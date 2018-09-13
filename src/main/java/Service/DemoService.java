@@ -67,7 +67,7 @@ public class DemoService {
 
 		if (s != null) {
 
-			s.unternehmenHinzufuegen(new Unternehmen(name));
+			s.unternehmenHinzufuegen(new Unternehmen(name, s));
 		}
 
 		return "neues unternehmen mit name " + name;
@@ -75,33 +75,30 @@ public class DemoService {
 
 	@GET
 	@Path("spielstarten")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String spielStart() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Unternehmen spielStart() {
 		//
-		s.rundenStart();
-
-		return "spiel start";
+		return s.rundenStart();
 	}
 	
 	@GET
 	@Path("quickstart")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String qs() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Unternehmen qs() {
 		s = new Spiel();
 		if (s != null) {
 
-			s.unternehmenHinzufuegen(new Unternehmen("ui"));
-			s.unternehmenHinzufuegen(new Unternehmen("uii"));
+			s.unternehmenHinzufuegen(new Unternehmen("ui", s));
+			s.unternehmenHinzufuegen(new Unternehmen("uii", s));
 		}
 
-		s.rundenStart();
-		return "spiel start";
+		return s.rundenStart();
 	}
 
 	@GET
 	@Path("zugbeendet")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String zugBeendet() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Unternehmen zugBeendet() {
 		//
 		return s.zugBeendet();
 
@@ -283,6 +280,16 @@ public class DemoService {
 	public Object getMaterialien() {
 
 		return s.getNaechstesUnternehmen().zeigeMaterialien();
+
+	}
+	
+	
+	@GET
+	@Path("umsatzhistorievmarkt")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Object getUmsatzHistorie() {
+
+		return s.getNaechstesUnternehmen().getVmarkt().getUmsatzHistorie(s, 1);
 
 	}
 }

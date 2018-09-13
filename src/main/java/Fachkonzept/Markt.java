@@ -32,6 +32,12 @@ public abstract class Markt {
 		// die einlagerung ist in der sub class
 
 	}
+	
+	List<Umsatz> umsatzHistorie = new ArrayList<Umsatz>();
+	
+	private void umsatzFesthalten(Angebot a, int menge, int runde) {
+		umsatzHistorie.add(new Umsatz(a, menge, runde - 1));	//da sim am anfang 
+	}
 
 	public void verkaufen(Angebot a, int menge, Unternehmen vk) {	//nur an simulation !!!!
 		Angebot verbleibendesAngebot = a.kaufen(menge);
@@ -44,7 +50,21 @@ public abstract class Markt {
 		// bestand muss verringert werden
 		vk.markteinheitEntfernen(a.getMarkteinheit(), menge);
 		
+		//zuletzt wollen wir das ereignis speichern
+		umsatzFesthalten(a, menge, vk.getSpiel().getRunde());
 
+	}
+	
+	public List<Umsatz> getUmsatzHistorie(Spiel s, int rundenZurueck) {
+
+		List<Umsatz> umsaetze = new ArrayList<Umsatz>();
+		for(Umsatz u : this.umsatzHistorie) {
+			if(u.getRunde() >= s.getRunde() - rundenZurueck) {
+				umsaetze.add(u);
+			}
+		}
+		
+		return umsaetze;
 	}
 
 	public void anbieten(Angebot a) {

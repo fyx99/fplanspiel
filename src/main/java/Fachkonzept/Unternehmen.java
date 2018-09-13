@@ -9,6 +9,8 @@ import DTOs.ProdukteGesamtDTO;
 
 public class Unternehmen {
 
+	private Spiel spiel;
+	
 	private String name;
 
 	private Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
@@ -24,8 +26,8 @@ public class Unternehmen {
 																				// falsches einfügen :D
 	private Map<String, Integer> produkte = new HashMap<String, Integer>();
 
-	public Unternehmen(String name) {
-
+	public Unternehmen(String name, Spiel s) {
+		spiel = s;
 		this.name = name;
 	}
 
@@ -187,5 +189,15 @@ public class Unternehmen {
 	public ProdukteGesamtDTO zeigeProdukte() {
 		return new ProdukteGesamtDTO(this.produkte);
 	}
+
+	public Spiel getSpiel() {
+		return spiel;
+	}
+
+	public void setSpiel(Spiel sp) {
+		this.spiel = sp;
+	}
+	
+	
 
 }

@@ -34,7 +34,7 @@ public class Spiel {
 
 	private Stack<Unternehmen> naechsteUnternehmen;
 
-	public void rundenStart() {
+	public Unternehmen rundenStart() {
 		
 		//wir simulieren jetzt mal am rundenanfang
 		Simulation.simuliere(this, unternehmen);
@@ -46,24 +46,25 @@ public class Spiel {
 		}
 		
 		if (!naechsteUnternehmen.isEmpty()) {
-			naechstesUnternehmen = naechsteUnternehmen.pop();
+			return naechstesUnternehmen = naechsteUnternehmen.pop();
 		}
+		return null;
 
 	}
 
-	public String zugBeendet() {
+	public Unternehmen zugBeendet() {
 		
 		//nächster ist dran
 
 		if (!naechsteUnternehmen.isEmpty()) {
 			naechstesUnternehmen = naechsteUnternehmen.pop();
-			return "nächster";
+			return naechstesUnternehmen;
 		}
 		else {
 			//alle durch -> Simulation
 			naechstesUnternehmen = null;
 			neueRunde();
-			return "simluiere";
+			return null;
 		}
 
 	}
