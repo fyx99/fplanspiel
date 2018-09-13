@@ -260,8 +260,15 @@ public class DemoService {
 
 	}
 	
-	//alle angebote
-	
+	//alle produkte
+	@GET
+	@Path("produkte")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Object getProdukte() {
+
+		return s.getNaechstesUnternehmen().zeigeProdukte();
+
+	}
 	
 	//alle materialien
 	@GET

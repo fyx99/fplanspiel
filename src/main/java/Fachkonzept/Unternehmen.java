@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import DTOs.MaschinenGesamtDTO;
+import DTOs.MaterialienGesamtDTO;
+import DTOs.ProdukteGesamtDTO;
 
 public class Unternehmen {
 
@@ -81,10 +83,10 @@ public class Unternehmen {
 	}
 
 	public void materialHinzu(Material m, Integer menge) {
-		if (this.materialien.containsKey(m.getClass().getName())) {
-			this.materialien.replace(m.getClass().getName(), menge + this.materialien.get(m.getClass().getName()));
+		if (this.materialien.containsKey(m.getName())) {
+			this.materialien.replace(m.getName(), menge + this.materialien.get(m.getName()));
 		} else
-			this.materialien.putIfAbsent(m.getClass().getName(), menge);
+			this.materialien.putIfAbsent(m.getName(), menge);
 	}
 
 	public void produktHinzu(Produkt m, Integer menge) {
@@ -95,14 +97,14 @@ public class Unternehmen {
 	}
 
 	public void maschineEntfernen(Maschine m, Integer menge) {
-		if (this.maschinen.containsKey(m.getClass().getName())) {
-			this.maschinen.replace(m.getClass().getName(), this.maschinen.get(m.getClass().getName()) - menge);
+		if (this.maschinen.containsKey(m.getName())) {
+			this.maschinen.replace(m.getName(), this.maschinen.get(m.getName()) - menge);
 		}
 	}
 
 	public void materialEntfernen(Material m, Integer menge) {
-		if (this.materialien.containsKey(m.getClass().getName())) {
-			this.materialien.replace(m.getClass().getName(), this.materialien.get(m.getClass().getName()) - menge);
+		if (this.materialien.containsKey(m.getName())) {
+			this.materialien.replace(m.getName(), this.materialien.get(m.getName()) - menge);
 		}
 	}
 
@@ -154,16 +156,21 @@ public class Unternehmen {
 		return umsatz;
 	}
 	
-	public Map<String, Integer> zeigeMaterialien(){
-		Map<String, Integer> res = new HashMap<String, Integer>();
+	public MaterialienGesamtDTO zeigeMaterialien(){
+		/*Map<String, Integer> res = new HashMap<String, Integer>();
 	    for (Map.Entry<String, Integer> ein : this.maschinen.entrySet()) {
 	    	res.put(Maschine.findeMaschine(ein.getKey()).getId() + "", ein.getValue());
 	    }
-	    return res;
+	    return res;*/
+
+		return new MaterialienGesamtDTO(this.materialien);
 	}
 
 	public MaschinenGesamtDTO zeigeMaschinen() {
 		return new MaschinenGesamtDTO(this.maschinen);
+	}
+	public ProdukteGesamtDTO zeigeProdukte() {
+		return new ProdukteGesamtDTO(this.produkte);
 	}
 
 }

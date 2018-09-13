@@ -38,21 +38,21 @@ public class Simulation {
 	}
 	
 	private static Beschaffungsmarkt beschaffungsmarktDemoDaten() {
-		AHolz ah = new AHolz(1);
-		BHolz bh = new BHolz(1);
+		Material aah = new Material(1, "AHolz");
+		Material bbh = new Material(1, "BHolz");
 		Beschaffungsmarkt b = new Beschaffungsmarkt();
-		b.anbieten(new Angebot(ah, 99, 3));
-		b.anbieten(new Angebot(bh, 59, 1));
+		b.anbieten(new Angebot(aah, 99, 3));
+		b.anbieten(new Angebot(bbh, 59, 1));
 		
 		return b;
 	}
 	private static Maschinenmarkt maschinenmarktDemoDaten() {
-		AHolz aah = new AHolz(1);
-		BHolz bbh = new BHolz(1);
+		Material aah = new Material(1, "AHolz");
+		Material bbh = new Material(1, "BHolz");
 		Produkt p1 = new Produkt("stuhl");
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put(aah.getClass().getName(), 3);
-		map.put(bbh.getClass().getName(), 2);
+		map.put(aah.getName(), 3);
+		map.put(bbh.getName(), 2);
 		Produktionsmatrix pm = new Produktionsmatrix(map);
 		Maschine m1 = new Maschine("beispielmaschine", 100, p1, pm);
 		Maschine m2 = new Maschine("beispielmaschine2", 70, p1, pm);
