@@ -1,7 +1,5 @@
 package Fachkonzept;
 
-import java.util.List;
-
 public class Verkaufsmarkt extends Markt {
 	
 	

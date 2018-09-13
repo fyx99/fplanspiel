@@ -1,7 +1,6 @@
 package DTOs;
 
 import Fachkonzept.Material;
-import Fachkonzept.Produkt;
 
 public class MaterialDTO {
 

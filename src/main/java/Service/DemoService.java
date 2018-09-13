@@ -1,6 +1,5 @@
 package Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,8 +148,7 @@ public class DemoService {
 	@Path("setangebote")
 	@Produces(MediaType.APPLICATION_JSON)
 	public void setAngebote(String json) {
-		List<Angebot> angebote = new Gson().fromJson(json, new TypeToken<List<Angebot>>() {
-		}.getType());
+		List<Angebot> angebote = new Gson().fromJson(json, new TypeToken<List<Angebot>>() {/**/}.getType());
 		//
 		s.getNaechstesUnternehmen().getVmarkt().setAngebote(angebote);
 
@@ -166,21 +164,21 @@ public class DemoService {
 		if(angebot == null)
 			return "kein anbgebot mit der id";
 		//new Gson().fromJson(json, Angebot.class);  convert json to java object
-		
+		int tatsaechlichemenge = menge;
 		if (angebot.getMenge() < menge)
-			menge = angebot.getMenge(); // maximal was angeboten wird
+		    tatsaechlichemenge = angebot.getMenge(); // maximal was angeboten wird
 
 		if (angebot.getMarkteinheit() instanceof Maschine) {
-			s.getNaechstesUnternehmen().getMmarkt().kaufen(angebot, menge, s.getNaechstesUnternehmen());
+			s.getNaechstesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, s.getNaechstesUnternehmen());
 
 		} else if (angebot.getMarkteinheit() instanceof Material) {
 
-			s.getNaechstesUnternehmen().getBmarkt().kaufen(angebot, menge, s.getNaechstesUnternehmen());
+			s.getNaechstesUnternehmen().getBmarkt().kaufen(angebot, tatsaechlichemenge, s.getNaechstesUnternehmen());
 		} else {
 			// sollte nicht passieren
 		}
 
-		return "gekauft " + menge + " vomn " + angebot.getMarkteinheit().getClass().getName();
+		return "gekauft " + tatsaechlichemenge + " vomn " + angebot.getMarkteinheit().getClass().getName();
 
 	}
 
@@ -241,7 +239,7 @@ public class DemoService {
 		// angebot entfernen
 		
 		Angebot a = Angebot.findeAngebot(id);
-		s.getNaechstesUnternehmen().getVmarkt().angebotEntfernen(a);;
+		s.getNaechstesUnternehmen().getVmarkt().angebotEntfernen(a);
 		
 		
 		return a.getId() + " entfernen ";
