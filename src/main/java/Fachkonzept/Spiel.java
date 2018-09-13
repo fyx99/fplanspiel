@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class Spiel {
 
-	int runde = 1;
+	private int runde = 1;
 	
 	
 	public Spiel() {

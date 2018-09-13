@@ -122,6 +122,21 @@ public class Unternehmen {
 			this.produkte.remove(m.getName());
 		}
 	}
+	
+	public void markteinheitEntfernen(Markteinheit m, Integer menge) {
+		if(m instanceof Maschine) {
+			maschineEntfernen((Maschine)m, menge);
+		}
+		else if (m instanceof Material) {
+
+			materialEntfernen((Material)m, menge);
+			
+		}
+		else if (m instanceof Produkt) {
+
+			produktEntfernen((Produkt)m, menge);
+		}
+	}
 
 	public Map<String, Integer> getMaschinen() {
 		return maschinen;

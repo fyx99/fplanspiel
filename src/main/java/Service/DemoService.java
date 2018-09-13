@@ -222,14 +222,22 @@ public class DemoService {
 	@Path("anbieten/{menge}/{produktid}/{preis}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object angebotErstellen(@PathParam("menge") int menge, @PathParam("produktid") int id, @PathParam("preis") int preis) {
-		// erstmal ressourcen verbrauchen
-		//dann produkte zum unternehmen hinzu
-		Produkt p = (Produkt)Markteinheit.findeMarkteinheit(id);
-		Angebot a = new Angebot(p, menge, preis);
-		s.getNaechstesUnternehmen().getVmarkt().anbieten(a);
+		//hiermit kann ich alle dinge verkaufen
+		Markteinheit m = Markteinheit.findeMarkteinheit(id);
+		if(m instanceof Material) {
+			Angebot a = new Angebot((Material)m, menge, preis);
+			s.getNaechstesUnternehmen().getBmarkt().anbieten(a);
+		}
+		else if(m instanceof Maschine) {
+			Angebot a = new Angebot((Maschine)m, menge, preis);
+			s.getNaechstesUnternehmen().getMmarkt().anbieten(a);
+		}
+		else if(m instanceof Produkt){
+			Angebot a = new Angebot((Produkt)m, menge, preis);
+			s.getNaechstesUnternehmen().getVmarkt().anbieten(a);
+		}
 		
-		
-		return p.getName() + " angeboten " + menge + " stück für " + preis;
+		return m.getName() + " angeboten " + menge + " stück für " + preis;
 
 	}
 	@GET
