@@ -16,10 +16,19 @@ public class Spiel {
 	private void neueRunde() {
 		runde++;
 		
-		if(runde > 3) {
+		if(!checkSpielende()) {
+			rundenStart();
+		}
+		
+	}
+	
+	private boolean checkSpielende() {
+		if(runde > 10) {
 			ende = true;
 		}
-		rundenStart();
+		//hier könnten noch umsatz oder gewinnziele
+		
+		return false;
 	}
 	
 	boolean ende = false;
