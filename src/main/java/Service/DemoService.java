@@ -68,7 +68,7 @@ public class DemoService {
 
 		if (s != null) {
 
-			s.unternehmenHinzufuegen(new Unternehmen(name));
+			s.unternehmenHinzufuegen(new Unternehmen(name, s));
 		}
 
 		return "neues unternehmen mit name " + name;
@@ -76,33 +76,30 @@ public class DemoService {
 
 	@GET
 	@Path("spielstarten")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String spielStart() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Unternehmen spielStart() {
 		//
-		s.rundenStart();
-
-		return "spiel start";
+		return s.rundenStart();
 	}
 	
 	@GET
 	@Path("quickstart")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String qs() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Unternehmen qs() {
 		s = new Spiel();
 		if (s != null) {
 
-			s.unternehmenHinzufuegen(new Unternehmen("ui"));
-			s.unternehmenHinzufuegen(new Unternehmen("uii"));
+			s.unternehmenHinzufuegen(new Unternehmen("ui", s));
+			s.unternehmenHinzufuegen(new Unternehmen("uii", s));
 		}
 
-		s.rundenStart();
-		return "spiel start";
+		return s.rundenStart();
 	}
 
 	@GET
 	@Path("zugbeendet")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String zugBeendet() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Unternehmen zugBeendet() {
 		//
 		return s.zugBeendet();
 
@@ -223,14 +220,22 @@ public class DemoService {
 	@Path("anbieten/{menge}/{produktid}/{preis}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object angebotErstellen(@PathParam("menge") int menge, @PathParam("produktid") int id, @PathParam("preis") int preis) {
-		// erstmal ressourcen verbrauchen
-		//dann produkte zum unternehmen hinzu
-		Produkt p = (Produkt)Markteinheit.findeMarkteinheit(id);
-		Angebot a = new Angebot(p, menge, preis);
-		s.getNaechstesUnternehmen().getVmarkt().anbieten(a);
+		//hiermit kann ich alle dinge verkaufen
+		Markteinheit m = Markteinheit.findeMarkteinheit(id);
+		if(m instanceof Material) {
+			Angebot a = new Angebot((Material)m, menge, preis);
+			s.getNaechstesUnternehmen().getBmarkt().anbieten(a);
+		}
+		else if(m instanceof Maschine) {
+			Angebot a = new Angebot((Maschine)m, menge, preis);
+			s.getNaechstesUnternehmen().getMmarkt().anbieten(a);
+		}
+		else if(m instanceof Produkt){
+			Angebot a = new Angebot((Produkt)m, menge, preis);
+			s.getNaechstesUnternehmen().getVmarkt().anbieten(a);
+		}
 		
-		
-		return p.getName() + " angeboten " + menge + " stück für " + preis;
+		return m.getName() + " angeboten " + menge + " stück für " + preis;
 
 	}
 	@GET
@@ -276,6 +281,16 @@ public class DemoService {
 	public Object getMaterialien() {
 
 		return s.getNaechstesUnternehmen().zeigeMaterialien();
+
+	}
+	
+	
+	@GET
+	@Path("umsatzhistorievmarkt")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Object getUmsatzHistorie() {
+
+		return s.getNaechstesUnternehmen().getVmarkt().getUmsatzHistorie(s, 1);
 
 	}
 }
