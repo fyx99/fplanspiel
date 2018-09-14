@@ -13,11 +13,11 @@ public class UnternehmenDTO {
 
 	private String name;
 
-	private Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
+	private MarktDTO bmarkt;
 
-	private Verkaufsmarkt vmarkt = new Verkaufsmarkt();
+	private MarktDTO vmarkt;
 
-	private Maschinenmarkt mmarkt = new Maschinenmarkt();
+	private MarktDTO mmarkt;
 
 	private float umsatz = 0;
 	private float kapital = 0;
@@ -31,22 +31,23 @@ public class UnternehmenDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Beschaffungsmarkt getBmarkt() {
+	
+	public MarktDTO getBmarkt() {
 		return bmarkt;
 	}
-	public void setBmarkt(Beschaffungsmarkt bmarkt) {
+	public void setBmarkt(MarktDTO bmarkt) {
 		this.bmarkt = bmarkt;
 	}
-	public Verkaufsmarkt getVmarkt() {
+	public MarktDTO getVmarkt() {
 		return vmarkt;
 	}
-	public void setVmarkt(Verkaufsmarkt vmarkt) {
+	public void setVmarkt(MarktDTO vmarkt) {
 		this.vmarkt = vmarkt;
 	}
-	public Maschinenmarkt getMmarkt() {
+	public MarktDTO getMmarkt() {
 		return mmarkt;
 	}
-	public void setMmarkt(Maschinenmarkt mmarkt) {
+	public void setMmarkt(MarktDTO mmarkt) {
 		this.mmarkt = mmarkt;
 	}
 	public float getUmsatz() {

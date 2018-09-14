@@ -3,6 +3,7 @@ package Fachkonzept;
 import java.util.HashMap;
 import java.util.Map;
 
+import DTOs.MarktDTO;
 import DTOs.MaschinenGesamtDTO;
 import DTOs.MaterialienGesamtDTO;
 import DTOs.ProdukteGesamtDTO;
@@ -203,9 +204,9 @@ public class Unternehmen {
 		// TODO Auto-generated constructor stub
 		UnternehmenDTO uu = new UnternehmenDTO();
 		uu.setName(u.getName());
-		uu.setBmarkt(u.getBmarkt());
-		uu.setVmarkt(u.getVmarkt());
-		uu.setMmarkt(u.getMmarkt());
+		uu.setBmarkt(new MarktDTO(u.getBmarkt().getAngebote()));
+		uu.setVmarkt(new MarktDTO(u.getVmarkt().getAngebote()));
+		uu.setMmarkt(new MarktDTO(u.getMmarkt().getAngebote()));
 		
 		uu.setUmsatz(u.getUmsatz());
 		uu.setKapital(u.getKapital());

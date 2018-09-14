@@ -18,6 +18,7 @@
     <p><a href="webapi/v1/demo/bestand">bestand</a></p>
     <p><a href="webapi/v1/demo/maschinen">maschinen</a></p>
     <p><a href="webapi/v1/demo/umsatzhistorievmarkt">umsatzhistorievmarkt</a></p>
+    <p><a href="webapi/v1/demo/unternehmen">unternehmen</a></p>
 
 </body>
 </html>
