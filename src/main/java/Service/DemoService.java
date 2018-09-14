@@ -155,7 +155,7 @@ public class DemoService {
 
 	}
 
-	@PUT
+	@GET
 	@Path("angebotkaufen/{menge}/{angebotsid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object kaufeAngebot(@PathParam("menge") int menge, @PathParam("angebotsid") int id) {
