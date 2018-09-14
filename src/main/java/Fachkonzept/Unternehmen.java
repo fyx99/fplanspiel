@@ -6,6 +6,7 @@ import java.util.Map;
 import DTOs.MaschinenGesamtDTO;
 import DTOs.MaterialienGesamtDTO;
 import DTOs.ProdukteGesamtDTO;
+import DTOs.UnternehmenDTO;
 
 public class Unternehmen {
 
@@ -196,6 +197,22 @@ public class Unternehmen {
 
 	public void setSpiel(Spiel sp) {
 		this.spiel = sp;
+	}
+	
+	public static UnternehmenDTO getDTO(Unternehmen u) {
+		// TODO Auto-generated constructor stub
+		UnternehmenDTO uu = new UnternehmenDTO();
+		uu.setName(u.getName());
+		uu.setBmarkt(u.getBmarkt());
+		uu.setVmarkt(u.getVmarkt());
+		uu.setMmarkt(u.getMmarkt());
+		
+		uu.setUmsatz(u.getUmsatz());
+		uu.setKapital(u.getKapital());
+		uu.setMaterialien(new MaterialienGesamtDTO(u.getMaterialien()));
+		uu.setMaschinen(new MaschinenGesamtDTO(u.getMaschinen()));
+		uu.setProdukte(new ProdukteGesamtDTO(u.getProdukte()));
+		return uu;
 	}
 	
 	

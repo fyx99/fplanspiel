@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import DTOs.UnternehmenDTO;
 import Fachkonzept.Angebot;
 import Fachkonzept.Beschaffungsmarkt;
 import Fachkonzept.Markteinheit;
@@ -85,7 +86,7 @@ public class DemoService {
 	@GET
 	@Path("quickstart")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Unternehmen qs() {
+	public void qs() {
 		s = new Spiel();
 		if (s != null) {
 
@@ -93,15 +94,15 @@ public class DemoService {
 			s.unternehmenHinzufuegen(new Unternehmen("uii", s));
 		}
 
-		return s.rundenStart();
+		s.rundenStart();
 	}
 
 	@GET
 	@Path("zugbeendet")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Unternehmen zugBeendet() {
+	public void zugBeendet() {
 		//
-		return s.zugBeendet();
+		s.zugBeendet();
 
 	}
 
@@ -111,6 +112,17 @@ public class DemoService {
 	public String gameStats() {
 		//
 		return s.gameStatsHelper();
+
+	}
+	@GET
+	@Path("unternehmen")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UnternehmenDTO u() {
+		//
+		if(s != null)
+		return Unternehmen.getDTO((s.getNaechstesUnternehmen()));
+		
+		return null;
 
 	}
 
