@@ -201,6 +201,7 @@ public class DemoService {
 		return "toll";
 
 	}
+	
 	@GET
 	@Path("bestand")
 	@Produces(MediaType.APPLICATION_JSON)
