@@ -5,11 +5,11 @@
     <p>neues spiel unternehmen hinzufügen -> spielstarten, 1. simulation -> jz erster u dran für actions</p>
     <p><a href="webapi/v1/Spiel/Quickstart">quick</a></p>
     <p><a href="webapi/v1/Spiel/Neu">neues Spiel</a></p>
-    <p><a href="webapi/v1/Spiel/Unternehmen/Neu/abcag">Neues Unternehmen mit dem Namen ABC AG</a></p>
-    <p><a href="webapi/v1/Spiel/Unternehmen/Neu/abckgaa">neues Unternehmen mit name ABC KGAA</a></p>
-    <p><a href="webapi/v1/Spiel/Start">spiel starten</a></p>
-    <p><a href="webapi/v1/Spiel/Zug/Ende">zug beendet</a></p>
-    <p><a href="webapi/v1/Spiel/Statistiken">stats</a></p>
+    <p><a href="webapi/v1/Spiel/Unternehmen/Neu/Tim Shook AG">Neues Unternehmen mit dem Namen ABC AG</a></p>
+    <p><a href="webapi/v1/Spiel/Unternehmen/Neu/Muster GmbH">neues Unternehmen mit name ABC KGAA</a></p>
+    <p><a href="webapi/v1/Spiel/Start">Spiel starten</a></p>
+    <p><a href="webapi/v1/Spiel/Zug/Ende">Zug beenden</a></p>
+    <p><a href="webapi/v1/Spiel/Statistiken">Statistiken Gesamt</a></p>
     <p><a href="webapi/v1/Spiel/Unternehmen/Maschinenmarkt/Angebote/Kauf/5/5">Maschine kaufen /5/5</a></p>
     <p><a href="webapi/v1/Spiel/Unternehmen/Maschinenmarkt/Angebote/Kauf/5/6">Maschine kaufen /5/6</a></p>
     <p><a href="webapi/v1/Spiel/Unternehmen/Beschaffungsmarkt/Angebote/Kauf/1/7">eigentlich: Beschaffungsmarkt Angebot kaufen /1/7  (aktuell immer Maschine)</a></p>

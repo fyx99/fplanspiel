@@ -56,7 +56,7 @@ public class SpielService {
 	@GET
 	@Path("Quickstart")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void qs() {
+	public String qs() {
 		spiel = new Spiel();
 		if (spiel != null) {
 
@@ -65,6 +65,7 @@ public class SpielService {
 		}
 
 		spiel.rundenStart();
+		return "Quickstart durchgeführt";
 	}
 	
 	//Zug beendet
