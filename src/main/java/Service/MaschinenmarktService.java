@@ -60,7 +60,7 @@ public class MaschinenmarktService {
 	@Path("Angebote/Kauf/{menge}/{angebotsid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object kaufeAngebot(@PathParam("menge") int menge, @PathParam("angebotsid") int id) {
-		// erstmal bezahlen
+	
 		
 		Angebot angebot = Angebot.findeAngebot(id);
 		if(angebot == null)
@@ -85,7 +85,7 @@ public class MaschinenmarktService {
 	}
 	
 	@GET
-	@Path("Angebote/Entfernung/{angebotsid}")
+	@Path("Angebote/Entfernung/{angebotsid}")   // manchmal weiß ich nicht ob ich weinen oder lachen soll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object angebotEntfernen(@PathParam("angebotsid") int id) {
 		// angebot entfernen
