@@ -32,7 +32,7 @@ import Fachkonzept.Verkaufsmarkt;
 
 @PermitAll
 @Path("Spiel/Unternehmen/Vertriebsmarkt")
-public class VertriebsmarktService {
+public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzmarkt
 	
 	private static Spiel spiel= SpielService.spiel;
 	
