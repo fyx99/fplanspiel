@@ -27,7 +27,7 @@ import Fachkonzept.Material;
 import Fachkonzept.Produkt;
 import Fachkonzept.Spiel;
 import Fachkonzept.Unternehmen;
-import Fachkonzept.Verkaufsmarkt;
+import Fachkonzept.Absatzmarkt;
 
 
 

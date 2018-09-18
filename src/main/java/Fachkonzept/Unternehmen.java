@@ -17,7 +17,7 @@ public class Unternehmen {
 
 	private Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
 
-	private Verkaufsmarkt vmarkt = new Verkaufsmarkt();
+	private Absatzmarkt vmarkt = new Absatzmarkt();
 
 	private Maschinenmarkt mmarkt = new Maschinenmarkt();
 	
@@ -63,11 +63,11 @@ public class Unternehmen {
 		this.bmarkt = bmarkt;
 	}
 
-	public Verkaufsmarkt getVmarkt() {
+	public Absatzmarkt getVmarkt() {
 		return vmarkt;
 	}
 
-	public void setVmarkt(Verkaufsmarkt vmarkt) {
+	public void setVmarkt(Absatzmarkt vmarkt) {
 		this.vmarkt = vmarkt;
 	}
 

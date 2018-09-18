@@ -27,7 +27,7 @@ import Fachkonzept.Material;
 import Fachkonzept.Produkt;
 import Fachkonzept.Spiel;
 import Fachkonzept.Unternehmen;
-import Fachkonzept.Verkaufsmarkt;
+import Fachkonzept.Absatzmarkt;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -138,7 +138,7 @@ public class DemoService {
 	@GET
 	@Path("vmarkt")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Verkaufsmarkt getVMarkt() {
+	public Absatzmarkt getVMarkt() {
 		//
 		return s.getNaechstesUnternehmen().getVmarkt();
 

@@ -7,7 +7,7 @@ import Fachkonzept.Beschaffungsmarkt;
 import Fachkonzept.Maschinenmarkt;
 import Fachkonzept.Spiel;
 import Fachkonzept.Unternehmen;
-import Fachkonzept.Verkaufsmarkt;
+import Fachkonzept.Absatzmarkt;
 
 public class UnternehmenDTO {
 

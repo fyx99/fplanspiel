@@ -1,11 +1,11 @@
 package Fachkonzept;
 
-public class Verkaufsmarkt extends Markt {
+public class Absatzmarkt extends Markt {
 	
 	
 	//hier soll der spieler angtebote einstellen und die simulation welche wahrnehmen
 	
-	public Verkaufsmarkt() {
+	public Absatzmarkt() {
 		// TODO Auto-generated constructor stub
 	}
 	

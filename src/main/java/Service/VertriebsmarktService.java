@@ -26,7 +26,7 @@ import Fachkonzept.Material;
 import Fachkonzept.Produkt;
 import Fachkonzept.Spiel;
 import Fachkonzept.Unternehmen;
-import Fachkonzept.Verkaufsmarkt;
+import Fachkonzept.Absatzmarkt;
 
 
 
@@ -49,7 +49,7 @@ public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzma
 	@GET
 	@Path("Angebote")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Verkaufsmarkt getVMarkt() {
+	public Absatzmarkt getVMarkt() {
 		//
 		return spiel.getNaechstesUnternehmen().getVmarkt();
 
