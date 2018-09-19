@@ -226,6 +226,11 @@ public class Unternehmen {
 		uu.setProdukte(new ProdukteGesamtDTO(u.getProdukte()));
 		return uu;
 	}
+
+    public void kosten(String string, double fertigungskosten) {
+        this.verringereKapital(fertigungskosten);
+        
+    }
 	
 	
 

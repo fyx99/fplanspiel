@@ -9,16 +9,18 @@ public class Maschine extends Markteinheit{
 	private String name;
 	private int kapazitaet;
 	private int auslastung;
+	private double fertigungskosten;
 	
 	private Produkt p;
 		
-	public Maschine(String bez, int k, Produkt pt, Produktionsmatrix m) {
+	public Maschine(String bez, int k, Produkt pt, Produktionsmatrix m, double fertigungskosten) {
 		super();
 		
 		this.name= bez;
 		this.kapazitaet = k;
 		this.p = pt;
 		this.matrix = m;
+		this.fertigungskosten = fertigungskosten;
 	}
 	
 	private Produktionsmatrix matrix;
@@ -69,6 +71,7 @@ public class Maschine extends Markteinheit{
 	    }
 	    //die produkte in den bestand
 		u.produktHinzu(this.p, menge);
+        u.kosten("Fertigungskosten", this.fertigungskosten * menge);
 		return this.p;
 	}
 	
@@ -81,6 +84,14 @@ public class Maschine extends Markteinheit{
 		return null;
 		
 	}
+
+    public double getFertigungskosten() {
+        return fertigungskosten;
+    }
+
+    public void setFertigungskosten(double fertigungskosten) {
+        this.fertigungskosten = fertigungskosten;
+    }
 
 	
 	

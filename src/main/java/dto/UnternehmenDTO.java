@@ -1,5 +1,7 @@
 package dto;
 
+import fachkonzept.marketing.Marketingmix;
+
 public class UnternehmenDTO {
 
 	private String name;
@@ -9,6 +11,8 @@ public class UnternehmenDTO {
 	private MarktDTO vmarkt;
 
 	private MarktDTO mmarkt;
+	
+	private Marketingmix marketingmix;
 
 	private float umsatz = 0;
 	private float kapital = 0;
@@ -71,6 +75,12 @@ public class UnternehmenDTO {
 	public void setProdukte(ProdukteGesamtDTO produkte) {
 		this.produkte = produkte;
 	}
+    public Marketingmix getMarketingmix() {
+        return marketingmix;
+    }
+    public void setMarketingmix(Marketingmix marketingmix) {
+        this.marketingmix = marketingmix;
+    }
 	
 	
 
