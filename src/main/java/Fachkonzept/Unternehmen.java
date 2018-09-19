@@ -43,8 +43,8 @@ public class Unternehmen {
 		this.kapital = kapital;
 	}
 
-	public void verringereKapital(float i) {
-		this.kapital -= i;
+	public void verringereKapital(double d) {
+		this.kapital -= d;
 	}
 
 	public String getName() {
@@ -166,8 +166,8 @@ public class Unternehmen {
 		this.produkte = produkte;
 	}
 	
-	public void umsatz(float a) {
-		this.umsatz += a;
+	public void umsatz(double d) {
+		this.umsatz += d;
 	}
 
 	public float getUmsatz() {

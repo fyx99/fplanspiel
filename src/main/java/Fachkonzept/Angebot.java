@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Angebot{
 	
-	private float preis;
+	private double preis;
 	private int id;
 	private static int angebotsnummer = 0;
 	private int menge;
@@ -17,7 +17,7 @@ public class Angebot{
 	private static List<Angebot> alleAngebote = new ArrayList<>();
 
 	//preis pro einheit
-	public Angebot(Markteinheit m, int menge, float preis) {
+	public Angebot(Markteinheit m, int menge, double preis) {
 		this.preis = preis;
 		this.menge = menge;
 		this.markteinheit = m;
@@ -37,7 +37,7 @@ public class Angebot{
 		this.menge = menge;
 	}
 	
-	public float getPreis() {
+	public double getPreis() {
 		return this.preis;
 	}
 	
@@ -64,7 +64,7 @@ public class Angebot{
 	public void setMarkteinheit(Markteinheit markteinheit) {
 		this.markteinheit = markteinheit;
 	}
-	public void setPreis(float preis) {
+	public void setPreis(double preis) {
 		this.preis = preis;
 	}
 	
