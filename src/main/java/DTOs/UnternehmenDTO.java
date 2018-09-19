@@ -1,14 +1,5 @@
 package DTOs;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import Fachkonzept.Beschaffungsmarkt;
-import Fachkonzept.Maschinenmarkt;
-import Fachkonzept.Spiel;
-import Fachkonzept.Unternehmen;
-import Fachkonzept.Absatzmarkt;
-
 public class UnternehmenDTO {
 
 	private String name;
