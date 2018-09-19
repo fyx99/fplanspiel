@@ -1,8 +1,6 @@
 package fachkonzept;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import dto.MarktDTO;
@@ -10,7 +8,7 @@ import dto.MaschinenGesamtDTO;
 import dto.MaterialienGesamtDTO;
 import dto.ProdukteGesamtDTO;
 import dto.UnternehmenDTO;
-import fachkonzept.marketing.Marketingmaßnahme;
+import fachkonzept.marketing.Marketingmix;
 import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Markteinheit;
@@ -30,7 +28,7 @@ public class Unternehmen {
 	
 	private float umsatz = 0;
 	
-	private List<Marketingmaßnahme> marketing = new ArrayList<Marketingmaßnahme>();
+	private Marketingmix marketingmix;
 
 	private Map<String, Integer> maschinen = new HashMap<String, Integer>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
@@ -88,20 +86,8 @@ public class Unternehmen {
 		this.mmarkt = mmarkt;
 	}
 
-	public List<Marketingmaßnahme> getMarketing() {
-        return marketing;
-    }
-
-    public void setMarketing(List<Marketingmaßnahme> marketing) {
-        this.marketing = marketing;
-    }
-    
-    public void marketingHinzu(Marketingmaßnahme m) {
-        this.marketing.add(m);
-    }
-    
-    public void marketingEntfernen(Marketingmaßnahme m) {
-        this.marketing.remove(m);
+    public Marketingmix getMarketingmix() {
+        return marketingmix;
     }
 
     public void maschineHinzu(Maschine m, Integer menge) {
