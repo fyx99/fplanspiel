@@ -1,6 +1,6 @@
 package fachkonzept.marketing;
 
-public class MessenKampagne extends Marketingmix{
+public class MessenKampagne extends Marketingmaßnahme{
     //
 
 }

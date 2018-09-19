@@ -1,6 +1,6 @@
 package fachkonzept.marketing;
 
-public class Plakatwerbung extends Marketingmix {
+public class Plakatwerbung extends Marketingmaßnahme {
     //
 
 }

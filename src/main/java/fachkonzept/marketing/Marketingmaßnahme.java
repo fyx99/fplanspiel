@@ -1,8 +1,8 @@
 package fachkonzept.marketing;
 
-public abstract class Marketingmix {
+public abstract class Marketingmaßnahme {
     
-    public Marketingmix() {
+    public Marketingmaßnahme() {
         
     }
     
@@ -15,7 +15,5 @@ public abstract class Marketingmix {
     public void setBudget(double budget) {
         this.budget = budget;
     }
-    
-    
 
 }

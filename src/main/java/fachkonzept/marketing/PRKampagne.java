@@ -1,6 +1,6 @@
 package fachkonzept.marketing;
 
-public class PRKampagne extends Marketingmix {
+public class PRKampagne extends Marketingmaßnahme {
     //
 
 }

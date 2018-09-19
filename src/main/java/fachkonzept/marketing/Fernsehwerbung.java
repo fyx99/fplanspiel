@@ -1,5 +1,5 @@
 package fachkonzept.marketing;
 
-public class Fernsehwerbung extends Marketingmix {
+public class Fernsehwerbung extends Marketingmaßnahme {
     //
 }
