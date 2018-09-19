@@ -37,7 +37,7 @@ public class MaschinenmarktService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Maschinenmarkt getMMarkt() {
 		//
-		return spiel.getNaechstesUnternehmen().getMmarkt();
+		return spiel.getAktuellesUnternehmen().getMmarkt();
 
 	}
 	
@@ -56,11 +56,11 @@ public class MaschinenmarktService {
 		    tatsaechlichemenge = angebot.getMenge(); // maximal was angeboten wird
 
 		if (angebot.getMarkteinheit() instanceof Maschine) {
-			spiel.getNaechstesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, spiel.getNaechstesUnternehmen());
+			spiel.getAktuellesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, spiel.getAktuellesUnternehmen());
 
 		} else if (angebot.getMarkteinheit() instanceof Material) {
 
-			spiel.getNaechstesUnternehmen().getBmarkt().kaufen(angebot, tatsaechlichemenge, spiel.getNaechstesUnternehmen());
+			spiel.getAktuellesUnternehmen().getBmarkt().kaufen(angebot, tatsaechlichemenge, spiel.getAktuellesUnternehmen());
 		} else {
 			// sollte nicht passieren
 		}
@@ -76,7 +76,7 @@ public class MaschinenmarktService {
 		// angebot entfernen
 		
 		Angebot a = Angebot.findeAngebot(id);
-		spiel.getNaechstesUnternehmen().getVmarkt().angebotEntfernen(a);
+		spiel.getAktuellesUnternehmen().getVmarkt().angebotEntfernen(a);
 		
 		
 		return a.getId() + " entfernen ";

@@ -39,7 +39,7 @@ public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzma
 	@Produces(MediaType.APPLICATION_JSON)
 	public Absatzmarkt getVMarkt() {
 		//
-		return spiel.getNaechstesUnternehmen().getVmarkt();
+		return spiel.getAktuellesUnternehmen().getVmarkt();
 
 	}
 	
@@ -51,15 +51,15 @@ public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzma
 		Markteinheit m = Markteinheit.findeMarkteinheit(id);
 		if(m instanceof Material) {
 			Angebot a = new Angebot((Material)m, menge, preis);
-			spiel.getNaechstesUnternehmen().getBmarkt().anbieten(a);
+			spiel.getAktuellesUnternehmen().getBmarkt().anbieten(a);
 		}
 		else if(m instanceof Maschine) {
 			Angebot a = new Angebot((Maschine)m, menge, preis);
-			spiel.getNaechstesUnternehmen().getMmarkt().anbieten(a);
+			spiel.getAktuellesUnternehmen().getMmarkt().anbieten(a);
 		}
 		else if(m instanceof Produkt){
 			Angebot a = new Angebot((Produkt)m, menge, preis);
-			spiel.getNaechstesUnternehmen().getVmarkt().anbieten(a);
+			spiel.getAktuellesUnternehmen().getVmarkt().anbieten(a);
 		}
 		
 		return m.getName() + " angeboten " + menge + " stück für " + preis;
@@ -71,7 +71,7 @@ public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzma
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object getUmsatzHistorie() {
 
-		return spiel.getNaechstesUnternehmen().getVmarkt().getUmsatzHistorie(spiel, 1);
+		return spiel.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie(spiel, 1);
 
 	}
 	
@@ -82,7 +82,7 @@ public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzma
 		// angebot entfernen
 		
 		Angebot a = Angebot.findeAngebot(id);
-		spiel.getNaechstesUnternehmen().getVmarkt().angebotEntfernen(a);
+		spiel.getAktuellesUnternehmen().getVmarkt().angebotEntfernen(a);
 		
 		
 		return a.getId() + " entfernen ";

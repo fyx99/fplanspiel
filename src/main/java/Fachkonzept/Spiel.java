@@ -33,7 +33,7 @@ public class Spiel {
 	
 	boolean ende = false;
 
-	Unternehmen naechstesUnternehmen = null;
+	Unternehmen aktuellesUnternehmen = null;
 
 	List<Unternehmen> unternehmen = new ArrayList<Unternehmen>();
 
@@ -55,7 +55,7 @@ public class Spiel {
 		}
 		
 		if (!naechsteUnternehmen.isEmpty()) {
-			return naechstesUnternehmen = naechsteUnternehmen.pop();
+			return aktuellesUnternehmen = naechsteUnternehmen.pop();
 		}
 		return null;
 
@@ -66,12 +66,12 @@ public class Spiel {
 		//nächster ist dran
 
 		if (!naechsteUnternehmen.isEmpty()) {
-			naechstesUnternehmen = naechsteUnternehmen.pop();
-			return naechstesUnternehmen;
+			aktuellesUnternehmen = naechsteUnternehmen.pop();
+			return aktuellesUnternehmen;
 		}
 		else {
 			//alle durch -> Simulation
-			naechstesUnternehmen = null;
+			aktuellesUnternehmen = null;
 			neueRunde();
 			return null;
 		}
@@ -90,12 +90,12 @@ public class Spiel {
 		return k;
 	}
 
-	public Unternehmen getNaechstesUnternehmen() {
-		return naechstesUnternehmen;
+	public Unternehmen getAktuellesUnternehmen() {
+		return aktuellesUnternehmen;
 	}
 
-	public void setNaechstesUnternehmen(Unternehmen naechstesUnternehmen) {
-		this.naechstesUnternehmen = naechstesUnternehmen;
+	public void setAktuellesUnternehmen(Unternehmen naechstesUnternehmen) {
+		this.aktuellesUnternehmen = naechstesUnternehmen;
 	}
 	
 	public void setUnternehmen(List<Unternehmen> unternehmen) {

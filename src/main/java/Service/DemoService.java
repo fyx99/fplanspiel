@@ -119,7 +119,7 @@ public class DemoService {
 	public UnternehmenDTO u() {
 		//
 		if(s != null)
-		return Unternehmen.getDTO((s.getNaechstesUnternehmen()));
+		return Unternehmen.getDTO((s.getAktuellesUnternehmen()));
 		
 		return null;
 
@@ -130,7 +130,7 @@ public class DemoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Beschaffungsmarkt getBMarkt() {
 		//
-		return s.getNaechstesUnternehmen().getBmarkt();
+		return s.getAktuellesUnternehmen().getBmarkt();
 
 	}
 
@@ -139,7 +139,7 @@ public class DemoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Absatzmarkt getVMarkt() {
 		//
-		return s.getNaechstesUnternehmen().getVmarkt();
+		return s.getAktuellesUnternehmen().getVmarkt();
 
 	}
 
@@ -148,7 +148,7 @@ public class DemoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Maschinenmarkt getMMarkt() {
 		//
-		return s.getNaechstesUnternehmen().getMmarkt();
+		return s.getAktuellesUnternehmen().getMmarkt();
 
 	}
 
@@ -159,7 +159,7 @@ public class DemoService {
 	public void setAngebote(String json) {
 		List<Angebot> angebote = new Gson().fromJson(json, new TypeToken<List<Angebot>>() {/**/}.getType());
 		//
-		s.getNaechstesUnternehmen().getVmarkt().setAngebote(angebote);
+		s.getAktuellesUnternehmen().getVmarkt().setAngebote(angebote);
 
 	}
 
@@ -178,11 +178,11 @@ public class DemoService {
 		    tatsaechlichemenge = angebot.getMenge(); // maximal was angeboten wird
 
 		if (angebot.getMarkteinheit() instanceof Maschine) {
-			s.getNaechstesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, s.getNaechstesUnternehmen());
+			s.getAktuellesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, s.getAktuellesUnternehmen());
 
 		} else if (angebot.getMarkteinheit() instanceof Material) {
 
-			s.getNaechstesUnternehmen().getBmarkt().kaufen(angebot, tatsaechlichemenge, s.getNaechstesUnternehmen());
+			s.getAktuellesUnternehmen().getBmarkt().kaufen(angebot, tatsaechlichemenge, s.getAktuellesUnternehmen());
 		} else {
 			// sollte nicht passieren
 		}
@@ -207,9 +207,9 @@ public class DemoService {
 	public Object getBestand() {
 		//
 		Map<String, Integer> bestand = new HashMap<String, Integer>();
-		bestand.putAll(s.getNaechstesUnternehmen().getMaschinen());
-		bestand.putAll(s.getNaechstesUnternehmen().getMaterialien());
-		bestand.putAll(s.getNaechstesUnternehmen().getProdukte());
+		bestand.putAll(s.getAktuellesUnternehmen().getMaschinen());
+		bestand.putAll(s.getAktuellesUnternehmen().getMaterialien());
+		bestand.putAll(s.getAktuellesUnternehmen().getProdukte());
 		return bestand;
 
 	}
@@ -221,7 +221,7 @@ public class DemoService {
 		// erstmal ressourcen verbrauchen
 		//dann produkte zum unternehmen hinzu
 		Maschine m = (Maschine)Markteinheit.findeMarkteinheit(id);
-		Produkt p = m.produziere(menge, s.getNaechstesUnternehmen());
+		Produkt p = m.produziere(menge, s.getAktuellesUnternehmen());
 		return p.getId() + "produziere " + menge + " von " + p.getName() + " in " + m.getName() 
 				+ " deren auslastung " + m.getAuslastung() + " kapazität" + m.getKapazitaet();
 
@@ -236,15 +236,15 @@ public class DemoService {
 		Markteinheit m = Markteinheit.findeMarkteinheit(id);
 		if(m instanceof Material) {
 			Angebot a = new Angebot((Material)m, menge, preis);
-			s.getNaechstesUnternehmen().getBmarkt().anbieten(a);
+			s.getAktuellesUnternehmen().getBmarkt().anbieten(a);
 		}
 		else if(m instanceof Maschine) {
 			Angebot a = new Angebot((Maschine)m, menge, preis);
-			s.getNaechstesUnternehmen().getMmarkt().anbieten(a);
+			s.getAktuellesUnternehmen().getMmarkt().anbieten(a);
 		}
 		else if(m instanceof Produkt){
 			Angebot a = new Angebot((Produkt)m, menge, preis);
-			s.getNaechstesUnternehmen().getVmarkt().anbieten(a);
+			s.getAktuellesUnternehmen().getVmarkt().anbieten(a);
 		}
 		
 		return m.getName() + " angeboten " + menge + " stück für " + preis;
@@ -257,7 +257,7 @@ public class DemoService {
 		// angebot entfernen
 		
 		Angebot a = Angebot.findeAngebot(id);
-		s.getNaechstesUnternehmen().getVmarkt().angebotEntfernen(a);
+		s.getAktuellesUnternehmen().getVmarkt().angebotEntfernen(a);
 		
 		
 		return a.getId() + " entfernen ";
@@ -272,7 +272,7 @@ public class DemoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object getMaschinen() {
 
-		return s.getNaechstesUnternehmen().zeigeMaschinen();
+		return s.getAktuellesUnternehmen().zeigeMaschinen();
 
 	}
 	
@@ -282,7 +282,7 @@ public class DemoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object getProdukte() {
 
-		return s.getNaechstesUnternehmen().zeigeProdukte();
+		return s.getAktuellesUnternehmen().zeigeProdukte();
 
 	}
 	
@@ -292,7 +292,7 @@ public class DemoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object getMaterialien() {
 
-		return s.getNaechstesUnternehmen().zeigeMaterialien();
+		return s.getAktuellesUnternehmen().zeigeMaterialien();
 
 	}
 	
@@ -302,7 +302,7 @@ public class DemoService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object getUmsatzHistorie() {
 
-		return s.getNaechstesUnternehmen().getVmarkt().getUmsatzHistorie(s, 1);
+		return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie(s, 1);
 
 	}
 }

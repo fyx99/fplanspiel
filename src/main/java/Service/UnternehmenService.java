@@ -46,7 +46,7 @@ public class UnternehmenService {
 	public UnternehmenDTO u() {
 		//
 		if(spiel != null)
-		return Unternehmen.getDTO((spiel.getNaechstesUnternehmen()));
+		return Unternehmen.getDTO((spiel.getAktuellesUnternehmen()));
 		
 		return null;
 
@@ -58,9 +58,9 @@ public class UnternehmenService {
 	public Object getBestand() {
 		//
 		Map<String, Integer> bestand = new HashMap<String, Integer>();
-		bestand.putAll(spiel.getNaechstesUnternehmen().getMaschinen());
-		bestand.putAll(spiel.getNaechstesUnternehmen().getMaterialien());
-		bestand.putAll(spiel.getNaechstesUnternehmen().getProdukte());
+		bestand.putAll(spiel.getAktuellesUnternehmen().getMaschinen());
+		bestand.putAll(spiel.getAktuellesUnternehmen().getMaterialien());
+		bestand.putAll(spiel.getAktuellesUnternehmen().getProdukte());
 		return bestand;
 
 	}
@@ -72,7 +72,7 @@ public class UnternehmenService {
 		// erstmal ressourcen verbrauchen
 		//dann produkte zum unternehmen hinzu
 		Maschine m = (Maschine)Markteinheit.findeMarkteinheit(id);
-		Produkt p = m.produziere(menge, spiel.getNaechstesUnternehmen());
+		Produkt p = m.produziere(menge, spiel.getAktuellesUnternehmen());
 		return p.getId() + "produziere " + menge + " von " + p.getName() + " in " + m.getName() 
 				+ " deren auslastung " + m.getAuslastung() + " kapazität" + m.getKapazitaet();
 
@@ -84,7 +84,7 @@ public class UnternehmenService {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Object getProdukte() {
 
-			return spiel.getNaechstesUnternehmen().zeigeProdukte();
+			return spiel.getAktuellesUnternehmen().zeigeProdukte();
 
 		}
 		
@@ -94,7 +94,7 @@ public class UnternehmenService {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Object getMaterialien() {
 
-			return spiel.getNaechstesUnternehmen().zeigeMaterialien();
+			return spiel.getAktuellesUnternehmen().zeigeMaterialien();
 
 		}
 		
@@ -104,7 +104,7 @@ public class UnternehmenService {
 		@Produces(MediaType.APPLICATION_JSON)
 		public Object getMaschinen() {
 
-			return spiel.getNaechstesUnternehmen().zeigeMaschinen();
+			return spiel.getAktuellesUnternehmen().zeigeMaschinen();
 
 		}
 
