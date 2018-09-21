@@ -78,7 +78,7 @@ public class Simulation {
 		map_sst.put(holz.getName(), 8);
 		map_sst.put(stoff.getName(), 4);
 		
-		Produkt lederstuhl = new Produkt("Lederstuhl");
+		Produkt lederstuhl = new Produkt("Lederstuhll");
 		Map<String, Integer> map_lst = new HashMap<String, Integer>();	
 		map_lst.put(holz.getName(), 8);
 		map_lst.put(leder.getName(), 4);
