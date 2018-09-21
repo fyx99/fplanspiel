@@ -115,30 +115,30 @@ public class Simulation {
 		
 		//Stühle
 		Maschine m1 = new Maschine("Holzstuhl-Maschine", 100, holzstuhl, new Produktionsmatrix(map_hst), 15);
-		Maschine m2 = new Maschine("Stoffstuhl-Maschine", 100, stoffstuhl, new Produktionsmatrix(map_sst), 20);
-		Maschine m3 = new Maschine("Lederstuhl-Maschine", 100, lederstuhl, new Produktionsmatrix(map_lst), 25);
+		Maschine m2 = new Maschine("Stoffstuhl-Maschine", 57, stoffstuhl, new Produktionsmatrix(map_sst), 20);
+		Maschine m3 = new Maschine("Lederstuhl-Maschine", 50, lederstuhl, new Produktionsmatrix(map_lst), 25);
 		
 		//Tische
-		Maschine m4 = new Maschine("Holztisch-Maschine", 100, holztisch, new Produktionsmatrix(map_ht), 100);
-		Maschine m5 = new Maschine("Glastisch-Maschine", 100, glastisch, new Produktionsmatrix(map_gt), 125);
-		Maschine m6 = new Maschine("Kunststofftisch-Maschine", 100, kunststofftisch, new Produktionsmatrix(map_kt), 20);
+		Maschine m4 = new Maschine("Holztisch-Maschine", 50, holztisch, new Produktionsmatrix(map_ht), 100);
+		Maschine m5 = new Maschine("Glastisch-Maschine", 35, glastisch, new Produktionsmatrix(map_gt), 125);
+		Maschine m6 = new Maschine("Kunststofftisch-Maschine", 180, kunststofftisch, new Produktionsmatrix(map_kt), 20);
 		
 		//Schränke
-		Maschine m7 = new Maschine("Holzschrank-Maschine", 100, holzschrank, new Produktionsmatrix(map_hsc), 150);
-		Maschine m8 = new Maschine("Edelstahlschrank-Maschine", 100, edelstahlschrank, new Produktionsmatrix(map_esc), 185);
-		Maschine m9 = new Maschine("Glasschrank-Maschine", 100, glasschrank, new Produktionsmatrix(map_gsc), 215);
+		Maschine m7 = new Maschine("Holzschrank-Maschine", 65, holzschrank, new Produktionsmatrix(map_hsc), 150);
+		Maschine m8 = new Maschine("Edelstahlschrank-Maschine", 50, edelstahlschrank, new Produktionsmatrix(map_esc), 185);
+		Maschine m9 = new Maschine("Glasschrank-Maschine", 38, glasschrank, new Produktionsmatrix(map_gsc), 215);
 		
 		//Maschinen auf Maschinenmarkt anbieten
 		Maschinenmarkt b = new Maschinenmarkt();
-		b.anbieten(new Angebot(m1, 3, 888));
-		b.anbieten(new Angebot(m2, 1, 34));
-		b.anbieten(new Angebot(m3, 1, 34));
-		b.anbieten(new Angebot(m4, 1, 34));
-		b.anbieten(new Angebot(m5, 1, 34));
-		b.anbieten(new Angebot(m6, 1, 34));
-		b.anbieten(new Angebot(m7, 1, 34));
-		b.anbieten(new Angebot(m8, 1, 34));
-		b.anbieten(new Angebot(m9, 1, 34));
+		b.anbieten(new Angebot(m1, 3, 7000));
+		b.anbieten(new Angebot(m2, 1, 7500));
+		b.anbieten(new Angebot(m3, 1, 8000));
+		b.anbieten(new Angebot(m4, 1, 9500));
+		b.anbieten(new Angebot(m5, 1, 11500));
+		b.anbieten(new Angebot(m6, 1, 8500));
+		b.anbieten(new Angebot(m7, 1, 11000));
+		b.anbieten(new Angebot(m8, 1, 12000));
+		b.anbieten(new Angebot(m9, 1, 12500));
 		
 		return b;
 	}
