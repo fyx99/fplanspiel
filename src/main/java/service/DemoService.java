@@ -23,6 +23,7 @@ import fachkonzept.Material;
 import fachkonzept.Produkt;
 import fachkonzept.Spiel;
 import fachkonzept.Unternehmen;
+import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Markteinheit;
 
 /**
@@ -307,18 +308,17 @@ public class DemoService {
         return s.getAktuellesUnternehmen().getMarketingmix();
 
     }
-    /*
+    
     @GET
-    @Path("sponsoring/{budget}")
+    @Path("sponsoring/{budget}/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Object erstelleSponsoring(@PathParam("budget") double b) {
+    public Object erstelleSponsoring(@PathParam("budget") double b, @PathParam("name") String name) {
         // angebot entfernen
 
-        Angebot a =  a.gAngebot.findeAngebot(id);
-        s.getAktuellesUnternehmen().getVmarkt().angebotEntfernen(a);
-
-        returnetId() + " entfernen ";
+        s.getAktuellesUnternehmen().getMarketingmix().marketingHinzu(new Sponsoring(name, b));
+        
+        return s.getAktuellesUnternehmen().getMarketingmix();
 
     }
-    */
+    
 }
