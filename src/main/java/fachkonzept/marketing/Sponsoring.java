@@ -7,6 +7,6 @@ public class Sponsoring extends Marketingmaßnahme {
         // TODO Auto-generated constructor stub
     }
     
-    //
+    //was wird gesponsert -> umwelt, (sport, sozial) 
 
 }

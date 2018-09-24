@@ -5,18 +5,18 @@ import fachkonzept.markt.Markteinheit;
 
 public class AngebotDTO {
 
-	private Float preis;
+	private double preis;
 	private Integer id;
 	private Integer menge;
 	private Markteinheit markteinheit;
 	
 	private Markt markttyp;
 
-    public Float getPreis() {
+    public double getPreis() {
         return preis;
     }
 
-    public void setPreis(Float preis) {
+    public void setPreis(double preis) {
         this.preis = preis;
     }
 

@@ -1,5 +1,6 @@
-package fachkonzept;
+ package fachkonzept;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,14 +23,15 @@ public class Simulation {
 		Iterator<Unternehmen> i = us.iterator();
 		while(i.hasNext()) {
 			Unternehmen n = i.next();
-			n.verringereKapital(6);
+			//n.verringereKapital(6);
 			
 			if(s.getRunde() == 1) {
 				n.setKapital(1000);
 				n.setBmarkt(beschaffungsmarktDemoDaten());
 				n.setMmarkt(maschinenmarktDemoDaten());
+				
 			}
-			else {//alle anderen Runden
+			/*else {//alle anderen Runden
 				
 			}
 			List<Angebot> as = n.getVmarkt().getAngebote();
@@ -39,9 +41,156 @@ public class Simulation {
 				
 			}
 			
+			*/
+		}if(s.getRunde() != 1)simuliereAbsatzmarkt(us);
+	}
+	
+	public static void simuliereAbsatzmarkt(List<Unternehmen> us) {
+		for (ProduktArt produktArt : ProduktArt.values()) {
+			//pro produkt gehen wir den spaß jetzt mal durch
+			List<Angebot> produkt_angebote = new ArrayList<Angebot>();
+			for (Unternehmen u : us) {
+				produkt_angebote.addAll(u.getVmarkt().getAngeboteByProduktArt(produktArt));
+				
+			}
+			//jetzt haben wir alle angebote der speziellen produkt art
 			
+			simuliereEinzelnesProdukt(produkt_angebote, getProduktMarktvolumen(produktArt), getProduktMarktpreis(produktArt));
 		}
 	}
+	
+	public static void simuliereEinzelnesProdukt(List<Angebot> angebote, int nachfrage, double grundpreis) {
+		int gedeckt = 0;
+		int preis = 0;
+		Spiel.log("brauch " + nachfrage);
+		while(gedeckt < nachfrage) {
+
+			Spiel.log("brauch " + nachfrage);
+			List<Angebot> pot_angebote = new ArrayList<Angebot>();
+			for(Angebot a : angebote) {		//erstmal angebote die preislich in frage kommen
+				if(a.getPreis() == preis) {
+					pot_angebote.add(a);
+
+				}
+			}
+			// => verteilen
+			int volle = pot_angebote.size();
+			while(gedeckt < nachfrage && !pot_angebote.isEmpty() && volle > 0) {
+				Spiel.log("anfang verteilen brauch" + (nachfrage-gedeckt));
+				
+				//schneiden
+				int durchschnittliche_menge = (nachfrage - gedeckt) / pot_angebote.size();
+				
+				for(Angebot aa : pot_angebote) {
+					if(aa.getMenge() < durchschnittliche_menge)
+						durchschnittliche_menge = aa.getMenge();
+				}
+				
+				//verteilen
+				Iterator<Angebot> iter = pot_angebote.iterator();
+
+				while (iter.hasNext()) {
+					Angebot aa = iter.next();
+					Spiel.log("Unternehmen " + aa.getMarkttyp().getU().getName() + " verkauft " + aa.getMarkteinheit().getName() + " menge: " + durchschnittliche_menge + " bei preis " + preis);
+					gedeckt += durchschnittliche_menge;
+					
+					if(aa.getMarkttyp().verkaufen(aa, durchschnittliche_menge, aa.getMarkttyp().getU()) == null) {
+						iter.remove();
+						Spiel.log("removed");
+						volle--;
+					}
+					Spiel.log(volle + "");
+				}
+
+			}
+			preis++;	//jetzt mal schauen ob es ein teureres gibt
+			if(preis > grundpreis) {
+				//hier wird jetzt die nachfrage gekappt, da kunden zwar x kaufen würden aber nicht zu denen preisen :D
+				nachfrage = 0;	//bsp direkte kappung
+				
+			}
+		}
+	}
+	
+	
+	
+	public static double getProduktMarktpreis(ProduktArt produktArt) {
+		//hier als vorläufiges beispiel mit dem string -> soll natürlich wenn dann als enum
+		double preis = 0;
+		switch(produktArt) {
+			case Holzstuhl:
+				preis = 40;
+				break;
+			case Stoffstuhl:
+				preis = 40;
+				break;
+			case Lederstuhl:
+				preis = 40;
+				break;
+			case Holztisch:
+				preis = 40;
+				break;
+			case Glastisch:
+				preis = 40;
+				break;
+			case Kunststofftisch:
+				preis = 40;
+				break;
+			case Holzschrank:
+				break;
+			case Edelstahlschrank:
+				preis = 40;
+				break;
+			case Glasschrank:
+				preis = 40;
+				break;
+			default:
+				return -1;
+		}
+		return preis;
+	}
+	
+	public static int getProduktMarktvolumen(ProduktArt produktArt) {
+		//hier als vorläufiges beispiel mit dem string -> soll natürlich wenn dann als enum
+		int volumen = 0;
+		switch(produktArt) {
+			case Holzstuhl:
+				volumen = 50;
+				break;
+			case Stoffstuhl:
+				volumen = 8808;
+				break;
+			case Lederstuhl:
+				volumen = 40;
+				break;
+			case Holztisch:
+				volumen = 40;
+				break;
+			case Glastisch:
+				volumen = 40;
+				break;
+			case Kunststofftisch:
+				volumen = 40;
+				break;
+			case Holzschrank:
+				break;
+			case Edelstahlschrank:
+				volumen = 40;
+				break;
+			case Glasschrank:
+				volumen = 40;
+				break;
+			default:
+				return -1;
+		}
+		return volumen;
+	}
+	
+	public static double getPeriodenverschiebung(int runde) {		//um die nachfragemenge zu verändern
+		double randomStart = Math.random() * 2;
+		return  1 + Math.sin(0.125 * Math.PI * runde + randomStart * Math.PI) * 0.5;
+	}
+	
 	
 	private static Beschaffungsmarkt beschaffungsmarktDemoDaten() {
 		Material holz = new Material(1, "Holz");
@@ -69,43 +218,43 @@ public class Simulation {
 		Material kunststoff = new Material(1, "Kunststoff");
 		Material edelstahl = new Material(1, "Edelstahl");
 		
-		Produkt holzstuhl = new Produkt("Holzstuhl");
+		Produkt holzstuhl = new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl);
 		Map<String, Integer> map_hst = new HashMap<String, Integer>();	//für jedes Produkt Map mit benötigten Ressourcen
 		map_hst.put(holz.getName(), 10);//10 Holz 
 		
-		Produkt stoffstuhl = new Produkt("Stoffstuhl");
+		Produkt stoffstuhl = new Produkt(ProduktArt.Stoffstuhl, ProduktTyp.Stuhl);
 		Map<String, Integer> map_sst = new HashMap<String, Integer>();	
 		map_sst.put(holz.getName(), 8);
 		map_sst.put(stoff.getName(), 4);
 		
-		Produkt lederstuhl = new Produkt("Lederstuhll");
+		Produkt lederstuhl = new Produkt(ProduktArt.Lederstuhl, ProduktTyp.Stuhl);
 		Map<String, Integer> map_lst = new HashMap<String, Integer>();	
 		map_lst.put(holz.getName(), 8);
 		map_lst.put(leder.getName(), 4);
 		
-		Produkt holztisch = new Produkt("Holztisch");
+		Produkt holztisch = new Produkt(ProduktArt.Holztisch, ProduktTyp.Tisch);
 		Map<String, Integer> map_ht = new HashMap<String, Integer>();	
 		map_ht.put(holz.getName(), 32);
 		
-		Produkt glastisch = new Produkt("Glastisch");
+		Produkt glastisch = new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch);
 		Map<String, Integer> map_gt = new HashMap<String, Integer>();	
 		map_gt.put(edelstahl.getName(), 10);
 		map_gt.put(glas.getName(), 18);
 		
-		Produkt kunststofftisch = new Produkt("Kunststofftisch");
+		Produkt kunststofftisch = new Produkt(ProduktArt.Kunststofftisch, ProduktTyp.Tisch);
 		Map<String, Integer> map_kt = new HashMap<String, Integer>();	
 		map_kt.put(kunststoff.getName(), 32);
 		
-		Produkt holzschrank = new Produkt("Holzschrank");
+		Produkt holzschrank = new Produkt(ProduktArt.Holzschrank, ProduktTyp.Schrank);
 		Map<String, Integer> map_hsc = new HashMap<String, Integer>();	
 		map_hsc.put(holz.getName(), 80);
 		
-		Produkt edelstahlschrank = new Produkt("Edelstahlschrank");
+		Produkt edelstahlschrank = new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank);
 		Map<String, Integer> map_esc = new HashMap<String, Integer>();	
 		map_esc.put(holz.getName(), 60);
 		map_esc.put(edelstahl.getName(), 20);
 		
-		Produkt glasschrank = new Produkt("Glasschrank");
+		Produkt glasschrank = new Produkt(ProduktArt.Glasschrank, ProduktTyp.Schrank);
 		Map<String, Integer> map_gsc = new HashMap<String, Integer>();	
 		map_gsc.put(holz.getName(), 60);
 		map_gsc.put(glas.getName(), 20);

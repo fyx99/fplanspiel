@@ -48,7 +48,7 @@ public class Angebot{
 		
 		this.menge -= menge;
 		
-		if(menge <= 0) {
+		if(this.menge <= 0) {
 			return null;
 		}
 		return this;

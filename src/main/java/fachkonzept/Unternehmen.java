@@ -22,7 +22,7 @@ public class Unternehmen {
 
 	private Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
 
-	private Absatzmarkt vmarkt = new Absatzmarkt();
+	private Absatzmarkt vmarkt = new Absatzmarkt(this);
 
 	private Maschinenmarkt mmarkt = new Maschinenmarkt();
 	

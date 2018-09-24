@@ -21,6 +21,15 @@
     <p><a href="webapi/v1/demo/produkte">produkte</a></p>
     <p><a href="webapi/v1/demo/umsatzhistorievmarkt">umsatzhistorievmarkt</a></p>
     <p><a href="webapi/v1/demo/unternehmen">unternehmen</a></p>
+    <p><a href="webapi/v1/demo/produziere/20/53">produziere/2/7</a></p>
+    <p><a href="webapi/v1/demo/produziere/20/53">produziere/2/7</a></p>
+    
+    <p><a href="webapi/v1/demo/anbieten/20/44/20">anbieten 20</a></p>
+    
+    <p><a href="webapi/v1/demo/anbieten/20/44/30">anbieten 20</a></p>
+    
+    
+    <p><a href="webapi/v1/demo/log">log</a></p>
 
 </body>
 </html>

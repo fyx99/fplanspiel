@@ -6,6 +6,7 @@ public class Fernsehwerbung extends Marketingmaßnahme {
         super(name, budget);
         // TODO Auto-generated constructor stub
     }
-    //
+    //jetzt muss man hier natürlich noch was besonderes machen
+    //denkbar
     
 }

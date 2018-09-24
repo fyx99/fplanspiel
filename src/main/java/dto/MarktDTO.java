@@ -9,24 +9,36 @@ public class MarktDTO {
 
 
 	public MarktDTO(List<Angebot> angebote) {
-		this.angebote = angebote;
+		for(Angebot aaa : angebote) {
+			this.angebote.add(toDTO(aaa));
+		}
 	}
 
 
-	private List<Angebot> angebote = new ArrayList<Angebot>();
+	private List<AngebotDTO> angebote = new ArrayList<AngebotDTO>();
 	
 
 
 
-	public List<Angebot> getAngebote() {
+	public List<AngebotDTO> getAngebote() {
 		return angebote;
 	}
 
 
-	public void setAngebote(List<Angebot> angebote) {
+	public void setAngebote(List<AngebotDTO> angebote) {
 		this.angebote = angebote;
 	}
 
+	
+	private AngebotDTO toDTO(Angebot an) {
+		AngebotDTO a = new AngebotDTO();
+		
+		a.setMenge(an.getMenge());
+		a.setMarkteinheit(an.getMarkteinheit());
+		a.setPreis(an.getPreis());
+		
+		return a;
+	}
 	
 
 }

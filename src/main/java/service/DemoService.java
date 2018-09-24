@@ -243,8 +243,8 @@ public class DemoService {
             s.getAktuellesUnternehmen().getVmarkt().anbieten(a);
         }
 
-        return m.getName() + " angeboten " + menge + " stück für " + preis;
-
+        //return m.getName() + " angeboten " + menge + " stück für " + preis;
+        return null;
     }
 
     @GET
@@ -321,4 +321,12 @@ public class DemoService {
 
     }
     
+    @GET
+    @Path("log")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object log() {
+        
+        return s.getLog();
+
+    }
 }

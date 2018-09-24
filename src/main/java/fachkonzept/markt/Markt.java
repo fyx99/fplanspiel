@@ -9,6 +9,8 @@ import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 
 public abstract class Markt {
+	
+	private Unternehmen u;
 
 	private List<Angebot> angebote = new ArrayList<Angebot>();
 
@@ -44,7 +46,7 @@ public abstract class Markt {
 		umsatzHistorie.add(new Umsatz(a, menge, runde - 1));	//da sim am anfang 
 	}
 
-	public void verkaufen(Angebot a, int menge, Unternehmen vk) {	//nur an simulation !!!!
+	public Angebot verkaufen(Angebot a, int menge, Unternehmen vk) {	//nur an simulation !!!!
 		Angebot verbleibendesAngebot = a.kaufen(menge);
 		angebote.remove(a);
 		if (verbleibendesAngebot != null) {
@@ -57,7 +59,7 @@ public abstract class Markt {
 		
 		//zuletzt wollen wir das ereignis speichern
 		umsatzFesthalten(a, menge, vk.getSpiel().getRunde());
-
+		return verbleibendesAngebot;
 	}
 	
 	public List<Umsatz> getUmsatzHistorie(Spiel s, int rundenZurueck) {
@@ -72,8 +74,17 @@ public abstract class Markt {
 		return umsaetze;
 	}
 
-	public void anbieten(Angebot a) {
+	public Angebot anbieten(Angebot a) {
+		a.setMarkttyp(this);
+		//jetzt weiß das angebot wo es gelandet ist -> dann kann mans auch kaufen
+		//muss schauen ob es vergleichbares angebot gibt
+		for (Angebot aa : this.angebote) {
+			if(vergleiche(a,aa)) {
+				aa.setMenge(a.getMenge() + aa.getMenge());
+				return aa;}
+		}
 		angebote.add(a);
+		return a;
 	}
 
 	public void angebotEntfernen(Angebot a) {
@@ -87,5 +98,22 @@ public abstract class Markt {
 	public void setAngebote(List<Angebot> angebote) {
 		this.angebote = angebote;
 	}
+
+	public Unternehmen getU() {
+		return u;
+	}
+
+	public void setU(Unternehmen u) {
+		this.u = u;
+	}
+	
+	private boolean vergleiche(Angebot a, Angebot b) {
+		boolean t = false;
+		if(a.getMarkteinheit().equals(b.getMarkteinheit()) && a.getPreis() == b.getPreis())
+			t = true;
+		
+		return t;
+	}
+	
 
 }

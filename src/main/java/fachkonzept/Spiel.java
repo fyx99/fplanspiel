@@ -110,5 +110,14 @@ public class Spiel {
 	public int getRunde() {
 		return runde;
 	}
+	
+	private static List<String> log = new ArrayList<String>();
+	
+	public static void log(String nachricht) {
+		log.add(nachricht);
+	}
+	public static List<String> getLog(){
+		return log;
+	}
 
 }
