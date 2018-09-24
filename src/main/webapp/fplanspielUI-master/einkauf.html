@@ -1,0 +1,587 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
+    <meta name="author" content="BootstrapBay.com">
+    <title>BootstrapBay Tutorial</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+ </head>
+ 
+ <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Unternehmensplanspiel</a>
+			</div>
+			<div class="navbar-collapse collapse">
+		
+				<ul class="nav navbar-nav navbar-default">
+					<!-- Start -->
+					<li><a href="index.html">Start</a></li> 
+
+					<!-- Einkauf -->					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Einkauf <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="einkauf.html">Einkauf</a></li>         
+						</ul>
+					</li>
+
+					<!-- Verarbeitung -->
+					<li class="dropdown">
+						<a href="verarbeitung.html" class="dropdown-toggle" data-toggle="dropdown">Verarbeitung <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						
+							<li><a href="verarbeitung.html">Verarbeitung</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Produkte</li>
+							<li><a href="#">Stühle</a></li>
+							<li><a href="#">Tische</a></li>
+							<li><a href="#">Schränke</a></li>
+						</ul>
+					</li>      
+
+					<!-- Verkauf -->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Verkauf <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						
+							<li><a href="verkauf.html">Verkauf</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Angebote</li>
+							<li><a href="#">Neues Angebot</a></li>
+							<li><a href="#">Bestehende Angebote</a></li>
+						</ul>
+					</li>
+
+					<!--Inventar-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventar <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						
+							<li><a href="rohstoffe.html">Rohstoffe</a></li>
+							<li><a href="fertigeerzeugnisse.html">Fertige Erzeugnisse</a></li>
+							<li><a href="maschinen.html">Maschinen</a></li>
+							<li class="divider"></li>		
+							<li><a href="ergebnis_runde.html">Ergebnis der letzten Runde</a></li>							
+						</ul>
+					</li>         
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#about">Runde 1</a></li>
+					<li><a href="#budget">Budget: 000000 €</a></li>
+					<li><a href="#about">Zeit: 00:00</a></li>
+					<li><img src="img/account.svg"></img></li>
+					<li><a href="#about">Spieler 1</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+    </div>
+    
+	<!-- Page Header -->
+	<div class="container">	
+        <div class="page-header">
+            <h1>Einkauf</h1>
+        </div>
+		
+		<div class="page-header">
+            <h2>Materialen</h2>
+        </div>
+		
+		<!-- Row 1: Bilder -->
+		<div class="row">
+			<div class="col-sm-4">
+				<a href="#" class="thumbnail home-thumb">
+					<img src="img/holz.jpg" alt="Chair Bootstrap Admin Theme">
+				</a>
+				
+			</div>
+			
+			<div class="col-sm-4">
+				<a href="#" class="thumbnail home-thumb">
+					<img src="img/stoff.jpg" alt="Tisch Landing Page Template">
+				</a>
+			</div>
+			
+			<div class="col-sm-4">
+				<a href="speisekarte.html" class="thumbnail home-thumb">
+					<img src="img/glas.jpg" alt="Regal Portfolio Theme">
+				</a>
+			</div>
+		</div>
+		
+		<!-- Row 2: Header Material -->
+		<div class="row">
+			<div class="col-sm-4">
+				<h3>Holz</h3>
+			</div>
+			
+			<div class="col-sm-4">
+				<h3>Stoff</h3>
+			</div>
+			
+			<div class="col-sm-4">
+				<h3>Glas</h3>
+			</div>
+		</div>
+		
+		<!-- Row 3: Preis pro ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Preis pro ME</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>3,00€</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis pro ME</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>3,50€</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis pro ME</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>14,00€</p>
+			</div>
+		</div>
+		
+		<!-- Row 4: Verfügbare ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Verfügbar</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>0</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Verfügbar</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>0</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Verfügbar</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>0</p>
+			</div>
+		</div>
+		
+		<!-- Row 5: ...ME Einkaufen -->
+		<div class="row">
+			<div class="col-sm-1">
+				<input class="form-control input-sm" type="text" id ="einkaufeins">
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<a href="#" class="btn btn-danger" onClick = "meldunganzeigen()" >Kaufen</a>
+			</div>
+			
+			<div class="col-sm-1">
+				<input class="form-control input-sm" type="text">
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+			
+			<div class="col-sm-1">
+				<input class="form-control input-sm" type="text">
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+		</div>
+		
+		<br>
+		
+		<!-- Row 6: Bilder -->
+		<div class="row">
+			<div class="col-sm-4">
+				<a href="#" class="thumbnail home-thumb">
+					<img src="img/plastik.jpg" alt="Chair Bootstrap Admin Theme">
+				</a>
+				
+			</div>
+			
+			<div class="col-sm-4">
+				<a href="#" class="thumbnail home-thumb">
+					<img src="img/edelstahl.jpg" alt="Tisch Landing Page Template">
+				</a>
+			</div>
+			
+			<div class="col-sm-4">
+				<a href="speisekarte.html" class="thumbnail home-thumb">
+					<img src="img/leder.jpg" alt="Regal Portfolio Theme">
+				</a>
+			</div>
+		</div>
+		
+		<!-- Row 7: Header Material -->
+		<div class="row">
+			<div class="col-sm-4">
+				<h3>Kunststoff</h3>
+			</div>
+			
+			<div class="col-sm-4">
+				<h3>Edelstahl</h3>
+			</div>
+			
+			<div class="col-sm-4">
+				<h3>Leder</h3>
+			</div>
+		</div>
+		
+		<!-- Row 8: Preis pro ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Preis pro ME</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>1,00€</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis pro ME</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>6,00€</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis pro ME</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>9,00€</p>
+			</div>
+		</div>
+		
+		<!-- Row 9: Verfügbare ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Verfügbar</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>0</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Verfügbar</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>0</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Verfügbar</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>0</p>
+			</div>
+		</div>
+		
+		<!-- Row 10: ...ME Einkaufen -->
+		<div class="row">
+			<div class="col-sm-1">
+				<input class="form-control input-sm" type="text">
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+			
+			<div class="col-sm-1">
+				<input class="form-control input-sm" type="text">
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+			
+			<div class="col-sm-1">
+				<input class="form-control input-sm" type="text">
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+		</div>
+		
+		<br>
+		<br>
+		
+		
+    
+        
+	
+		
+	<!-- Maschinenheader -->
+
+
+	<div class="page-header">
+            <h2>Maschinen</h2>
+        </div>
+		
+		<!-- Row 1: Bilder der Maschinen -->
+		<div class="row">
+			<div class="col-sm-4">
+				<a href="#" class="thumbnail home-thumb">
+					<img src="img/maschineeins.jpg" alt="Chair Bootstrap Admin Theme">
+				</a>
+				
+			</div>
+			
+			<div class="col-sm-4">
+				<a href="#" class="thumbnail home-thumb">
+					<img src="img/maschinezwei.jpg" alt="Tisch Landing Page Template">
+				</a>
+			</div>
+			
+			<div class="col-sm-4">
+				<a href="speisekarte.html" class="thumbnail home-thumb">
+					<img src="img/maschinedrei.jpg" alt="Regal Portfolio Theme">
+				</a>
+			</div>
+		</div>
+		
+		<!-- Row 2: Header Material -->
+		<div class="row">
+			<div class="col-sm-4">
+				<h3>Pro Master</h3>
+			</div>
+			
+			<div class="col-sm-4">
+				<h3>UM-500V5</h3>
+			</div>
+			
+			<div class="col-sm-4">
+				<h3>FD-E</h3>
+			</div>
+		</div>
+		
+		<!-- Row 3: Preis pro ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Preis</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>3</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>2</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>5</p>
+			</div>
+		</div>
+<!-- Row 3: Preis pro ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Kapazität</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>150</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Kapazität</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>200</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Kapazität</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>170</p>
+			</div>
+		</div>
+		
+		<!-- Row 4: Verfügbare ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Nutzungsdauer:</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>5 Jahre</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Nutzungsdauer:</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>4 Jahre</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Nutzungsdauer:</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>6 Jahre</p>
+			</div>
+		</div>
+		
+		<!-- Row 5: ...ME Einkaufen -->
+		<div class="row">
+			
+			
+			<div class="col-sm-4">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+			
+		
+			
+			<div class="col-sm-4">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+			
+
+			
+			<div class="col-sm-4">
+				<a href="#" class="btn btn-danger">Kaufen</a>
+			</div>
+		</div>
+		
+		<br>
+		</div>	
+
+	
+<script>
+var ekeinswert = document.querySelector("#einkaufeins").value;
+function meldunganzeigen(){
+	window.alert(ekeinswert);
+}
+
+</script>		    
+   
+ <!-- Fixed footer -->
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <div class="navbar-text pull-left">
+                <p>© 2018 </p>
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="#help">Hilfe</a> 
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <div class="modal fade" id="contact" role="dialog">
+    	<div class="modal-dialog">
+    		<div class="modal-content">
+    			<form class="form-horizontal" role="form">
+    				<div class="modal-header">
+    					<h4>Contact<h4>
+	    			</div>
+	    			<div class="modal-body">
+    					<div class="form-group">
+    						<label for="contact-name" class="col-sm-2 control-label">Name</label>
+    						<div class="col-sm-10">
+    							<input type="text" class="form-control" id="contact-name" placeholder="First & Last Name">
+    						</div>
+    					</div>
+    					<div class="form-group">
+    						<label for="contact-email" class="col-sm-2 control-label">Email</label>
+    						<div class="col-sm-10">
+    							<input type="email" class="form-control" id="contact-email" placeholder="example@domain.com">
+    						</div>
+    					</div>
+    					<div class="form-group">
+    						<label for="contact-message" class="col-sm-2 control-label">Message</label>
+    						<div class="col-sm-10">
+    							<textarea class="form-control" rows="4"></textarea>
+    						</div>
+    					</div>
+	    			</div>
+	    			<div class="modal-footer">
+    					<a class="btn btn-default" data-dismiss="modal">Close</a>
+    					<button type="submit" class="btn btn-primary">Send</button>
+    				</div>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

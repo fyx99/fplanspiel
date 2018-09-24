@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
+    <meta name="author" content="BootstrapBay.com">
+    <title>Spiel starten</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="start.html">Unternehmensplanspiel</a>		<!--zeigt auf start-->
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-default">
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+	<div class="container pt-5">
+
+        <div class="page-header">
+            <h1>Neues Spiel</h1>
+        </div>	
+            	<h3>Bitte wählen Sie die Anzahl der Spieler und die Länge des Spiels aus!</h3>
+
+                <!--Tabelle-->
+                <style> 
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                    }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    border-collapse: separate;
+                    padding: 8px;
+                    }
+
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                    }
+                </style>
+                
+                <div class="well">
+                    <div class="btn-group" role="group" aria-label="rundenzahl">
+                            <button type="button" onclick="document.getElementById('anzahlRundenText').innerHTML='6 Runden'" class="btn btn-default">Kurz (6 Runden)</button>
+                            <button type="button" onclick="document.getElementById('anzahlRundenText').innerHTML='12 Runden'" class="btn btn-default">Mittel (12 Runden)</button>
+                            <button type="button" onclick="document.getElementById('anzahlRundenText').innerHTML='20 Runden'" class="btn btn-default">Lang (20 Runden)</button>
+                    </div>
+
+                    <p></p>
+                    <p></p>
+
+                    <table style="row" id="tableTest">
+                        <tr style="text-align: center;">
+                            <th></th>
+                            <th>Spieler</th>
+                            <th>Firma</th> 
+                            <th>Unternehmensform</th>
+                        </tr>
+                        
+                        <!--Reihe 1-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" disabled checked>
+                                </div>
+                            </td>
+                            <td>Spieler 1</td>
+                            <td><input id="firma1" name="firmaSpieler1"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler1">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler1').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler1').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler1').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler1').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler1').innerHTML='Einzelkaufmann (eK)'">eK</a></li>   <!--http://holdirbootstrap.de/komponenten/-->
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler1').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler1').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!--Reihe 2-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" onclick="" type="checkbox" value="" id="defaultCheck2" disabled checked>
+                                </div>
+                            </td>
+                            <td>Spieler 2</td>
+                            <td><input id="firma2" name="firmaSpieler2"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler2">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler2').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler2').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler2').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler2').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler2').innerHTML='Einzelkaufmann (eK)'">eK</a></li> 
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler2').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler2').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--Reihe 3-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck3')" id="defaultCheck3">
+                                </div>
+                            </td>
+                            <td>Spieler 3</td>
+                            <td><input id="firma3" name="firmaSpieler3"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler3">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler3').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler3').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler3').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler3').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler3').innerHTML='Einzelkaufmann (eK)'">eK</a></li> 
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler3').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler3').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--Reihe 4-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck4')" id="defaultCheck4">
+                                </div>
+                            </td>
+                            <td>Spieler 4</td>
+                            <td><input id="firma4" name="firmaSpieler4"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler4">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler4').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler4').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler4').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler4').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler4').innerHTML='Einzelkaufmann (eK)'">eK</a></li>  
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler4').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler4').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!--Reihe 5-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck5')" id="defaultCheck5">
+                                </div>
+                            </td>
+                            <td>Spieler 5</td>
+                            <td><input id="firma5" name="firmaSpieler5"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler5">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler5').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler5').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler5').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler5').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler5').innerHTML='Einzelkaufmann (eK)'">eK</a></li>  
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler5').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler5').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--Reihe 6-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck6')" id="defaultCheck6">
+                                </div>
+                            </td>
+                            <td>Spieler 6</td>
+                            <td><input id="firma6" name="firmaSpieler6"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler6">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler6').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler6').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler6').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler6').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler6').innerHTML='Einzelkaufmann (eK)'">eK</a></li>  
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler6').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler6').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--Reihe 7-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck7')" id="defaultCheck7">
+                                </div>
+                            </td>
+                            <td>Spieler 7</td>
+                            <td><input id="firma7" name="firmaSpieler7"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler7">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler7').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler7').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler7').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler7').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler7').innerHTML='Einzelkaufmann (eK)'">eK</a></li>  
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler7').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler7').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--Reihe 8-->
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck8')" id="defaultCheck8">
+                                </div>
+                            </td>
+                            <td>Spieler 8</td>
+                            <td><input id="firma8" name="firmaSpieler8"></td> 
+                            <td>
+                                <div class="dropdown" padding="20px">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenuSpieler8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Unternehmensform
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler8">
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler8').innerHTML='Aktiengesellschaft (AG)'">AG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler8').innerHTML='Gesellschaft mit beschränkter Haftung (GmbH)'">GmbH</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler8').innerHTML='Offene Handelsgesellschaft (OHG)'">OHG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler8').innerHTML='Kommanditgesellschaft (KG)'">KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler8').innerHTML='Einzelkaufmann (eK)'">eK</a></li>  
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler8').innerHTML='Gesellschaft mit beschränkter Haftung und Compagnie Kommanditgesellschaft (GmbH & Co.KG)'">GmbH & Co.KG</a></li>
+                                        <li><a onclick="document.getElementById('dropdownMenuSpieler8').innerHTML='Unternehmergesellschaft mit haftungsbeschränkung'">UG</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+
+				<hr>
+                <h3>Übersicht</h3>
+
+				<style>
+					.gameSummary {
+						color: green;
+						font-size: 15px;
+					}
+				</style>
+
+				<div class="well well-sm">
+					<p class="gameSummary">Anzahl der Spieler: 				
+						<p style="font-weight: bold" id="anzahlSpielerText">2 Spieler</p> <!--damit zwangsweise etwas ausgewählt ist-->
+					</p>
+
+					<p class="gameSummary">Anzahl der Runden:
+						<p style="font-weight: bold" id="anzahlRundenText">6 Runden</p> <!--damit zwangsweise etwas ausgewählt ist-->
+					</p>
+				</div>
+
+                <p></p>
+                <hr>
+
+               
+				<p></p>
+            	<a class="btn btn-primary float-right" onclick="href='index.html'">Spiel starten</a>	<!--HIER NOCH DATEN ÜBERMITTELN-->
+        </div>
+
+	</div>	
+	
+		    
+    <!-- Fixed footer -->
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <div class="navbar-text pull-left">
+                <p>© 2018 </p>
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="#help">Hilfe</a>       
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script>
+        var anzahlSpieler = 2;
+        document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
+
+        function changePlayerCount(checkBoxID) {
+            var checkBoxObject = document.getElementById(checkBoxID);
+            if (checkBoxObject.checked == true) {
+                anzahlSpieler = anzahlSpieler + 1;
+            } else {
+                anzahlSpieler = anzahlSpieler - 1;
+            }
+            document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
+        }
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

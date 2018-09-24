@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
+    <meta name="author" content="BootstrapBay.com">
+    <title>Verkauf</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+ </head>
+ 
+ <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Unternehmensplanspiel</a>
+			</div>
+			<div class="navbar-collapse collapse">
+		
+				<ul class="nav navbar-nav navbar-default">
+					<!-- Start -->
+					<li><a href="index.html">Start</a></li> 
+
+					<!-- Einkauf -->					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Einkauf <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="einkauf.html">Einkauf</a></li>         
+						</ul>
+					</li>
+
+					<!-- Verarbeitung -->
+					<li class="dropdown">
+						<a href="verarbeitung.html" class="dropdown-toggle" data-toggle="dropdown">Verarbeitung <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						
+							<li><a href="verarbeitung.html">Verarbeitung</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Produkte</li>
+							<li><a href="#">Stühle</a></li>
+							<li><a href="#">Tische</a></li>
+							<li><a href="#">Schränke</a></li>
+						</ul>
+					</li>      
+
+					<!-- Verkauf -->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Verkauf <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						
+							<li><a href="verkauf.html">Verkauf</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Angebote</li>
+							<li><a href="#">Neues Angebot</a></li>
+							<li><a href="#">Bestehende Angebote</a></li>
+						</ul>
+					</li>
+
+					<!--Inventar-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventar <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+						
+							<li><a href="rohstoffe.html">Rohstoffe</a></li>
+							<li><a href="fertigeerzeugnisse.html">Fertige Erzeugnisse</a></li>
+							<li><a href="maschinen.html">Maschinen</a></li>
+							<li class="divider"></li>   
+                   			<li><a href="ergebnis_runde.html">Ergebnis der letzten Runde</a></li>  
+						</ul>
+					</li>        
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#about">Runde 1</a></li>
+					<li><a href="#budget">Budget: 000000 €</a></li>
+					<li><a href="#about">Zeit: 00:00</a></li>
+					<li><img src="img/account.svg"></img></li>
+					<li><a href="#about">Spieler 1</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+    </div>
+    
+	<!-- Page Header -->
+	<div class="container">	
+        <div class="page-header">
+            <h1>Verkauf</h1>
+        </div>
+		
+		<div>
+			<h4>Bestand an Produkten:</h4>
+		</div>
+		
+		<!-- Liste des Produktbestandes -->
+		<div class="row">
+			<ul class="list-group col-sm-4">
+			<li class="list-group-item">Holzstuhl <span class="badge">12</span></li>
+			<li class="list-group-item">Stoffstuhl <span class="badge">5</span></li>
+			<li class="list-group-item">Holztisch <span class="badge">3</span></li>
+			</ul> 
+			<div class="col-sm-6 align-self-center">
+			
+			</div>
+			<div class="col-sm-2 align-self-end">
+			<button type="button" class="btn">Neues Angebot einstellen</button>
+			</div>
+		</div>
+		
+		
+		<!-- Button neues Angebot -->
+		<br>
+		<div>
+			<h4>Bestehende Angebote:</h4>
+		</div>
+		
+		
+		<!-- Row 3: Preis pro ME -->
+		<div class="row">
+			<div class="col-sm-4">
+				<h5>Angebot 1</h5>
+			</div>
+			
+			<div class="col-sm-4">
+				<h5>Angebot 2</h5>
+			</div>
+			
+			<div class="col-sm-4">
+				<h5>Angebot 3</h5>
+			</div>
+		</div>
+		
+		<!-- Row 4: Verfügbare ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Holzstuhl</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>200</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Holztisch</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>200</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Stoffstuhl</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>200</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>Stück</p>
+			</div>
+		</div>
+		
+		<!-- Row 4: Verfügbare ME -->
+		<div class="row">
+			<div class="col-sm-2">
+				<p>Preis</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>300 </p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>€ </p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>200</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>€</p>
+			</div>
+			
+			<div class="col-sm-2">
+				<p>Preis</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>200</p>
+			</div>
+			
+			<div class="col-sm-1">
+				<p>€</p>
+			</div>
+		</div>
+		
+	</div>
+
+	
+		    
+    <!-- Fixed footer -->
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <div class="navbar-text pull-left">
+                <p>© 2018 </p>
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="#help">Hilfe</a> 
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <div class="modal fade" id="contact" role="dialog">
+    	<div class="modal-dialog">
+    		<div class="modal-content">
+    			<form class="form-horizontal" role="form">
+    				<div class="modal-header">
+    					<h4>Contact<h4>
+	    			</div>
+	    			<div class="modal-body">
+    					<div class="form-group">
+    						<label for="contact-name" class="col-sm-2 control-label">Name</label>
+    						<div class="col-sm-10">
+    							<input type="text" class="form-control" id="contact-name" placeholder="First & Last Name">
+    						</div>
+    					</div>
+    					<div class="form-group">
+    						<label for="contact-email" class="col-sm-2 control-label">Email</label>
+    						<div class="col-sm-10">
+    							<input type="email" class="form-control" id="contact-email" placeholder="example@domain.com">
+    						</div>
+    					</div>
+    					<div class="form-group">
+    						<label for="contact-message" class="col-sm-2 control-label">Message</label>
+    						<div class="col-sm-10">
+    							<textarea class="form-control" rows="4"></textarea>
+    						</div>
+    					</div>
+	    			</div>
+	    			<div class="modal-footer">
+    					<a class="btn btn-default" data-dismiss="modal">Close</a>
+    					<button type="submit" class="btn btn-primary">Send</button>
+    				</div>
+    			</form>
+    		</div>
+    	</div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

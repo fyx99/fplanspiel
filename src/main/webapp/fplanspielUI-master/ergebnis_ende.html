@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
+    <meta name="author" content="BootstrapBay.com">
+    <title>Ergebnis</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
+       <script type="text/javascript">
+    window.onload = function () {
+        var chart01 = new CanvasJS.Chart("chartContainer01",
+        {
+            theme: "theme2",
+            title:{
+                text: "Gewinn in €"
+            },      
+            data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} €",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  y: 300000, x: 1, label: "Spieler 1" },
+                    {  y: 300000, x: 2, label: "Spieler 2" },
+                    {  y: 300000, x: 3, label: "Spieler 3" },
+                    {  y: 300000, x: 4, label: "Spieler 4" }
+                ]
+            }
+            ]
+        });
+        chart01.render();
+
+        var chart02 = new CanvasJS.Chart("chartContainer02",
+        {
+            theme: "theme2",
+            title:{
+                text: "Marktanteil in %"
+            },      
+             data: [
+            {       
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{y} %",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  y: 20, indexLabel: "Spieler 1" },
+                    {  y: 30, indexLabel: "Spieler 2" },
+                    {  y: 40, indexLabel: "Spieler 3" },
+                    {  y: 10, indexLabel: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart02.render();
+
+        var chart03 = new CanvasJS.Chart("chartContainer03",
+        {
+            theme: "theme2",
+            title:{
+                text: "Ausgaben in €"
+            },      
+             data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} €",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  x:1, y: 300000, label: "Spieler 1" },
+                    {  x:2, y: 300000, label: "Spieler 2" },
+                    {  x:3, y: 300000, label: "Spieler 3" },
+                    {  x:4, y: 300000, label: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart03.render();
+
+         var chart04 = new CanvasJS.Chart("chartContainer04",
+        {
+            theme: "theme2",
+            title:{
+                text: "Endkapital in €"
+            },      
+            data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} €",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  x:1, y: 300000, label: "Spieler 1" },
+                    {  x:2, y: 300000, label: "Spieler 2" },
+                    {  x:3, y: 300000, label: "Spieler 3" },
+                    {  x:4, y: 300000, label: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart04.render();
+
+         var chart05 = new CanvasJS.Chart("chartContainer05",
+        {
+            theme: "theme2",
+            title:{
+                text: "Mitarbeiter"
+            },      
+            data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} Mitarbeiter",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  x:1, y: 4, label: "Spieler 1" },
+                    {  x:2, y: 3, label: "Spieler 2" },
+                    {  x:3, y: 2, label: "Spieler 3" },
+                    {  x:4, y: 1, label: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart05.render();
+
+         var chart06 = new CanvasJS.Chart("chartContainer06",
+        {
+            theme: "theme2",
+            title:{
+                text: "Diagramm"
+            },      
+            data: [
+            {       
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{y} Mitarbeiter",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  y: 4, indexLabel: "Spieler 1" },
+                    {  y: 5, indexLabel: "Spieler 2" },
+                    {  y: 2, indexLabel: "Spieler 3" },
+                    {  y: 1, indexLabel: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart06.render();
+
+
+
+    }
+    </script>
+
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ </head>
+ 
+ <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Unternehmensplanspiel</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page Header -->
+    <div class="container"> 
+        <div class="page-header">
+            <h1>Die Simulation ist beendet! </h1>
+        </div>
+
+        <div class="card mb-5">
+            <div class="card-block p-0">
+                <table class="table table-bordered table-sm m-0">
+                    <thead class="">
+                        <tr>
+                            <th>Platz </th>
+                            <th>Spieler</th>
+                            <th>XXX</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> 1.</td>
+                            <td>Spieler 1</td>
+                            
+                            <td>0€</td>
+                        </tr>
+                        <tr>
+                            <td> 2.</td>
+                            <td>Spieler 2</td>                          
+                            <td>0€</td>
+                        </tr>
+                        <tr>
+                            <td> 3.</td>
+                            <td>Spieler 3</td>
+                            <td>0€</td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                
+
+                </table>
+            </div>
+
+            <br>
+            <p>Herzlichen Glückwunsch an Spieler 1!</p>
+            <br>
+            <br>
+        </div>
+
+
+        <div class="row">
+            <!--<h2>Spielerstatistik</h2>-->
+            <div class="col-sm-4">
+                 <div id="chartContainer01" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4">
+               <div id="chartContainer02" style="height: 300px; width: 100%;"></div>
+            </div>
+             <div class="col-sm-4">
+               <div id="chartContainer03" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-sm-4">
+                 <div id="chartContainer04" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4">
+               <div id="chartContainer05" style="height: 300px; width: 100%;"></div>
+            </div>
+             <div class="col-sm-4">
+               <div id="chartContainer06" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <a class="btn btn-primary float-right" onclick="href='start.html'">Neues Spiel starten</a>
+    </div>    
+            
+    <!-- Fixed footer -->
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <div class="navbar-text pull-left">
+                <p>© 2018 </p>
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="#help">Hilfe</a> 
+            </div>
+        </div>
+    </div>
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

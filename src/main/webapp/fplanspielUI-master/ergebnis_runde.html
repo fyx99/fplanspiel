@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
+    <meta name="author" content="BootstrapBay.com">
+    <title>Ergebnis der Runde</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
+       <script type="text/javascript">
+    window.onload = function () {
+        var chart01 = new CanvasJS.Chart("chartContainer01",
+        {
+            theme: "theme2",
+            title:{
+                text: "Gewinn in €"
+            },      
+            data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} €",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  y: 300000, x: 1, label: "Spieler 1" },
+                    {  y: 300000, x: 2, label: "Spieler 2" },
+                    {  y: 300000, x: 3, label: "Spieler 3" },
+                    {  y: 300000, x: 4, label: "Spieler 4" }
+                ]
+            }
+            ]
+        });
+        chart01.render();
+
+        var chart02 = new CanvasJS.Chart("chartContainer02",
+        {
+            theme: "theme2",
+            title:{
+                text: "Marktanteil in %"
+            },      
+             data: [
+            {       
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{y} %",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  y: 20, indexLabel: "Spieler 1" },
+                    {  y: 30, indexLabel: "Spieler 2" },
+                    {  y: 40, indexLabel: "Spieler 3" },
+                    {  y: 10, indexLabel: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart02.render();
+
+        var chart03 = new CanvasJS.Chart("chartContainer03",
+        {
+            theme: "theme2",
+            title:{
+                text: "Ausgaben in €"
+            },      
+             data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} €",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  x:1, y: 300000, label: "Spieler 1" },
+                    {  x:2, y: 300000, label: "Spieler 2" },
+                    {  x:3, y: 300000, label: "Spieler 3" },
+                    {  x:4, y: 300000, label: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart03.render();
+
+         var chart04 = new CanvasJS.Chart("chartContainer04",
+        {
+            theme: "theme2",
+            title:{
+                text: "Endkapital in €"
+            },      
+            data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} €",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  x:1, y: 300000, label: "Spieler 1" },
+                    {  x:2, y: 300000, label: "Spieler 2" },
+                    {  x:3, y: 300000, label: "Spieler 3" },
+                    {  x:4, y: 300000, label: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart04.render();
+
+         var chart05 = new CanvasJS.Chart("chartContainer05",
+        {
+            theme: "theme2",
+            title:{
+                text: "Mitarbeiter"
+            },      
+            data: [
+            {       
+                type: "column",
+                showInLegend: true,
+                toolTipContent: "{y} Mitarbeiter",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  x:1, y: 4, label: "Spieler 1" },
+                    {  x:2, y: 3, label: "Spieler 2" },
+                    {  x:3, y: 2, label: "Spieler 3" },
+                    {  x:4, y: 1, label: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart05.render();
+
+         var chart06 = new CanvasJS.Chart("chartContainer06",
+        {
+            theme: "theme2",
+            title:{
+                text: "Diagramm"
+            },      
+            data: [
+            {       
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{y} Mitarbeiter",
+                //yValueFormatString: "###,,.### ",
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    {  y: 4, indexLabel: "Spieler 1" },
+                    {  y: 5, indexLabel: "Spieler 2" },
+                    {  y: 2, indexLabel: "Spieler 3" },
+                    {  y: 1, indexLabel: "Spieler 4"}
+                ]
+            }
+            ]
+        });
+        chart06.render();
+
+
+
+    }
+    </script>
+
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ </head>
+ 
+ <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Unternehmensplanspiel</a>
+            </div>
+            <div class="navbar-collapse collapse">
+        
+                <ul class="nav navbar-nav navbar-default">
+                    <!-- Start -->
+                    <li><a href="index.html">Start</a></li> 
+
+                    <!-- Einkauf -->                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Einkauf <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="einkauf.html">Einkauf</a></li>         
+                        </ul>
+                    </li>
+
+                    <!-- Verarbeitung -->
+                    <li class="dropdown">
+                        <a href="verarbeitung.html" class="dropdown-toggle" data-toggle="dropdown">Verarbeitung <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li><a href="verarbeitung.html">Verarbeitung</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Produkte</li>
+                            <li><a href="#">Stühle</a></li>
+                            <li><a href="#">Tische</a></li>
+                            <li><a href="#">Schränke</a></li>
+                        </ul>
+                    </li>      
+
+                    <!-- Verkauf -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Verkauf <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li><a href="verkauf.html">Verkauf</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Angebote</li>
+                            <li><a href="#">Neues Angebot</a></li>
+                            <li><a href="#">Bestehende Angebote</a></li>
+                        </ul>
+                    </li>
+
+                    <!--Inventar-->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventar <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li><a href="rohstoffe.html">Rohstoffe</a></li>
+                            <li><a href="fertigeerzeugnisse.html">Fertige Erzeugnisse</a></li>
+                            <li><a href="maschinen.html">Maschinen</a></li>
+                            <li class="divider"></li>       
+                            <li><a href="ergebnis_runde.html">Ergebnis der letzten Runde</a></li>                            
+                        </ul>
+                    </li>     
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#about">Runde 1</a></li>
+                    <li><a href="#budget">Budget: 000000 €</a></li>
+                    <li><a href="#about">Zeit: 00:00</a></li>
+                    <li><img src="img/account.svg"></img></li>
+                    <li><a href="#about">Spieler 1</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+    
+    <!-- Page Header -->
+    <div class="container"> 
+        <div class="page-header">
+            <h1>Ergebnis Runde 1 </h1>
+        </div>
+
+         <div class="row">
+            <div class="col-sm-4">
+                 <div id="chartContainer01" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4">
+               <div id="chartContainer02" style="height: 300px; width: 100%;"></div>
+            </div>
+             <div class="col-sm-4">
+               <div id="chartContainer03" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-sm-4">
+                 <div id="chartContainer04" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4">
+               <div id="chartContainer05" style="height: 300px; width: 100%;"></div>
+            </div>
+             <div class="col-sm-4">
+               <div id="chartContainer06" style="height: 300px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+    </div>    
+            
+    <!-- Fixed footer -->
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <div class="navbar-text pull-left">
+                <p>© 2018 </p>
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="#help">Hilfe</a> 
+            </div>
+        </div>
+    </div>
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
