@@ -69,11 +69,19 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#about">Runde 1</a></li>
-            <li><a href="#budget">Budget: 000000 €</a></li>
-            <li><a href="#about">Zeit: 00:00</a></li>
-            <li><img src="img/account.svg"></img></li>
-            <li><a href="#about">Spieler 1</a></li>
+                    <li><a href="#about">Zeit: 00:00</a></li>                   
+                    <!--  <li><img src="img/account.svg"></img></li>-->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Spieler 1 <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li><a href="#about">Runde 1</a></li>
+                            <li><a href="#budget" id="exampleContent">Budget: 000000 €</a></li>
+
+                            <li class="divider"></li>       
+                            <li><a class="btn float-right" onclick="#'">Runde beenden</a> </li>
+                        </ul>
+                    </li>        
             </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -91,13 +99,16 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLongTitle">Deine Zeit ist abgelaufen!</h2>
+                <h4 class="modal-title" id="exampleModalLongTitle">Hinweis</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                Nach 30 Sekunden ist der nächste Spieler am Zug!
+                 <h2>Die Unternehmenssimulation startet in 30 Sekunden!</h2>
+            <br>
+
+                <p>Nach 30 Sekunden ist der nächste Spieler am Zug!</p>
               </div>
             </div>
           </div>
