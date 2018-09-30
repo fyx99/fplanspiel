@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import dto.MarktDTO;
 import dto.UnternehmenDTO;
+import dto.ZwischenstandDTO;
 import fachkonzept.Angebot;
 import fachkonzept.Maschine;
 import fachkonzept.Material;
@@ -62,6 +63,13 @@ public class DemoService {
     public String neuesSpiel(@PathParam("name") String name) {
 
         if(s != null) {
+            
+            for(Unternehmen u : s.getUnternehmen()) {
+                if(u.getName() == name) {
+                    //doppelter name soll nicht sein
+                    return "Doppelter Name";
+                }
+            }
 
             s.unternehmenHinzufuegen(new Unternehmen(name, s));
         }
@@ -261,7 +269,6 @@ public class DemoService {
             s.getAktuellesUnternehmen().getVmarkt().anbieten(a);
         }
 
-        //return m.getName() + " angeboten " + menge + " stück für " + preis;
         return null;
     }
 
@@ -337,7 +344,19 @@ public class DemoService {
         
         return s.getAktuellesUnternehmen().getMarketingmix();
 
-    }
+    }    
+
+    @GET
+    @Path("zwischenstand")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object checkZwischenstand() {
+        //von allen unternehmen umsatz und kapital ...
+        if(s == null)
+            return null;
+        return new ZwischenstandDTO(s.getRunde(), s.getUnternehmen());
+
+    }    
+
     
     @GET
     @Path("log")

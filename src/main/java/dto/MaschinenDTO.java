@@ -9,7 +9,7 @@ public class MaschinenDTO {
 	private String name;
 	private int kapazitaet;
 	private int auslastung;
-	
+	private int id;
 	private int menge;
 
 	private Produkt p;
@@ -24,7 +24,7 @@ public class MaschinenDTO {
 		auslastung = m.getAuslastung();
 		p = m.getP();
 		matrix = m.getMatrix();
-		
+		this.id = m.getId();
 		this.menge = menge;
 	}
 
@@ -75,6 +75,14 @@ public class MaschinenDTO {
 	public void setMatrix(Produktionsmatrix matrix) {
 		this.matrix = matrix;
 	}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 	
 	
 	
