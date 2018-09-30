@@ -21,6 +21,7 @@
 		function start(){
  			getKapital();
  			getSpielername();
+ 			getRunde();
  		}
 		function getKapital(){
 			jQuery.ajax({
@@ -57,6 +58,23 @@
 					var s =data.name;
 					cont.innerHTML += s;
 					//console.log(data.kapital);
+					//console.log(data.bmarkt.angebote);
+					//console.log(data.mmarkt.angebote);
+					
+				}
+			});
+		}
+
+		function getRunde(){
+			jQuery.ajax({
+				url: "../webapi/v1/demo/zwischenstand",
+				type: "GET",
+				dataType: "json",
+				success: function(data, data2){
+					var cont  = document.getElementById('runde');
+					var s =data.runde;
+					cont.innerHTML += s;
+					console.log(data.runde);
 					//console.log(data.bmarkt.angebote);
 					//console.log(data.mmarkt.angebote);
 					
@@ -147,7 +165,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/account.svg"></img> <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 						
-							<li><a href="#about">Runde 1</a></li>
+							<li><a id="runde">Runde: </a></li>
 							<li><a href="#budget" id="exampleContent">Kapital: </a></li>
 
 							<li class="divider"></li>		
