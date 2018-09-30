@@ -12,148 +12,48 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
  </head>
  
- <body onload="test()">
- 		<script type="text/javascript">
-		function test(){
-			jQuery.ajax({
-				url: "../webapi/v1/demo/unternehmen",
-				type: "GET",
-				dataType: "json",
-				success: function(data, data2){
-					printExample(data.kapital);
-					//console.log(data.kapital);
-					//console.log(data.bmarkt.angebote);
-					//console.log(data.mmarkt.angebote);
-					
-				}
-			});
-		}
-		function printExample(data){
-			var cont  = document.getElementById('exampleContent');
-			var s =data;
-			/*for(var angebot in data){
-				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src="img/leder.jpg" alt="Leder"><div class="caption"><h3>' + data[angebot].markteinheit.name   +
-						'</h3><p>Kommentar ?</p>' + 
-						'<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">25%</div>' + 
-						'</div><p><a href="#" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" class="btn btn-primary" role="button">Informationen</a></p>' + 
-						'</div></div></div>';
-			}*/
-			cont.innerHTML = s;
-			//console.log(s);
-		}
+ <body onload="start()">
+ 		<script type="text/javascript" >
+ 			$(document).ready(function() {
+                $('#navbar').load('navbar.html');
+                $('#footer').load('footer.html');
+                });
+
 		</script>
 
     <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">Unternehmensplanspiel</a>
-			</div>
-			<div class="navbar-collapse collapse">
-		
-				<ul class="nav navbar-nav navbar-default">
-					<!-- Einkauf -->					
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Einkauf <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="einkauf.html">Einkauf</a></li>         
-						</ul>
-					</li>
+    <div id="navbar">
+	</div>
 
-					<!-- Verarbeitung -->
-					<li class="dropdown">
-						<a href="verarbeitung.html" class="dropdown-toggle" data-toggle="dropdown">Verarbeitung <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-						
-							<li><a href="verarbeitung.html">Verarbeitung</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Produkte</li>
-							<li><a href="#">Stühle</a></li>
-							<li><a href="#">Tische</a></li>
-							<li><a href="#">Schränke</a></li>
-						</ul>
-					</li>      
+       <!-- Modal -->
+        <div class="modal fade" id="modalContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Hinweis</h4>
+              </div>
+              <div class="modal-body">
+                <h2>Die Unternehmenssimulation startet in 30 Sekunden!</h2>
+                    <br>
+                    <p>Du kannst im Navigationsbereich die Elemente Einkauf, Verarbeitung und Verkauf auswählen und entsprechend Produkte produzieren.</p>
+                    <p>Nach jeder Runde erhälst du eine Übersicht und kannst deine Ergebnisse mit denen der anderen Spieler vergleichen.</p>
+                    <p>Nach *** Minuten startet automatisch die nächste Runde, falls du nicht vorzeitig die Runde beendet hast.</p>
+                    <p>Viel Erfolg!</p>
+              </div>
+            </div>
 
-					<!-- Verkauf -->
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Verkauf <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-						
-							<li><a href="verkauf.html">Verkauf</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Angebote</li>
-							<li><a href="#">Neues Angebot</a></li>
-							<li><a href="#">Bestehende Angebote</a></li>
-						</ul>
-					</li>
-
-					<!--Inventar-->
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventar <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-						
-							<li><a href="rohstoffe.html">Rohstoffe</a></li>
-							<li><a href="fertigeerzeugnisse.html">Fertige Erzeugnisse</a></li>
-							<li><a href="maschinen.html">Maschinen</a></li>
-							<li class="divider"></li>		
-							<li><a href="ergebnis_runde.html">Ergebnis der letzten Runde</a></li>
-						</ul>
-					</li>        
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#about">Zeit: 00:00</a></li>					
-					<!--  <li><img src="img/account.svg"></img></li>-->
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Spieler 1 <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-						
-							<li><a href="#about">Runde 1</a></li>
-							<li><a href="#budget" id="exampleContent">Budget: 000000 €</a></li>
-
-							<li class="divider"></li>		
-							<li><a class="btn float-right" onclick="#'">Runde beenden</a> </li>
-						</ul>
-					</li>        
-				</ul>
-			</div><!--/.nav-collapse -->
-		</div>
-    </div>
-    
-	<!-- Page Header -->
-	<div class="container">	
-        <div class="page-header">
-            <h1>Die Unternehmenssimulation startet in 30 Sekunden!</h1>
-            <br>
-            <p>Du kannst im Navigationsbereich die Elemente Einkauf, Verarbeitung und Verkauf auswählen und entsprechend Produkte produzieren.</p>
-            <p>Nach jeder Runde erhälst du eine Übersicht und kannst deine Ergebnisse mit denen der anderen Spieler vergleichen.</p>
-            <p>Nach *** Minuten startet automatisch die nächste Runde, falls du nicht vorzeitig die Runde beendet hast.</p>
-            <p>Viel Erfolg!</p>
+          </div>
         </div>
-	</div>			
-
-
-	
 		    
     <!-- Fixed footer -->
-    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-        <div class="container">
-            <div class="navbar-text pull-left">
-                <p>© 2018 </p>
-            </div>
-            <div class="navbar-text pull-right">
-                <a href="#help">Hilfe</a> 
-            </div>
-        </div>
-    </div>
+    <div id="footer">
+	</div>
+
     
     <!-- Bootstrap core JavaScript
     ================================================== -->
