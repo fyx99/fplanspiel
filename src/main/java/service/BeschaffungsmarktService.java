@@ -42,7 +42,7 @@ public class BeschaffungsmarktService {
 	}
 	
 	@GET
-	@Path("Angebote/Kauf/{menge}/{angebotsid}")
+	@Path("Angebot/kaufen/{menge}/{angebotsid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object kaufeAngebot(@PathParam("menge") int menge, @PathParam("angebotsid") int id) {
 		// erstmal bezahlen
@@ -70,7 +70,7 @@ public class BeschaffungsmarktService {
 	}
 	
 	@GET
-	@Path("Angebote/Entfernung/{angebotsid}")
+	@Path("Angebot/entfernen/{angebotsid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object angebotEntfernen(@PathParam("angebotsid") int id) {
 		// angebot entfernen

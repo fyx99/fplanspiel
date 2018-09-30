@@ -2,7 +2,6 @@ package service;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,19 +19,9 @@ import fachkonzept.markt.Markteinheit;
 
 @PermitAll
 @Path("Spiel/Unternehmen/Vertriebsmarkt")
-public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzmarkt
+public class AbsatzmarktService {		//nein - entweder verkaufs - oder Absatzmarkt
 	
 	private static Spiel spiel= SpielService.spiel;
-	
-	
-	@POST
-	@Path("Initialisierung")
-	public void initVMarkt() {
-		
-		//Initilialisierung des Vertriebmarktes
-
-	}
-	
 	
 	@GET
 	@Path("Angebote")
@@ -44,7 +33,7 @@ public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzma
 	}
 	
 	@GET
-	@Path("Produkte/Verkauf/{menge}/{produktid}/{preis}")
+	@Path("Produkt/anbieten/{menge}/{produktid}/{preis}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object angebotErstellen(@PathParam("menge") int menge, @PathParam("produktid") int id, @PathParam("preis") int preis) {
 		//hiermit kann ich alle dinge verkaufen
@@ -76,7 +65,7 @@ public class VertriebsmarktService {		//nein - entweder verkaufs - oder Absatzma
 	}
 	
 	@GET
-	@Path("Angebote/Entfernung/{angebotsid}")
+	@Path("Angebot/entfernen/{angebotsid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object angebotEntfernen(@PathParam("angebotsid") int id) {
 		// angebot entfernen

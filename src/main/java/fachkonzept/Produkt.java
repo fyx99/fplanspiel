@@ -36,8 +36,17 @@ public class Produkt extends Markteinheit{
 	public void setStartPreis(double startPreis) {
 		this.startPreis = startPreis;
 	}
+	
 
-	public static Produkt findeProdukt(String name) {
+	public double getPreisEntwicklung() {
+        return preisEntwicklung;
+    }
+
+    public void setPreisEntwicklung(double preisEntwicklung) {
+        this.preisEntwicklung = preisEntwicklung;
+    }
+
+    public static Produkt findeProdukt(String name) {
 		for(Markteinheit m : Markteinheit.alleMarkteinheiten) {
 			if(m instanceof Produkt && ((Produkt) m).getName() == name) {
 				return (Produkt)m;

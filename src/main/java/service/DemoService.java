@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import dto.MarktDTO;
 import dto.UnternehmenDTO;
 import fachkonzept.Angebot;
 import fachkonzept.Maschine;
@@ -51,11 +52,8 @@ public class DemoService {
     @GET
     @Path("neuesspiel")
     @Produces(MediaType.TEXT_PLAIN) // Application_Json
-    public String neuesSpiel() {
-
+    public void neuesSpiel() {
         s = new Spiel();
-
-        return "neues spiel erstellt";
     }
 
     @GET
@@ -74,9 +72,10 @@ public class DemoService {
     @GET
     @Path("spielstarten")
     @Produces(MediaType.APPLICATION_JSON)
-    public Unternehmen spielStart() {
-        //
-        return s.rundenStart();
+    public Object spielStart() {
+        if(s != null)
+            return s.rundenStart();
+        return "Runde kann nicht gestartet werden!";
     }
 
     @GET
@@ -114,12 +113,10 @@ public class DemoService {
     @GET
     @Path("unternehmen")
     @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes({"application/javascript", "application/json"})
-//    @JSONP(queryParam = "callback")
     public UnternehmenDTO u() {
         //
-        if(s != null)
-            return Unternehmen.getDTO((s.getAktuellesUnternehmen()));
+        if(s != null && s.getAktuellesUnternehmen() != null)
+            return Unternehmen.getDTO(s.getAktuellesUnternehmen());
 
         return null;
 
@@ -131,7 +128,7 @@ public class DemoService {
     @Produces(MediaType.APPLICATION_JSON)
     public Object getBMarkt() {
         //
-        return s.getAktuellesUnternehmen().getBmarkt();
+        return new MarktDTO(s.getAktuellesUnternehmen().getBmarkt().getAngebote());
 
     }
 
@@ -140,7 +137,23 @@ public class DemoService {
     @Produces(MediaType.APPLICATION_JSON)
     public Object getVMarkt() {
         //
-        return s.getAktuellesUnternehmen().getVmarkt();
+        return new MarktDTO(s.getAktuellesUnternehmen().getVmarkt().getAngebote());
+
+    }
+    
+    @GET
+    @Path("fmarkt")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getFMarkt() {
+        //
+        return new MarktDTO(s.getAktuellesUnternehmen().getFmarkt().getAngebote());
+
+    }
+    @Path("amarkt")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getAMarkt() {
+        //
+        return new MarktDTO(s.getAktuellesUnternehmen().getAmarkt().getAngebote());
 
     }
 
@@ -149,7 +162,7 @@ public class DemoService {
     @Produces(MediaType.APPLICATION_JSON)
     public Object getMMarkt() {
         //
-        return s.getAktuellesUnternehmen().getMmarkt();
+        return new MarktDTO(s.getAktuellesUnternehmen().getMmarkt().getAngebote());
 
     }
 
@@ -174,6 +187,8 @@ public class DemoService {
         Angebot angebot = Angebot.findeAngebot(id);
         if(angebot == null)
             return "kein anbgebot mit der id";
+
+        Spiel.log(angebot.getId() + " gefundenes angebot");
         // new Gson().fromJson(json, Angebot.class); convert json to java object
         int tatsaechlichemenge = menge;
         if(angebot.getMenge() < menge)
@@ -183,13 +198,13 @@ public class DemoService {
             s.getAktuellesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, s.getAktuellesUnternehmen());
 
         } else if(angebot.getMarkteinheit() instanceof Material) {
-
+            Spiel.log(" instance material ");
             s.getAktuellesUnternehmen().getBmarkt().kaufen(angebot, tatsaechlichemenge, s.getAktuellesUnternehmen());
         } else {
             // sollte nicht passieren
         }
 
-        return "gekauft " + tatsaechlichemenge + " vomn " + angebot.getMarkteinheit().getClass().getName();
+        return "gekauft " + tatsaechlichemenge + " von " + angebot.getMarkteinheit().getName();
 
     }
 

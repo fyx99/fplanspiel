@@ -19,22 +19,22 @@ public abstract class Markt {
 	}
 
 	public void kaufen(Angebot a, int menge, Unternehmen k) {
-		Angebot verbleibendesAngebot = a.kaufen(menge);
-		angebote.remove(a);
-		if (verbleibendesAngebot != null) {
-			angebote.add(verbleibendesAngebot);
+		a.setMenge(a.getMenge() - menge);
+		if(a.getMenge() <= 0) {
+		    angebote.remove(a);
 		}
+		Spiel.log(a.getId() + " gekaufet übrig " + a.getMenge());
 		k.verringereKapital(a.getPreis() * menge);
 		// unternehmen bezahlt angebot
 
 	}
 
 	public void kaufen(Angebot a, int menge) {
-		Angebot verbleibendesAngebot = a.kaufen(menge);
+	    a.setMenge(a.getMenge() - menge);
 		angebote.remove(a);
-		if (verbleibendesAngebot != null) {
-			angebote.add(verbleibendesAngebot);
-		}
+	      if(a.getMenge() <= 0) {
+	            angebote.remove(a);
+	        }
 		// simulation muss nicht bezahlen :)
 		// die einlagerung ist in der sub class
 

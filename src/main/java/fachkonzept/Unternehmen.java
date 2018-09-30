@@ -10,7 +10,9 @@ import dto.ProdukteGesamtDTO;
 import dto.UnternehmenDTO;
 import fachkonzept.marketing.Marketingmix;
 import fachkonzept.markt.Absatzmarkt;
+import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
+import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Markteinheit;
 import fachkonzept.markt.Maschinenmarkt;
 
@@ -21,19 +23,20 @@ public class Unternehmen {
 	private String name;
 
 	private Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
-
 	private Absatzmarkt vmarkt = new Absatzmarkt(this);
-
 	private Maschinenmarkt mmarkt = new Maschinenmarkt();
-	
+	private Finanzmarkt fmarkt = new Finanzmarkt();
+	private Arbeitsmarkt amarkt = new Arbeitsmarkt();
+
 	private float umsatz = 0;
 	
 	private Marketingmix marketingmix;
 
 	private Map<String, Integer> maschinen = new HashMap<String, Integer>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
-																				// falsches einfügen :D
-	private Map<String, Integer> produkte = new HashMap<String, Integer>();
+	private Map<String, Integer> produkte = new HashMap<String, Integer>();		// falsches einfügen :D
+    private Map<String, Integer> mitarbeiter = new HashMap<String, Integer>();
+    private Map<String, Integer> kredite = new HashMap<String, Integer>();
 
 	public Unternehmen(String name, Spiel s) {
 		spiel = s;
@@ -90,6 +93,22 @@ public class Unternehmen {
         return marketingmix;
     }
 
+    public Finanzmarkt getFmarkt() {
+        return fmarkt;
+    }
+
+    public void setFmarkt(Finanzmarkt fmarkt) {
+        this.fmarkt = fmarkt;
+    }
+
+    public Arbeitsmarkt getAmarkt() {
+        return amarkt;
+    }
+
+    public void setAmarkt(Arbeitsmarkt amarkt) {
+        this.amarkt = amarkt;
+    }
+
     public void maschineHinzu(Maschine m, Integer menge) {
 		if (this.maschinen.containsKey(m.getName())) {
 			this.maschinen.replace(m.getName(), menge + this.maschinen.get(m.getName()));
@@ -98,18 +117,32 @@ public class Unternehmen {
 	}
 
 	public void materialHinzu(Material m, Integer menge) {
+	    Spiel.log(m.getId() + " am hinzufügen " + m.getName());
 		if (this.materialien.containsKey(m.getName())) {
 			this.materialien.replace(m.getName(), menge + this.materialien.get(m.getName()));
 		} else
 			this.materialien.putIfAbsent(m.getName(), menge);
 	}
 
-	public void produktHinzu(Produkt m, Integer menge) {
-		if (this.produkte.containsKey(m.getName())) {
-			this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
-		} else
-			this.produkte.putIfAbsent(m.getName(), menge);
-	}
+    public void produktHinzu(Produkt m, Integer menge) {
+        if (this.produkte.containsKey(m.getName())) {
+            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
+        } else
+            this.produkte.putIfAbsent(m.getName(), menge);
+    }
+    public void mitarbeiterHinzu(Mitarbeiter m, Integer menge) {
+        if (this.produkte.containsKey(m.getName())) {
+            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
+        } else
+            this.produkte.putIfAbsent(m.getName(), menge);
+    }
+    
+    public void kreditHinzu(Kredit m, Integer menge) {
+        if (this.produkte.containsKey(m.getName())) {
+            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
+        } else
+            this.produkte.putIfAbsent(m.getName(), menge);
+    }
 
 	public void maschineEntfernen(Maschine m, Integer menge) {
 		if (this.maschinen.containsKey(m.getName())) {
@@ -129,14 +162,32 @@ public class Unternehmen {
 		}
 	}
 
-	public void produktEntfernen(Produkt m, Integer menge) {
-		if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
-			this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
-		}
-		else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
-			this.produkte.remove(m.getName());
-		}
-	}
+    public void produktEntfernen(Produkt m, Integer menge) {
+        if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
+            this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
+        }
+        else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
+            this.produkte.remove(m.getName());
+        }
+    }
+    
+    public void mitarbeiterEntfernen(Mitarbeiter m, Integer menge) {
+        if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
+            this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
+        }
+        else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
+            this.produkte.remove(m.getName());
+        }
+    }
+    
+    public void kreditEntfernen(Kredit m, Integer menge) {
+        if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
+            this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
+        }
+        else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
+            this.produkte.remove(m.getName());
+        }
+    }
 	
 	public void markteinheitEntfernen(Markteinheit m, Integer menge) {
 		if(m instanceof Maschine) {
@@ -147,10 +198,19 @@ public class Unternehmen {
 			materialEntfernen((Material)m, menge);
 			
 		}
-		else if (m instanceof Produkt) {
+        else if (m instanceof Produkt) {
 
-			produktEntfernen((Produkt)m, menge);
-		}
+            produktEntfernen((Produkt)m, menge);
+        }
+        else if (m instanceof Mitarbeiter) {
+
+            mitarbeiterEntfernen((Mitarbeiter)m, menge);
+        }
+        else if (m instanceof Kredit) {
+
+            kreditEntfernen((Kredit)m, menge);
+        }
+	
 	}
 
 	public Map<String, Integer> getMaschinen() {
@@ -177,7 +237,23 @@ public class Unternehmen {
 		this.produkte = produkte;
 	}
 	
-	public void umsatz(double d) {
+	public Map<String, Integer> getMitarbeiter() {
+        return mitarbeiter;
+    }
+
+    public void setMitarbeiter(Map<String, Integer> mitarbeiter) {
+        this.mitarbeiter = mitarbeiter;
+    }
+
+    public Map<String, Integer> getKredite() {
+        return kredite;
+    }
+
+    public void setKredite(Map<String, Integer> kredite) {
+        this.kredite = kredite;
+    }
+
+    public void umsatz(double d) {
 		this.umsatz += d;
 	}
 

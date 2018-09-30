@@ -24,7 +24,8 @@ public class Angebot{
 		this.preis = preis;
 		this.menge = menge;
 		this.markteinheit = m;
-		this.id = ++angebotsnummer;
+		this.id = angebotsnummer;
+		angebotsnummer ++;
 		alleAngebote.add(this);
 	}
 	
@@ -69,7 +70,7 @@ public class Angebot{
 	}
 	public void setPreis(double preis) {
 		this.preis = preis;
-	}
+	}//
 	
 	public static Angebot findeAngebot(int id) {
 		for (int i = 0; i < alleAngebote.size(); i++) {

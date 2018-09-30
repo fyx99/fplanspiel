@@ -1,4 +1,7 @@
 <html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
 <body>
     <h2>Beispiel Rest!</h2>
     <p><a href="webapi/v1/demo/ping">Ping</a></p>
@@ -11,8 +14,19 @@
     <p><a href="webapi/v1/demo/zugbeendet">zug beendet</a></p>
     <p><a href="webapi/v1/demo/stats">stats</a></p>
     <p><a href="webapi/v1/demo/angebotkaufen/5/5">angebotkaufen/5/5</a></p>
-    <p><a href="webapi/v1/demo/angebotkaufen/5/6">angebotkaufen/5/6</a></p>
-    <p><a href="webapi/v1/demo/angebotkaufen/1/7">angebotkaufen/1/7</a></p>
+    <div>
+    	<input id="id" /><input id="menge" /><button onclick="kaufen()">kaufen</button>
+    	<script>
+    		function kaufen(){
+    			var id = document.getElementById("id").value;
+    			var menge = document.getElementById("menge").value;
+    			jQuery.ajax({
+    				url: "webapi/v1/demo/angebotkaufen/" + menge + "/" + id,
+    				type:"GET"
+    			});
+    		}
+    	</script>
+    </div>
     <p><a href="webapi/v1/demo/produziere/2/7">produziere/2/7</a></p>
     <p><a href="webapi/v1/demo/anbieten/2/6/10">anbieten/2/6/10</a></p>
     <p><a href="webapi/v1/demo/bestand">bestand</a></p>

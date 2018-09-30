@@ -14,11 +14,7 @@ public class MarktDTO {
 		}
 	}
 
-
 	private List<AngebotDTO> angebote = new ArrayList<AngebotDTO>();
-	
-
-
 
 	public List<AngebotDTO> getAngebote() {
 		return angebote;
@@ -32,7 +28,7 @@ public class MarktDTO {
 	
 	private AngebotDTO toDTO(Angebot an) {
 		AngebotDTO a = new AngebotDTO();
-		
+		a.setId(an.getId());
 		a.setMenge(an.getMenge());
 		a.setMarkteinheit(an.getMarkteinheit());
 		a.setPreis(an.getPreis());

@@ -14,17 +14,15 @@ public class Spiel {
 	}
 
 	private void neueRunde() {
-		runde++;
-		
+		this.runde++;
 		if(!checkSpielende()) {
 			rundenStart();
 		}
-		
 	}
 	
 	private boolean checkSpielende() {
-		if(runde > 10) {
-			ende = true;
+		if(this.runde > 10) {
+			this.ende = true;
 		}
 		//hier könnten noch umsatz oder gewinnziele
 		
@@ -43,21 +41,22 @@ public class Spiel {
 
 	private Stack<Unternehmen> naechsteUnternehmen;
 
-	public Unternehmen rundenStart() {
+	public String rundenStart() {
 		
 		//wir simulieren jetzt mal am rundenanfang
 		Simulation.simuliere(this, unternehmen);
 
 		this.naechsteUnternehmen = new Stack<Unternehmen>();
-		for (int i = 0; i < unternehmen.size(); i++) {
+		for (int i = unternehmen.size() - 1; i >= 0; i--) {   //bisschen kompliziert damit der erste auch erster ist :D
 
 			naechsteUnternehmen.push(unternehmen.get(i));
 		}
 		
 		if (!naechsteUnternehmen.isEmpty()) {
-			return aktuellesUnternehmen = naechsteUnternehmen.pop();
+			aktuellesUnternehmen = naechsteUnternehmen.pop();
+			return null;
 		}
-		return null;
+		return "funzt net";
 
 	}
 
@@ -77,9 +76,6 @@ public class Spiel {
 		}
 
 	}
-	
-	
-	
 	public String gameStatsHelper() {
 		String k ="";
 		for (int i = 0; i < unternehmen.size(); i++) {
@@ -108,7 +104,7 @@ public class Spiel {
 	}
 
 	public int getRunde() {
-		return runde;
+		return this.runde;
 	}
 	
 	private static List<String> log = new ArrayList<String>();

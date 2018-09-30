@@ -37,7 +37,7 @@ public class SpielService {
 	@GET
 	@Path("Start")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Unternehmen spielStart() {
+	public String spielStart() {
 		//
 		return spiel.rundenStart();
 	}
