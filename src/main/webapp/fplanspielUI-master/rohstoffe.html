@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
-    <meta name="author" content="BootstrapBay.com">
     <title>Rohstoffe</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
@@ -15,32 +13,6 @@
  </head>
  
  <body>
-	<script type="text/javascript">
-		function test(){
-			jQuery.ajax({
-				url: "../webapi/v1/demo/unternehmen",
-				type: "GET",
-				dataType: "json",
-				success: function(data, data2){
-					printExample(data.bmarkt.angebote);
-				}
-			});
-		}
-		function printExample(data){
-			var cont  = document.getElementById('exampleContent');
-			var s ="";
-			for(var angebot in data){
-				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src="img/leder.jpg" alt="Leder"><div class="caption"><h3>' + data[angebot].markteinheit.name   +
-						'</h3><p>Kommentar ?</p>' + 
-						'<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">25%</div>' + 
-						'</div><p><a href="#" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" class="btn btn-primary" role="button">Informationen</a></p>' + 
-						'</div></div></div>';
-			}
-			cont.innerHTML = s;
-		}
-</script>
-	<Button onclick="test()">Test</Button>
- 
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -132,10 +104,102 @@
         </div>
         <!--ROHSTOFFE ÜBERSICHT-->
         	<div class="well">
-        		<div class="row" id="exampleContent">
+        		<div class="row">
+  					<div class="col-sm-6 col-md-4">
+    					<div class="thumbnail">
+      						<img src="img/holz.jpg" alt="Holz">
+     						<div class="caption">
+       							<h3>Holz</h3>
+        						<p>Verfügbare Menge:</p>
+        						<div class="progress">
+  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="60/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+   									60%
+  									</div>
+								</div>
+        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+      						</div>
+    					</div>
+  					</div>
 
+  					<div class="col-sm-6 col-md-4">
+    					<div class="thumbnail">
+      						<img src="img/stoff.jpg" alt="Stoff">
+     						<div class="caption">
+       							<h3>Stoff</h3>
+        						<p>Verfügbare Menge:</p>
+        						<div class="progress">
+  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="95/100" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%;">
+   									95%
+  									</div>
+								</div>
+        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+      						</div>
+    					</div>
+  					</div>
 
+  					<div class="col-sm-6 col-md-4">
+    					<div class="thumbnail">
+      						<img src="img/leder.jpg" alt="Leder">
+     						<div class="caption">
+       							<h3>Leder</h3>
+        						<p>Verfügbare Menge:</p>
+        						<div class="progress">
+  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="25/100" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+   									25%
+  									</div>
+								</div>
+        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+      						</div>
+    					</div>
+  					</div>
 
+  					<div class="col-sm-6 col-md-4">
+    					<div class="thumbnail">
+      						<img src="img/plastik.jpg" alt="Kunststoff">
+     						<div class="caption">
+       							<h3>Kunststoff</h3>
+        						<p>Verfügbare Menge:</p>
+        						<div class="progress">
+  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="10/100" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+   									10%
+  									</div>
+								</div>
+        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+      						</div>
+    					</div>
+  					</div>
+
+  					<div class="col-sm-6 col-md-4">
+    					<div class="thumbnail">
+      						<img src="img/edelstahl.jpg" alt="Edelstahl">
+     						<div class="caption">
+       							<h3>Edelstahl</h3>
+        						<p>Verfügbare Menge:</p>
+        						<div class="progress">
+  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="80/100" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+   									80%
+  									</div>
+								</div>
+        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+      						</div>
+    					</div>
+  					</div>
+
+  					<div class="col-sm-6 col-md-4">
+    					<div class="thumbnail">
+      						<img src="img/glas.jpg" alt="Glas">
+     						<div class="caption">
+       							<h3>Glas</h3>
+        						<p>Verfügbare Menge:</p>
+        						<div class="progress">
+  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="50/100" aria-valuenow="75" aria-valuemin="0" aria-valuemax="10" style="width: 50%;">
+   									50%
+  									</div>
+								</div>
+        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+      						</div>
+    					</div>
+  					</div>
   				</div>
   			</div>
         </div>
@@ -157,41 +221,52 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <div class="modal fade" id="contact" role="dialog">
-    	<div class="modal-dialog">
-    		<div class="modal-content">
-    			<form class="form-horizontal" role="form">
-    				<div class="modal-header">
-    					<h4>Contact<h4>
-	    			</div>
-	    			<div class="modal-body">
-    					<div class="form-group">
-    						<label for="contact-name" class="col-sm-2 control-label">Name</label>
-    						<div class="col-sm-10">
-    							<input type="text" class="form-control" id="contact-name" placeholder="First & Last Name">
-    						</div>
-    					</div>
-    					<div class="form-group">
-    						<label for="contact-email" class="col-sm-2 control-label">Email</label>
-    						<div class="col-sm-10">
-    							<input type="email" class="form-control" id="contact-email" placeholder="example@domain.com">
-    						</div>
-    					</div>
-    					<div class="form-group">
-    						<label for="contact-message" class="col-sm-2 control-label">Message</label>
-    						<div class="col-sm-10">
-    							<textarea class="form-control" rows="4"></textarea>
-    						</div>
-    					</div>
-	    			</div>
-	    			<div class="modal-footer">
-    					<a class="btn btn-default" data-dismiss="modal">Close</a>
-    					<button type="submit" class="btn btn-primary">Send</button>
-    				</div>
-    			</form>
-    		</div>
-    	</div>
+    <script>
+    	$(document).ready(function(){
+    		$('[data-toggle="tooltip"]').tooltip();
+    	});
+    </script>
+
+<!--Modal-Details-->
+  <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+           <h2 class="modal-title" id="verkaufenDialogTitel">Details</h2>
+         </div>
+         <div class="modal-body">
+
+            <h4>Holz wird zur Produktion folgender Möbelstücke benötigt:</h4>
+            	<li>Holzstuhl</li>
+            	<li>Stoffstuhl</li>
+            	<li>Lederstuhl</li>
+            	<li>Holztisch</li>
+            	<li>Holzschrank</li>
+            	<li>Edelstahlschrank</li>
+            	<li>Glasschrank</li>
+            <hr>
+            <h4>Verfügbare Menge an Holz:</h4>
+            <p>Im Lager: 40 ME</p>
+            <p>Größe des Lagers: 100 ME</p>
+
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"  style="width: 40%">40%
+                <span class="sr-only">40% abgeschlossen (Erfolg)</span>
+              </div>
+            </div>
+
+         </div>
+         <div class="modal-footer">
+            <p>
+              <button class="btn btn-primary" data-dismiss="modal" role="button">Schließen</button>
+            </p>  
+         </div>
+       </div>
     </div>
+  </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
