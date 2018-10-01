@@ -16,12 +16,119 @@
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
  </head>
-  <body onload="start()">
+ 
+ <body onload="start()">
  		<script type="text/javascript" >
+ 		
  			$(document).ready(function() {
                 $('#navbar').load('navbar.html');
                 $('#footer').load('footer.html');
                 });
+ 			
+ 			window.onload = function getDataEinkauf(){
+ 				jQuery.ajax({
+ 					url: "../webapi/v1/demo/unternehmen",
+ 					type: "GET",
+ 					dataType: "json",
+ 					success: function(data, data2){
+ 						printMaterial(data.bmarkt.angebote);
+ 						printMaschinen(data.mmarkt.angebote);
+ 					}
+ 				});
+ 			}
+ 			
+ 			function printMaterial(data){
+ 				var cont  = document.getElementById('contentMaterial');
+ 				var s ="";
+ 				for(var angebot in data){
+ 					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
+ 							'<img src="img/leder.jpg" alt="Leder">'+
+ 							'<div class="caption">'+
+ 								'<div class="col-sm-12">'+
+ 									'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
+ 								'</div>'+
+ 								'<div class="col-sm-6">'+
+ 									'<p>Preis pro ME in €</p>'+
+ 								'</div>'+
+ 								'<div class="col-sm-6">'+
+ 									'<p>'+ data[angebot].preis+'</p>'+
+ 								'</div>'+
+ 											
+ 								'<div class="col-sm-6">'+
+ 									'<p>Verfügbar</p>'+
+ 								'</div>'+
+ 								'<div class="col-sm-6">'+
+ 									'<p>'+ data[angebot].menge+'</p>'+
+ 									'<br>'+
+ 								'</div>'+		
+ 																
+ 		        				'<div class="col-sm-3">'+
+ 									'<input class="form-control input-sm" type="text" id ="einkaufeins">'+
+ 									'<br>'+
+ 								'</div>'+
+ 								'<div class="col-sm-3">'+
+ 									'<p>Stück</p>'+
+ 									'<br>'+
+ 								'</div>'+
+ 								'<div class="col-sm-4">'+
+ 									'<a href="#" class="btn btn-danger" onClick = "meldunganzeigen()" >Kaufen</a>'+
+ 									'<br>'+
+ 								'</div>'+
+ 							'</div>' + 
+ 							'</div></div></div>';
+ 				}
+ 				cont.innerHTML = s;
+ 			}
+ 			
+ 			function printMaschinen(data){
+ 				var cont  = document.getElementById('contentMaschine');
+ 				var s ="";
+ 				for(var angebot in data){
+ 					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
+ 							'<img src="img/leder.jpg" alt="Leder">'+
+ 							'<div class="caption">'+
+ 								'<div class="col-sm-12">'+
+ 									'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
+ 								'</div>'+
+ 								'<div class="col-sm-6">'+
+ 									'<p>Preis in €</p>'+
+ 								'</div>'+
+ 								'<div class="col-sm-6">'+
+ 									'<p>'+ data[angebot].preis+'</p>'+
+ 								'</div>'+
+ 											
+ 								'<div class="col-sm-6">'+
+ 									'<p>Verfügbar</p>'+
+ 								'</div>'+
+ 								'<div class="col-sm-6">'+
+ 									'<p>'+ data[angebot].menge+'</p>'+
+ 								'</div>'+
+ 								
+ 								'<div class="col-sm-6">'+
+ 								'<p>Kapazität</p>'+
+ 								'</div>'+
+ 								'<div class="col-sm-6">'+
+ 									'<p>'+ data[angebot].markteinheit.kapazitaet+'</p>'+
+ 									'<br>'+
+ 								'</div>'+	
+ 																
+ 		        				'<div class="col-sm-3">'+
+ 									'<input class="form-control input-sm" type="text" id ="einkaufeins">'+
+ 									'<br>'+
+ 								'</div>'+
+ 								'<div class="col-sm-3">'+
+ 									'<p>Stück</p>'+
+ 									'<br>'+
+ 								'</div>'+
+ 								'<div class="col-sm-4">'+
+ 									'<a href="#" class="btn btn-danger" onClick = "meldunganzeigen()" >Kaufen</a>'+
+ 									'<br>'+
+ 								'</div>'+
+ 							'</div>' + 
+ 							'</div></div></div>';
+ 				}
+ 				cont.innerHTML = s;
+ 			}
 
 		</script>
 
@@ -34,437 +141,30 @@
         <div class="page-header">
             <h1>Einkauf</h1>
         </div>
-		
-		<div class="page-header">
+        <div class="page-header">
             <h2>Materialen</h2>
         </div>
-		
-		<!-- Row 1: Bilder -->
-		<div class="row">
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/holz.jpg" alt="Chair Bootstrap Admin Theme">
-				</a>
-				
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/stoff.jpg" alt="Tisch Landing Page Template">
-				</a>
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="speisekarte.html" class="thumbnail home-thumb">
-					<img src="img/glas.jpg" alt="Regal Portfolio Theme">
-				</a>
-			</div>
-		</div>
-		
-		<!-- Row 2: Header Material -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h3>Holz</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Stoff</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Glas</h3>
-			</div>
-		</div>
-		
-		<!-- Row 3: Preis pro ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Preis pro ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3,00€</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis pro ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3,50€</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis pro ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>14,00€</p>
-			</div>
-		</div>
-		
-		<!-- Row 4: Verfügbare ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Verfügbar</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Verfügbar</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Verfügbar</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 5: ...ME Einkaufen -->
-		<div class="row">
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text" id ="einkaufeins">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger" onClick = "meldunganzeigen()" >Kaufen</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-		</div>
-		
-		<br>
-		
-		<!-- Row 6: Bilder -->
-		<div class="row">
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/plastik.jpg" alt="Chair Bootstrap Admin Theme">
-				</a>
-				
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/edelstahl.jpg" alt="Tisch Landing Page Template">
-				</a>
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="speisekarte.html" class="thumbnail home-thumb">
-					<img src="img/leder.jpg" alt="Regal Portfolio Theme">
-				</a>
-			</div>
-		</div>
-		
-		<!-- Row 7: Header Material -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h3>Kunststoff</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Edelstahl</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Leder</h3>
-			</div>
-		</div>
-		
-		<!-- Row 8: Preis pro ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Preis pro ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>1,00€</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis pro ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>6,00€</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis pro ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>9,00€</p>
-			</div>
-		</div>
-		
-		<!-- Row 9: Verfügbare ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Verfügbar</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Verfügbar</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Verfügbar</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 10: ...ME Einkaufen -->
-		<div class="row">
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-		</div>
-		
-		<br>
-		<br>
-		
-		
-    
         
-	
-		
-	<!-- Maschinenheader -->
-
-
-	<div class="page-header">
+    <!--  Page Content -->
+        <div class="well">
+        		<div class="row" id="contentMaterial">
+  				</div>
+  		</div>
+  		
+  		 <div class="page-header">
             <h2>Maschinen</h2>
         </div>
-		
-		<!-- Row 1: Bilder der Maschinen -->
-		<div class="row">
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/maschineeins.jpg" alt="Chair Bootstrap Admin Theme">
-				</a>
-				
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/maschinezwei.jpg" alt="Tisch Landing Page Template">
-				</a>
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="speisekarte.html" class="thumbnail home-thumb">
-					<img src="img/maschinedrei.jpg" alt="Regal Portfolio Theme">
-				</a>
-			</div>
-		</div>
-		
-		<!-- Row 2: Header Material -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h3>Pro Master</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>UM-500V5</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>FD-E</h3>
-			</div>
-		</div>
-		
-		<!-- Row 3: Preis pro ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Preis</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>2</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>5</p>
-			</div>
-		</div>
-<!-- Row 3: Preis pro ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>150</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>200</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>170</p>
-			</div>
-		</div>
-		
-		<!-- Row 4: Verfügbare ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Nutzungsdauer:</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>5 Jahre</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Nutzungsdauer:</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>4 Jahre</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Nutzungsdauer:</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>6 Jahre</p>
-			</div>
-		</div>
-		
-		<!-- Row 5: ...ME Einkaufen -->
-		<div class="row">
-			
-			
-			<div class="col-sm-4">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-			
-		
-			
-			<div class="col-sm-4">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-			
-
-			
-			<div class="col-sm-4">
-				<a href="#" class="btn btn-danger">Kaufen</a>
-			</div>
-		</div>
+        
+        <div class="well">
+        		<div class="row" id="contentMaschine">
+  				</div>
+  		</div>
 		
 		<br>
-		</div>	
+	</div>	
 
 	
-<script>
-var ekeinswert = document.querySelector("#einkaufeins").value;
-function meldunganzeigen(){
-	window.alert(ekeinswert);
-}
-
-</script>		    
+    
    
     <!-- Fixed footer -->
     <div id="footer">

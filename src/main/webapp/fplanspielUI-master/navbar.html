@@ -102,7 +102,32 @@
 				}
 
 			});
+			}
+
+			function ladeErgebnisLetzteRunde(){
+			jQuery.ajax({
+				url: "../webapi/v1/demo/rundenresultat",
+				type: "GET",
+				dataType: "json",
+				success: function(data, data2){
+					var einnahmen  = document.getElementById('einnahmen');
+					var ausgaben  = document.getElementById('ausgaben');
+					var kapital  = document.getElementById('kapital');
+					var einnahmenData =data.guv.einnahmen;
+					var ausgabenData =data.guv.ausgaben;
+					var kapitalData =data.kapital;
+					einnahmen.innerHTML = einnahmenData;
+					ausgaben.innerHTML =ausgabenData;
+					kapital.innerHTML = kapitalData;
+					//console.log(data.kapital);
+					//console.log(data.bmarkt.angebote);
+					//console.log(data.mmarkt.angebote);
+					
+				}
+			});
 		}
+
+		
 
 </script>
      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -163,13 +188,13 @@
 							<li><a href="fertigeerzeugnisse.html">Fertige Erzeugnisse</a></li>
 							<li><a href="maschinen.html">Maschinen</a></li>
 							<li class="divider"></li>		
-							<li><a href="ergebnis_runde.html">Ergebnis der letzten Runde</a></li>
+							<li><a data-toggle="modal" href="#ergebnisLetzteRundeModal" onclick="ladeErgebnisLetzteRunde()">Ergebnis der letzten Runde</a></li>
 						</ul>
 					</li>        
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#about">Zeit: 00:00</a></li>
+					<!--<li><a href="#about">Zeit: 00:00</a></li>-->
 					<li ><a id="spielerName">Unternehmen: </a></li>					
 					<!--  <li><img src="img/account.svg"></img></li>-->
 					<li class="dropdown">
@@ -180,15 +205,16 @@
 							<li><a href="#budget" id="exampleContent">Kapital: </a></li>
 
 							<li class="divider"></li>		
-							<li><a class="btn float-right" onclick="beendeZug()">Zug beenden</a> </li>
+							<li><a class="btn float-right" onclick="beendeZug()" data-toggle="modal">Zug beenden</a> </li>
 							<!-- data-toggle="modal" data-target="#modalContent"-->
 						</ul>
 					</li>        
 				</ul>
 			</div><!--/.nav-collapse -->
-		</div>
+		</div>       
+    </div>
 
-		     <!-- Modal -->
+    <!-- Modal -->
         <div class="modal fade" id="modalContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog">
             <!-- Modal content-->
@@ -206,7 +232,41 @@
 
           </div>
         </div>
-        
-    </div>
+
+            <!-- Modal -->
+        <div class="modal fade" id="ergebnisLetzteRundeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Hinweis</h4>
+              </div>
+              <div class="modal-body">
+                <h2>Dein Ergebnis der letzten Runde</h2>
+                    <br>
+                    <table class="table table-bordered table-sm m-0">
+                    <tbody>
+                        <tr>
+                        	<th class="col-sm-1">Einnahmen</th>
+                            <td id="einnahmen"> 0€</td>
+                        </tr>
+                        <tr>
+                        	<th class="col-sm-1">Ausgaben</th>
+                            <td id="ausgaben"> 0€</td>
+                        </tr>
+                        <tr>
+                            <th class="col-sm-1">Kapital</td>
+                            <td id="kapital"> 0€</td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
 
 </body>

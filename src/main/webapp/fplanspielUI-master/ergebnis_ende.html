@@ -22,7 +22,27 @@
                 $('#footer').load('footer.html');
                 });
 
+            // Funktion, um Tabelle dynamisch zu erstellen, muss noch bearbeitet werden!
             window.onload = function () {
+                jQuery.ajax({
+                    url: "../webapi/v1/demo/zwischenstand",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data, data2){
+                        var inhaltTabelle  = document.getElementById('inhaltTabelle');
+                        console.log(data);
+                        var s =" ";
+                        var platz =1;
+                         for(var angebot in data){
+                             s += "<tr><td>" + platz + "</td> <td>Spieler 1</td><td>0€</td></tr>";
+                             platz++;
+                            
+                            }
+                            inhaltTabelle.innerHTML = s;
+                        
+                    }
+                });
+
                 jQuery.ajax({
                 url: "../webapi/v1/demo/zwischenstand",
                 type: "GET",
@@ -236,23 +256,10 @@
                             <th>XXX</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td> 1.</td>
-                            <td>Spieler 1</td>
-                            
-                            <td>0€</td>
-                        </tr>
-                        <tr>
-                            <td> 2.</td>
-                            <td>Spieler 2</td>                          
-                            <td>0€</td>
-                        </tr>
-                        <tr>
-                            <td> 3.</td>
-                            <td>Spieler 3</td>
-                            <td>0€</td>
-                        </tr>
+                    <tbody id="inhaltTabelle">
+                                             
+                        
+                      
                     </tbody>
 
                     <tfoot>
