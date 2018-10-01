@@ -8,8 +8,8 @@
     <p>neues spiel unternehmen hinzufügen -> spielstarten, 1. simulation -> jz erster u dran für actions</p>
     <p><a href="webapi/v1/demo/quickstart">quick</a></p>
     <p><a href="webapi/v1/demo/neuesspiel">neues Spiel</a></p>
-    <p><a href="webapi/v1/demo/neuesunternehmen/abcag">neues Unternehmen mit name ABC AG</a></p>
-    <p><a href="webapi/v1/demo/neuesunternehmen/abckgaa">neues Unternehmen mit name ABC KGAA</a></p>
+    <p><a href="webapi/v1/demo/neuesunternehmen/abcag/A">neues Unternehmen mit name ABC AG mit Standort A</a></p>
+    <p><a href="webapi/v1/demo/neuesunternehmen/abckgaa/B">neues Unternehmen mit name ABC KGAA mit Stanndort B</a></p>
     <p><a href="webapi/v1/demo/spielstarten">spiel starten</a></p>
     <p><a href="webapi/v1/demo/zugbeendet">zug beendet</a></p>
     <p><a href="webapi/v1/demo/stats">stats</a></p>

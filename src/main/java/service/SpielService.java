@@ -49,8 +49,8 @@ public class SpielService {
 		spiel = new Spiel();
 		if (spiel != null) {
 
-			spiel.unternehmenHinzufuegen(new Unternehmen("ui", spiel));
-			spiel.unternehmenHinzufuegen(new Unternehmen("uii", spiel));
+			spiel.unternehmenHinzufuegen(new Unternehmen("ui", spiel, "A"));
+			spiel.unternehmenHinzufuegen(new Unternehmen("uii", spiel, "A"));
 		}
 
 		spiel.rundenStart();

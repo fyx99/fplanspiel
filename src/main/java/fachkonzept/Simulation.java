@@ -27,10 +27,10 @@ public class Simulation {
         while(i.hasNext()) {
             Unternehmen n = i.next();
             n.setKapital(1000);
-            n.setBmarkt(beschaffungsmarktDemoDaten());
+            n.setBmarkt(beschaffungsmarktDemoDaten(n));
             n.setMmarkt(maschinenmarktDemoDaten());
             n.setFmarkt(finanzmarktDemoDaten());
-            n.setAmarkt(arbeitsmarktDemoDaten());
+            n.setAmarkt(arbeitsmarktDemoDaten(n));
 
         }
 
@@ -221,7 +221,8 @@ public class Simulation {
         return 1 + Math.sin(0.125 * Math.PI * runde + randomStart * Math.PI) * 0.5;
     }
 
-    private static Beschaffungsmarkt beschaffungsmarktDemoDaten() {
+    private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
+    	double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
         Material holz = new Material(1, "Holz");
         Material stoff = new Material(1, "Stoff");
         Material leder = new Material(1, "Leder");
@@ -230,12 +231,12 @@ public class Simulation {
         Material edelstahl = new Material(1, "Edelstahl");
 
         Beschaffungsmarkt b = new Beschaffungsmarkt();
-        b.anbieten(new Angebot(holz, 100, 3));
-        b.anbieten(new Angebot(stoff, 100, 3.50));
-        b.anbieten(new Angebot(leder, 100, 9));
-        b.anbieten(new Angebot(glas, 100, 14));
-        b.anbieten(new Angebot(kunststoff, 100, 1));
-        b.anbieten(new Angebot(edelstahl, 100, 6));
+        b.anbieten(new Angebot(holz, 100, 3 * standortfaktor_material));
+        b.anbieten(new Angebot(stoff, 100, 3.50 * standortfaktor_material));
+        b.anbieten(new Angebot(leder, 100, 9 * standortfaktor_material));
+        b.anbieten(new Angebot(glas, 100, 14 * standortfaktor_material));
+        b.anbieten(new Angebot(kunststoff, 100, 1 * standortfaktor_material));
+        b.anbieten(new Angebot(edelstahl, 100, 6 * standortfaktor_material));
 
         return b;
     }
@@ -253,7 +254,8 @@ public class Simulation {
         return fm;
     }
     
-    private static Arbeitsmarkt arbeitsmarktDemoDaten() {
+    private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
+    	double standortfaktor_mitarbeiterkosten = n.getStandort().getFaktor_mitarbeiterkosten();
         Mitarbeiter ma1 = new Mitarbeiter("Name unnötig", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
         Mitarbeiter ma2 = new Mitarbeiter("Name unnötig", 400, 60000, MitarbeiterFachgebiet.MASCHINE);  //bsp weniger arbeitszeit
         Mitarbeiter ma3 = new Mitarbeiter("Name unnötig", 200, 120000, MitarbeiterFachgebiet.VERTRIEB);
@@ -261,11 +263,11 @@ public class Simulation {
         Mitarbeiter ma5 = new Mitarbeiter("Name unnötig", 250, 120000, MitarbeiterFachgebiet.VERWALTUNG);
 
         Arbeitsmarkt am = new Arbeitsmarkt();
-        am.anbieten(new Angebot(ma1, 30, 20));      //ist der preis hier nötig? oder einfach 0
-        am.anbieten(new Angebot(ma2, 30, 20));
-        am.anbieten(new Angebot(ma3, 30, 20));
-        am.anbieten(new Angebot(ma4, 30, 20));
-        am.anbieten(new Angebot(ma5, 30, 20));
+        am.anbieten(new Angebot(ma1, 30, 20 * standortfaktor_mitarbeiterkosten));      //ist der preis hier nötig? oder einfach 0
+        am.anbieten(new Angebot(ma2, 30, 20 * standortfaktor_mitarbeiterkosten));
+        am.anbieten(new Angebot(ma3, 30, 20 * standortfaktor_mitarbeiterkosten));
+        am.anbieten(new Angebot(ma4, 30, 20 * standortfaktor_mitarbeiterkosten));
+        am.anbieten(new Angebot(ma5, 30, 20 * standortfaktor_mitarbeiterkosten));
         return am;
     }
 
