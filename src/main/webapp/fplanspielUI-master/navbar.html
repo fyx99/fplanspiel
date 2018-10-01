@@ -7,12 +7,8 @@
     <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
     <meta name="author" content="BootstrapBay.com">
     <title>BootstrapBay Tutorial</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
  </head>
 
  <body onload="start()">
@@ -85,12 +81,27 @@
 		function beendeZug(){
 			jQuery.ajax({
 				url: "../webapi/v1/demo/zugbeendet",
-				type: "GET"
-			});
+				type: "GET",
+				dataType: "json",
+				success: function(data, data2){
+					var runde = data;
+					console.log(data);
+					if (runde>0) {
+						window.location.href = "ergebnis_runde.html";
+					} else if (runde==0) {
+						$(document).ready(function(){
+  								$('#modalContent').modal('show');
+								});
 
-			window.setTimeout(function(){
-            window.location.href = "einkauf.html";
-            }, 5000); //Test: 5sec 
+						window.setTimeout(function(){
+			            window.location.href = "einkauf.html";
+			            }, 5000); //Test: 5sec 
+					} else {
+						window.location.href = "ergebnis_ende.html";
+					}
+				}
+
+			});
 		}
 
 </script>
@@ -169,11 +180,33 @@
 							<li><a href="#budget" id="exampleContent">Kapital: </a></li>
 
 							<li class="divider"></li>		
-							<li><a class="btn float-right" data-toggle="modal" data-target="#modalContent" onclick="beendeZug()">Zug beenden</a> </li>
+							<li><a class="btn float-right" onclick="beendeZug()">Zug beenden</a> </li>
+							<!-- data-toggle="modal" data-target="#modalContent"-->
 						</ul>
 					</li>        
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
+
+		     <!-- Modal -->
+        <div class="modal fade" id="modalContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Hinweis</h4>
+              </div>
+              <div class="modal-body">
+                <h2>Der nächste Spieler ist in 30 Sekunden an der Reihe!</h2>
+                    <br>
+                    <p>Viel Erfolg!</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        
     </div>
+
 </body>
