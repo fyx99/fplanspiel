@@ -65,17 +65,6 @@ public abstract class Markt {
 		
 		return umsaetze;
 	}
-
-    public void anbieten(Angebot a, Unternehmen u) {
-
-        for (Angebot aa : this.angebote) {
-            if(vergleiche(a,aa)) {
-                aa.setMenge(a.getMenge() + aa.getMenge());
-                return;
-                }
-        }
-        this.angebote.add(a);
-    }
     
     public void anbieten(Angebot a) {       //für simulation
 

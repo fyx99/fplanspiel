@@ -108,14 +108,6 @@ public class Maschine extends Markteinheit{
         this.fertigungskosten = fertigungskosten;
     }
 
-    public int getArbeitsstunden() {
-        return arbeitszeit;
-    }
-
-    public void setArbeitsstunden(int arbeitsstunden) {
-        this.arbeitszeit = arbeitsstunden;
-    }
-
     public int getArbeitszeit() {
         return arbeitszeit;
     }
