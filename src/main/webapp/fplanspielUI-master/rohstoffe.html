@@ -112,11 +112,11 @@
        							<h3>Holz</h3>
         						<p>Verfügbare Menge:</p>
         						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="60/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-   									60%
+  									<div class="progress-bar" id="progressbarHolz" role="progressbar" data-toggle="tooltip" title="100/100" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+   									100%
   									</div>
 								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+        						<p><a data-toggle="modal" data-target="#verkaufen" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
       						</div>
     					</div>
   					</div>
@@ -132,7 +132,7 @@
    									95%
   									</div>
 								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+        						<p><a data-toggle="modal" data-target="#verkaufen" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
       						</div>
     					</div>
   					</div>
@@ -148,7 +148,7 @@
    									25%
   									</div>
 								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+        						<p><a data-toggle="modal" data-target="#verkaufen" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
       						</div>
     					</div>
   					</div>
@@ -164,7 +164,7 @@
    									10%
   									</div>
 								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+        						<p><a data-toggle="modal" data-target="#verkaufen" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
       						</div>
     					</div>
   					</div>
@@ -180,7 +180,7 @@
    									80%
   									</div>
 								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+        						<p><a data-toggle="modal" data-target="#verkaufen" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
       						</div>
     					</div>
   					</div>
@@ -196,7 +196,7 @@
    									50%
   									</div>
 								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
+        						<p><a data-toggle="modal" data-target="#verkaufen" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
       						</div>
     					</div>
   					</div>
@@ -221,11 +221,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>
-    	$(document).ready(function(){
-    		$('[data-toggle="tooltip"]').tooltip();
-    	});
-    </script>
 
 <!--Modal-Details-->
   <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -267,8 +262,135 @@
        </div>
     </div>
   </div>
+
+ <!--Modal-Verkaufen-->
+  <div class="modal fade" id="verkaufen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+           <h2 class="modal-title" id="verkaufenDialogTitel">Rohstoffe verkaufen</h2>
+         </div>
+         <div class="modal-body">
+
+            <h4>Bitte wählen Sie die zu verkaufende Menge des Rohstoffs: </h4>
+            
+            <style>
+				.erlös {
+				color: green;
+				}
+            </style>
+            <div>         
+  				<table class="table">
+    				<tbody>
+      					<tr>
+        					<td>Menge im Lager:</td>
+        					<td id="mengeImLagerID"></td>
+      					</tr>
+      					<tr>
+        					<td>Preis pro ME:</td>
+        					<td id="preisProMengeID"></td>
+      					</tr>
+      					<tr>
+        					<td>Menge zu verkaufen:</td>
+        					<td>            
+        						<div class="input-group">
+            						<input class="form-control input-sm" id="zuVerkaufendeMengeID">
+            						<span class="input-group-addon">ME</span>
+            					</div>
+            				</td>
+      					</tr>
+    				</tbody>
+  				</table>
+			</div>
+
+			<div class="well well-sm" style="font-weight: bold;">
+				<p id="erlösAusVerkaufVon">Erlös aus dem Verkauf von </p>
+					<p class="erlös" id="erlösAnzeigeID"></p>
+			</div>
+
+			<div>
+				<button class="btn btn-primary" id="buttonBerechnen" onclick="berechneErlös()">Erlös berechnen</button>
+				<label for="buttonBerechnen" id="bemerkungBerechnen" style="color: red"></label>
+			<div>
+
+         </div>
+         <div class="modal-footer">
+            <p>
+              <button class="btn btn-primary" data-dismiss="modal">Schließen</button>
+              <button class="btn btn-danger" onclick="rohstoffeVerkaufen()" id="verkaufenButtonID">Verkaufen</button>
+            </p>  
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <script>
+  	var mengeImLager = 100;
+  	var preisProMenge = 3;
+  	var zuVerkaufendeMenge = 0;
+  	var erlös = 0;
+
+  	window.onload = function(){
+  		document.getElementById('mengeImLagerID').innerHTML = mengeImLager + " ME";
+  		document.getElementById('preisProMengeID').innerHTML = preisProMenge + " GE";
+  	}
+
+  	function berechneErlös(){
+  		zuVerkaufendeMenge = document.getElementById('zuVerkaufendeMengeID').value;
+  		document.getElementById('erlösAusVerkaufVon').innerHTML = "Erlös aus dem Verkauf von " + zuVerkaufendeMenge + " ME:"
+  		erlös = zuVerkaufendeMenge * preisProMenge;
+  		document.getElementById('erlösAnzeigeID').innerHTML = erlös + " GE";
+  	}
+
+  	function rohstoffeVerkaufen(){
+  		berechneErlös();
+  		if (zuVerkaufendeMenge >= 0 && mengeImLager > 0) {
+  			mengeImLager = mengeImLager - zuVerkaufendeMenge;
+
+  			var progressbar = document.getElementById('progressbarHolz');
+
+  			$(progressbar).tooltip('hide')
+          		.attr('data-original-title', mengeImLager + "/100")
+         		.tooltip('fixTitle')
+          		.tooltip('show');
+
+  			progressbar.style = "width: " + (mengeImLager/100)*100 + "%;";
+
+
+
+  			document.getElementById('mengeImLagerID').innerHTML = mengeImLager + " ME";
+  		} else {
+  			document.getElementById('bemerkungBerechnen').innerHTML = "Bitte geben Sie eine Zahl größer oder gleich 0 ein!";
+  		}
+  	}
+
+	$('#verkaufen').on('hidden.bs.modal', function (e) {
+  		$(this)
+    		.find("input,textarea,select")
+       		.val('')
+       		.end()
+       	$(this)
+       		.find("#erlösAusVerkaufVon")
+       		.html("Erlös aus dem Verkauf von ")
+       		.end()
+       	$(this)
+       		.find("#erlösAnzeigeID")
+       		.html("")
+       		.end()
+	});
+  </script>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+		$(document).ready(function(){
+    	$('[data-toggle="tooltip"]').tooltip();
+    	});
+    </script>
   </body>
 </html>
