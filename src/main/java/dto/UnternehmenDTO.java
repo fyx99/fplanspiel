@@ -5,6 +5,8 @@ import fachkonzept.marketing.Marketingmix;
 public class UnternehmenDTO {
 
 	private String name;
+	
+	private String standort;
 
 	private MarktDTO bmarkt;
 
@@ -25,6 +27,14 @@ public class UnternehmenDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setStandort(String standort) {
+		this.standort = standort;
+	}
+	
+	public String getStandort() {
+		return this.standort;
 	}
 	
 	public MarktDTO getBmarkt() {

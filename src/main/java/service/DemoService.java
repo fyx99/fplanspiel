@@ -59,9 +59,9 @@ public class DemoService {
     }
 
     @GET
-    @Path("neuesunternehmen/{name}")
+    @Path("neuesunternehmen/{name}/{standort}")
     @Produces(MediaType.TEXT_PLAIN) // Application_Json
-    public String neuesSpiel(@PathParam("name") String name) {
+    public String neuesSpiel(@PathParam("name") String name, @PathParam("standort") String standort) {
 
         if(s != null) {
             
@@ -72,7 +72,7 @@ public class DemoService {
                 }
             }
 
-            s.unternehmenHinzufuegen(new Unternehmen(name, s));
+            s.unternehmenHinzufuegen(new Unternehmen(name, s, standort));
         }
 
         return "neues unternehmen mit name " + name;
@@ -99,8 +99,8 @@ public class DemoService {
         s = new Spiel();
         if(s != null) {
 
-            s.unternehmenHinzufuegen(new Unternehmen("ui", s));
-            s.unternehmenHinzufuegen(new Unternehmen("uii", s));
+            s.unternehmenHinzufuegen(new Unternehmen("ui", s, "C"));
+            s.unternehmenHinzufuegen(new Unternehmen("uii", s, "B"));
         }
 
         spielStart(10);

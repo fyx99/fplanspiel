@@ -11,7 +11,7 @@ class UnternehmenTest {
     @BeforeAll
     static void setUp() {
         Spiel s = new Spiel();
-        s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s));
+        s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s, 'A'));
         s.rundenStart();    //-> anfangs simulation triggern
     }
     

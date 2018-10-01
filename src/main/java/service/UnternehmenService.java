@@ -30,7 +30,7 @@ public class UnternehmenService {
 
 		if (spiel != null) {
 
-			spiel.unternehmenHinzufuegen(new Unternehmen(name, spiel));
+			spiel.unternehmenHinzufuegen(new Unternehmen(name, spiel, "A"));
 		}
 
 		return "neues unternehmen mit name " + name;
