@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Maschinenmarkt;
@@ -27,6 +28,7 @@ public class Simulation {
             n.setBmarkt(beschaffungsmarktDemoDaten());
             n.setMmarkt(maschinenmarktDemoDaten());
             n.setFmarkt(finanzmarktDemoDaten());
+            n.setAmarkt(arbeitsmarktDemoDaten());
 
         }
 
@@ -40,6 +42,7 @@ public class Simulation {
             // n.verringereKapital(6);
 
             simuliereKredittilgung(n);
+            simuliereLohnzahlung(n);
 
         }
         // gemeinsame konkurrenz dinge
@@ -51,10 +54,16 @@ public class Simulation {
         for(Verbindlichkeit v : u.getVerbindlichkeiten()) {
             // jeder kredit muss getilgt werden
 
-            u.verringereKapital(v.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit()))
-                    + v.getKredit().getZinssatz() * v.getVerbleibendeSumme());
+            u.kosten(v.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit()))
+                    + v.getKredit().getZinssatz() * v.getVerbleibendeSumme(), "Kreditkosten");
             // irgendwie nicht die richtige formel :D
 
+        }
+    }
+    
+    public static void simuliereLohnzahlung(Unternehmen u) {
+        for(Arbeitskraft ak : u.getMitarbeiter()) {
+            u.kosten(ak.getM().getLohnkosten(), "Lohnkosten");
         }
     }
 
@@ -238,6 +247,22 @@ public class Simulation {
 
         return fm;
     }
+    
+    private static Arbeitsmarkt arbeitsmarktDemoDaten() {
+        Mitarbeiter ma1 = new Mitarbeiter("Name unnötig", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
+        Mitarbeiter ma2 = new Mitarbeiter("Name unnötig", 400, 60000, MitarbeiterFachgebiet.MASCHINE);  //bsp weniger arbeitszeit
+        Mitarbeiter ma3 = new Mitarbeiter("Name unnötig", 200, 120000, MitarbeiterFachgebiet.VERTRIEB);
+        Mitarbeiter ma4 = new Mitarbeiter("Name unnötig", 300, 120000, MitarbeiterFachgebiet.VERTRIEB);
+        Mitarbeiter ma5 = new Mitarbeiter("Name unnötig", 250, 120000, MitarbeiterFachgebiet.VERWALTUNG);
+
+        Arbeitsmarkt am = new Arbeitsmarkt();
+        am.anbieten(new Angebot(ma1, 30, 20));      //ist der preis hier nötig? oder einfach 0
+        am.anbieten(new Angebot(ma2, 30, 20));
+        am.anbieten(new Angebot(ma3, 30, 20));
+        am.anbieten(new Angebot(ma4, 30, 20));
+        am.anbieten(new Angebot(ma5, 30, 20));
+        return am;
+    }
 
     private static Maschinenmarkt maschinenmarktDemoDaten() {
         Material holz = new Material(1, "Holz");
@@ -292,19 +317,19 @@ public class Simulation {
         // Produktionsmatrix pm = new Produktionsmatrix(map);
 
         // Stühle
-        Maschine m1 = new Maschine("Holzstuhl-Maschine", 100, holzstuhl, new Produktionsmatrix(map_hst), 15);
-        Maschine m2 = new Maschine("Stoffstuhl-Maschine", 57, stoffstuhl, new Produktionsmatrix(map_sst), 20);
-        Maschine m3 = new Maschine("Lederstuhl-Maschine", 50, lederstuhl, new Produktionsmatrix(map_lst), 25);
+        Maschine m1 = new Maschine("Holzstuhl-Maschine", 100, holzstuhl, new Produktionsmatrix(map_hst), 15, 1);
+        Maschine m2 = new Maschine("Stoffstuhl-Maschine", 57, stoffstuhl, new Produktionsmatrix(map_sst), 20, 2);
+        Maschine m3 = new Maschine("Lederstuhl-Maschine", 50, lederstuhl, new Produktionsmatrix(map_lst), 25, 3);
 
         // Tische
-        Maschine m4 = new Maschine("Holztisch-Maschine", 50, holztisch, new Produktionsmatrix(map_ht), 100);
-        Maschine m5 = new Maschine("Glastisch-Maschine", 35, glastisch, new Produktionsmatrix(map_gt), 125);
-        Maschine m6 = new Maschine("Kunststofftisch-Maschine", 180, kunststofftisch, new Produktionsmatrix(map_kt), 20);
+        Maschine m4 = new Maschine("Holztisch-Maschine", 50, holztisch, new Produktionsmatrix(map_ht), 100, 4);
+        Maschine m5 = new Maschine("Glastisch-Maschine", 35, glastisch, new Produktionsmatrix(map_gt), 125, 5);
+        Maschine m6 = new Maschine("Kunststofftisch-Maschine", 180, kunststofftisch, new Produktionsmatrix(map_kt), 20, 6);
 
         // Schränke
-        Maschine m7 = new Maschine("Holzschrank-Maschine", 65, holzschrank, new Produktionsmatrix(map_hsc), 150);
-        Maschine m8 = new Maschine("Edelstahlschrank-Maschine", 50, edelstahlschrank, new Produktionsmatrix(map_esc), 185);
-        Maschine m9 = new Maschine("Glasschrank-Maschine", 38, glasschrank, new Produktionsmatrix(map_gsc), 215);
+        Maschine m7 = new Maschine("Holzschrank-Maschine", 65, holzschrank, new Produktionsmatrix(map_hsc), 150, 7);
+        Maschine m8 = new Maschine("Edelstahlschrank-Maschine", 50, edelstahlschrank, new Produktionsmatrix(map_esc), 185, 8);
+        Maschine m9 = new Maschine("Glasschrank-Maschine", 38, glasschrank, new Produktionsmatrix(map_gsc), 215, 9);
 
         // Maschinen auf Maschinenmarkt anbieten
         Maschinenmarkt b = new Maschinenmarkt();

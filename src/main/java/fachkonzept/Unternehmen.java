@@ -38,7 +38,7 @@ public class Unternehmen {
 	private List<Maschine> maschinen = new ArrayList<Maschine>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
 	private Map<String, Integer> produkte = new HashMap<String, Integer>();		// falsches einfügen :D
-    private Map<String, Integer> mitarbeiter = new HashMap<String, Integer>();
+    private List<Arbeitskraft> mitarbeiter = new ArrayList<Arbeitskraft>();
     private List<Verbindlichkeit> verbindlichkeiten = new ArrayList();
 
 	public Unternehmen(String name, Spiel s) {
@@ -142,6 +142,10 @@ public class Unternehmen {
     public void verbindlichkeitHinzu(Verbindlichkeit v) {
         verbindlichkeiten.add(v);
     }
+    
+    public void arbeitskraftHinzu(Arbeitskraft ak) {
+        mitarbeiter.add(ak);
+    }
 
 	public void maschineEntfernen(Maschine m) {
 		maschinen.remove(m);
@@ -168,13 +172,8 @@ public class Unternehmen {
         }
     }
     
-    public void mitarbeiterEntfernen(Mitarbeiter m, Integer menge) {
-        if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
-            this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
-        }
-        else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
-            this.produkte.remove(m.getName());
-        }
+    public void arbeitskraftEntfernen(Arbeitskraft ak) {
+        mitarbeiter.remove(ak);
     }
     
     public void verbindlichkeitEntfernen(Verbindlichkeit v) {
@@ -196,17 +195,11 @@ public class Unternehmen {
 
             produktEntfernen((Produkt)m, menge);
         }
-        else if (m instanceof Mitarbeiter) {
 
-            mitarbeiterEntfernen((Mitarbeiter)m, menge);
-        }
         
 	
 	}
 	
-
-
-
 	public Map<String, Integer> getMaterialien() {
 		return materialien;
 	}
@@ -230,16 +223,15 @@ public class Unternehmen {
 	public void setProdukte(Map<String, Integer> produkte) {
 		this.produkte = produkte;
 	}
-	
-	public Map<String, Integer> getMitarbeiter() {
+    
+    public List<Arbeitskraft> getMitarbeiter() {
         return mitarbeiter;
     }
 
-    public void setMitarbeiter(Map<String, Integer> mitarbeiter) {
+    public void setMitarbeiter(List<Arbeitskraft> mitarbeiter) {
         this.mitarbeiter = mitarbeiter;
     }
 
-    
     public List<Verbindlichkeit> getVerbindlichkeiten() {
         return verbindlichkeiten;
     }
@@ -258,6 +250,23 @@ public class Unternehmen {
         this.verringereKapital(kosten);
         //sollte das ganze natürlich noch in einer form überblicksweise haben
         this.guv.neueAusgabe(new Zahlung(kosten, this.spiel.getRunde(), beschreibung));
+        
+    }
+    
+    public boolean beschaeftigeMitarbeiter(MitarbeiterFachgebiet mfg, int minuten) {
+        //einfach mal bei a anfangen und z aufhören
+        int verteilteZeit = minuten;
+        for(Arbeitskraft ak : mitarbeiter) {
+            if(ak.getM().getMfg().compareTo(mfg) == 0 && !ak.isAusgelastet()) {
+                int tatZeit = Math.max(minuten, ak.getM().getArbeitszeit() - ak.getAuslastung()); //was noch geht wenn zuviel
+                ak.setAuslastung(tatZeit);
+                verteilteZeit -= tatZeit;
+                if(verteilteZeit <= 0)
+                    return true;
+            }
+        }
+        Spiel.log("Arbeitszeit konnte nicht verteilt werden " + verteilteZeit);
+        return false;
         
     }
 
@@ -289,6 +298,21 @@ public class Unternehmen {
 	public GuV getGuv() {
         return guv;
     }
+	
+	
+	public void rundenReset() {
+	    //nach jeder runde müssen bestimmte werte zurückgesetzt werden
+	    //1. mitarbeiter werden entlastet
+	    for(Arbeitskraft ak : mitarbeiter) {
+            ak.setAuslastung(0);
+        }
+	    //2. maschinen auslastung
+	    for(Maschine m : maschinen) {
+	        m.setAuslastung(0);
+	    }
+	    
+	    
+	}
 
     public static UnternehmenDTO getDTO(Unternehmen u) {
 		// TODO Auto-generated constructor stub

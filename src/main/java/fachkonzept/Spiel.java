@@ -24,6 +24,10 @@ public class Spiel {
 			rundenStart();
             this.runde++;
 		}
+		else {
+		    //spiel zu ende
+		    
+		}
 	}
 	
 	private boolean checkSpielende() {

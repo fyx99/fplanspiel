@@ -9,13 +9,16 @@ public class Mitarbeiter extends Markteinheit {
     
     private String name;
     private double lohnkosten;
+    private MitarbeiterFachgebiet mfg;
+    private int arbeitszeit;
     
         
-    public Mitarbeiter(String name, double lohn) {
+    public Mitarbeiter(String name, double lohn, int arbeitszeit, MitarbeiterFachgebiet mfg) {
         super();
         
         this.name= name;
         this.lohnkosten = lohn;
+        this.mfg = mfg;
     }
     
 
@@ -34,8 +37,28 @@ public class Mitarbeiter extends Markteinheit {
     }
 
 
+    public MitarbeiterFachgebiet getMfg() {
+        return mfg;
+    }
+
+
+    public void setMfg(MitarbeiterFachgebiet mfg) {
+        this.mfg = mfg;
+    }
+
+
     public void setLohnkosten(double lohnkosten) {
         this.lohnkosten = lohnkosten;
+    }
+
+    
+    public int getArbeitszeit() {
+        return arbeitszeit;
+    }
+
+
+    public void setArbeitszeit(int arbeitszeit) {
+        this.arbeitszeit = arbeitszeit;
     }
 
 

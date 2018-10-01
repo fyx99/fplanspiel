@@ -343,6 +343,14 @@ public class DemoService {
 
     } 
     
+    @GET
+    @Path("spielende")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getSpielende() {
+        //hier soll der gewinner ausgegeben werden
+        return 0;
+    } 
+    
 
     
     @GET

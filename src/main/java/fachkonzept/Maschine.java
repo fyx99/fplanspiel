@@ -10,10 +10,13 @@ public class Maschine extends Markteinheit{
 	private int kapazitaet;
 	private int auslastung;
 	private double fertigungskosten;
+	private int arbeitszeit;     //jede maschine hat einen bestimmten menschlichen arbeitsaufwand
+	        //könnte man jetzt untergliederin in maschinen bestücker usw.
+	//!!! pro produzierter einheit in minuten
 	
 	private Produkt p;
 		
-	public Maschine(String bez, int k, Produkt pt, Produktionsmatrix m, double fertigungskosten) {
+	public Maschine(String bez, int k, Produkt pt, Produktionsmatrix m, double fertigungskosten, int minuten) {
 		super();
 		
 		this.name= bez;
@@ -21,6 +24,7 @@ public class Maschine extends Markteinheit{
 		this.p = pt;
 		this.matrix = m;
 		this.fertigungskosten = fertigungskosten;
+		this.arbeitszeit = minuten;
 	}
 	
 	public Maschine(Maschine angebot) {
@@ -30,6 +34,7 @@ public class Maschine extends Markteinheit{
 	    this.auslastung = angebot.auslastung;
 	    this.matrix = angebot.matrix;
 	    this.p = angebot.p;
+	    this.arbeitszeit = angebot.arbeitszeit;
 	}
 	
 	private Produktionsmatrix matrix;
@@ -79,6 +84,7 @@ public class Maschine extends Markteinheit{
 	    	//materialien verbrauchen
 	    }
 	    //die produkte in den bestand
+	    u.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, menge * arbeitszeit);
 		u.produktHinzu(this.p, menge);
         u.kosten(this.fertigungskosten * menge, "Fertigungskosten");
 		return this.p;
@@ -102,9 +108,28 @@ public class Maschine extends Markteinheit{
         this.fertigungskosten = fertigungskosten;
     }
 
-	
-	
-	
-	
+    public int getArbeitsstunden() {
+        return arbeitszeit;
+    }
+
+    public void setArbeitsstunden(int arbeitsstunden) {
+        this.arbeitszeit = arbeitsstunden;
+    }
+
+    public int getArbeitszeit() {
+        return arbeitszeit;
+    }
+
+    public void setArbeitszeit(int arbeitszeit) {
+        this.arbeitszeit = arbeitszeit;
+    }
+
+    public void setAuslastung(int auslastung) {
+        this.auslastung = auslastung;
+    }
+
+    public void setP(Produkt p) {
+        this.p = p;
+    }
 	
 }
