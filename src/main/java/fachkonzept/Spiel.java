@@ -6,21 +6,23 @@ import java.util.Stack;
 
 public class Spiel {
 
-	private int runde = 1;
+	private int runde = 0;
 	private int rundenAnzahl = 10;
-	
+    Unternehmen aktuellesUnternehmen = null;
+    List<Unternehmen> unternehmen = new ArrayList<Unternehmen>();
+    private Stack<Unternehmen> naechsteUnternehmen;
+    
     public Spiel() {
         
     }
-    
     public Spiel(int rundenAnzahl) {
         this.rundenAnzahl = rundenAnzahl;
     }
 
 	private void neueRunde() {
 		if(!checkSpielende()) {
-		    this.runde++;
 			rundenStart();
+            this.runde++;
 		}
 	}
 	
@@ -33,15 +35,7 @@ public class Spiel {
 		return false;
 	}
 
-	Unternehmen aktuellesUnternehmen = null;
 
-	List<Unternehmen> unternehmen = new ArrayList<Unternehmen>();
-
-	public List<Unternehmen> getUnternehmen() {
-		return unternehmen;
-	}
-
-	private Stack<Unternehmen> naechsteUnternehmen;
 
 	public String rundenStart() {
 		
@@ -58,7 +52,7 @@ public class Spiel {
 			aktuellesUnternehmen = naechsteUnternehmen.pop();
 			return null;
 		}
-		return "funzt net";
+		return "Kann die runde nicht starten!";
 
 	}
 
@@ -79,6 +73,10 @@ public class Spiel {
 		}
 
 	}
+
+    public List<Unternehmen> getUnternehmen() {
+        return unternehmen;
+    }
 
 	public Unternehmen getAktuellesUnternehmen() {
 		return aktuellesUnternehmen;

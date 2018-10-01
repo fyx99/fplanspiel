@@ -16,6 +16,22 @@ public class Simulation {
         // TODO Auto-generated constructor stub
     }
 
+    private static List<String> simlog = new ArrayList();
+
+    public static void simuliereSpielstart(Spiel s, List<Unternehmen> us) {
+
+        Iterator<Unternehmen> i = us.iterator();
+        while(i.hasNext()) {
+            Unternehmen n = i.next();
+            n.setKapital(1000);
+            n.setBmarkt(beschaffungsmarktDemoDaten());
+            n.setMmarkt(maschinenmarktDemoDaten());
+            n.setFmarkt(finanzmarktDemoDaten());
+
+        }
+
+    }
+
     public static void simuliere(Spiel s, List<Unternehmen> us) {
 
         Iterator<Unternehmen> i = us.iterator();
@@ -23,34 +39,24 @@ public class Simulation {
             Unternehmen n = i.next();
             // n.verringereKapital(6);
 
-            if(s.getRunde() == 1) {
-                n.setKapital(1000);
-                n.setBmarkt(beschaffungsmarktDemoDaten());
-                n.setMmarkt(maschinenmarktDemoDaten());
-                n.setFmarkt(finanzmarktDemoDaten());
-
-            } else {// alle anderen Runden
-                 
-            }
             simuliereKredittilgung(n);
 
         }
-        if(s.getRunde() != 1) {
-            simuliereAbsatzmarkt(us);
+        // gemeinsame konkurrenz dinge
+        simuliereAbsatzmarkt(us);
 
-        }
     }
 
     public static void simuliereKredittilgung(Unternehmen u) {
         for(Verbindlichkeit v : u.getVerbindlichkeiten()) {
-            //jeder kredit muss getilgt werden
-            
-            u.verringereKapital(v.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit())) + v.getKredit().getZinssatz() * v.getVerbleibendeSumme());
-            //irgendwie nicht die richtige formel :D
-            
+            // jeder kredit muss getilgt werden
+
+            u.verringereKapital(v.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit()))
+                    + v.getKredit().getZinssatz() * v.getVerbleibendeSumme());
+            // irgendwie nicht die richtige formel :D
+
         }
     }
-
 
     public static void simuliereAbsatzmarkt(List<Unternehmen> us) {
         for(ProduktArt produktArt : ProduktArt.values()) {
@@ -61,7 +67,7 @@ public class Simulation {
 
             }
             // jetzt haben wir alle angebote der speziellen produkt art
-
+            log("vorhandene produktart size: " + produkt_angebote.size());
             simuliereEinzelnesProdukt(produkt_angebote, getProduktMarktvolumen(produktArt), getProduktMarktpreis(produktArt));
         }
     }
@@ -72,7 +78,6 @@ public class Simulation {
         int preis = 0;
         while(gedeckt < verbleibende_nachfrage) {
 
-            Spiel.log("brauch " + verbleibende_nachfrage);
             List<Angebot> pot_angebote = new ArrayList<Angebot>();
             for(Angebot a : angebote) {		// erstmal angebote die preislich in frage kommen
                 if(a.getPreis() == preis) {
@@ -80,10 +85,12 @@ public class Simulation {
 
                 }
             }
+            log("pot angebote: " + pot_angebote.size() + " bei preis " + preis);
             // => verteilen
+            double kappungsindex = 1;
+            double kappungsfaktor = 1;
             int volle = pot_angebote.size();
             while(gedeckt < verbleibende_nachfrage && !pot_angebote.isEmpty() && volle > 0) {
-                Spiel.log("anfang verteilen brauch" + (verbleibende_nachfrage - gedeckt));
 
                 // schneiden
                 int durchschnittliche_menge = (verbleibende_nachfrage - gedeckt) / pot_angebote.size();
@@ -98,14 +105,14 @@ public class Simulation {
 
                 while(iter.hasNext()) {
                     Angebot aa = iter.next();
-                    Spiel.log("Unternehmen " + aa.getMarkttyp().getU().getName() + " verkauft " + aa.getMarkteinheit().getName() + " menge: "
-                            + durchschnittliche_menge + " bei preis " + preis);
+                    // Spiel.log("Unternehmen " + aa.getMarkttyp().getU().getName() + " verkauft " + aa.getMarkteinheit().getName() + " menge: "
+                    // + durchschnittliche_menge + " bei preis " + preis);
                     gedeckt += durchschnittliche_menge;
 
                     if(aa.getMarkttyp().verkaufen(aa, durchschnittliche_menge, aa.getMarkttyp().getU()) == null) {
                         iter.remove();
-                        Spiel.log("removed");
                         volle--;
+                        log("Simkauf: " + aa.getId() + " " + durchschnittliche_menge + " von " + aa.getMarkttyp().getU().getName());
                     }
                     Spiel.log(volle + "");
                 }
@@ -114,9 +121,12 @@ public class Simulation {
             preis++;	// jetzt mal schauen ob es ein teureres gibt
             if(preis > grundpreis) {
                 // hier wird jetzt die nachfrage gekappt, da kunden zwar x kaufen würden aber nicht zu denen preisen :D
-                verbleibende_nachfrage = 0;	// bsp direkte kappung
-
-            }
+                verbleibende_nachfrage = 0;
+                // bsp direkte kappung
+                // hier wäre ein beispiel wie man es quadratisch abnehmen lassen kann - kappungsfaktor zum angleichen
+                /*
+                 * verbleibende_nachfrage = verbleibende_nachfrage - (int)(kappungsfaktor * kappungsindex * kappungsindex); kappungsindex++;
+                 */ }
         }
     }
 
@@ -309,6 +319,14 @@ public class Simulation {
         b.anbieten(new Angebot(m9, 1, 12500));
 
         return b;
+    }
+
+    public static List<String> getLog() {
+        return simlog;
+    }
+
+    public static void log(String a) {
+        simlog.add(a);
     }
 
 }

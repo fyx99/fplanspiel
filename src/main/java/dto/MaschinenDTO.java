@@ -10,14 +10,13 @@ public class MaschinenDTO {
 	private int kapazitaet;
 	private int auslastung;
 	private int id;
-	private int menge;
 
 	private Produkt p;
 	
 
 	private Produktionsmatrix matrix;
 	
-	public MaschinenDTO(Maschine m, int menge) {
+	public MaschinenDTO(Maschine m) {
 		//sollte in einen extra mapper
 		name = m.getName();
 		kapazitaet = m.getKapazitaet();
@@ -25,7 +24,6 @@ public class MaschinenDTO {
 		p = m.getP();
 		matrix = m.getMatrix();
 		this.id = m.getId();
-		this.menge = menge;
 	}
 
 	public String getName() {
@@ -50,14 +48,6 @@ public class MaschinenDTO {
 
 	public void setAuslastung(int auslastung) {
 		this.auslastung = auslastung;
-	}
-
-	public int getMenge() {
-		return menge;
-	}
-
-	public void setMenge(int menge) {
-		this.menge = menge;
 	}
 
 	public Produkt getP() {

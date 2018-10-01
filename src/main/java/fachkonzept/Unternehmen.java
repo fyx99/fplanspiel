@@ -33,8 +33,9 @@ public class Unternehmen {
 	private float umsatz = 0;
 	
 	private Marketingmix marketingmix;
+	private GuV guv = new GuV();
 
-	private Map<String, Integer> maschinen = new HashMap<String, Integer>(); // jeweils mit mengen
+	private List<Maschine> maschinen = new ArrayList<Maschine>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
 	private Map<String, Integer> produkte = new HashMap<String, Integer>();		// falsches einfügen :D
     private Map<String, Integer> mitarbeiter = new HashMap<String, Integer>();
@@ -112,10 +113,9 @@ public class Unternehmen {
     }
 
     public void maschineHinzu(Maschine m, Integer menge) {
-		if (this.maschinen.containsKey(m.getName())) {
-			this.maschinen.replace(m.getName(), menge + this.maschinen.get(m.getName()));
-		} else
-			this.maschinen.putIfAbsent(m.getName(), menge);
+		for(int i = 0; i < menge; i++) {
+		    this.maschinen.add(new Maschine(m));
+        }
 	}
 
 	public void materialHinzu(Material m, Integer menge) {
@@ -143,10 +143,8 @@ public class Unternehmen {
         verbindlichkeiten.add(v);
     }
 
-	public void maschineEntfernen(Maschine m, Integer menge) {
-		if (this.maschinen.containsKey(m.getName())) {
-			this.maschinen.replace(m.getName(), this.maschinen.get(m.getName()) - menge);
-		}
+	public void maschineEntfernen(Maschine m) {
+		maschinen.remove(m);
 	}
 
 	public void materialEntfernen(Material m, Integer menge) {
@@ -184,8 +182,10 @@ public class Unternehmen {
     }
 	
 	public void markteinheitEntfernen(Markteinheit m, Integer menge) {
+	    //hier will ich irgendwas auf den markt werfen
+	    //menge ist nur bei material und produkten angebracht
 		if(m instanceof Maschine) {
-			maschineEntfernen((Maschine)m, menge);
+			maschineEntfernen((Maschine)m);
 		}
 		else if (m instanceof Material) {
 
@@ -203,20 +203,23 @@ public class Unternehmen {
         
 	
 	}
+	
 
-	public Map<String, Integer> getMaschinen() {
-		return maschinen;
-	}
 
-	public void setMaschinen(Map<String, Integer> maschinen) {
-		this.maschinen = maschinen;
-	}
 
 	public Map<String, Integer> getMaterialien() {
 		return materialien;
 	}
 
-	public void setMaterialien(Map<String, Integer> materialien) {
+	public List<Maschine> getMaschinen() {
+        return maschinen;
+    }
+
+    public void setMaschinen(List<Maschine> maschinen) {
+        this.maschinen = maschinen;
+    }
+
+    public void setMaterialien(Map<String, Integer> materialien) {
 		this.materialien = materialien;
 	}
 
@@ -245,9 +248,18 @@ public class Unternehmen {
         this.verbindlichkeiten = verbindlichkeiten;
     }
 
-    public void umsatz(double d) {
-		this.umsatz += d;
+    public void umsatz(double summe, String beschreibung) {
+		this.umsatz += summe;
+		this.kapital += summe;    //soll ja auch geld geben
+        this.guv.neueEinnahme(new Zahlung(summe, this.getSpiel().getRunde(), beschreibung));
 	}
+
+    public void kosten(double kosten, String beschreibung) {
+        this.verringereKapital(kosten);
+        //sollte das ganze natürlich noch in einer form überblicksweise haben
+        this.guv.neueAusgabe(new Zahlung(kosten, this.spiel.getRunde(), beschreibung));
+        
+    }
 
 	public float getUmsatz() {
 		// TODO Auto-generated method stub
@@ -255,12 +267,6 @@ public class Unternehmen {
 	}
 	
 	public MaterialienGesamtDTO zeigeMaterialien(){
-		/*Map<String, Integer> res = new HashMap<String, Integer>();
-	    for (Map.Entry<String, Integer> ein : this.maschinen.entrySet()) {
-	    	res.put(Maschine.findeMaschine(ein.getKey()).getId() + "", ein.getValue());
-	    }
-	    return res;*/
-
 		return new MaterialienGesamtDTO(this.materialien);
 	}
 
@@ -279,7 +285,12 @@ public class Unternehmen {
 		this.spiel = sp;
 	}
 	
-	public static UnternehmenDTO getDTO(Unternehmen u) {
+	
+	public GuV getGuv() {
+        return guv;
+    }
+
+    public static UnternehmenDTO getDTO(Unternehmen u) {
 		// TODO Auto-generated constructor stub
 		UnternehmenDTO uu = new UnternehmenDTO();
 		uu.setName(u.getName());
@@ -295,10 +306,6 @@ public class Unternehmen {
 		return uu;
 	}
 
-    public void kosten(String string, double fertigungskosten) {
-        this.verringereKapital(fertigungskosten);
-        
-    }
 	
 	
 
