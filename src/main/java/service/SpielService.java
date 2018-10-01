@@ -66,15 +66,5 @@ public class SpielService {
 		spiel.zugBeendet();
 
 	}
-	
-	//Gesamtstatistik aller Spieler
-	@GET
-	@Path("Statistiken")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String gameStats() {
-		//
-		return spiel.gameStatsHelper();
 
-	}
-	
 }

@@ -42,11 +42,10 @@ public class Simulation {
     }
 
     public static void simuliereKredittilgung(Unternehmen u) {
-        for(Map.Entry<String, Integer> ein : u.getKredite().entrySet()) {
+        for(Verbindlichkeit v : u.getVerbindlichkeiten()) {
             //jeder kredit muss getilgt werden
-            Kredit k = (Kredit)Kredit.findeMarkteinheit(ein.getKey(), Kredit.class);
             
-            u.verringereKapital(k.getVolumen() / k.getLaufzeit() + k.getZinssatz() * k.getVolumen());
+            u.verringereKapital(v.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit())) + v.getKredit().getZinssatz() * v.getVerbleibendeSumme());
             //irgendwie nicht die richtige formel :D
             
         }

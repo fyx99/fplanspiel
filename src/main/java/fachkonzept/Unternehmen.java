@@ -1,6 +1,8 @@
 package fachkonzept;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dto.MarktDTO;
@@ -36,7 +38,7 @@ public class Unternehmen {
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
 	private Map<String, Integer> produkte = new HashMap<String, Integer>();		// falsches einfügen :D
     private Map<String, Integer> mitarbeiter = new HashMap<String, Integer>();
-    private Map<String, Integer> kredite = new HashMap<String, Integer>();
+    private List<Verbindlichkeit> verbindlichkeiten = new ArrayList();
 
 	public Unternehmen(String name, Spiel s) {
 		spiel = s;
@@ -137,11 +139,8 @@ public class Unternehmen {
             this.produkte.putIfAbsent(m.getName(), menge);
     }
     
-    public void kreditHinzu(Kredit m, Integer menge) {
-        if (this.produkte.containsKey(m.getName())) {
-            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
-        } else
-            this.produkte.putIfAbsent(m.getName(), menge);
+    public void verbindlichkeitHinzu(Verbindlichkeit v) {
+        verbindlichkeiten.add(v);
     }
 
 	public void maschineEntfernen(Maschine m, Integer menge) {
@@ -180,13 +179,8 @@ public class Unternehmen {
         }
     }
     
-    public void kreditEntfernen(Kredit m, Integer menge) {
-        if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
-            this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
-        }
-        else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
-            this.produkte.remove(m.getName());
-        }
+    public void verbindlichkeitEntfernen(Verbindlichkeit v) {
+        verbindlichkeiten.remove(v);
     }
 	
 	public void markteinheitEntfernen(Markteinheit m, Integer menge) {
@@ -206,10 +200,7 @@ public class Unternehmen {
 
             mitarbeiterEntfernen((Mitarbeiter)m, menge);
         }
-        else if (m instanceof Kredit) {
-
-            kreditEntfernen((Kredit)m, menge);
-        }
+        
 	
 	}
 
@@ -245,12 +236,13 @@ public class Unternehmen {
         this.mitarbeiter = mitarbeiter;
     }
 
-    public Map<String, Integer> getKredite() {
-        return kredite;
+    
+    public List<Verbindlichkeit> getVerbindlichkeiten() {
+        return verbindlichkeiten;
     }
 
-    public void setKredite(Map<String, Integer> kredite) {
-        this.kredite = kredite;
+    public void setVerbindlichkeiten(List<Verbindlichkeit> verbindlichkeiten) {
+        this.verbindlichkeiten = verbindlichkeiten;
     }
 
     public void umsatz(double d) {

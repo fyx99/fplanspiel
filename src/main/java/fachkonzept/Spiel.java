@@ -7,29 +7,31 @@ import java.util.Stack;
 public class Spiel {
 
 	private int runde = 1;
+	private int rundenAnzahl = 10;
 	
-	
-	public Spiel() {
-		
-	}
+    public Spiel() {
+        
+    }
+    
+    public Spiel(int rundenAnzahl) {
+        this.rundenAnzahl = rundenAnzahl;
+    }
 
 	private void neueRunde() {
-		this.runde++;
 		if(!checkSpielende()) {
+		    this.runde++;
 			rundenStart();
 		}
 	}
 	
 	private boolean checkSpielende() {
-		if(this.runde > 10) {
-			this.ende = true;
+		if(this.runde >= this.rundenAnzahl) {
+			return true;
 		}
 		//hier könnten noch umsatz oder gewinnziele
 		
 		return false;
 	}
-	
-	boolean ende = false;
 
 	Unternehmen aktuellesUnternehmen = null;
 
@@ -60,30 +62,22 @@ public class Spiel {
 
 	}
 
-	public Unternehmen zugBeendet() {
+	public Integer zugBeendet() {
 		
 		//nächster ist dran
 
 		if (!naechsteUnternehmen.isEmpty()) {
 			aktuellesUnternehmen = naechsteUnternehmen.pop();
-			return aktuellesUnternehmen;
+			return 0;
 		}
 		else {
 			//alle durch -> Simulation
 			aktuellesUnternehmen = null;
+			int alteRunde = this.getRunde();
 			neueRunde();
-			return null;
+			return this.getRunde() > alteRunde ? this.getRunde() : -1;
 		}
 
-	}
-	public String gameStatsHelper() {
-		String k ="";
-		for (int i = 0; i < unternehmen.size(); i++) {
-			k += "U: " + unternehmen.get(i).getName() + " K: " + unternehmen.get(i).getKapital() + " Umsatz " 
-				+ unternehmen.get(i).getUmsatz() + "\n";
-		}
-		k += ende + "!";
-		return k;
 	}
 
 	public Unternehmen getAktuellesUnternehmen() {
@@ -115,5 +109,14 @@ public class Spiel {
 	public static List<String> getLog(){
 		return log;
 	}
+
+    public int getRundenAnzahl() {
+        return rundenAnzahl;
+    }
+
+    public void setRundenAnzahl(int rundenAnzahl) {
+        this.rundenAnzahl = rundenAnzahl;
+    }
+	
 
 }

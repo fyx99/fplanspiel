@@ -44,7 +44,7 @@ public class DemoService {
     private static Spiel s;
 
     @GET
-    @Path("ping")
+    @Path("ping") 
     @Produces(MediaType.TEXT_PLAIN) // Application_Json
     public String getIt() {
         return "1";
@@ -78,12 +78,16 @@ public class DemoService {
     }
 
     @GET
-    @Path("spielstarten")
+    @Path("spielstarten/{rundenZahl}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Object spielStart() {
-        if(s != null)
+    public Object spielStart(@PathParam("rundenZahl") Integer rundenAnzahl) {
+        if(s != null) {
+            s.setRundenAnzahl(rundenAnzahl);
             return s.rundenStart();
-        return "Runde kann nicht gestartet werden!";
+            
+        }
+        Spiel.log("Runde kann nicht gestartet werden!");
+        return null;
     }
 
     @GET
@@ -103,18 +107,9 @@ public class DemoService {
     @GET
     @Path("zugbeendet")
     @Produces(MediaType.APPLICATION_JSON)
-    public void zugBeendet() {
+    public Integer zugBeendet() {
         //
-        s.zugBeendet();
-
-    }
-
-    @GET
-    @Path("stats")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String gameStats() {
-        //
-        return s.gameStatsHelper();
+        return s.zugBeendet();
 
     }
 
@@ -355,7 +350,19 @@ public class DemoService {
             return null;
         return new ZwischenstandDTO(s.getRunde(), s.getUnternehmen());
 
-    }    
+    } 
+    
+    @GET
+    @Path("rundenresultat")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getRundenResultat() {
+        //hier was in der vorherigen simulation alles so passiert ist
+        //erziehlter umsatz
+        if(s == null)
+            return null;
+        return new ZwischenstandDTO(s.getRunde(), s.getUnternehmen());
+
+    } 
 
     
     @GET
