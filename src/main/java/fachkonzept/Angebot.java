@@ -7,11 +7,19 @@ import fachkonzept.markt.Markt;
 import fachkonzept.markt.Markteinheit;
 
 public class Angebot{
+    
+    
+    private int menge;
+    /*
+     * 
+     * !!! außer bei material und produkt menge = 1!!
+     * 
+     * */
 	
 	private double preis;
 	private int id;
 	private static int angebotsnummer = 0;
-	private int menge;
+
 	
 	private Markteinheit markteinheit;
 	

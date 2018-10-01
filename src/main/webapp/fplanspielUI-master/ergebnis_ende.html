@@ -12,162 +12,198 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
-       <script type="text/javascript">
-    window.onload = function () {
-        var chart01 = new CanvasJS.Chart("chartContainer01",
-        {
-            theme: "theme2",
-            title:{
-                text: "Gewinn in €"
-            },      
-            data: [
-            {       
-                type: "column",
-                showInLegend: true,
-                toolTipContent: "{y} €",
-                //yValueFormatString: "###,,.### ",
-                legendText: "{indexLabel}",
-                dataPoints: [
-                    {  y: 300000, x: 1, label: "Spieler 1" },
-                    {  y: 300000, x: 2, label: "Spieler 2" },
-                    {  y: 300000, x: 3, label: "Spieler 3" },
-                    {  y: 300000, x: 4, label: "Spieler 4" }
-                ]
-            }
-            ]
-        });
-        chart01.render();
-
-        var chart02 = new CanvasJS.Chart("chartContainer02",
-        {
-            theme: "theme2",
-            title:{
-                text: "Marktanteil in %"
-            },      
-             data: [
-            {       
-                type: "pie",
-                showInLegend: true,
-                toolTipContent: "{y} %",
-                //yValueFormatString: "###,,.### ",
-                legendText: "{indexLabel}",
-                dataPoints: [
-                    {  y: 20, indexLabel: "Spieler 1" },
-                    {  y: 30, indexLabel: "Spieler 2" },
-                    {  y: 40, indexLabel: "Spieler 3" },
-                    {  y: 10, indexLabel: "Spieler 4"}
-                ]
-            }
-            ]
-        });
-        chart02.render();
-
-        var chart03 = new CanvasJS.Chart("chartContainer03",
-        {
-            theme: "theme2",
-            title:{
-                text: "Ausgaben in €"
-            },      
-             data: [
-            {       
-                type: "column",
-                showInLegend: true,
-                toolTipContent: "{y} €",
-                //yValueFormatString: "###,,.### ",
-                legendText: "{indexLabel}",
-                dataPoints: [
-                    {  x:1, y: 300000, label: "Spieler 1" },
-                    {  x:2, y: 300000, label: "Spieler 2" },
-                    {  x:3, y: 300000, label: "Spieler 3" },
-                    {  x:4, y: 300000, label: "Spieler 4"}
-                ]
-            }
-            ]
-        });
-        chart03.render();
-
-         var chart04 = new CanvasJS.Chart("chartContainer04",
-        {
-            theme: "theme2",
-            title:{
-                text: "Endkapital in €"
-            },      
-            data: [
-            {       
-                type: "column",
-                showInLegend: true,
-                toolTipContent: "{y} €",
-                //yValueFormatString: "###,,.### ",
-                legendText: "{indexLabel}",
-                dataPoints: [
-                    {  x:1, y: 300000, label: "Spieler 1" },
-                    {  x:2, y: 300000, label: "Spieler 2" },
-                    {  x:3, y: 300000, label: "Spieler 3" },
-                    {  x:4, y: 300000, label: "Spieler 4"}
-                ]
-            }
-            ]
-        });
-        chart04.render();
-
-         var chart05 = new CanvasJS.Chart("chartContainer05",
-        {
-            theme: "theme2",
-            title:{
-                text: "Mitarbeiter"
-            },      
-            data: [
-            {       
-                type: "column",
-                showInLegend: true,
-                toolTipContent: "{y} Mitarbeiter",
-                //yValueFormatString: "###,,.### ",
-                legendText: "{indexLabel}",
-                dataPoints: [
-                    {  x:1, y: 4, label: "Spieler 1" },
-                    {  x:2, y: 3, label: "Spieler 2" },
-                    {  x:3, y: 2, label: "Spieler 3" },
-                    {  x:4, y: 1, label: "Spieler 4"}
-                ]
-            }
-            ]
-        });
-        chart05.render();
-
-         var chart06 = new CanvasJS.Chart("chartContainer06",
-        {
-            theme: "theme2",
-            title:{
-                text: "Diagramm"
-            },      
-            data: [
-            {       
-                type: "pie",
-                showInLegend: true,
-                toolTipContent: "{y} Mitarbeiter",
-                //yValueFormatString: "###,,.### ",
-                legendText: "{indexLabel}",
-                dataPoints: [
-                    {  y: 4, indexLabel: "Spieler 1" },
-                    {  y: 5, indexLabel: "Spieler 2" },
-                    {  y: 2, indexLabel: "Spieler 3" },
-                    {  y: 1, indexLabel: "Spieler 4"}
-                ]
-            }
-            ]
-        });
-        chart06.render();
-
-
-
-    }
-    </script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
  </head>
  
- <body>
+   <body onload="start()">
+        <script type="text/javascript" >
+            $(document).ready(function() {
+                $('#footer').load('footer.html');
+                });
+
+            window.onload = function () {
+                jQuery.ajax({
+                url: "../webapi/v1/demo/zwischenstand",
+                type: "GET",
+                dataType: "json",
+                success: function(data, data2){
+                    var unternehmenData = data.unternehmen;
+                    var xWert = 1
+                   
+                    for(var angebot in unternehmenData){
+                        dataPoints01.push({ label: unternehmenData[angebot].name, y: unternehmenData[angebot].gewinn, x: xWert});
+                        dataPoints03.push({ label: unternehmenData[angebot].name, y: unternehmenData[angebot].kapital, x: xWert});
+                        dataPoints04.push({ label: unternehmenData[angebot].name, y: unternehmenData[angebot].umsatz, x: xWert});
+                        console.log(angebot);
+                        xWert++;
+                    }
+                    //console.log(gewinnUnternehmen);
+                    //console.log(kapitalUnternehmen);
+                    //console.log(nameUnternehmen);
+                    //console.log(umsatzUnternehmen);
+
+                    chart01.options.data[0].dataPoints = dataPoints01;
+                    chart03.options.data[0].dataPoints = dataPoints03;
+                    chart04.options.data[0].dataPoints = dataPoints04;
+                    chart01.render();
+                    chart03.render();
+                    chart04.render();
+
+
+                }
+            });
+
+                var dataPoints01 = [];
+                var dataPoints02 = [];
+                var dataPoints03 = [];
+                var dataPoints04 = [];
+                var dataPoints05 = [];
+                var dataPoints06 = [];
+
+                var chart01 = new CanvasJS.Chart("chartContainer01",
+                {
+                    theme: "theme2",
+                    title:{
+                        text: "Gewinn in €"
+                    },      
+                    data: [
+                    {       
+                        type: "column",
+                        showInLegend: true,
+                        toolTipContent: "{y} €",
+                        //yValueFormatString: "###,,.### ",
+                        legendText: "{indexLabel}",
+                        dataPoints: [
+                        ]
+                    }
+                    ]
+                });
+               // chart01.render();
+                 var chart04 = new CanvasJS.Chart("chartContainer04",
+                {
+                    theme: "theme2",
+                    title:{
+                        text: "Umsatz in €"
+                    },      
+                    data: [
+                    {       
+                        type: "column",
+                        showInLegend: true,
+                        toolTipContent: "{y} €",
+                        //yValueFormatString: "###,,.### ",
+                        legendText: "{indexLabel}",
+                        dataPoints: [
+                            {  x:1, y: 300000, label: "Spieler 1" },
+                            {  x:2, y: 300000, label: "Spieler 2" },
+                            {  x:3, y: 300000, label: "Spieler 3" },
+                            {  x:4, y: 300000, label: "Spieler 4"}
+                        ]
+                    }
+                    ]
+                });
+                //chart04.render();
+
+                
+                var chart03 = new CanvasJS.Chart("chartContainer03",
+                {
+                    theme: "theme2",
+                    title:{
+                        text: "Kapital in €"
+                    },      
+                     data: [
+                    {       
+                        type: "column",
+                        showInLegend: true,
+                        toolTipContent: "{y} €",
+                        //yValueFormatString: "###,,.### ",
+                        legendText: "{indexLabel}",
+                        dataPoints: [
+                            {  x:1, y: 300000, label: "Spieler 1" },
+                            {  x:2, y: 300000, label: "Spieler 2" },
+                            {  x:3, y: 300000, label: "Spieler 3" },
+                            {  x:4, y: 300000, label: "Spieler 4"}
+                        ]
+                    }
+                    ]
+                });
+                //chart03.render();
+                var chart02 = new CanvasJS.Chart("chartContainer02",
+                {
+                    theme: "theme2",
+                    title:{
+                        text: "Marktanteil in %"
+                    },      
+                     data: [
+                    {       
+                        type: "pie",
+                        showInLegend: true,
+                        toolTipContent: "{y} %",
+                        //yValueFormatString: "###,,.### ",
+                        legendText: "{indexLabel}",
+                        dataPoints: [
+                            {  y: 20, indexLabel: "Spieler 1" },
+                            {  y: 30, indexLabel: "Spieler 2" },
+                            {  y: 40, indexLabel: "Spieler 3" },
+                            {  y: 10, indexLabel: "Spieler 4"}
+                        ]
+                    }
+                    ]
+                });
+                chart02.render();
+
+
+                 var chart05 = new CanvasJS.Chart("chartContainer05",
+                {
+                    theme: "theme2",
+                    title:{
+                        text: "Mitarbeiter"
+                    },      
+                    data: [
+                    {       
+                        type: "column",
+                        showInLegend: true,
+                        toolTipContent: "{y} Mitarbeiter",
+                        //yValueFormatString: "###,,.### ",
+                        legendText: "{indexLabel}",
+                        dataPoints: [
+                            {  x:1, y: 4, label: "Spieler 1" },
+                            {  x:2, y: 3, label: "Spieler 2" },
+                            {  x:3, y: 2, label: "Spieler 3" },
+                            {  x:4, y: 1, label: "Spieler 4"}
+                        ]
+                    }
+                    ]
+                });
+                chart05.render();
+
+                 var chart06 = new CanvasJS.Chart("chartContainer06",
+                {
+                    theme: "theme2",
+                    title:{
+                        text: "Diagramm"
+                    },      
+                    data: [
+                    {       
+                        type: "pie",
+                        showInLegend: true,
+                        toolTipContent: "{y} Mitarbeiter",
+                        //yValueFormatString: "###,,.### ",
+                        legendText: "{indexLabel}",
+                        dataPoints: [
+                            {  y: 4, indexLabel: "Spieler 1" },
+                            {  y: 5, indexLabel: "Spieler 2" },
+                            {  y: 2, indexLabel: "Spieler 3" },
+                            {  y: 1, indexLabel: "Spieler 4"}
+                        ]
+                    }
+                    ]
+                });
+                chart06.render();
+    }
+
+        </script>
+   
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
@@ -178,8 +214,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Unternehmensplanspiel</a>
+                <a class="navbar-brand">Unternehmensplanspiel</a>
             </div>
+            </div><!--/.nav-collapse -->
         </div>
     </div>
     
@@ -237,7 +274,7 @@
                  <div id="chartContainer01" style="height: 300px; width: 100%;"></div>
             </div>
             <div class="col-sm-4">
-               <div id="chartContainer02" style="height: 300px; width: 100%;"></div>
+               <div id="chartContainer04" style="height: 300px; width: 100%;"></div>
             </div>
              <div class="col-sm-4">
                <div id="chartContainer03" style="height: 300px; width: 100%;"></div>
@@ -250,7 +287,7 @@
 
         <div class="row">
             <div class="col-sm-4">
-                 <div id="chartContainer04" style="height: 300px; width: 100%;"></div>
+                 <div id="chartContainer02" style="height: 300px; width: 100%;"></div>
             </div>
             <div class="col-sm-4">
                <div id="chartContainer05" style="height: 300px; width: 100%;"></div>
@@ -268,15 +305,7 @@
     </div>    
             
     <!-- Fixed footer -->
-    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-        <div class="container">
-            <div class="navbar-text pull-left">
-                <p>© 2018 </p>
-            </div>
-            <div class="navbar-text pull-right">
-                <a href="#help">Hilfe</a> 
-            </div>
-        </div>
+    <div id="footer">
     </div>
         
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

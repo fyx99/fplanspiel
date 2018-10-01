@@ -29,7 +29,7 @@ public class Marketingmix {
     public static void marketingBuchen(Marketingmaßnahme m, Unternehmen u) {
         //hier wird direkt bezahlt
         u.getMarketingmix().marketingHinzu(m);
-        u.kosten("Marketingkosten", m.getBudget());
+        u.kosten(m.getBudget(), "Marketingkosten");
     }
 
 }

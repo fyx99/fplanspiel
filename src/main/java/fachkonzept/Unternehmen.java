@@ -1,6 +1,8 @@
 package fachkonzept;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import dto.MarktDTO;
@@ -31,12 +33,13 @@ public class Unternehmen {
 	private float umsatz = 0;
 	
 	private Marketingmix marketingmix;
+	private GuV guv = new GuV();
 
-	private Map<String, Integer> maschinen = new HashMap<String, Integer>(); // jeweils mit mengen
+	private List<Maschine> maschinen = new ArrayList<Maschine>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
 	private Map<String, Integer> produkte = new HashMap<String, Integer>();		// falsches einfügen :D
     private Map<String, Integer> mitarbeiter = new HashMap<String, Integer>();
-    private Map<String, Integer> kredite = new HashMap<String, Integer>();
+    private List<Verbindlichkeit> verbindlichkeiten = new ArrayList();
 
 	public Unternehmen(String name, Spiel s) {
 		spiel = s;
@@ -110,10 +113,9 @@ public class Unternehmen {
     }
 
     public void maschineHinzu(Maschine m, Integer menge) {
-		if (this.maschinen.containsKey(m.getName())) {
-			this.maschinen.replace(m.getName(), menge + this.maschinen.get(m.getName()));
-		} else
-			this.maschinen.putIfAbsent(m.getName(), menge);
+		for(int i = 0; i < menge; i++) {
+		    this.maschinen.add(new Maschine(m));
+        }
 	}
 
 	public void materialHinzu(Material m, Integer menge) {
@@ -137,17 +139,12 @@ public class Unternehmen {
             this.produkte.putIfAbsent(m.getName(), menge);
     }
     
-    public void kreditHinzu(Kredit m, Integer menge) {
-        if (this.produkte.containsKey(m.getName())) {
-            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
-        } else
-            this.produkte.putIfAbsent(m.getName(), menge);
+    public void verbindlichkeitHinzu(Verbindlichkeit v) {
+        verbindlichkeiten.add(v);
     }
 
-	public void maschineEntfernen(Maschine m, Integer menge) {
-		if (this.maschinen.containsKey(m.getName())) {
-			this.maschinen.replace(m.getName(), this.maschinen.get(m.getName()) - menge);
-		}
+	public void maschineEntfernen(Maschine m) {
+		maschinen.remove(m);
 	}
 
 	public void materialEntfernen(Material m, Integer menge) {
@@ -180,18 +177,15 @@ public class Unternehmen {
         }
     }
     
-    public void kreditEntfernen(Kredit m, Integer menge) {
-        if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
-            this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
-        }
-        else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
-            this.produkte.remove(m.getName());
-        }
+    public void verbindlichkeitEntfernen(Verbindlichkeit v) {
+        verbindlichkeiten.remove(v);
     }
 	
 	public void markteinheitEntfernen(Markteinheit m, Integer menge) {
+	    //hier will ich irgendwas auf den markt werfen
+	    //menge ist nur bei material und produkten angebracht
 		if(m instanceof Maschine) {
-			maschineEntfernen((Maschine)m, menge);
+			maschineEntfernen((Maschine)m);
 		}
 		else if (m instanceof Material) {
 
@@ -206,26 +200,26 @@ public class Unternehmen {
 
             mitarbeiterEntfernen((Mitarbeiter)m, menge);
         }
-        else if (m instanceof Kredit) {
-
-            kreditEntfernen((Kredit)m, menge);
-        }
+        
 	
 	}
+	
 
-	public Map<String, Integer> getMaschinen() {
-		return maschinen;
-	}
 
-	public void setMaschinen(Map<String, Integer> maschinen) {
-		this.maschinen = maschinen;
-	}
 
 	public Map<String, Integer> getMaterialien() {
 		return materialien;
 	}
 
-	public void setMaterialien(Map<String, Integer> materialien) {
+	public List<Maschine> getMaschinen() {
+        return maschinen;
+    }
+
+    public void setMaschinen(List<Maschine> maschinen) {
+        this.maschinen = maschinen;
+    }
+
+    public void setMaterialien(Map<String, Integer> materialien) {
 		this.materialien = materialien;
 	}
 
@@ -245,17 +239,27 @@ public class Unternehmen {
         this.mitarbeiter = mitarbeiter;
     }
 
-    public Map<String, Integer> getKredite() {
-        return kredite;
+    
+    public List<Verbindlichkeit> getVerbindlichkeiten() {
+        return verbindlichkeiten;
     }
 
-    public void setKredite(Map<String, Integer> kredite) {
-        this.kredite = kredite;
+    public void setVerbindlichkeiten(List<Verbindlichkeit> verbindlichkeiten) {
+        this.verbindlichkeiten = verbindlichkeiten;
     }
 
-    public void umsatz(double d) {
-		this.umsatz += d;
+    public void umsatz(double summe, String beschreibung) {
+		this.umsatz += summe;
+		this.kapital += summe;    //soll ja auch geld geben
+        this.guv.neueEinnahme(new Zahlung(summe, this.getSpiel().getRunde(), beschreibung));
 	}
+
+    public void kosten(double kosten, String beschreibung) {
+        this.verringereKapital(kosten);
+        //sollte das ganze natürlich noch in einer form überblicksweise haben
+        this.guv.neueAusgabe(new Zahlung(kosten, this.spiel.getRunde(), beschreibung));
+        
+    }
 
 	public float getUmsatz() {
 		// TODO Auto-generated method stub
@@ -263,12 +267,6 @@ public class Unternehmen {
 	}
 	
 	public MaterialienGesamtDTO zeigeMaterialien(){
-		/*Map<String, Integer> res = new HashMap<String, Integer>();
-	    for (Map.Entry<String, Integer> ein : this.maschinen.entrySet()) {
-	    	res.put(Maschine.findeMaschine(ein.getKey()).getId() + "", ein.getValue());
-	    }
-	    return res;*/
-
 		return new MaterialienGesamtDTO(this.materialien);
 	}
 
@@ -287,7 +285,12 @@ public class Unternehmen {
 		this.spiel = sp;
 	}
 	
-	public static UnternehmenDTO getDTO(Unternehmen u) {
+	
+	public GuV getGuv() {
+        return guv;
+    }
+
+    public static UnternehmenDTO getDTO(Unternehmen u) {
 		// TODO Auto-generated constructor stub
 		UnternehmenDTO uu = new UnternehmenDTO();
 		uu.setName(u.getName());
@@ -303,10 +306,6 @@ public class Unternehmen {
 		return uu;
 	}
 
-    public void kosten(String string, double fertigungskosten) {
-        this.verringereKapital(fertigungskosten);
-        
-    }
 	
 	
 

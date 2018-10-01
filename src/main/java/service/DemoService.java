@@ -1,8 +1,7 @@
 package service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
@@ -17,12 +16,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import dto.MarktDTO;
+import dto.RundenResultatDTO;
 import dto.UnternehmenDTO;
 import dto.ZwischenstandDTO;
 import fachkonzept.Angebot;
 import fachkonzept.Maschine;
 import fachkonzept.Material;
 import fachkonzept.Produkt;
+import fachkonzept.Simulation;
 import fachkonzept.Spiel;
 import fachkonzept.Unternehmen;
 import fachkonzept.marketing.Sponsoring;
@@ -44,7 +45,7 @@ public class DemoService {
     private static Spiel s;
 
     @GET
-    @Path("ping")
+    @Path("ping") 
     @Produces(MediaType.TEXT_PLAIN) // Application_Json
     public String getIt() {
         return "1";
@@ -78,12 +79,18 @@ public class DemoService {
     }
 
     @GET
-    @Path("spielstarten")
+    @Path("spielstarten/{rundenZahl}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Object spielStart() {
-        if(s != null)
-            return s.rundenStart();
-        return "Runde kann nicht gestartet werden!";
+    public void spielStart(@PathParam("rundenZahl") Integer rundenAnzahl) {
+        if(s != null) {
+            for(Unternehmen u : s.getUnternehmen())
+                u.setSpiel(s);
+            s.setRundenAnzahl(rundenAnzahl);
+            s.rundenStart();
+            Simulation.simuliereSpielstart(s, s.getUnternehmen());
+            
+        }
+        Spiel.log("Runde kann nicht gestartet werden!");
     }
 
     @GET
@@ -97,24 +104,15 @@ public class DemoService {
             s.unternehmenHinzufuegen(new Unternehmen("uii", s));
         }
 
-        s.rundenStart();
+        spielStart(10);
     }
 
     @GET
     @Path("zugbeendet")
     @Produces(MediaType.APPLICATION_JSON)
-    public void zugBeendet() {
+    public Integer zugBeendet() {
         //
-        s.zugBeendet();
-
-    }
-
-    @GET
-    @Path("stats")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String gameStats() {
-        //
-        return s.gameStatsHelper();
+        return s.zugBeendet();
 
     }
 
@@ -129,7 +127,6 @@ public class DemoService {
         return null;
 
     }
-
 
     @GET
     @Path("bmarkt")
@@ -216,29 +213,6 @@ public class DemoService {
 
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("demopost")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Object kaufeAngebot(String json) {
-
-        return "toll";
-
-    }
-
-    @GET
-    @Path("bestand")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Object getBestand() {
-        //
-        Map<String, Integer> bestand = new HashMap<String, Integer>();
-        bestand.putAll(s.getAktuellesUnternehmen().getMaschinen());
-        bestand.putAll(s.getAktuellesUnternehmen().getMaterialien());
-        bestand.putAll(s.getAktuellesUnternehmen().getProdukte());
-        return bestand;
-
-    }
-
     @GET
     @Path("produziere/{menge}/{maschinenid}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -251,7 +225,7 @@ public class DemoService {
                 + m.getKapazitaet();
 
     }
-
+//
     @GET
     @Path("anbieten/{menge}/{produktid}/{preis}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -355,15 +329,34 @@ public class DemoService {
             return null;
         return new ZwischenstandDTO(s.getRunde(), s.getUnternehmen());
 
-    }    
+    } 
+    
+    @GET
+    @Path("rundenresultat")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getRundenResultat() {
+        //hier was in der vorherigen simulation alles so passiert ist
+        //für einzelnen spiler
+        if(s == null)
+            return null;
+        return new RundenResultatDTO(s.getAktuellesUnternehmen());
+
+    } 
+    
 
     
     @GET
     @Path("log")
     @Produces(MediaType.APPLICATION_JSON)
     public Object log() {
-        
-        return s.getLog();
+        List<String> logs = new ArrayList();
+        logs.add("SPIELLOG------------------");
+        logs.add("");
+        logs.addAll(s.getLog());
+        logs.add("SIMLOG--------------------");
+        logs.add("");
+        logs.addAll(Simulation.getLog());
+        return logs;
 
     }
 }

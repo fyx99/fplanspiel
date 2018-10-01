@@ -13,7 +13,7 @@
     <p><a href="webapi/v1/demo/spielstarten">spiel starten</a></p>
     <p><a href="webapi/v1/demo/zugbeendet">zug beendet</a></p>
     <p><a href="webapi/v1/demo/stats">stats</a></p>
-    <p><a href="webapi/v1/demo/angebotkaufen/5/5">angebotkaufen/5/5</a></p>
+    <p>Märkte  <a href="webapi/v1/demo/mmarkt">m</a>  <a href="webapi/v1/demo/bmarkt">b</a>  <a href="webapi/v1/demo/vmarkt">v</a>  <a href="webapi/v1/demo/fmarkt">f</a>  <a href="webapi/v1/demo/amarkt">a</a></p>
     <div>
     	<input id="id" /><input id="menge" /><button onclick="kaufen()">kaufen</button>
     	<script>
@@ -54,13 +54,13 @@
     		}
     	</script>
     </div>
-    <p><a href="webapi/v1/demo/bestand">bestand</a></p>
     <p><a href="webapi/v1/demo/maschinen">maschinen</a></p>
     <p><a href="webapi/v1/demo/materialien">material</a></p>
     <p><a href="webapi/v1/demo/produkte">produkte</a></p>
     <p><a href="webapi/v1/demo/umsatzhistorievmarkt">umsatzhistorievmarkt</a></p>
     <p><a href="webapi/v1/demo/unternehmen">unternehmen</a></p>
     <p><a href="webapi/v1/demo/zwischenstand">zwischenstand</a></p>
+    <p><a href="webapi/v1/demo/rundenresultat">rundenresultat</a></p>
     
     
     

@@ -2,16 +2,14 @@ package dto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import fachkonzept.Maschine;
 
 public class MaschinenGesamtDTO {
 
-	public MaschinenGesamtDTO(Map<String, Integer> maschinenmatrix) {
-	    for (Map.Entry<String, Integer> ein : maschinenmatrix.entrySet()) {
-	    	maschinen.add(new MaschinenDTO(Maschine.findeMaschine(ein.getKey()), ein.getValue()));
-	    }
+	public MaschinenGesamtDTO(List<Maschine> maschinen) {
+	    for(Maschine m : maschinen)
+	        this.maschinen.add(new MaschinenDTO(m));
 	}
 	
 	private List<MaschinenDTO> maschinen = new ArrayList<MaschinenDTO>();

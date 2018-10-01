@@ -1,8 +1,5 @@
 package service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -49,19 +46,6 @@ public class UnternehmenService {
 		return Unternehmen.getDTO((spiel.getAktuellesUnternehmen()));
 		
 		return null;
-
-	}
-	
-	@GET
-	@Path("Inventar")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Object getBestand() {
-		//
-		Map<String, Integer> bestand = new HashMap<String, Integer>();
-		bestand.putAll(spiel.getAktuellesUnternehmen().getMaschinen());
-		bestand.putAll(spiel.getAktuellesUnternehmen().getMaterialien());
-		bestand.putAll(spiel.getAktuellesUnternehmen().getProdukte());
-		return bestand;
 
 	}
 	

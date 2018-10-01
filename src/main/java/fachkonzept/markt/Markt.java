@@ -24,7 +24,7 @@ public abstract class Markt {
 		    angebote.remove(a);
 		}
 		Spiel.log(a.getId() + " gekaufet übrig " + a.getMenge());
-		k.verringereKapital(a.getPreis() * menge);
+		k.kosten(a.getPreis() * menge, ("Kauf von " + a.getMarkteinheit().getClass().getSimpleName()));
 		// unternehmen bezahlt angebot
 
 	}
@@ -43,7 +43,7 @@ public abstract class Markt {
 	List<Umsatz> umsatzHistorie = new ArrayList<Umsatz>();
 	
 	private void umsatzFesthalten(Angebot a, int menge, int runde) {
-		umsatzHistorie.add(new Umsatz(a, menge, runde - 1));	//da sim am anfang 
+		umsatzHistorie.add(new Umsatz(a, menge, runde));	//da simulation am ende
 	}
 
 	public Angebot verkaufen(Angebot a, int menge, Unternehmen vk) {	//nur an simulation !!!!
@@ -52,10 +52,11 @@ public abstract class Markt {
 		if (verbleibendesAngebot != null) {
 			angebote.add(verbleibendesAngebot);
 		}
-		vk.umsatz(a.getPreis() * menge);
+		vk.umsatz(a.getPreis() * menge, "Verkauf");
 		// erziehlt umsatz
 		// bestand muss verringert werden
 		vk.markteinheitEntfernen(a.getMarkteinheit(), menge);
+		//muss jetzt nicht unbedingt sein, kann man auch überall reinschreiben
 		
 		//zuletzt wollen wir das ereignis speichern
 		umsatzFesthalten(a, menge, vk.getSpiel().getRunde());

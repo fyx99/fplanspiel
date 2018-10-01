@@ -1,7 +1,9 @@
 package fachkonzept.markt;
 
 import fachkonzept.Angebot;
+import fachkonzept.Kredit;
 import fachkonzept.Unternehmen;
+import fachkonzept.Verbindlichkeit;
 
 public class Finanzmarkt extends Markt {
 
@@ -14,7 +16,7 @@ public class Finanzmarkt extends Markt {
         // TODO Auto-generated method stub
         super.kaufen(a, menge, k);
         
-        //hier muss man handeln was bei kreditaufnahme passiert
+        k.verbindlichkeitHinzu(new Verbindlichkeit((Kredit)a.getMarkteinheit()));
        
     }
 

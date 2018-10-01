@@ -23,6 +23,15 @@ public class Maschine extends Markteinheit{
 		this.fertigungskosten = fertigungskosten;
 	}
 	
+	public Maschine(Maschine angebot) {
+	    this.name = angebot.name;
+	    this.kapazitaet = angebot.kapazitaet;
+	    this.fertigungskosten = angebot.fertigungskosten;
+	    this.auslastung = angebot.auslastung;
+	    this.matrix = angebot.matrix;
+	    this.p = angebot.p;
+	}
+	
 	private Produktionsmatrix matrix;
 
 	public Produktionsmatrix getMatrix() {
@@ -71,7 +80,7 @@ public class Maschine extends Markteinheit{
 	    }
 	    //die produkte in den bestand
 		u.produktHinzu(this.p, menge);
-        u.kosten("Fertigungskosten", this.fertigungskosten * menge);
+        u.kosten(this.fertigungskosten * menge, "Fertigungskosten");
 		return this.p;
 	}
 	
