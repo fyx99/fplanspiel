@@ -19,11 +19,27 @@
 <body onload="start()">
         <script type="text/javascript" >
             $(document).ready(function() {
-                $('#navbar').load('navbar.html');
+                //$('#navbar').load('navbar.html');
                 $('#footer').load('footer.html');
+
                 });
 
             window.onload = function () {
+                jQuery.ajax({
+                url: "../webapi/v1/demo/zwischenstand",
+                type: "GET",
+                dataType: "json",
+                success: function(data, data2){
+                    var cont  = document.getElementById('runde');
+                    var s =data.runde;
+                    cont.innerHTML += s;
+                    console.log(data.runde);
+                    //console.log(data.bmarkt.angebote);
+                    //console.log(data.mmarkt.angebote);
+                    
+                }
+            });
+
                 jQuery.ajax({
                 url: "../webapi/v1/demo/zwischenstand",
                 type: "GET",
@@ -206,13 +222,25 @@
         </script>
 
     <!-- Fixed navbar -->
-    <div id="navbar">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">Unternehmensplanspiel</a>
+            </div>
+            </div><!--/.nav-collapse -->
+        </div>
     </div>
-    
+
     <!-- Page Header -->
     <div class="container"> 
         <div class="page-header">
-            <h1>Ergebnis Runde 1 </h1>
+            <h1 id="runde">Ergebnis Runde </h1>
         </div>
 
          <div class="row">
