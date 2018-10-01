@@ -87,7 +87,6 @@ public class DemoService {
                 u.setSpiel(s);
             s.setRundenAnzahl(rundenAnzahl);
             s.rundenStart();
-            Simulation.simuliereSpielstart(s, s.getUnternehmen());
             
         }
         Spiel.log("Runde kann nicht gestartet werden!");

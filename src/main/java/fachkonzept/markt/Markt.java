@@ -13,11 +13,7 @@ public abstract class Markt {
 	private Unternehmen u;
 
 	private List<Angebot> angebote = new ArrayList<Angebot>();
-
-	public void angebotHinzu(Angebot a) {
-		this.angebote.add(a);
-	}
-
+	
 	public void kaufen(Angebot a, int menge, Unternehmen k) {
 		a.setMenge(a.getMenge() - menge);
 		if(a.getMenge() <= 0) {
@@ -35,8 +31,6 @@ public abstract class Markt {
 	      if(a.getMenge() <= 0) {
 	            angebote.remove(a);
 	        }
-		// simulation muss nicht bezahlen :)
-		// die einlagerung ist in der sub class
 
 	}
 	
@@ -53,12 +47,9 @@ public abstract class Markt {
 			angebote.add(verbleibendesAngebot);
 		}
 		vk.umsatz(a.getPreis() * menge, "Verkauf");
-		// erziehlt umsatz
-		// bestand muss verringert werden
+
 		vk.markteinheitEntfernen(a.getMarkteinheit(), menge);
-		//muss jetzt nicht unbedingt sein, kann man auch überall reinschreiben
-		
-		//zuletzt wollen wir das ereignis speichern
+
 		umsatzFesthalten(a, menge, vk.getSpiel().getRunde());
 		return verbleibendesAngebot;
 	}
@@ -75,29 +66,30 @@ public abstract class Markt {
 		return umsaetze;
 	}
 
-	public Angebot anbieten(Angebot a) {
-		a.setMarkttyp(this);
-		//jetzt weiß das angebot wo es gelandet ist -> dann kann mans auch kaufen
-		//muss schauen ob es vergleichbares angebot gibt
-		for (Angebot aa : this.angebote) {
-			if(vergleiche(a,aa)) {
-				aa.setMenge(a.getMenge() + aa.getMenge());
-				return aa;}
-		}
-		angebote.add(a);
-		return a;
-	}
+    public void anbieten(Angebot a, Unternehmen u) {
+
+        for (Angebot aa : this.angebote) {
+            if(vergleiche(a,aa)) {
+                aa.setMenge(a.getMenge() + aa.getMenge());
+                return;
+                }
+        }
+        this.angebote.add(a);
+    }
+    
+    public void anbieten(Angebot a) {       //für simulation
+
+        for (Angebot aa : this.angebote) {
+            if(vergleiche(a,aa)) {
+                aa.setMenge(a.getMenge() + aa.getMenge());
+                return;
+                }
+        }
+        this.angebote.add(a);
+    }
 
 	public void angebotEntfernen(Angebot a) {
 		angebote.remove(a);
-	}
-
-	public List<Angebot> getAngebote() {
-		return this.angebote;
-	}
-
-	public void setAngebote(List<Angebot> angebote) {
-		this.angebote = angebote;
 	}
 
 	public Unternehmen getU() {
@@ -108,7 +100,19 @@ public abstract class Markt {
 		this.u = u;
 	}
 	
-	private boolean vergleiche(Angebot a, Angebot b) {
+	public List<Angebot> getAngebote() {
+        return angebote;
+    }
+
+    public void setAngebote(List<Angebot> angebote) {
+        this.angebote = angebote;
+    }
+    public void angebotHinzu(Angebot a) {
+        this.angebote.add(a);
+    }
+
+
+    private boolean vergleiche(Angebot a, Angebot b) {
 		boolean t = false;
 		if(a.getMarkteinheit().equals(b.getMarkteinheit()) && a.getPreis() == b.getPreis())
 			t = true;

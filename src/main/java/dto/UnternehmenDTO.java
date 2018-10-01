@@ -14,8 +14,8 @@ public class UnternehmenDTO {
 	
 	private Marketingmix marketingmix;
 
-	private float umsatz = 0;
-	private float kapital = 0;
+	private double umsatz = 0;
+	private double kapital = 0;
 
 	private MaterialienGesamtDTO materialien;
 	private MaschinenGesamtDTO maschinen;
@@ -45,16 +45,16 @@ public class UnternehmenDTO {
 	public void setMmarkt(MarktDTO mmarkt) {
 		this.mmarkt = mmarkt;
 	}
-	public float getUmsatz() {
+	public double getUmsatz() {
 		return umsatz;
 	}
 	public void setUmsatz(float umsatz) {
 		this.umsatz = umsatz;
 	}
-	public float getKapital() {
+	public double getKapital() {
 		return kapital;
 	}
-	public void setKapital(float kapital) {
+	public void setKapital(double kapital) {
 		this.kapital = kapital;
 	}
 	public MaterialienGesamtDTO getMaterialien() {

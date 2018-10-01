@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
@@ -70,9 +72,13 @@ public class Simulation {
     public static void simuliereAbsatzmarkt(List<Unternehmen> us) {
         for(ProduktArt produktArt : ProduktArt.values()) {
             // pro produkt gehen wir den spaß jetzt mal durch
-            List<Angebot> produkt_angebote = new ArrayList<Angebot>();
+            Map<Angebot, Unternehmen> produkt_angebote = new HashMap<Angebot, Unternehmen>();
             for(Unternehmen u : us) {
-                produkt_angebote.addAll(u.getVmarkt().getAngeboteByProduktArt(produktArt));
+                
+                List<Angebot> unternehmenAngebote = u.getVmarkt().getAngeboteByProduktArt(produktArt);
+
+                produkt_angebote.putAll(unternehmenAngebote.stream().collect(Collectors.toMap(a -> a, a -> u)));
+                //hier werden hoffentlich die angebote gesammelt :D
 
             }
             // jetzt haben wir alle angebote der speziellen produkt art
@@ -81,16 +87,16 @@ public class Simulation {
         }
     }
 
-    public static void simuliereEinzelnesProdukt(List<Angebot> angebote, int nachfrage, double grundpreis) {
+    public static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage, double grundpreis) {
         int verbleibende_nachfrage = nachfrage;
         int gedeckt = 0;
         int preis = 0;
         while(gedeckt < verbleibende_nachfrage) {
 
-            List<Angebot> pot_angebote = new ArrayList<Angebot>();
-            for(Angebot a : angebote) {		// erstmal angebote die preislich in frage kommen
-                if(a.getPreis() == preis) {
-                    pot_angebote.add(a);
+            Map<Angebot, Unternehmen> pot_angebote = new HashMap<Angebot, Unternehmen>();
+            for(Entry<Angebot, Unternehmen> a : angebote.entrySet()) {		// erstmal angebote die preislich in frage kommen
+                if(a.getKey().getPreis() == preis) {
+                    pot_angebote.put(a.getKey(), a.getValue());
 
                 }
             }
@@ -104,24 +110,23 @@ public class Simulation {
                 // schneiden
                 int durchschnittliche_menge = (verbleibende_nachfrage - gedeckt) / pot_angebote.size();
 
-                for(Angebot aa : pot_angebote) {
-                    if(aa.getMenge() < durchschnittliche_menge)
-                        durchschnittliche_menge = aa.getMenge();
+                for(Entry<Angebot, Unternehmen> aa : pot_angebote.entrySet()) {
+                    if(aa.getKey().getMenge() < durchschnittliche_menge)
+                        durchschnittliche_menge = aa.getKey().getMenge();
                 }
 
                 // verteilen
-                Iterator<Angebot> iter = pot_angebote.iterator();
+                Iterator<Entry<Angebot, Unternehmen>> iter = pot_angebote.entrySet().iterator();
 
                 while(iter.hasNext()) {
-                    Angebot aa = iter.next();
+                    Entry<Angebot, Unternehmen> aa = iter.next();
                     // Spiel.log("Unternehmen " + aa.getMarkttyp().getU().getName() + " verkauft " + aa.getMarkteinheit().getName() + " menge: "
                     // + durchschnittliche_menge + " bei preis " + preis);
                     gedeckt += durchschnittliche_menge;
 
-                    if(aa.getMarkttyp().verkaufen(aa, durchschnittliche_menge, aa.getMarkttyp().getU()) == null) {
+                    if(aa.getValue().getVmarkt().verkaufen(aa.getKey(), durchschnittliche_menge, aa.getValue()) == null) {
                         iter.remove();
                         volle--;
-                        log("Simkauf: " + aa.getId() + " " + durchschnittliche_menge + " von " + aa.getMarkttyp().getU().getName());
                     }
                     Spiel.log(volle + "");
                 }

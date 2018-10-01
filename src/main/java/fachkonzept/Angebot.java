@@ -3,7 +3,6 @@ package fachkonzept;
 import java.util.ArrayList;
 import java.util.List;
 
-import fachkonzept.markt.Markt;
 import fachkonzept.markt.Markteinheit;
 
 public class Angebot{
@@ -23,7 +22,7 @@ public class Angebot{
 	
 	private Markteinheit markteinheit;
 	
-	private Markt markttyp;
+	//private Markt markttyp;
 	
 	private static List<Angebot> alleAngebote = new ArrayList<>();
 
@@ -64,12 +63,9 @@ public class Angebot{
 		
 		
 	}
-	public Markt getMarkttyp() {
-		return markttyp;
-	}
-	public void setMarkttyp(Markt markttyp) {
-		this.markttyp = markttyp;
-	}
+	
+	
+
 	public Markteinheit getMarkteinheit() {
 		return markteinheit;
 	}

@@ -25,7 +25,7 @@ public class Unternehmen {
 	private String name;
 
 	private Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
-	private Absatzmarkt vmarkt = new Absatzmarkt(this);
+	private Absatzmarkt vmarkt = new Absatzmarkt();
 	private Maschinenmarkt mmarkt = new Maschinenmarkt();
 	private Finanzmarkt fmarkt = new Finanzmarkt();
 	private Arbeitsmarkt amarkt = new Arbeitsmarkt();
@@ -46,14 +46,14 @@ public class Unternehmen {
 		this.name = name;
 	}
 
-	private float kapital = 0;
+	private double kapital = 0;
 
-	public float getKapital() {
+	public double getKapital() {
 		return kapital;
 	}
 
-	public void setKapital(float kapital) {
-		this.kapital = kapital;
+	public void setKapital(double d) {
+		this.kapital = d;
 	}
 
 	public void verringereKapital(double d) {
