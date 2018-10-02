@@ -34,7 +34,6 @@ public class Maschine extends Markteinheit{
 	    this.setName(angebot.getName());
 	    this.kapazitaet = angebot.kapazitaet;
 	    this.fertigungskosten = angebot.fertigungskosten;
-	    this.auslastung = angebot.auslastung;
 	    this.matrix = angebot.matrix;
 	    this.p = angebot.p;
 	    this.arbeitszeit = angebot.arbeitszeit;
@@ -67,21 +66,16 @@ public class Maschine extends Markteinheit{
 		return p;
 	}
 
-	public Produkt produziere(int menge, Unternehmen u){
+	public Produkt produziere(int menge, Unternehmen eigentuemer){
 		
 		this.auslastung += menge;
-		//hier müsste man evt. die auslastung angeben
-		
-		//und das unternehmen soll rohstoffe bereitstellen
-	    
+
 	    for (Map.Entry<String, Integer> ein : this.matrix.getMatrix().entrySet()) {
-	    	u.materialEntfernen(ein.getKey(), ein.getValue() * menge);
-	    	//materialien verbrauchen
+	        eigentuemer.materialEntfernen(ein.getKey(), ein.getValue() * menge);
 	    }
-	    //die produkte in den bestand
-	    u.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, menge * arbeitszeit);
-		u.produktHinzu(this.p, menge);
-        u.kosten(this.fertigungskosten * menge, "Fertigungskosten");
+	    eigentuemer.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, menge * arbeitszeit);
+	    eigentuemer.produktHinzu(this.p, menge);
+	    eigentuemer.kosten(this.fertigungskosten * menge, "Fertigungskosten");
 		return this.p;
 	}
 	
@@ -108,5 +102,15 @@ public class Maschine extends Markteinheit{
     public void setP(Produkt p) {
         this.p = p;
     }
+
+    public MaschinenArt getMaschinenArt() {
+        return maschinenArt;
+    }
+
+    public void setMaschinenArt(MaschinenArt maschinenArt) {
+        this.maschinenArt = maschinenArt;
+        this.setName(maschinenArt.name());
+    }
+    
 	
 }

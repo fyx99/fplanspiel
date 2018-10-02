@@ -70,8 +70,8 @@ class MarktTest {
         m.anbieten(new Angebot(m3, 222, 77.64));
 
         assertEquals(3, m.getAngebote().size());
-        assertEquals("TetsMaschine3", m.getAngebote().get(2).getMarkteinheit().getName());
-        assertEquals("TetsMaschine", m.getAngebote().get(1).getMarkteinheit().getName());
+        assertEquals("Holzstuhlmaschine", m.getAngebote().get(2).getMarkteinheit().getName());
+        assertEquals("Glastischmaschine", m.getAngebote().get(1).getMarkteinheit().getName());
         assertEquals(77.64, m.getAngebote().get(2).getPreis());
         assertEquals(222, m.getAngebote().get(2).getMenge());
         assertTrue(m.getAngebote().get(2).getMarkteinheit() instanceof Maschine);

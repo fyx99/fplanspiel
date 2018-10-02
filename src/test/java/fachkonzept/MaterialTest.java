@@ -33,18 +33,18 @@ class MaterialTest {
         Material m3 = new Material(32, MaterialArt.Glas);
         int testid = m3.getId();
         Material m4 = new Material(65, MaterialArt.Leder);
-        assertEquals(m2, Material.findeMarkteinheit("beispiel material2"));
-        assertEquals(33, ((Material)Material.findeMarkteinheit("beispiel material2")).getQuality());
-        assertEquals(33, ((Material)m.findeMarkteinheit("beispiel material2")).getQuality());
+        assertEquals(m2, Material.findeMarkteinheit("Holz"));
+        assertEquals(33, ((Material)Material.findeMarkteinheit("Holz")).getQuality());
+        assertEquals(33, ((Material)m.findeMarkteinheit("Holz")).getQuality());
 
         assertEquals(m4, m.findeMarkteinheit(testid + 1));
         assertEquals(65, ((Material)Markteinheit.findeMarkteinheit(testid + 1)).getQuality());
         
-        assertEquals(m2, Material.findeMarkteinheit("beispiel material2", Material.class));
-        assertEquals(33, ((Material)Material.findeMarkteinheit("beispiel material2", Material.class)).getQuality());
+        assertEquals(m2, Material.findeMarkteinheit("Holz", Material.class));
+        assertEquals(33, ((Material)Material.findeMarkteinheit("Holz", Material.class)).getQuality());
         
 
-        assertNull(Material.findeMarkteinheit("beispiel material2", Maschine.class));
+        assertNull(Material.findeMarkteinheit("Holz", Maschine.class));
         assertNull(Material.findeMarkteinheit(null, Material.class));
     }
 
