@@ -8,17 +8,17 @@
     <meta name="author" content="BootstrapBay.com">
     <title>BootstrapBay Tutorial</title>
 
-
  </head>
 
  <body onload="start()">
 
 <script type="text/javascript">
-		function start(){
+
+	$(document).ready(function() {
  			getKapital();
  			getSpielername();
  			getRunde();
- 		}
+ 		});
 		function getKapital(){
 			jQuery.ajax({
 				url: "../webapi/v1/demo/unternehmen",
@@ -28,7 +28,7 @@
 					var cont  = document.getElementById('exampleContent');
 					var s =data.kapital;
 					cont.innerHTML += s;
-					//console.log(data.kapital);
+					console.log(data.kapital);
 					//console.log(data.bmarkt.angebote);
 					//console.log(data.mmarkt.angebote);
 
@@ -172,6 +172,7 @@
 						<ul class="dropdown-menu">
 						
 							<li><a href="verkauf.html">Verkauf</a></li>
+							<li><a href="marketing.html">Marketing</a></li>
 							<li class="divider"></li>
 							<li class="dropdown-header">Angebote</li>
 							<li><a href="#">Neues Angebot</a></li>
@@ -186,11 +187,10 @@
 						
 							<li><a href="rohstoffe.html">Rohstoffe</a></li>
 							<li><a href="fertigeerzeugnisse.html">Fertige Erzeugnisse</a></li>
-							<li><a href="maschinen.html">Maschinen</a></li>
-							<li class="divider"></li>		
-							<li><a data-toggle="modal" href="#ergebnisLetzteRundeModal" onclick="ladeErgebnisLetzteRunde()">Ergebnis der letzten Runde</a></li>
+							<li><a href="maschinen.html">Maschinen</a></li>	
 						</ul>
-					</li>        
+					</li>
+					<li><a data-toggle="modal" href="#ergebnisLetzteRundeModal" onclick="ladeErgebnisLetzteRunde()">Ergebnis der letzten Runde</a></li>        
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
