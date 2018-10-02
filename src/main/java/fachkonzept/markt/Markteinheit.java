@@ -55,7 +55,7 @@ public abstract class Markteinheit {
 	public String getName() {
 		return name;
 	}
-
+	//um das material zu verändern nicht den namen verändern :D
     public void setName(String name) {
         this.name = name;
     }

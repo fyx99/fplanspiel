@@ -14,6 +14,8 @@ import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MaterialArt;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 
@@ -45,7 +47,7 @@ class MarktTest {
     @Test
     void maschinenMarkt() {
         assertEquals(0, m.getAngebote().size());
-        m.anbieten(new Angebot(new Material(1, "Hölchen"), 77, 77777.64));
+        m.anbieten(new Angebot(new Material(1, MaterialArt.Kunststoff), 77, 77777.64));
         assertEquals(1, m.getAngebote().size());
         assertNotNull(m.getAngebote().get(0));
         assertNotNull(m.getAngebote().get(0).getMarkteinheit());
@@ -61,8 +63,8 @@ class MarktTest {
         assertEquals(Integer.valueOf(68), pm.getMatrix().get("Holz"));
         assertEquals(Integer.valueOf(44), pm.getMatrix().get("Glas"));
 
-        Maschine m2 = new Maschine("TetsMaschine", 1040, new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank),pm,45,12);
-        Maschine m3 = new Maschine("TetsMaschine3", 458, new Produkt(ProduktArt.Holztisch, ProduktTyp.Tisch),pm,23.99,2);
+        Maschine m2 = new Maschine(MaschinenArt.Glastischmaschine, 1040, new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank),pm,45,12);
+        Maschine m3 = new Maschine(MaschinenArt.Holzstuhlmaschine, 458, new Produkt(ProduktArt.Holztisch, ProduktTyp.Tisch),pm,23.99,2);
         Angebot aa1 = new Angebot(m2, 77, 77777.64);
         m.anbieten(aa1);
         m.anbieten(new Angebot(m3, 222, 77.64));
