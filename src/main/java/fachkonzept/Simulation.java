@@ -12,6 +12,11 @@ import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MaterialArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.ProduktArt;
+import fachkonzept.util.ProduktTyp;
 
 public class Simulation {
 
@@ -223,12 +228,12 @@ public class Simulation {
 
     private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
     	double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
-        Material holz = new Material(1, "Holz");
-        Material stoff = new Material(1, "Stoff");
-        Material leder = new Material(1, "Leder");
-        Material glas = new Material(1, "Glas");
-        Material kunststoff = new Material(1, "Kunststoff");
-        Material edelstahl = new Material(1, "Edelstahl");
+        Material holz = new Material(1, MaterialArt.Holz);
+        Material stoff = new Material(1, MaterialArt.Stoff);
+        Material leder = new Material(1, MaterialArt.Leder);
+        Material glas = new Material(1, MaterialArt.Glas);
+        Material kunststoff = new Material(1, MaterialArt.Kunststoff);
+        Material edelstahl = new Material(1, MaterialArt.Edelstahl);
 
         Beschaffungsmarkt b = new Beschaffungsmarkt();
         b.anbieten(new Angebot(holz, 100, 3 * standortfaktor_material));
@@ -272,12 +277,12 @@ public class Simulation {
     }
 
     private static Maschinenmarkt maschinenmarktDemoDaten() {
-        Material holz = new Material(1, "Holz");
-        Material stoff = new Material(1, "Stoff");
-        Material leder = new Material(1, "Leder");
-        Material glas = new Material(1, "Glas");
-        Material kunststoff = new Material(1, "Kunststoff");
-        Material edelstahl = new Material(1, "Edelstahl");
+        Material holz = new Material(1, MaterialArt.Holz);
+        Material stoff = new Material(1, MaterialArt.Stoff);
+        Material leder = new Material(1, MaterialArt.Leder);
+        Material glas = new Material(1, MaterialArt.Glas);
+        Material kunststoff = new Material(1, MaterialArt.Kunststoff);
+        Material edelstahl = new Material(1, MaterialArt.Edelstahl);
 
         Produkt holzstuhl = new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl);
         Map<String, Integer> map_hst = new HashMap<String, Integer>();	// für jedes Produkt Map mit benötigten Ressourcen
@@ -324,19 +329,19 @@ public class Simulation {
         // Produktionsmatrix pm = new Produktionsmatrix(map);
 
         // Stühle
-        Maschine m1 = new Maschine("Holzstuhl-Maschine", 100, holzstuhl, new Produktionsmatrix(map_hst), 15, 1);
-        Maschine m2 = new Maschine("Stoffstuhl-Maschine", 57, stoffstuhl, new Produktionsmatrix(map_sst), 20, 2);
-        Maschine m3 = new Maschine("Lederstuhl-Maschine", 50, lederstuhl, new Produktionsmatrix(map_lst), 25, 3);
+        Maschine m1 = new Maschine(MaschinenArt.Holzstuhlmaschine, 100, holzstuhl, new Produktionsmatrix(map_hst), 15, 1);
+        Maschine m2 = new Maschine(MaschinenArt.Stoffstuhlmaschine, 57, stoffstuhl, new Produktionsmatrix(map_sst), 20, 2);
+        Maschine m3 = new Maschine(MaschinenArt.Lederstuhlmaschine, 50, lederstuhl, new Produktionsmatrix(map_lst), 25, 3);
 
         // Tische
-        Maschine m4 = new Maschine("Holztisch-Maschine", 50, holztisch, new Produktionsmatrix(map_ht), 100, 4);
-        Maschine m5 = new Maschine("Glastisch-Maschine", 35, glastisch, new Produktionsmatrix(map_gt), 125, 5);
-        Maschine m6 = new Maschine("Kunststofftisch-Maschine", 180, kunststofftisch, new Produktionsmatrix(map_kt), 20, 6);
+        Maschine m4 = new Maschine(MaschinenArt.Holztischmaschine, 50, holztisch, new Produktionsmatrix(map_ht), 100, 4);
+        Maschine m5 = new Maschine(MaschinenArt.Glastischmaschine, 35, glastisch, new Produktionsmatrix(map_gt), 125, 5);
+        Maschine m6 = new Maschine(MaschinenArt.Kunststofftischmaschine, 180, kunststofftisch, new Produktionsmatrix(map_kt), 20, 6);
 
         // Schränke
-        Maschine m7 = new Maschine("Holzschrank-Maschine", 65, holzschrank, new Produktionsmatrix(map_hsc), 150, 7);
-        Maschine m8 = new Maschine("Edelstahlschrank-Maschine", 50, edelstahlschrank, new Produktionsmatrix(map_esc), 185, 8);
-        Maschine m9 = new Maschine("Glasschrank-Maschine", 38, glasschrank, new Produktionsmatrix(map_gsc), 215, 9);
+        Maschine m7 = new Maschine(MaschinenArt.Holzschrankmaschine, 65, holzschrank, new Produktionsmatrix(map_hsc), 150, 7);
+        Maschine m8 = new Maschine(MaschinenArt.Edelstahlschrankmaschine, 50, edelstahlschrank, new Produktionsmatrix(map_esc), 185, 8);
+        Maschine m9 = new Maschine(MaschinenArt.Glasschrankmaschine, 38, glasschrank, new Produktionsmatrix(map_gsc), 215, 9);
 
         // Maschinen auf Maschinenmarkt anbieten
         Maschinenmarkt b = new Maschinenmarkt();

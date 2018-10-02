@@ -3,10 +3,12 @@ package fachkonzept;
 import java.util.Map;
 
 import fachkonzept.markt.Markteinheit;
+import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class Maschine extends Markteinheit{
 	
-	private String name;
+	private MaschinenArt maschinenArt;
 	private int kapazitaet;
 	private int auslastung;
 	private double fertigungskosten;
@@ -16,10 +18,10 @@ public class Maschine extends Markteinheit{
 	
 	private Produkt p;
 		
-	public Maschine(String bez, int k, Produkt pt, Produktionsmatrix m, double fertigungskosten, int minuten) {
+	public Maschine(MaschinenArt ma, int k, Produkt pt, Produktionsmatrix m, double fertigungskosten, int minuten) {
 		super();
-		
-		this.name= bez;
+		this.maschinenArt = ma;
+		this.setName(ma.name());
 		this.kapazitaet = k;
 		this.p = pt;
 		this.matrix = m;
@@ -28,7 +30,8 @@ public class Maschine extends Markteinheit{
 	}
 	
 	public Maschine(Maschine angebot) {
-	    this.name = angebot.name;
+	    this.maschinenArt = angebot.maschinenArt;
+	    this.setName(angebot.getName());
 	    this.kapazitaet = angebot.kapazitaet;
 	    this.fertigungskosten = angebot.fertigungskosten;
 	    this.auslastung = angebot.auslastung;
@@ -45,14 +48,6 @@ public class Maschine extends Markteinheit{
 
 	public void setMatrix(Produktionsmatrix matrix) {
 		this.matrix = matrix;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getKapazitaet() {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import fachkonzept.Angebot;
 import fachkonzept.Produkt;
-import fachkonzept.ProduktArt;
+import fachkonzept.util.ProduktArt;
 
 public class Absatzmarkt extends Markt {
 	

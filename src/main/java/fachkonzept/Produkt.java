@@ -1,6 +1,8 @@
 package fachkonzept;
 
 import fachkonzept.markt.Markteinheit;
+import fachkonzept.util.ProduktArt;
+import fachkonzept.util.ProduktTyp;
 
 public class Produkt extends Markteinheit{
 	

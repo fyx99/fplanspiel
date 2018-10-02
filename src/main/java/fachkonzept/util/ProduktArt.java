@@ -1,4 +1,4 @@
-package fachkonzept;
+package fachkonzept.util;
 
 import java.util.ArrayList;
 import java.util.List;

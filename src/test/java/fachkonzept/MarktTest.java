@@ -14,6 +14,8 @@ import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.util.ProduktArt;
+import fachkonzept.util.ProduktTyp;
 
 class MarktTest {
     static Unternehmen u;

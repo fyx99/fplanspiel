@@ -17,6 +17,7 @@ import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Markteinheit;
 import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class Unternehmen {
 

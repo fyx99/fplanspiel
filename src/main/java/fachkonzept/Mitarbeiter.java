@@ -1,6 +1,7 @@
 package fachkonzept;
 
 import fachkonzept.markt.Markteinheit;
+import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class Mitarbeiter extends Markteinheit {
     
