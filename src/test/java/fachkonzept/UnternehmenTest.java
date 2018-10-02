@@ -11,13 +11,13 @@ class UnternehmenTest {
     @BeforeAll
     static void setUp() {
         Spiel s = new Spiel();
-        s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s, 'A'));
+        s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s, "A"));
         s.rundenStart();    //-> anfangs simulation triggern
     }
     
     @Test
     void unternehmenErstellen() {
-        Unternehmen u = new Unternehmen("Test  Name", new Spiel());
+        Unternehmen u = new Unternehmen("Test  Name", new Spiel(), "A");
         u.setKapital(10000.99);
         
         assertEquals("Test  Name", u.getName());

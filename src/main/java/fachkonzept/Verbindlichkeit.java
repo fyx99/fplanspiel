@@ -3,7 +3,7 @@ package fachkonzept;
 public class Verbindlichkeit {
     
     
-    public Verbindlichkeit(double verbleibendeSumme, Integer aktuelleLaufzeit, Kredit kredit) {
+    public Verbindlichkeit(Kredit kredit, double verbleibendeSumme, Integer aktuelleLaufzeit) {
         this.verbleibendeSumme = verbleibendeSumme;
         this.aktuelleLaufzeit = aktuelleLaufzeit;
         this.kredit = kredit;

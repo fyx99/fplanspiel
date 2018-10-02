@@ -25,7 +25,7 @@ class MarktTest {
 
     @BeforeAll
     static void setup() {
-        u = new Unternehmen("Testing U", new Spiel());
+        u = new Unternehmen("Testing U", new Spiel(), "A");
         m = new Maschinenmarkt();
         b = new Beschaffungsmarkt();
         a = new Arbeitsmarkt();

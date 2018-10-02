@@ -13,9 +13,9 @@ class SpielTest {
     @BeforeAll
     static void vorbereiten() {
         testSpiel = new Spiel(10);
-        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest1", testSpiel));
-        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest2", testSpiel));
-        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest3", testSpiel));
+        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest1", testSpiel, "A"));
+        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest2", testSpiel, "A"));
+        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest3", testSpiel, "A"));
         testSpiel.rundenStart();
     }
 
@@ -29,7 +29,7 @@ class SpielTest {
     @Test
     void unternehmenHinzu() {
         Spiel spiel = new Spiel();
-        Unternehmen u1 = new Unternehmen("test", spiel);
+        Unternehmen u1 = new Unternehmen("test", spiel, "A");
         spiel.unternehmenHinzufuegen(u1);
         spiel.rundenStart();
         assertEquals(1, spiel.getUnternehmen().size());

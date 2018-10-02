@@ -7,11 +7,11 @@ public class Kredit extends Markteinheit {
     private String name;
     private double volumen; //wv ausgezahlt wird
     private double zinssatz;    //0.05 -> 5 %
-    private double laufzeit;    // -> quartale - 4 = ein jahr
+    private int laufzeit;    // -> quartale - 4 = ein jahr
     //die tilgungs + zins rate, die pro zeit gezahlt werden muss berechnet sich aus volumen, zinsen und laufzeit
     
         
-    public Kredit(double volumen, double zinssatz, double laufzeit, String name) {
+    public Kredit(double volumen, double zinssatz, int laufzeit, String name) {
         super();
         
         this.volumen = volumen;
@@ -42,12 +42,12 @@ public class Kredit extends Markteinheit {
     }
 
 
-    public double getLaufzeit() {
+    public int getLaufzeit() {
         return laufzeit;
     }
 
 
-    public void setLaufzeit(double laufzeit) {
+    public void setLaufzeit(int laufzeit) {
         this.laufzeit = laufzeit;
     }
 
