@@ -1,9 +1,14 @@
 package fachkonzept;
 
-public class MaschineTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-	public MaschineTest() {
-		// TODO Auto-generated constructor stub
-	}
+import org.junit.jupiter.api.Test;
+
+class MaschineTest {
+
+    @Test
+    void test() {
+        fail("Not yet implemented");
+    }
 
 }

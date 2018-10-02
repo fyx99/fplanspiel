@@ -98,7 +98,7 @@ class MarktTest {
         Angebot kaAn = Angebot.findeAngebot(tid);
         assertEquals(kaAn, aa1);
         
-        u.getMmarkt().kaufen(kaAn, 7);
+        u.getMmarkt().kaufen(kaAn, 7, u);
         assertEquals(70, kaAn.getMenge());
         assertEquals(70, aa1.getMenge());
         assertEquals(77777.64, aa1.getPreis());

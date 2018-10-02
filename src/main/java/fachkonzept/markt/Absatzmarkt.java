@@ -15,14 +15,6 @@ public class Absatzmarkt extends Markt {
 	public Absatzmarkt() {
 	}
 	
-	@Override
-	public void kaufen(Angebot a, int menge) {
-		// TODO Auto-generated method stub
-		super.kaufen(a, menge);
-
-		//hier kauft nur die simulation, wenn die kauft muss es nirgens gespeichert werden fürn anfang
-	}
-	
     public List<Angebot> getAngeboteByProduktArt(ProduktArt pa){
 
         List<Angebot> produkt_angebote = new ArrayList<Angebot>();
