@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 
@@ -62,6 +63,7 @@ class MaschineTest {
     @Test
     void produziere() {
         Unternehmen u = new Unternehmen("a", new Spiel(), "A");
+        u.arbeitskraftHinzu(new Arbeitskraft(0, new Mitarbeiter("name test", 777.88, 70000, MitarbeiterFachgebiet.MASCHINE)));
         u.setKapital(50000);
         Produkt p = m.produziere(9, u);
         assertNotNull(p);
@@ -74,6 +76,9 @@ class MaschineTest {
         assertEquals(1, u.getGuv().getAusgaben().size());
         assertEquals(450, u.getGuv().getAusgaben().get(0).getSumme());
         assertEquals("Fertigungskosten", u.getGuv().getAusgaben().get(0).getBeschreibung());
+//       assertEquals(450, u.getMitarbeiter().get(0).getAuslastung());
+        
+        
     }
     
     

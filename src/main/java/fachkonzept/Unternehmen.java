@@ -135,12 +135,7 @@ public class Unternehmen {
         } else
             this.produkte.putIfAbsent(m.getName(), menge);
     }
-    public void mitarbeiterHinzu(Mitarbeiter m, Integer menge) {
-        if (this.produkte.containsKey(m.getName())) {
-            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
-        } else
-            this.produkte.putIfAbsent(m.getName(), menge);
-    }
+
     
     public void verbindlichkeitHinzu(Verbindlichkeit v) {
         verbindlichkeiten.add(v);
@@ -271,6 +266,25 @@ public class Unternehmen {
         Spiel.log("Arbeitszeit konnte nicht verteilt werden " + verteilteZeit);
         return false;
         
+    }
+    
+    public int getMitarbeiterKapazitaeten(MitarbeiterFachgebiet mfg){
+        int vorhandeneZeit = 0;
+        for(Arbeitskraft ak : this.mitarbeiter) {
+            if(mfg.name().equals(ak.getM().getMfg().name())) {
+                vorhandeneZeit += (ak.getM().getArbeitszeit() - ak.getAuslastung());
+            }
+        }
+        
+        return vorhandeneZeit;
+    }
+    
+    public Map<MitarbeiterFachgebiet, Integer> getMitarbeiterKapazitaeten(){
+        Map<MitarbeiterFachgebiet, Integer> map = new HashMap<MitarbeiterFachgebiet, Integer>();
+        map.put(MitarbeiterFachgebiet.MASCHINE, getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+        map.put(MitarbeiterFachgebiet.VERWALTUNG, getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG));
+        map.put(MitarbeiterFachgebiet.VERTRIEB, getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB));
+        return map;
     }
 
 	public float getUmsatz() {

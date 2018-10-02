@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import fachkonzept.util.MitarbeiterFachgebiet;
+
 class UnternehmenTest {
     static Unternehmen testUnternehmen;
     @BeforeAll
@@ -13,6 +15,11 @@ class UnternehmenTest {
         Spiel s = new Spiel();
         s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s, "A"));
         s.rundenStart();    //-> anfangs simulation triggern
+
+        testUnternehmen.arbeitskraftHinzu(new Arbeitskraft( new Mitarbeiter("test na2me", 3333, 2002, MitarbeiterFachgebiet.MASCHINE)));
+        testUnternehmen.arbeitskraftHinzu(new Arbeitskraft(new Mitarbeiter("test name", 7000, 20000, MitarbeiterFachgebiet.MASCHINE)));
+        testUnternehmen.arbeitskraftHinzu(new Arbeitskraft(0, new Mitarbeiter("test nam3e", 4000, 7000, MitarbeiterFachgebiet.VERWALTUNG)));
+        testUnternehmen.arbeitskraftHinzu(new Arbeitskraft(4000, new Mitarbeiter("test nam4e", 7030, 30000, MitarbeiterFachgebiet.VERTRIEB)));
     }
     
     @Test
@@ -22,7 +29,6 @@ class UnternehmenTest {
         
         assertEquals("Test  Name", u.getName());
         assertEquals(10000.99, u.getKapital());
-        
     }
     
     
@@ -62,6 +68,22 @@ class UnternehmenTest {
         assertEquals(2, testUnternehmen.getGuv().getEinnahmen().size());
         assertEquals(1, testUnternehmen.getGuv().getEinnahmen().get(1).getSumme());
         assertEquals("1€", testUnternehmen.getGuv().getEinnahmen().get(1).getBeschreibung());
+    }
+    
+    @Test
+    void mitarbeiterKapazitaeten() {
+        assertEquals(4, testUnternehmen.getMitarbeiter().size());
+        assertEquals(7000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG));
+        assertEquals(22002, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+        assertEquals(30000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB));
+    
+        
+        
+    }
+    
+    @Test
+    void beschaeftigeMitarbeiter() {
+        testUnternehmen.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, 50);
     }
     
 }

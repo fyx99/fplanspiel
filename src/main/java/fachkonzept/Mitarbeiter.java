@@ -20,6 +20,7 @@ public class Mitarbeiter extends Markteinheit {
         this.name= name;
         this.lohnkosten = lohn;
         this.mfg = mfg;
+        this.arbeitszeit = arbeitszeit;
     }
     
 
