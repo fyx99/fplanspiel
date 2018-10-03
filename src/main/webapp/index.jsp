@@ -10,9 +10,8 @@
     <p><a href="api/spiel/neuesspiel">neues Spiel</a></p>
     <p><a href="api/spiel/neuesunternehmen/abcag/A">neues Unternehmen mit name ABC AG mit Standort A</a></p>
     <p><a href="api/spiel/neuesunternehmen/abckgaa/B">neues Unternehmen mit name ABC KGAA mit Stanndort B</a></p>
-    <p><a href="api/spiel/spielstarten/5">spiel starten</a></p>
+    <p><a href="api/spiel/spielstarten?rundenZahl=5">spiel starten</a></p>
     <p><a href="api/spiel/zugbeendet">zug beendet</a></p>
-    <p><a href="api/spiel/stats">stats</a></p>
     <p>Märkte  <a href="api/spiel/mmarkt">m</a>  <a href="api/spiel/bmarkt">b</a>  <a href="api/spiel/vmarkt">v</a>  <a href="api/spiel/fmarkt">f</a>  <a href="api/spiel/amarkt">a</a></p>
     <div>
     	<input id="id" /><input id="menge" /><button onclick="kaufen()">kaufen</button>
@@ -21,7 +20,7 @@
     			var id = document.getElementById("id").value;
     			var menge = document.getElementById("menge").value;
     			jQuery.ajax({
-    				url: "api/spiel/angebotkaufen/" + menge + "/" + id,
+    				url: "api/spiel/angebotkaufen?menge=" + menge + "&angebotsid=" + id,
     				type:"GET"
     			});
     		}
@@ -34,7 +33,7 @@
     			var id = document.getElementById("id2").value;
     			var menge = document.getElementById("menge2").value;
     			jQuery.ajax({
-    				url: "api/spiel/produziere/" + menge + "/" + id,
+    				url: "api/spiel/produziere?menge=" + menge + "&maschinenid=" + id,
     				type:"GET"
     			});
     		}
@@ -48,7 +47,7 @@
     			var menge = document.getElementById("menge3").value;
     			var preis = document.getElementById("preis3").value;
     			jQuery.ajax({
-    				url: "api/spiel/anbieten/" + menge + "/" + id + "/" + preis,
+    				url: "api/spiel/anbieten?menge=" + menge + "&produktid=" + id + "&preis=" + preis,
     				type:"GET"
     			});
     		}
@@ -62,9 +61,6 @@
     <p><a href="api/spiel/zwischenstand">zwischenstand</a></p>
     <p><a href="api/spiel/rundenresultat">rundenresultat</a></p>
     
-    
-    
-    <p><a href="api/spiel/log">log</a></p>
 
 </body>
 </html>
