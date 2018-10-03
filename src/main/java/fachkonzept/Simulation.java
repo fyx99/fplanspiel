@@ -5,11 +5,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MaterialArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.ProduktArt;
+import fachkonzept.util.ProduktTyp;
 
 public class Simulation {
 
@@ -25,10 +32,10 @@ public class Simulation {
         while(i.hasNext()) {
             Unternehmen n = i.next();
             n.setKapital(1000);
-            n.setBmarkt(beschaffungsmarktDemoDaten());
+            n.setBmarkt(beschaffungsmarktDemoDaten(n));
             n.setMmarkt(maschinenmarktDemoDaten());
             n.setFmarkt(finanzmarktDemoDaten());
-            n.setAmarkt(arbeitsmarktDemoDaten());
+            n.setAmarkt(arbeitsmarktDemoDaten(n));
 
         }
 
@@ -70,9 +77,13 @@ public class Simulation {
     public static void simuliereAbsatzmarkt(List<Unternehmen> us) {
         for(ProduktArt produktArt : ProduktArt.values()) {
             // pro produkt gehen wir den spaß jetzt mal durch
-            List<Angebot> produkt_angebote = new ArrayList<Angebot>();
+            Map<Angebot, Unternehmen> produkt_angebote = new HashMap<Angebot, Unternehmen>();
             for(Unternehmen u : us) {
-                produkt_angebote.addAll(u.getVmarkt().getAngeboteByProduktArt(produktArt));
+                
+                List<Angebot> unternehmenAngebote = u.getVmarkt().getAngeboteByProduktArt(produktArt);
+
+                produkt_angebote.putAll(unternehmenAngebote.stream().collect(Collectors.toMap(a -> a, a -> u)));
+                //hier werden hoffentlich die angebote gesammelt :D
 
             }
             // jetzt haben wir alle angebote der speziellen produkt art
@@ -81,16 +92,16 @@ public class Simulation {
         }
     }
 
-    public static void simuliereEinzelnesProdukt(List<Angebot> angebote, int nachfrage, double grundpreis) {
+    public static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage, double grundpreis) {
         int verbleibende_nachfrage = nachfrage;
         int gedeckt = 0;
         int preis = 0;
         while(gedeckt < verbleibende_nachfrage) {
 
-            List<Angebot> pot_angebote = new ArrayList<Angebot>();
-            for(Angebot a : angebote) {		// erstmal angebote die preislich in frage kommen
-                if(a.getPreis() == preis) {
-                    pot_angebote.add(a);
+            Map<Angebot, Unternehmen> pot_angebote = new HashMap<Angebot, Unternehmen>();
+            for(Entry<Angebot, Unternehmen> a : angebote.entrySet()) {		// erstmal angebote die preislich in frage kommen
+                if(a.getKey().getPreis() == preis) {
+                    pot_angebote.put(a.getKey(), a.getValue());
 
                 }
             }
@@ -104,24 +115,23 @@ public class Simulation {
                 // schneiden
                 int durchschnittliche_menge = (verbleibende_nachfrage - gedeckt) / pot_angebote.size();
 
-                for(Angebot aa : pot_angebote) {
-                    if(aa.getMenge() < durchschnittliche_menge)
-                        durchschnittliche_menge = aa.getMenge();
+                for(Entry<Angebot, Unternehmen> aa : pot_angebote.entrySet()) {
+                    if(aa.getKey().getMenge() < durchschnittliche_menge)
+                        durchschnittliche_menge = aa.getKey().getMenge();
                 }
 
                 // verteilen
-                Iterator<Angebot> iter = pot_angebote.iterator();
+                Iterator<Entry<Angebot, Unternehmen>> iter = pot_angebote.entrySet().iterator();
 
                 while(iter.hasNext()) {
-                    Angebot aa = iter.next();
+                    Entry<Angebot, Unternehmen> aa = iter.next();
                     // Spiel.log("Unternehmen " + aa.getMarkttyp().getU().getName() + " verkauft " + aa.getMarkteinheit().getName() + " menge: "
                     // + durchschnittliche_menge + " bei preis " + preis);
                     gedeckt += durchschnittliche_menge;
 
-                    if(aa.getMarkttyp().verkaufen(aa, durchschnittliche_menge, aa.getMarkttyp().getU()) == null) {
+                    if(aa.getValue().getVmarkt().verkaufen(aa.getKey(), durchschnittliche_menge, aa.getValue()) == null) {
                         iter.remove();
                         volle--;
-                        log("Simkauf: " + aa.getId() + " " + durchschnittliche_menge + " von " + aa.getMarkttyp().getU().getName());
                     }
                     Spiel.log(volle + "");
                 }
@@ -216,21 +226,22 @@ public class Simulation {
         return 1 + Math.sin(0.125 * Math.PI * runde + randomStart * Math.PI) * 0.5;
     }
 
-    private static Beschaffungsmarkt beschaffungsmarktDemoDaten() {
-        Material holz = new Material(1, "Holz");
-        Material stoff = new Material(1, "Stoff");
-        Material leder = new Material(1, "Leder");
-        Material glas = new Material(1, "Glas");
-        Material kunststoff = new Material(1, "Kunststoff");
-        Material edelstahl = new Material(1, "Edelstahl");
+    private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
+    	double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
+        Material holz = new Material(MaterialArt.Holz);
+        Material stoff = new Material(MaterialArt.Stoff);
+        Material leder = new Material(MaterialArt.Leder);
+        Material glas = new Material(MaterialArt.Glas);
+        Material kunststoff = new Material(MaterialArt.Kunststoff);
+        Material edelstahl = new Material(MaterialArt.Edelstahl);
 
         Beschaffungsmarkt b = new Beschaffungsmarkt();
-        b.anbieten(new Angebot(holz, 100, 3));
-        b.anbieten(new Angebot(stoff, 100, 3.50));
-        b.anbieten(new Angebot(leder, 100, 9));
-        b.anbieten(new Angebot(glas, 100, 14));
-        b.anbieten(new Angebot(kunststoff, 100, 1));
-        b.anbieten(new Angebot(edelstahl, 100, 6));
+        b.anbieten(new Angebot(holz, 100, 3 * standortfaktor_material));
+        b.anbieten(new Angebot(stoff, 100, 3.50 * standortfaktor_material));
+        b.anbieten(new Angebot(leder, 100, 9 * standortfaktor_material));
+        b.anbieten(new Angebot(glas, 100, 14 * standortfaktor_material));
+        b.anbieten(new Angebot(kunststoff, 100, 1 * standortfaktor_material));
+        b.anbieten(new Angebot(edelstahl, 100, 6 * standortfaktor_material));
 
         return b;
     }
@@ -248,7 +259,8 @@ public class Simulation {
         return fm;
     }
     
-    private static Arbeitsmarkt arbeitsmarktDemoDaten() {
+    private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
+    	double standortfaktor_mitarbeiterkosten = n.getStandort().getFaktor_mitarbeiterkosten();
         Mitarbeiter ma1 = new Mitarbeiter("Name unnötig", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
         Mitarbeiter ma2 = new Mitarbeiter("Name unnötig", 400, 60000, MitarbeiterFachgebiet.MASCHINE);  //bsp weniger arbeitszeit
         Mitarbeiter ma3 = new Mitarbeiter("Name unnötig", 200, 120000, MitarbeiterFachgebiet.VERTRIEB);
@@ -256,21 +268,21 @@ public class Simulation {
         Mitarbeiter ma5 = new Mitarbeiter("Name unnötig", 250, 120000, MitarbeiterFachgebiet.VERWALTUNG);
 
         Arbeitsmarkt am = new Arbeitsmarkt();
-        am.anbieten(new Angebot(ma1, 30, 20));      //ist der preis hier nötig? oder einfach 0
-        am.anbieten(new Angebot(ma2, 30, 20));
-        am.anbieten(new Angebot(ma3, 30, 20));
-        am.anbieten(new Angebot(ma4, 30, 20));
-        am.anbieten(new Angebot(ma5, 30, 20));
+        am.anbieten(new Angebot(ma1, 30, 20 * standortfaktor_mitarbeiterkosten));      //ist der preis hier nötig? oder einfach 0
+        am.anbieten(new Angebot(ma2, 30, 20 * standortfaktor_mitarbeiterkosten));
+        am.anbieten(new Angebot(ma3, 30, 20 * standortfaktor_mitarbeiterkosten));
+        am.anbieten(new Angebot(ma4, 30, 20 * standortfaktor_mitarbeiterkosten));
+        am.anbieten(new Angebot(ma5, 30, 20 * standortfaktor_mitarbeiterkosten));
         return am;
     }
 
     private static Maschinenmarkt maschinenmarktDemoDaten() {
-        Material holz = new Material(1, "Holz");
-        Material stoff = new Material(1, "Stoff");
-        Material leder = new Material(1, "Leder");
-        Material glas = new Material(1, "Glas");
-        Material kunststoff = new Material(1, "Kunststoff");
-        Material edelstahl = new Material(1, "Edelstahl");
+        Material holz = new Material(MaterialArt.Holz);
+        Material stoff = new Material(MaterialArt.Stoff);
+        Material leder = new Material(MaterialArt.Leder);
+        Material glas = new Material(MaterialArt.Glas);
+        Material kunststoff = new Material(MaterialArt.Kunststoff);
+        Material edelstahl = new Material(MaterialArt.Edelstahl);
 
         Produkt holzstuhl = new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl);
         Map<String, Integer> map_hst = new HashMap<String, Integer>();	// für jedes Produkt Map mit benötigten Ressourcen
@@ -317,19 +329,19 @@ public class Simulation {
         // Produktionsmatrix pm = new Produktionsmatrix(map);
 
         // Stühle
-        Maschine m1 = new Maschine("Holzstuhl-Maschine", 100, holzstuhl, new Produktionsmatrix(map_hst), 15, 1);
-        Maschine m2 = new Maschine("Stoffstuhl-Maschine", 57, stoffstuhl, new Produktionsmatrix(map_sst), 20, 2);
-        Maschine m3 = new Maschine("Lederstuhl-Maschine", 50, lederstuhl, new Produktionsmatrix(map_lst), 25, 3);
+        Maschine m1 = new Maschine(MaschinenArt.Holzstuhlmaschine, 100, holzstuhl, new Produktionsmatrix(map_hst), 15, 1);
+        Maschine m2 = new Maschine(MaschinenArt.Stoffstuhlmaschine, 57, stoffstuhl, new Produktionsmatrix(map_sst), 20, 2);
+        Maschine m3 = new Maschine(MaschinenArt.Lederstuhlmaschine, 50, lederstuhl, new Produktionsmatrix(map_lst), 25, 3);
 
         // Tische
-        Maschine m4 = new Maschine("Holztisch-Maschine", 50, holztisch, new Produktionsmatrix(map_ht), 100, 4);
-        Maschine m5 = new Maschine("Glastisch-Maschine", 35, glastisch, new Produktionsmatrix(map_gt), 125, 5);
-        Maschine m6 = new Maschine("Kunststofftisch-Maschine", 180, kunststofftisch, new Produktionsmatrix(map_kt), 20, 6);
+        Maschine m4 = new Maschine(MaschinenArt.Holztischmaschine, 50, holztisch, new Produktionsmatrix(map_ht), 100, 4);
+        Maschine m5 = new Maschine(MaschinenArt.Glastischmaschine, 35, glastisch, new Produktionsmatrix(map_gt), 125, 5);
+        Maschine m6 = new Maschine(MaschinenArt.Kunststofftischmaschine, 180, kunststofftisch, new Produktionsmatrix(map_kt), 20, 6);
 
         // Schränke
-        Maschine m7 = new Maschine("Holzschrank-Maschine", 65, holzschrank, new Produktionsmatrix(map_hsc), 150, 7);
-        Maschine m8 = new Maschine("Edelstahlschrank-Maschine", 50, edelstahlschrank, new Produktionsmatrix(map_esc), 185, 8);
-        Maschine m9 = new Maschine("Glasschrank-Maschine", 38, glasschrank, new Produktionsmatrix(map_gsc), 215, 9);
+        Maschine m7 = new Maschine(MaschinenArt.Holzschrankmaschine, 65, holzschrank, new Produktionsmatrix(map_hsc), 150, 7);
+        Maschine m8 = new Maschine(MaschinenArt.Edelstahlschrankmaschine, 50, edelstahlschrank, new Produktionsmatrix(map_esc), 185, 8);
+        Maschine m9 = new Maschine(MaschinenArt.Glasschrankmaschine, 38, glasschrank, new Produktionsmatrix(map_gsc), 215, 9);
 
         // Maschinen auf Maschinenmarkt anbieten
         Maschinenmarkt b = new Maschinenmarkt();

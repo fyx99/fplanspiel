@@ -1,31 +1,24 @@
 package fachkonzept;
 
 import fachkonzept.markt.Markteinheit;
+import fachkonzept.util.MaterialArt;
 
 public class Material extends Markteinheit{
 	
 	
-	private int quality;
+	private MaterialArt materialArt;
 	
-	private String name;
-	
-	
-	public Material(int q, String name) {
+	public Material(MaterialArt ma) {
 		super();
-		this.quality = q;
-		this.name = name;
-	
+		this.setName(ma.name());
+		this.materialArt = ma;
 	}
+    public MaterialArt getMaterialArt() {
+        return materialArt;
+    }
 
-
-	public int getQuality() {
-		return quality;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-	
+    public void setMaterialArt(MaterialArt materialArt) {
+        this.materialArt = materialArt;
+    }
 	
 }

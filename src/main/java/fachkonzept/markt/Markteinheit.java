@@ -3,8 +3,6 @@ package fachkonzept.markt;
 import java.util.ArrayList;
 import java.util.List;
 
-import fachkonzept.Produkt;
-
 public abstract class Markteinheit {
 
 	//DAch für MAteroial, MAschine und Produkt
@@ -29,16 +27,7 @@ public abstract class Markteinheit {
 		}
 		return null;
 	}
-	
-	public static Markteinheit findeMarkteinheit(String name) {
-		for(Markteinheit m : Markteinheit.alleMarkteinheiten) {
-			if(m.getName().equals(name)) {
-				return (Produkt)m;
-			}
-		}
-		return null;
-	}
-	
+/*
 	public static Markteinheit findeMarkteinheit(String name, Class<?> klasse) {	//mit check der klasse
 		klasse.getName();
 		for(Markteinheit m : Markteinheit.alleMarkteinheiten) {
@@ -48,7 +37,8 @@ public abstract class Markteinheit {
 		}
 		return null;
 	}
-
+	
+*/
 	public int getId() {
 		return id;
 	}
@@ -56,6 +46,10 @@ public abstract class Markteinheit {
 	public String getName() {
 		return name;
 	}
+	//um das material zu verändern nicht den namen verändern :D
+    public void setName(String name) {
+        this.name = name;
+    }
 	
 
 	

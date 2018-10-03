@@ -13,7 +13,7 @@ public class Finanzmarkt extends Markt {
 
     @Override
     public void kaufen(Angebot a, int menge, Unternehmen k) {
-        // TODO Auto-generated method stub
+        
         super.kaufen(a, menge, k);
         
         k.verbindlichkeitHinzu(new Verbindlichkeit((Kredit)a.getMarkteinheit()));

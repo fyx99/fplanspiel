@@ -1,10 +1,14 @@
 package dto;
 
+import java.util.Map;
+
 import fachkonzept.marketing.Marketingmix;
 
 public class UnternehmenDTO {
 
 	private String name;
+	
+	private String standort;
 
 	private MarktDTO bmarkt;
 
@@ -14,17 +18,26 @@ public class UnternehmenDTO {
 	
 	private Marketingmix marketingmix;
 
-	private float umsatz = 0;
-	private float kapital = 0;
+	private double umsatz = 0;
+	private double kapital = 0;
 
-	private MaterialienGesamtDTO materialien;
+	private Map<String, Integer> materialien;
 	private MaschinenGesamtDTO maschinen;
-	private ProdukteGesamtDTO produkte;
+	private  Map<String, Integer> produkte;
+	private MitarbeiterGesamtDTO mitarbeiter;
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setStandort(String standort) {
+		this.standort = standort;
+	}
+	
+	public String getStandort() {
+		return this.standort;
 	}
 	
 	public MarktDTO getBmarkt() {
@@ -45,23 +58,17 @@ public class UnternehmenDTO {
 	public void setMmarkt(MarktDTO mmarkt) {
 		this.mmarkt = mmarkt;
 	}
-	public float getUmsatz() {
+	public double getUmsatz() {
 		return umsatz;
 	}
 	public void setUmsatz(float umsatz) {
 		this.umsatz = umsatz;
 	}
-	public float getKapital() {
+	public double getKapital() {
 		return kapital;
 	}
-	public void setKapital(float kapital) {
+	public void setKapital(double kapital) {
 		this.kapital = kapital;
-	}
-	public MaterialienGesamtDTO getMaterialien() {
-		return materialien;
-	}
-	public void setMaterialien(MaterialienGesamtDTO materialien) {
-		this.materialien = materialien;
 	}
 	public MaschinenGesamtDTO getMaschinen() {
 		return maschinen;
@@ -69,17 +76,32 @@ public class UnternehmenDTO {
 	public void setMaschinen(MaschinenGesamtDTO maschinen) {
 		this.maschinen = maschinen;
 	}
-	public ProdukteGesamtDTO getProdukte() {
-		return produkte;
-	}
-	public void setProdukte(ProdukteGesamtDTO produkte) {
-		this.produkte = produkte;
-	}
     public Marketingmix getMarketingmix() {
         return marketingmix;
     }
     public void setMarketingmix(Marketingmix marketingmix) {
         this.marketingmix = marketingmix;
+    }
+    public MitarbeiterGesamtDTO getMitarbeiter() {
+        return mitarbeiter;
+    }
+    public void setMitarbeiter(MitarbeiterGesamtDTO mitarbeiter) {
+        this.mitarbeiter = mitarbeiter;
+    }
+    public void setUmsatz(double umsatz) {
+        this.umsatz = umsatz;
+    }
+    public Map<String, Integer> getMaterialien() {
+        return materialien;
+    }
+    public void setMaterialien(Map<String, Integer> materialien) {
+        this.materialien = materialien;
+    }
+    public Map<String, Integer> getProdukte() {
+        return produkte;
+    }
+    public void setProdukte(Map<String, Integer> produkte) {
+        this.produkte = produkte;
     }
 	
 	

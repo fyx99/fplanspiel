@@ -3,10 +3,12 @@ package fachkonzept;
 import java.util.Map;
 
 import fachkonzept.markt.Markteinheit;
+import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class Maschine extends Markteinheit{
 	
-	private String name;
+	private MaschinenArt maschinenArt;
 	private int kapazitaet;
 	private int auslastung;
 	private double fertigungskosten;
@@ -16,10 +18,10 @@ public class Maschine extends Markteinheit{
 	
 	private Produkt p;
 		
-	public Maschine(String bez, int k, Produkt pt, Produktionsmatrix m, double fertigungskosten, int minuten) {
+	public Maschine(MaschinenArt ma, int k, Produkt pt, Produktionsmatrix m, double fertigungskosten, int minuten) {
 		super();
-		
-		this.name= bez;
+		this.maschinenArt = ma;
+		this.setName(ma.name());
 		this.kapazitaet = k;
 		this.p = pt;
 		this.matrix = m;
@@ -28,10 +30,10 @@ public class Maschine extends Markteinheit{
 	}
 	
 	public Maschine(Maschine angebot) {
-	    this.name = angebot.name;
+	    this.maschinenArt = angebot.maschinenArt;
+	    this.setName(angebot.getName());
 	    this.kapazitaet = angebot.kapazitaet;
 	    this.fertigungskosten = angebot.fertigungskosten;
-	    this.auslastung = angebot.auslastung;
 	    this.matrix = angebot.matrix;
 	    this.p = angebot.p;
 	    this.arbeitszeit = angebot.arbeitszeit;
@@ -45,14 +47,6 @@ public class Maschine extends Markteinheit{
 
 	public void setMatrix(Produktionsmatrix matrix) {
 		this.matrix = matrix;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getKapazitaet() {
@@ -72,48 +66,25 @@ public class Maschine extends Markteinheit{
 		return p;
 	}
 
-	public Produkt produziere(int menge, Unternehmen u){
+	public Produkt produziere(int menge, Unternehmen eigentuemer){
 		
 		this.auslastung += menge;
-		//hier müsste man evt. die auslastung angeben
-		
-		//und das unternehmen soll rohstoffe bereitstellen
-	    
+
 	    for (Map.Entry<String, Integer> ein : this.matrix.getMatrix().entrySet()) {
-	    	u.materialEntfernen(ein.getKey(), ein.getValue() * menge);
-	    	//materialien verbrauchen
+	        eigentuemer.materialEntfernen(ein.getKey(), ein.getValue() * menge);
 	    }
-	    //die produkte in den bestand
-	    u.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, menge * arbeitszeit);
-		u.produktHinzu(this.p, menge);
-        u.kosten(this.fertigungskosten * menge, "Fertigungskosten");
+	    eigentuemer.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, menge * arbeitszeit);
+	    eigentuemer.produktHinzu(this.p, menge);
+	    eigentuemer.kosten(this.fertigungskosten * menge, "Fertigungskosten");
 		return this.p;
 	}
 	
-	public static Maschine findeMaschine(String name) {
-		for(Markteinheit m : Markteinheit.alleMarkteinheiten) {
-			if(m instanceof Maschine && ((Maschine) m).getName() == name) {
-				return (Maschine)m;
-			}
-		}
-		return null;
-		
-	}
-
     public double getFertigungskosten() {
         return fertigungskosten;
     }
 
     public void setFertigungskosten(double fertigungskosten) {
         this.fertigungskosten = fertigungskosten;
-    }
-
-    public int getArbeitsstunden() {
-        return arbeitszeit;
-    }
-
-    public void setArbeitsstunden(int arbeitsstunden) {
-        this.arbeitszeit = arbeitsstunden;
     }
 
     public int getArbeitszeit() {
@@ -131,5 +102,15 @@ public class Maschine extends Markteinheit{
     public void setP(Produkt p) {
         this.p = p;
     }
+
+    public MaschinenArt getMaschinenArt() {
+        return maschinenArt;
+    }
+
+    public void setMaschinenArt(MaschinenArt maschinenArt) {
+        this.maschinenArt = maschinenArt;
+        this.setName(maschinenArt.name());
+    }
+    
 	
 }

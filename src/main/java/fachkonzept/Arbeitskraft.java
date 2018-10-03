@@ -26,6 +26,9 @@ public class Arbeitskraft {
     public void setM(Mitarbeiter m) {
         this.m = m;
     }
+    public void auslastungErhoeen(int zeit) {
+        this.auslastung += zeit;
+    }
 
     public boolean isAusgelastet() {
         if(auslastung >= m.getArbeitszeit()) {

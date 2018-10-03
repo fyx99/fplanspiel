@@ -8,11 +8,11 @@ import fachkonzept.Angebot;
 public class MarktDTO {
 
 
-	public MarktDTO(List<Angebot> angebote) {
-		for(Angebot aaa : angebote) {
-			this.angebote.add(toDTO(aaa));
-		}
-	}
+    public MarktDTO(List<Angebot> angebote) {
+        for(Angebot aaa : angebote) {
+            this.angebote.add(toDTO(aaa));
+        }
+    }
 
 	private List<AngebotDTO> angebote = new ArrayList<AngebotDTO>();
 

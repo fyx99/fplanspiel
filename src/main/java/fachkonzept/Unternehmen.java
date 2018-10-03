@@ -7,8 +7,7 @@ import java.util.Map;
 
 import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
-import dto.MaterialienGesamtDTO;
-import dto.ProdukteGesamtDTO;
+import dto.MitarbeiterGesamtDTO;
 import dto.UnternehmenDTO;
 import fachkonzept.marketing.Marketingmix;
 import fachkonzept.markt.Absatzmarkt;
@@ -17,6 +16,7 @@ import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Markteinheit;
 import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class Unternehmen {
 
@@ -25,15 +25,16 @@ public class Unternehmen {
 	private String name;
 
 	private Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
-	private Absatzmarkt vmarkt = new Absatzmarkt(this);
+	private Absatzmarkt vmarkt = new Absatzmarkt();
 	private Maschinenmarkt mmarkt = new Maschinenmarkt();
 	private Finanzmarkt fmarkt = new Finanzmarkt();
 	private Arbeitsmarkt amarkt = new Arbeitsmarkt();
 
-	private float umsatz = 0;
+	private double umsatz = 0;
 	
 	private Marketingmix marketingmix;
 	private GuV guv = new GuV();
+	private Standort standort;
 
 	private List<Maschine> maschinen = new ArrayList<Maschine>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
@@ -41,19 +42,20 @@ public class Unternehmen {
     private List<Arbeitskraft> mitarbeiter = new ArrayList<Arbeitskraft>();
     private List<Verbindlichkeit> verbindlichkeiten = new ArrayList();
 
-	public Unternehmen(String name, Spiel s) {
+	public Unternehmen(String name, Spiel s, String standort) {
 		spiel = s;
 		this.name = name;
+		this.standort = new Standort(standort);
 	}
 
-	private float kapital = 0;
+	private double kapital = 0;
 
-	public float getKapital() {
+	public double getKapital() {
 		return kapital;
 	}
 
-	public void setKapital(float kapital) {
-		this.kapital = kapital;
+	public void setKapital(double d) {
+		this.kapital = d;
 	}
 
 	public void verringereKapital(double d) {
@@ -132,12 +134,7 @@ public class Unternehmen {
         } else
             this.produkte.putIfAbsent(m.getName(), menge);
     }
-    public void mitarbeiterHinzu(Mitarbeiter m, Integer menge) {
-        if (this.produkte.containsKey(m.getName())) {
-            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
-        } else
-            this.produkte.putIfAbsent(m.getName(), menge);
-    }
+
     
     public void verbindlichkeitHinzu(Verbindlichkeit v) {
         verbindlichkeiten.add(v);
@@ -256,10 +253,10 @@ public class Unternehmen {
     public boolean beschaeftigeMitarbeiter(MitarbeiterFachgebiet mfg, int minuten) {
         //einfach mal bei a anfangen und z aufhören
         int verteilteZeit = minuten;
-        for(Arbeitskraft ak : mitarbeiter) {
-            if(ak.getM().getMfg().compareTo(mfg) == 0 && !ak.isAusgelastet()) {
-                int tatZeit = Math.max(minuten, ak.getM().getArbeitszeit() - ak.getAuslastung()); //was noch geht wenn zuviel
-                ak.setAuslastung(tatZeit);
+        for(Arbeitskraft arbeitskraft : this.mitarbeiter) {
+            if(arbeitskraft.getM().getMfg().compareTo(mfg) == 0 && !arbeitskraft.isAusgelastet()) {
+                int tatZeit = Math.min(minuten, (arbeitskraft.getM().getArbeitszeit() - arbeitskraft.getAuslastung())); //was noch geht wenn zuviel
+                arbeitskraft.auslastungErhoeen(tatZeit);
                 verteilteZeit -= tatZeit;
                 if(verteilteZeit <= 0)
                     return true;
@@ -269,21 +266,40 @@ public class Unternehmen {
         return false;
         
     }
+    
+    public int getMitarbeiterKapazitaeten(MitarbeiterFachgebiet mfg){
+        int vorhandeneZeit = 0;
+        for(Arbeitskraft ak : this.mitarbeiter) {
+            if(mfg.name().equals(ak.getM().getMfg().name())) {
+                vorhandeneZeit += (ak.getM().getArbeitszeit() - ak.getAuslastung());
+            }
+        }
+        
+        return vorhandeneZeit;
+    }
+    
+    public Map<MitarbeiterFachgebiet, Integer> getMitarbeiterKapazitaeten(){
+        Map<MitarbeiterFachgebiet, Integer> map = new HashMap<MitarbeiterFachgebiet, Integer>();
+        map.put(MitarbeiterFachgebiet.MASCHINE, getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+        map.put(MitarbeiterFachgebiet.VERWALTUNG, getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG));
+        map.put(MitarbeiterFachgebiet.VERTRIEB, getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB));
+        return map;
+    }
 
-	public float getUmsatz() {
+	public double getUmsatz() {
 		// TODO Auto-generated method stub
 		return umsatz;
 	}
 	
-	public MaterialienGesamtDTO zeigeMaterialien(){
-		return new MaterialienGesamtDTO(this.materialien);
+	public  Map<String, Integer> zeigeMaterialien(){
+		return this.materialien;
 	}
 
 	public MaschinenGesamtDTO zeigeMaschinen() {
 		return new MaschinenGesamtDTO(this.maschinen);
 	}
-	public ProdukteGesamtDTO zeigeProdukte() {
-		return new ProdukteGesamtDTO(this.produkte);
+	public  Map<String, Integer> zeigeProdukte() {
+		return this.produkte;
 	}
 
 	public Spiel getSpiel() {
@@ -298,6 +314,14 @@ public class Unternehmen {
 	public GuV getGuv() {
         return guv;
     }
+	
+	public String getStandortName() {
+		return standort.getName();
+	}
+	
+	public Standort getStandort() {
+		return standort;
+	}
 	
 	
 	public void rundenReset() {
@@ -318,15 +342,17 @@ public class Unternehmen {
 		// TODO Auto-generated constructor stub
 		UnternehmenDTO uu = new UnternehmenDTO();
 		uu.setName(u.getName());
+		uu.setStandort(u.getStandortName());
 		uu.setBmarkt(new MarktDTO(u.getBmarkt().getAngebote()));
 		uu.setVmarkt(new MarktDTO(u.getVmarkt().getAngebote()));
 		uu.setMmarkt(new MarktDTO(u.getMmarkt().getAngebote()));
 		
 		uu.setUmsatz(u.getUmsatz());
 		uu.setKapital(u.getKapital());
-		uu.setMaterialien(new MaterialienGesamtDTO(u.getMaterialien()));
+		uu.setMaterialien(u.getMaterialien());
 		uu.setMaschinen(new MaschinenGesamtDTO(u.getMaschinen()));
-		uu.setProdukte(new ProdukteGesamtDTO(u.getProdukte()));
+		uu.setProdukte(u.getProdukte());
+		uu.setMitarbeiter(new MitarbeiterGesamtDTO(u.getMitarbeiter(), u.getMitarbeiterKapazitaeten()));
 		return uu;
 	}
 

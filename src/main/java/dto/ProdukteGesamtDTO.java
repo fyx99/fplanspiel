@@ -1,4 +1,4 @@
-package dto;
+/*package dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class ProdukteGesamtDTO {
 
 	public ProdukteGesamtDTO(Map<String, Integer> produktmatrix) {
 	    for (Map.Entry<String, Integer> ein : produktmatrix.entrySet()) {
-	    	produkte.add(new ProduktDTO(Produkt.findeProdukt(ein.getKey()), ein.getValue()));
+	    	produkte.add(new ProduktDTO((Produkt)Produkt.findeMarkteinheit(ein.getKey(), Produkt.class), ein.getValue()));
 	    }
 	}
 	
@@ -20,3 +20,4 @@ public class ProdukteGesamtDTO {
 		return produkte;
 	}
 }
+*/

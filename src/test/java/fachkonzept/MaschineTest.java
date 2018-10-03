@@ -1,9 +1,93 @@
 package fachkonzept;
 
-public class MaschineTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-	public MaschineTest() {
-		// TODO Auto-generated constructor stub
-	}
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.ProduktArt;
+import fachkonzept.util.ProduktTyp;
+
+class MaschineTest {
+    static Produktionsmatrix pm ;
+    static Produkt p;
+    static Maschine m;
+    @BeforeAll
+    static void setup() {
+        Map map = new HashMap<String, Integer>();
+        map.put("Holz", 68);
+        map.put("Glas", 4);
+        map.put("Edelstahl", 434);
+        map.put("Stoff", 74);
+        map.put("Leder", 1);
+        map.put("Kunststoff", 0);
+        pm = new Produktionsmatrix(map);
+        p= new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank);
+        m = new Maschine(MaschinenArt.Holzschrankmaschine, 600, p, pm, 50, 50);
+    }
+   
+    @Test
+    void init() {
+        
+        Maschine mTest = new Maschine(MaschinenArt.Holzstuhlmaschine, 487, p, pm, 15, 34);
+        assertEquals(34, mTest.getArbeitszeit());
+        assertEquals(0, mTest.getAuslastung());
+        assertEquals(15, mTest.getFertigungskosten());
+        assertEquals(487, mTest.getKapazitaet());
+        assertNotNull(mTest.getId());
+        assertEquals(pm, mTest.getMatrix());
+        assertEquals(MaschinenArt.Holzstuhlmaschine, mTest.getMaschinenArt());
+        assertEquals("Holzstuhlmaschine", mTest.getName());
+        assertEquals(ProduktArt.Edelstahlschrank, mTest.getP().getProduktArt());
+        assertEquals(6, mTest.getMatrix().getMatrix().size());
+        
+        Maschine m2Test = new Maschine(m);
+        assertEquals(50, m2Test.getArbeitszeit());
+        assertEquals(0, m2Test.getAuslastung());
+        assertEquals(50, m2Test.getFertigungskosten());
+        assertEquals(600, m2Test.getKapazitaet());
+        assertNotNull(m2Test.getId());
+        assertEquals(pm, m2Test.getMatrix());
+        assertEquals(MaschinenArt.Holzschrankmaschine, m2Test.getMaschinenArt());
+        assertEquals("Holzschrankmaschine", m2Test.getName());
+        assertEquals(ProduktArt.Edelstahlschrank, m2Test.getP().getProduktArt());
+        assertEquals(6, m2Test.getMatrix().getMatrix().size());
+    }
+    
+    @Test
+    void produziere() {
+        Unternehmen u = new Unternehmen("a", new Spiel(), "A");
+        u.arbeitskraftHinzu(new Arbeitskraft(0, new Mitarbeiter("name test", 777.88, 70000, MitarbeiterFachgebiet.MASCHINE)));
+        u.setKapital(50000);
+        Produkt p = m.produziere(9, u);
+        assertNotNull(p);
+        assertEquals(9, m.getAuslastung());
+        assertEquals(1, u.getProdukte().size());
+        assertEquals(Integer.valueOf(9), u.getProdukte().get("Edelstahlschrank"));
+        assertEquals(1, u.getProdukte().size());
+
+        assertEquals(49550, u.getKapital());
+        assertEquals(1, u.getGuv().getAusgaben().size());
+        assertEquals(450, u.getGuv().getAusgaben().get(0).getSumme());
+        assertEquals("Fertigungskosten", u.getGuv().getAusgaben().get(0).getBeschreibung());
+//       assertEquals(450, u.getMitarbeiter().get(0).getAuslastung());
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
