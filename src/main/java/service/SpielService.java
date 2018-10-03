@@ -99,7 +99,7 @@ public class SpielService {
     @GET
     @Path("unternehmen")
     @Produces(MediaType.APPLICATION_JSON)
-    public static UnternehmenDTO u() {
+    public static UnternehmenDTO getUnternehmen() {
         if(s != null && s.getAktuellesUnternehmen() != null)
             return Unternehmen.getDTO(s.getAktuellesUnternehmen());
         return null;
@@ -264,7 +264,7 @@ public class SpielService {
     @GET
     @Path("zwischenstand")
     @Produces(MediaType.APPLICATION_JSON)
-    public static ZwischenstandDTO checkZwischenstand() {
+    public static ZwischenstandDTO getZwischenstand() {
         if(s == null)
             return null;
         return new ZwischenstandDTO(s.getRunde(), s.getUnternehmen());

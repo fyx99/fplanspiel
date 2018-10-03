@@ -78,6 +78,37 @@ class ServiceTest {
         assertNotNull(SpielService.getKredite());
         assertNotNull(SpielService.getMitarbeiter());
         assertNotNull(SpielService.getMitarbeiter());
+        assertNotNull(SpielService.getUnternehmen());
+        assertNotNull(SpielService.getUmsatzHistorie());
+        assertNotNull(SpielService.getMarketingmix());
+        //kosequenter weise könnte man alle nach richtigkeit untersuchen
+    }
+    
+    @Test
+    void anbieten() {
+        //todo
+    }
+    
+    @Test
+    void kaufen() {
+        //todo
+    }
+    
+    @Test
+    void produziere() {
+        //todo
+    }
+    
+    @Test
+    void resultate() {
+        //hier mal die rundenergebnisse für 1 spieler, für alle nach der simulation und das endergebnis
+
+        assertNotNull(SpielService.getRundenResultat());
+        assertNotNull(SpielService.getZwischenstand());
+        assertNotNull(SpielService.getSpielende());
+        
+        //die sollten auf jeden fall auf richtigkeit überprüft werden, solange man nicht nur eine methode aufruft, 
+        //dann sollte man einfach die methode testen und hier nur kurz ob das mit den parametern klappt
     }
 
 }

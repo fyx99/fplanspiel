@@ -32,7 +32,7 @@ public class Unternehmen {
 
 	private double umsatz = 0;
 	
-	private Marketingmix marketingmix;
+	private Marketingmix marketingmix = new Marketingmix();
 	private GuV guv = new GuV();
 	private Standort standort;
 
