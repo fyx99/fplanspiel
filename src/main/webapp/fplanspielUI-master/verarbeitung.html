@@ -7,22 +7,180 @@
     <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
     <meta name="author" content="BootstrapBay.com">
     <title>Verarbeitung</title>
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
  </head>
  
  <body onload="start()">
- 		<script type="text/javascript" >
- 			$(document).ready(function() {
-                $('#navbar').load('navbar.html');
-                $('#footer').load('footer.html');
-                });
+ 	<script type="text/javascript" >
+ 	
+ 		$(document).ready(function() {
+            $('#navbar').load('navbar.html');
+            $('#footer').load('footer.html');
+            
+        });
+ 		
+ 		var daten;
 
-		</script>
+ 		window.onload = function getDataVerarbeitung(){
+			jQuery.ajax({
+				url: "../webapi/v1/demo/unternehmen",
+				type: "GET",
+				dataType: "json",
+				success: function(data, data2){
+					daten = data.mmarkt.angebote;
+					printVerarbeitung(daten);
+					
+				}
+			});
+		}
+ 		
+ 		//var c ="";
+		function printVerarbeitung(data){
+			//for (String key : data[angebot].markteinheit.matrix.matrix.keySet()) {
+	 		//    c = key;
+	 		//    console.log(key);
+	 		//}
+			var verarbData = data;
+			var cont  = document.getElementById('contentVerarbeitung');
+			var s ="";
+			for(var angebot in data){
+				var maschinenid = data[angebot].markteinheit.id;
+				var inputid = "inputVerarbeitung"+maschinenid;
+				var outputid = "demo"+maschinenid;
+				
+				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
+						'<img src="img/leder.jpg" alt="Leder">'+
+						'<div class="caption">'+
+							'<div class="col-sm-12">'+
+								'<h3>'+ data[angebot].markteinheit.p.name+'</h3>'+
+							'</div>'+
+							'<div class="col-sm-12">'+
+								'<h4>Benötigtes Material:</h4>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>Leer</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+							//	'<p>'+ c +'</p>'+
+								'<p>Leer</p>'+
+							'</div>'+
+							
+							'<div class="col-sm-12">'+
+								'<h4>Maschine:</h4>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>Benötigte Kapazität</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+ data[angebot].menge+'</p>'+
+								
+							'</div>'+	
+							'<div class="col-sm-12">'+
+								'<h4>Sonstige Kosten:</h4>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>Fertigungskosten: </p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+ data[angebot].markteinheit.fertigungskosten+'</p>'+
+								'<br>'+
+							'</div>'+	
+							
+		    				'<div class="col-sm-3">'+
+								'<input class="form-control input-sm" type="text" id ='+ inputid+'>'+
+								'<br>'+
+							'</div>'+
+							'<div class="col-sm-3">'+
+								'<p>Stück</p>'+
+								'<br>'+
+							'</div>'+
+							'<div class="col-sm-4">'+
+								'<a href="#" class="btn btn-danger" onClick = "produziere('+maschinenid+','+angebot+')" data-toggle="modal" data-target="#modalProduzieren">Produzieren</a>'+
+								'<br>'+
+							'</div>'+
+							
+							
+							'<div class="col-sm-12">'+
+							'<p id='+outputid+'>Test</p>'+
+							'</div>' +
+						'</div>' + 
+						'</div></div></div>';
+				
+			}
+			cont.innerHTML = s;
+		}
+		
+		// Bei Klick auf Button "Produziere"
+		function produziere(id, angebot) {
+			
+			// Wert des Input-Feldes (Menge, die produziert werden soll)
+			var iV = document.getElementById("inputVerarbeitung"+id).value;
+			
+			//Test: Input-Wert
+			document.getElementById("demo"+id).innerHTML = iV;
+			
+			//Inhalt des Modal
+			var cont  = document.getElementById('contentModal');
+			var s ="";
+			
+			//Multipliziere mit eingebener Menge
+			var menge = daten[angebot].menge;
+			menge *= iV;
+			var kosten = daten[angebot].markteinheit.fertigungskosten;
+			kosten *= iV;
+			
+				s += 
+					'<div class="col-sm-12">'+
+						'<h3>Produktion von ' +iV+'x ' +  daten[angebot].markteinheit.p.name +':</h3><div><br></div>'+
+					'</div>'+
+					
+					'<div class="col-sm-12">'+
+						'<h4>Benötigtes Material:</h4>'+
+					'</div>'+
+					
+					'<div class="col-sm-6">'+
+						'<p>Leer</p>'+
+					'</div>'+
+					'<div class="col-sm-6">'+
+						'<p>Leer</p>'+
+					'</div>'+
+					
+					'<div class="col-sm-12">'+
+						'<h4>Maschine:</h4>'+
+					'</div>'+
+					'<div class="col-sm-6">'+
+						'<p>Benötigte Kapazität:</p>'+
+					'</div>'+
+					'<div class="col-sm-6">'+
+						'<p>'+ menge +'</p>'+
+					'</div>'+	
+					
+					'<div class="col-sm-12">'+
+						'<h4>Sonstige Kosten:</h4>'+
+					'</div>'+
+					'<div class="col-sm-6">'+
+						'<p>Fertigungskosten: </p>'+
+					'</div>'+
+					'<div class="col-sm-6">'+
+						'<p>'+ kosten+'</p>'+
+						'<br>'+
+					'</div>'
+					 ;
+		
+				cont.innerHTML = s;
+		}
+		
+		
+		
+	</script>
 
     <!-- Fixed navbar -->
     <div id="navbar">
@@ -31,713 +189,44 @@
 	<!-- Page Header -->
 	<div class="container">	
         <div class="page-header">
-            <h1>Herstellung von Produkten</h1>
+             <h1>Herstellung von Produkten</h1>
         </div>
-		
-		<!-- Row 1: Bilder -->
-		<div class="row">
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/holzstuhl2.jpg" alt="Chair Bootstrap Admin Theme">
-				</a>
-				
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/lederstuhl.jpg" alt="Tisch Landing Page Template">
-				</a>
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="speisekarte.html" class="thumbnail home-thumb">
-					<img src="img/stoffstuhl.jpg" alt="Regal Portfolio Theme">
-				</a>
-			</div>
-		</div>
-		
-		<!-- Row 2: Header Art der herzustellenden Produktes -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h3>Holzstuhl</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Lederstuhl</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Stoffstuhl</h3>
-			</div>
-		</div>
-		
-		<!-- Row 3: Benötigtes Material Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-		</div>
-		
-		<!-- Row 4: Benötigte ME1 -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3ME</p>
-			</div>
-		</div>
-		
-		<!-- Row 5: Benötigte ME2 -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3ME</p>
-			</div>
-		</div>
-		
-		<!-- Row 6: Maschine Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-		</div>
-		
-		<!-- Row 7: Benötigte Kapazität -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 8: Sonstige Kosten Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-		</div>
-		
-		<!-- Row 9: Sonstige Kosten -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 10: ...ME Produzieren -->
-		<div class="row">
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-		</div>
-		
-		
+        
+   	<!-- Page Content -->
+        <div class="well">
+        		<div class="row" id="contentVerarbeitung">
+        		
+  				</div>
+  		</div>
 		<br>
-		<br>
-		<br>
-		
-		
-				<!-- Row 11: Bilder -->
-		<div class="row">
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/holztisch.jpg" alt="Chair Bootstrap Admin Theme">
-				</a>
-				
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/glastisch.jpg" alt="Tisch Landing Page Template">
-				</a>
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="speisekarte.html" class="thumbnail home-thumb">
-					<img src="img/kunststofftisch.jpg" alt="Regal Portfolio Theme">
-				</a>
-			</div>
-		</div>
-		
-		<!-- Row 2: Header Art der herzustellenden Produktes -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h3>Holztisch</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Glastisch</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Kunststofftisch</h3>
-			</div>
-		</div>
-		
-		<!-- Row 3: Benötigtes Material Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-		</div>
-		
-		<!-- Row 4: Benötigte ME1 -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3ME</p>
-			</div>
-		</div>
-		
-		<!-- Row 5: Benötigte ME2 -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3ME</p>
-			</div>
-		</div>
-		
-		<!-- Row 6: Maschine Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-		</div>
-		
-		<!-- Row 7: Benötigte Kapazität -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 8: Sonstige Kosten Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-		</div>
-		
-		<!-- Row 9: Sonstige Kosten -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 10: ...ME Produzieren -->
-		<div class="row">
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-		</div>
-		
-		
-		<br>
-		<br>
-		<br>
-		
-		
-				<!-- Row 1: Bilder -->
-		<div class="row">
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/glasschrank.jpg" alt="Chair Bootstrap Admin Theme">
-				</a>
-				
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="#" class="thumbnail home-thumb">
-					<img src="img/edelstahlschrank.jpg" alt="Tisch Landing Page Template">
-				</a>
-			</div>
-			
-			<div class="col-sm-4">
-				<a href="speisekarte.html" class="thumbnail home-thumb">
-					<img src="img/holzschrank.jpg" alt="Regal Portfolio Theme">
-				</a>
-			</div>
-		</div>
-		
-		<!-- Row 2: Header Art der herzustellenden Produktes -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h3>Glasschrank</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Edelstahlschrank</h3>
-			</div>
-			
-			<div class="col-sm-4">
-				<h3>Holzschrank</h3>
-			</div>
-		</div>
-		
-		<!-- Row 3: Benötigtes Material Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Benötigtes Material:</h4>
-			</div>
-			
-		</div>
-		
-		<!-- Row 4: Benötigte ME1 -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3ME</p>
-			</div>
-		</div>
-		
-		<!-- Row 5: Benötigte ME2 -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3 ME</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holz</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>3ME</p>
-			</div>
-		</div>
-		
-		<!-- Row 6: Maschine Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Maschine:</h4>
-			</div>
-			
-		</div>
-		
-		<!-- Row 7: Benötigte Kapazität -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Benötigte Kapazität</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 8: Sonstige Kosten Header -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-			
-			<div class="col-sm-4">
-				<h4>Sonstige Kosten:</h4>
-			</div>
-		</div>
-		
-		<!-- Row 9: Sonstige Kosten -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Kosten für Hilfs-, Betriebsstoffe und Mitarbeiter</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>0</p>
-			</div>
-		</div>
-		
-		<!-- Row 10: ...ME Produzieren -->
-		<div class="row">
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-			
-			<div class="col-sm-1">
-				<input class="form-control input-sm" type="text">
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<a href="#" class="btn btn-danger btn-sm">Produzieren</a>
-			</div>
-		</div>
+	</div>	
+	
+	<!-- The Modal -->
+  <div class="modal" id="modalProduzieren">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+         <div id="contentModal">
+          </div>
+        <!-- Modal body -->
+        <div class="modal-body" >
+         
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer" >
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Bestätigen</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
     <!-- Fixed footer -->
     <div id="footer">
@@ -782,7 +271,7 @@
     	</div>
     </div>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+   
+  
   </body>
 </html>
