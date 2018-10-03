@@ -228,12 +228,12 @@ public class Simulation {
 
     private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
     	double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
-        Material holz = new Material(1, MaterialArt.Holz);
-        Material stoff = new Material(1, MaterialArt.Stoff);
-        Material leder = new Material(1, MaterialArt.Leder);
-        Material glas = new Material(1, MaterialArt.Glas);
-        Material kunststoff = new Material(1, MaterialArt.Kunststoff);
-        Material edelstahl = new Material(1, MaterialArt.Edelstahl);
+        Material holz = new Material(MaterialArt.Holz);
+        Material stoff = new Material(MaterialArt.Stoff);
+        Material leder = new Material(MaterialArt.Leder);
+        Material glas = new Material(MaterialArt.Glas);
+        Material kunststoff = new Material(MaterialArt.Kunststoff);
+        Material edelstahl = new Material(MaterialArt.Edelstahl);
 
         Beschaffungsmarkt b = new Beschaffungsmarkt();
         b.anbieten(new Angebot(holz, 100, 3 * standortfaktor_material));
@@ -277,12 +277,12 @@ public class Simulation {
     }
 
     private static Maschinenmarkt maschinenmarktDemoDaten() {
-        Material holz = new Material(1, MaterialArt.Holz);
-        Material stoff = new Material(1, MaterialArt.Stoff);
-        Material leder = new Material(1, MaterialArt.Leder);
-        Material glas = new Material(1, MaterialArt.Glas);
-        Material kunststoff = new Material(1, MaterialArt.Kunststoff);
-        Material edelstahl = new Material(1, MaterialArt.Edelstahl);
+        Material holz = new Material(MaterialArt.Holz);
+        Material stoff = new Material(MaterialArt.Stoff);
+        Material leder = new Material(MaterialArt.Leder);
+        Material glas = new Material(MaterialArt.Glas);
+        Material kunststoff = new Material(MaterialArt.Kunststoff);
+        Material edelstahl = new Material(MaterialArt.Edelstahl);
 
         Produkt holzstuhl = new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl);
         Map<String, Integer> map_hst = new HashMap<String, Integer>();	// für jedes Produkt Map mit benötigten Ressourcen

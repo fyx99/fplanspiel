@@ -294,7 +294,7 @@ public class DemoService {
     @Produces(MediaType.APPLICATION_JSON)
     public Object getUmsatzHistorie() {
 
-        return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie(s, 1);
+        return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie();
 
     }
 

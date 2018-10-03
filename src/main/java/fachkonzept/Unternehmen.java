@@ -7,9 +7,7 @@ import java.util.Map;
 
 import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
-import dto.MaterialienGesamtDTO;
 import dto.MitarbeiterGesamtDTO;
-import dto.ProdukteGesamtDTO;
 import dto.UnternehmenDTO;
 import fachkonzept.marketing.Marketingmix;
 import fachkonzept.markt.Absatzmarkt;
@@ -293,15 +291,15 @@ public class Unternehmen {
 		return umsatz;
 	}
 	
-	public MaterialienGesamtDTO zeigeMaterialien(){
-		return new MaterialienGesamtDTO(this.materialien);
+	public  Map<String, Integer> zeigeMaterialien(){
+		return this.materialien;
 	}
 
 	public MaschinenGesamtDTO zeigeMaschinen() {
 		return new MaschinenGesamtDTO(this.maschinen);
 	}
-	public ProdukteGesamtDTO zeigeProdukte() {
-		return new ProdukteGesamtDTO(this.produkte);
+	public  Map<String, Integer> zeigeProdukte() {
+		return this.produkte;
 	}
 
 	public Spiel getSpiel() {
@@ -351,9 +349,9 @@ public class Unternehmen {
 		
 		uu.setUmsatz(u.getUmsatz());
 		uu.setKapital(u.getKapital());
-		uu.setMaterialien(new MaterialienGesamtDTO(u.getMaterialien()));
+		uu.setMaterialien(u.getMaterialien());
 		uu.setMaschinen(new MaschinenGesamtDTO(u.getMaschinen()));
-		uu.setProdukte(new ProdukteGesamtDTO(u.getProdukte()));
+		uu.setProdukte(u.getProdukte());
 		uu.setMitarbeiter(new MitarbeiterGesamtDTO(u.getMitarbeiter(), u.getMitarbeiterKapazitaeten()));
 		return uu;
 	}

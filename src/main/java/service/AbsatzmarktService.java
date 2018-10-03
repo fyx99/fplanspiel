@@ -60,7 +60,7 @@ public class AbsatzmarktService {		//nein - entweder verkaufs - oder Absatzmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object getUmsatzHistorie() {
 
-		return spiel.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie(spiel, 1);
+		return spiel.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie();
 
 	}
 	

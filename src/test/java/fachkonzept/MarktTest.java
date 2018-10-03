@@ -47,7 +47,7 @@ class MarktTest {
     @Test
     void maschinenMarkt() {
         assertEquals(0, m.getAngebote().size());
-        m.anbieten(new Angebot(new Material(1, MaterialArt.Kunststoff), 77, 77777.64));
+        m.anbieten(new Angebot(new Material(MaterialArt.Kunststoff), 77, 77777.64));
         assertEquals(1, m.getAngebote().size());
         assertNotNull(m.getAngebote().get(0));
         assertNotNull(m.getAngebote().get(0).getMarkteinheit());

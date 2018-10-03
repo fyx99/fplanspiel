@@ -52,18 +52,6 @@ public abstract class Markt {
     private void umsatzFesthalten(Angebot a, int menge, int runde) {
         umsatzHistorie.add(new Umsatz(a, menge, runde));    // da simulation am ende
     }
-    
-    public List<Umsatz> getUmsatzHistorie(Spiel s, int rundenZurueck) {
-
-        List<Umsatz> umsaetze = new ArrayList<Umsatz>();
-        for(Umsatz u : this.umsatzHistorie) {
-            if(u.getRunde() >= s.getRunde() - rundenZurueck) {
-                umsaetze.add(u);
-            }
-        }
-
-        return umsaetze;
-    }
 
     public void angebotEntfernen(Angebot a) {
         angebote.remove(a);
@@ -88,13 +76,17 @@ public abstract class Markt {
     public void angebotHinzu(Angebot a) {
         this.angebote.add(a);
     }
+    
+    public List<Umsatz> getUmsatzHistorie() {
+        return umsatzHistorie;
+    }
+
 
     private boolean vergleiche(Angebot a, Angebot b) {
-        boolean t = false;
-        if(a.getMarkteinheit().equals(b.getMarkteinheit()) && a.getPreis() == b.getPreis())
-            t = true;
+        if(a.getMarkteinheit().getName().equals(b.getMarkteinheit().getName()) && a.getPreis() == b.getPreis())
+            return true;
 
-        return t;
+        return false;
     }
 
 }
