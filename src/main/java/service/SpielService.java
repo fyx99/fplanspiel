@@ -39,7 +39,7 @@ public class SpielService {
     @GET
     @Path("ping") 
     @Produces(MediaType.TEXT_PLAIN) // Application_Json
-    public String getIt(@DefaultValue("1") @QueryParam("ping") String p) {
+    public static String ping(@DefaultValue("1") @QueryParam("ping") String p) {
         return p;
     }
     
@@ -47,14 +47,14 @@ public class SpielService {
     @GET
     @Path("neuesspiel")
     @Produces(MediaType.TEXT_PLAIN) // Application_Json
-    public void neuesSpiel() {
+    public static void neuesSpiel() {
         s = new Spiel();
     }
 
     @GET
     @Path("neuesunternehmen")
     @Produces(MediaType.TEXT_PLAIN) // Application_Json
-    public String neuesSpiel(@QueryParam("name") String name, @QueryParam("standort") String standort) {
+    public static String neuesUnternehmen(@QueryParam("name") String name, @QueryParam("standort") String standort) {
 
         if(s != null) {
             
@@ -74,21 +74,19 @@ public class SpielService {
     @GET
     @Path("starten")
     @Produces(MediaType.APPLICATION_JSON)
-    public void spielStart(@DefaultValue("10") @QueryParam("rundenZahl") Integer rundenAnzahl) {
+    public static void spielStart(@DefaultValue("10") @QueryParam("rundenZahl") Integer rundenAnzahl) {
         if(s != null) {
             for(Unternehmen u : s.getUnternehmen())
                 u.setSpiel(s);
             s.setRundenAnzahl(rundenAnzahl);
             s.rundenStart();
-            
         }
-        Spiel.log("Runde kann nicht gestartet werden!");
     }
 
     @GET
     @Path("zugbeendet")
     @Produces(MediaType.APPLICATION_JSON)
-    public Integer zugBeendet() {
+    public static Integer zugBeendet() {
         //-1: spiel zu ende
         //0: weitere spieler in der runde
         //n: runden nummer bei neuer runde
@@ -99,7 +97,7 @@ public class SpielService {
     @GET
     @Path("unternehmen")
     @Produces(MediaType.APPLICATION_JSON)
-    public UnternehmenDTO u() {
+    public static UnternehmenDTO u() {
         if(s != null && s.getAktuellesUnternehmen() != null)
             return Unternehmen.getDTO(s.getAktuellesUnternehmen());
         return null;
@@ -109,41 +107,41 @@ public class SpielService {
     @GET
     @Path("bmarkt")
     @Produces(MediaType.APPLICATION_JSON)
-    public MarktDTO getBMarkt() {
+    public static MarktDTO getBMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getBmarkt().getAngebote());
     }
 
     @GET
     @Path("vmarkt")
     @Produces(MediaType.APPLICATION_JSON)
-    public MarktDTO getVMarkt() {
+    public static MarktDTO getVMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getVmarkt().getAngebote());
     }
     
     @GET
     @Path("fmarkt")
     @Produces(MediaType.APPLICATION_JSON)
-    public MarktDTO getFMarkt() {
+    public static MarktDTO getFMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getFmarkt().getAngebote());
     }
     
     @Path("amarkt")
     @Produces(MediaType.APPLICATION_JSON)
-    public MarktDTO getAMarkt() {
+    public static MarktDTO getAMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getAmarkt().getAngebote());
     }
 
     @GET
     @Path("mmarkt")
     @Produces(MediaType.APPLICATION_JSON)
-    public MarktDTO getMMarkt() {
+    public static MarktDTO getMMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getMmarkt().getAngebote());
     }
 
     @GET
     @Path("angebotkaufen")
     @Produces(MediaType.APPLICATION_JSON)
-    public void kaufeAngebot(@DefaultValue("0") @QueryParam("menge") int menge, @QueryParam("angebotsid") int id) {
+    public static void kaufeAngebot(@DefaultValue("0") @QueryParam("menge") int menge, @QueryParam("angebotsid") int id) {
         // erstmal bezahlen
 
         Angebot angebot = Angebot.findeAngebot(id);
@@ -171,7 +169,7 @@ public class SpielService {
     @GET
     @Path("produziere")
     @Produces(MediaType.APPLICATION_JSON)
-    public void produziere(@QueryParam("menge") int menge, @QueryParam("maschinenid") int id) {
+    public static void produziere(@QueryParam("menge") int menge, @QueryParam("maschinenid") int id) {
         Maschine m = (Maschine) Markteinheit.findeMarkteinheit(id);
         Produkt p = m.produziere(menge, s.getAktuellesUnternehmen());
     }
@@ -199,7 +197,7 @@ public class SpielService {
     @GET
     @Path("angebotentfernen")
     @Produces(MediaType.APPLICATION_JSON)
-    public void angebotEntfernen(@QueryParam("id") int id) {
+    public static void angebotEntfernen(@QueryParam("id") int id) {
         Angebot a = Angebot.findeAngebot(id);
         s.getAktuellesUnternehmen().getVmarkt().angebotEntfernen(a);
     }
@@ -207,42 +205,42 @@ public class SpielService {
     @GET
     @Path("maschinen")
     @Produces(MediaType.APPLICATION_JSON)
-    public MaschinenGesamtDTO getMaschinen() {
+    public static MaschinenGesamtDTO getMaschinen() {
         return s.getAktuellesUnternehmen().zeigeMaschinen();
     }
 
     @GET
     @Path("produkte")
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Integer> getProdukte() {
+    public static Map<String, Integer> getProdukte() {
         return s.getAktuellesUnternehmen().zeigeProdukte();
     }
 
     @GET
     @Path("materialien")
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Integer> getMaterialien() {
+    public static Map<String, Integer> getMaterialien() {
         return s.getAktuellesUnternehmen().zeigeMaterialien();
     }
 
     @GET
     @Path("umsatzhistorievmarkt")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Umsatz> getUmsatzHistorie() {
+    public static List<Umsatz> getUmsatzHistorie() {
         return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie();
     }
 
     @GET
     @Path("marketingmix")
     @Produces(MediaType.APPLICATION_JSON)
-    public Marketingmix getMarketingmix() {
+    public static Marketingmix getMarketingmix() {
         return s.getAktuellesUnternehmen().getMarketingmix();
     }
     
     @GET
     @Path("sponsoring")
     @Produces(MediaType.APPLICATION_JSON)
-    public Marketingmix erstelleSponsoring(@QueryParam("budget") double b, @QueryParam("name") String name) {
+    public static Marketingmix erstelleSponsoring(@QueryParam("budget") double b, @QueryParam("name") String name) {
         s.getAktuellesUnternehmen().getMarketingmix().marketingHinzu(new Sponsoring(name, b));   
         return s.getAktuellesUnternehmen().getMarketingmix();
     }    
@@ -250,7 +248,7 @@ public class SpielService {
     @GET
     @Path("zwischenstand")
     @Produces(MediaType.APPLICATION_JSON)
-    public ZwischenstandDTO checkZwischenstand() {
+    public static ZwischenstandDTO checkZwischenstand() {
         if(s == null)
             return null;
         return new ZwischenstandDTO(s.getRunde(), s.getUnternehmen());
@@ -260,7 +258,7 @@ public class SpielService {
     @GET
     @Path("rundenresultat")
     @Produces(MediaType.APPLICATION_JSON)
-    public Object getRundenResultat() {
+    public static Object getRundenResultat() {
         if(s == null)
             return null;
         return new RundenResultatDTO(s.getAktuellesUnternehmen());
@@ -269,8 +267,12 @@ public class SpielService {
     @GET
     @Path("spielende")
     @Produces(MediaType.APPLICATION_JSON)
-    public Object getSpielende() {
+    public static Object getSpielende() {
         //@Jonas Breuer
         return 0;
     } 
+    
+    public static Spiel getSpiel() {
+        return s;
+    }
 }
