@@ -4,14 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class SpielTest {
-    static Spiel testSpiel;
+    Spiel testSpiel;
 
-    @BeforeAll
-    static void vorbereiten() {
+    @BeforeEach
+
+    void vorbereiten() {
         testSpiel = new Spiel(10);
         testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest1", testSpiel, "A"));
         testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest2", testSpiel, "A"));

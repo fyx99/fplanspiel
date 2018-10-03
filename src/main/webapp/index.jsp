@@ -6,11 +6,10 @@
     <h2>Beispiel Rest!</h2>
     <p><a href="api/spiel/ping?ping=84">Ping</a></p>
     <p>neues spiel unternehmen hinzufügen -> spielstarten, 1. simulation -> jz erster u dran für actions</p>
-    <p><a href="api/spiel/quickstart">quick</a></p>
     <p><a href="api/spiel/neuesspiel">neues Spiel</a></p>
-    <p><a href="api/spiel/neuesunternehmen/abcag/A">neues Unternehmen mit name ABC AG mit Standort A</a></p>
-    <p><a href="api/spiel/neuesunternehmen/abckgaa/B">neues Unternehmen mit name ABC KGAA mit Stanndort B</a></p>
-    <p><a href="api/spiel/spielstarten?rundenZahl=5">spiel starten</a></p>
+    <p><a href="api/spiel/neuesunternehmen?name=abcag&standort=A">neues Unternehmen mit name ABC AG mit Standort A</a></p>
+    <p><a href="api/spiel/neuesunternehmen?name=abckgaa&standort=B">neues Unternehmen mit name ABC KGAA mit Stanndort B</a></p>
+    <p><a href="api/spiel/starten?rundenZahl=5">spiel starten</a></p>
     <p><a href="api/spiel/zugbeendet">zug beendet</a></p>
     <p>Märkte  <a href="api/spiel/mmarkt">m</a>  <a href="api/spiel/bmarkt">b</a>  <a href="api/spiel/vmarkt">v</a>  <a href="api/spiel/fmarkt">f</a>  <a href="api/spiel/amarkt">a</a></p>
     <div>

@@ -4,14 +4,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import service.SpielService;
 
 class ServiceTest {
+    
+    @BeforeEach
+    void beforeEaching() {
+        SpielService.neuesSpiel();
+        SpielService.neuesUnternehmen("Test Unternehmen AG 107", "A");
+        SpielService.neuesUnternehmen("Test Unternehmen AG 108", "B");
+        SpielService.neuesUnternehmen("Test Unternehmen AG 109", "C");
+        SpielService.spielStart(3);
+    }
 
     @Test
-    void init() {
+    void spielInit() {
         //start eines spiels
         assertEquals("test ping", SpielService.ping("test ping"));
         SpielService.neuesSpiel();
@@ -52,6 +62,22 @@ class ServiceTest {
         
 
         assertEquals(Integer.valueOf(-1), SpielService.zugBeendet());
+    }
+    
+    @Test
+    void datenSchnittstellen() {
+
+        assertNotNull(SpielService.getAMarkt());
+        assertNotNull(SpielService.getBMarkt());
+        assertNotNull(SpielService.getFMarkt());
+        assertNotNull(SpielService.getMMarkt());
+        assertNotNull(SpielService.getVMarkt());
+        assertNotNull(SpielService.getMaterialien());
+        assertNotNull(SpielService.getMaschinen());
+        assertNotNull(SpielService.getProdukte());
+        assertNotNull(SpielService.getKredite());
+        assertNotNull(SpielService.getMitarbeiter());
+        assertNotNull(SpielService.getMitarbeiter());
     }
 
 }

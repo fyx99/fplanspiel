@@ -3,16 +3,16 @@ package fachkonzept;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.markt.Finanzmarkt;
 
 class FinanzmarktTest {
 
-    static Unternehmen testU;
-    @BeforeAll
-    static void setup() {
+    Unternehmen testU;
+    @BeforeEach
+    void setup() {
         testU = new Unternehmen("Test", new Spiel(), "A");
         testU.setKapital(2500.01);
     }

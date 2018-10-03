@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.markt.Absatzmarkt;
@@ -20,15 +20,15 @@ import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 
 class MarktTest {
-    static Unternehmen u;
-    static Maschinenmarkt m;
-    static Beschaffungsmarkt b;
-    static Arbeitsmarkt a;
-    static Absatzmarkt v;
-    static Finanzmarkt f;
+     Unternehmen u;
+     Maschinenmarkt m;
+     Beschaffungsmarkt b;
+     Arbeitsmarkt a;
+     Absatzmarkt v;
+     Finanzmarkt f;
 
-    @BeforeAll
-    static void setup() {
+    @BeforeEach
+    void setup() {
         u = new Unternehmen("Testing U", new Spiel(), "A");
         m = new Maschinenmarkt();
         b = new Beschaffungsmarkt();

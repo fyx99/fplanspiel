@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.util.MaschinenArt;
@@ -15,11 +15,11 @@ import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 
 class MaschineTest {
-    static Produktionsmatrix pm ;
-    static Produkt p;
-    static Maschine m;
-    @BeforeAll
-    static void setup() {
+    Produktionsmatrix pm ;
+    Produkt p;
+    Maschine m;
+    @BeforeEach
+    void setup() {
         Map map = new HashMap<String, Integer>();
         map.put("Holz", 68);
         map.put("Glas", 4);

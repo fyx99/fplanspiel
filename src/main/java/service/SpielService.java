@@ -17,12 +17,14 @@ import dto.RundenResultatDTO;
 import dto.UnternehmenDTO;
 import dto.ZwischenstandDTO;
 import fachkonzept.Angebot;
+import fachkonzept.Arbeitskraft;
 import fachkonzept.Maschine;
 import fachkonzept.Material;
 import fachkonzept.Produkt;
 import fachkonzept.Spiel;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
+import fachkonzept.Verbindlichkeit;
 import fachkonzept.marketing.Marketingmix;
 import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Markteinheit;
@@ -221,6 +223,20 @@ public class SpielService {
     @Produces(MediaType.APPLICATION_JSON)
     public static Map<String, Integer> getMaterialien() {
         return s.getAktuellesUnternehmen().zeigeMaterialien();
+    }
+    
+    @GET
+    @Path("kredite")
+    @Produces(MediaType.APPLICATION_JSON)
+    public static List<Verbindlichkeit> getKredite() {
+        return s.getAktuellesUnternehmen().getVerbindlichkeiten();
+    }
+    
+    @GET
+    @Path("mitarbeiter")
+    @Produces(MediaType.APPLICATION_JSON)
+    public static List<Arbeitskraft> getMitarbeiter() {
+        return s.getAktuellesUnternehmen().getMitarbeiter();
     }
 
     @GET
