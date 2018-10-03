@@ -22,6 +22,7 @@ public class UnternehmenDTO {
 	private MaterialienGesamtDTO materialien;
 	private MaschinenGesamtDTO maschinen;
 	private ProdukteGesamtDTO produkte;
+	private MitarbeiterGesamtDTO mitarbeiter;
 	public String getName() {
 		return name;
 	}
@@ -90,6 +91,15 @@ public class UnternehmenDTO {
     }
     public void setMarketingmix(Marketingmix marketingmix) {
         this.marketingmix = marketingmix;
+    }
+    public MitarbeiterGesamtDTO getMitarbeiter() {
+        return mitarbeiter;
+    }
+    public void setMitarbeiter(MitarbeiterGesamtDTO mitarbeiter) {
+        this.mitarbeiter = mitarbeiter;
+    }
+    public void setUmsatz(double umsatz) {
+        this.umsatz = umsatz;
     }
 	
 	

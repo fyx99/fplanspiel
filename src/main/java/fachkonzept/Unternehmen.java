@@ -8,6 +8,7 @@ import java.util.Map;
 import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
 import dto.MaterialienGesamtDTO;
+import dto.MitarbeiterGesamtDTO;
 import dto.ProdukteGesamtDTO;
 import dto.UnternehmenDTO;
 import fachkonzept.marketing.Marketingmix;
@@ -31,7 +32,7 @@ public class Unternehmen {
 	private Finanzmarkt fmarkt = new Finanzmarkt();
 	private Arbeitsmarkt amarkt = new Arbeitsmarkt();
 
-	private float umsatz = 0;
+	private double umsatz = 0;
 	
 	private Marketingmix marketingmix;
 	private GuV guv = new GuV();
@@ -254,10 +255,10 @@ public class Unternehmen {
     public boolean beschaeftigeMitarbeiter(MitarbeiterFachgebiet mfg, int minuten) {
         //einfach mal bei a anfangen und z aufhören
         int verteilteZeit = minuten;
-        for(Arbeitskraft ak : mitarbeiter) {
-            if(ak.getM().getMfg().compareTo(mfg) == 0 && !ak.isAusgelastet()) {
-                int tatZeit = Math.max(minuten, ak.getM().getArbeitszeit() - ak.getAuslastung()); //was noch geht wenn zuviel
-                ak.setAuslastung(tatZeit);
+        for(Arbeitskraft arbeitskraft : this.mitarbeiter) {
+            if(arbeitskraft.getM().getMfg().compareTo(mfg) == 0 && !arbeitskraft.isAusgelastet()) {
+                int tatZeit = Math.min(minuten, (arbeitskraft.getM().getArbeitszeit() - arbeitskraft.getAuslastung())); //was noch geht wenn zuviel
+                arbeitskraft.auslastungErhoeen(tatZeit);
                 verteilteZeit -= tatZeit;
                 if(verteilteZeit <= 0)
                     return true;
@@ -287,7 +288,7 @@ public class Unternehmen {
         return map;
     }
 
-	public float getUmsatz() {
+	public double getUmsatz() {
 		// TODO Auto-generated method stub
 		return umsatz;
 	}
@@ -353,6 +354,7 @@ public class Unternehmen {
 		uu.setMaterialien(new MaterialienGesamtDTO(u.getMaterialien()));
 		uu.setMaschinen(new MaschinenGesamtDTO(u.getMaschinen()));
 		uu.setProdukte(new ProdukteGesamtDTO(u.getProdukte()));
+		uu.setMitarbeiter(new MitarbeiterGesamtDTO(u.getMitarbeiter(), u.getMitarbeiterKapazitaeten()));
 		return uu;
 	}
 

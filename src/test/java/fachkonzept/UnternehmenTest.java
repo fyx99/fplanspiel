@@ -2,6 +2,7 @@ package fachkonzept;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -72,10 +73,16 @@ class UnternehmenTest {
     
     @Test
     void mitarbeiterKapazitaeten() {
+        setUp();
         assertEquals(4, testUnternehmen.getMitarbeiter().size());
         assertEquals(7000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG));
         assertEquals(22002, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
-        assertEquals(30000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB));
+        assertEquals(26000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB));
+        
+        assertEquals(3, testUnternehmen.getMitarbeiterKapazitaeten().size());
+        assertEquals(7000, (int)testUnternehmen.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.VERWALTUNG));
+        assertEquals(22002, (int)testUnternehmen.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.MASCHINE));
+        assertEquals(Integer.valueOf(26000), testUnternehmen.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.VERTRIEB));
     
         
         
@@ -83,7 +90,77 @@ class UnternehmenTest {
     
     @Test
     void beschaeftigeMitarbeiter() {
-        testUnternehmen.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, 50);
+        setUp();
+        testUnternehmen.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, 500);
+        assertEquals(21502, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+        assertEquals(4, testUnternehmen.getMitarbeiter().size());
+        //sollen gleich bleiben
+        assertEquals(7000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG));
+        assertEquals(Integer.valueOf(26000), testUnternehmen.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.VERTRIEB));
+
+        testUnternehmen.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, 1502);
+        assertEquals(20000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+
+        testUnternehmen.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, 0);
+        assertEquals(20000, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+        
+        testUnternehmen.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, 1);
+        assertEquals(19999, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+        
+        assertTrue(!testUnternehmen.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.MASCHINE, 20000));
+        assertEquals(0, testUnternehmen.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE));
+    }
+    
+    @Test
+    void umsatz() 
+    {
+        setUp();
+        testUnternehmen.setKapital(1000);
+        testUnternehmen.umsatz(77.885, "Test umsatz");
+        assertEquals(77.885, testUnternehmen.getUmsatz());
+        assertEquals(1077.885, testUnternehmen.getKapital());
+        assertEquals(1, testUnternehmen.getGuv().getEinnahmen().size());
+        assertEquals("Test umsatz", testUnternehmen.getGuv().getEinnahmen().get(0).getBeschreibung());
+        assertEquals(77.885, testUnternehmen.getGuv().getEinnahmen().get(0).getSumme());
+        assertEquals(1, testUnternehmen.getGuv().getEinnahmen().get(0).getRunde());
+        
+
+        testUnternehmen.umsatz(0.5, "Test umsatz2");
+        testUnternehmen.umsatz(1154284.885, "Test umsatz3");
+        assertEquals(77.885 + 0.5 + 1154284.885, testUnternehmen.getUmsatz());
+        assertEquals(1000 + 77.885 + 0.5 + 1154284.885, testUnternehmen.getKapital());
+        assertEquals(3, testUnternehmen.getGuv().getEinnahmen().size());
+        assertEquals("Test umsatz2", testUnternehmen.getGuv().getEinnahmen().get(1).getBeschreibung());
+        assertEquals(0.5, testUnternehmen.getGuv().getEinnahmen().get(1).getSumme());
+        assertEquals("Test umsatz3", testUnternehmen.getGuv().getEinnahmen().get(2).getBeschreibung());
+        assertEquals(1154284.885, testUnternehmen.getGuv().getEinnahmen().get(2).getSumme());
+        
+
+        assertEquals(77.885 + 0.5 + 1154284.885, testUnternehmen.getGuv().rundenErgebnis());
+    }
+    
+    @Test
+    void kosten() {
+        setUp();
+        testUnternehmen.setKapital(1000);
+        testUnternehmen.kosten(77, "Test kosten");
+        assertEquals(923, testUnternehmen.getKapital());
+        assertEquals(1, testUnternehmen.getGuv().getAusgaben().size());
+        assertEquals("Test kosten", testUnternehmen.getGuv().getAusgaben().get(0).getBeschreibung());
+        assertEquals(77, testUnternehmen.getGuv().getAusgaben().get(0).getSumme());
+        assertEquals(1, testUnternehmen.getGuv().getAusgaben().get(0).getRunde());
+        
+
+        testUnternehmen.kosten(0.5, "Test kosten2");
+        testUnternehmen.kosten(37, "Test kosten3");
+        assertEquals(1000 - 77 - 37 - 0.5, testUnternehmen.getKapital());
+        assertEquals(3, testUnternehmen.getGuv().getAusgaben().size());
+        assertEquals("Test kosten2", testUnternehmen.getGuv().getAusgaben().get(1).getBeschreibung());
+        assertEquals(0.5, testUnternehmen.getGuv().getAusgaben().get(1).getSumme());
+        assertEquals("Test kosten3", testUnternehmen.getGuv().getAusgaben().get(2).getBeschreibung());
+        assertEquals(37, testUnternehmen.getGuv().getAusgaben().get(2).getSumme());
+        
+        assertEquals(-114.5, testUnternehmen.getGuv().rundenErgebnis());
     }
     
 }
