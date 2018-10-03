@@ -21,6 +21,33 @@
                 $('#navbar').load('navbar.html');
                 $('#footer').load('footer.html');
                 });
+ 			
+ 			window.onload = function getDataVerkauf(){
+ 				jQuery.ajax({
+ 					url: "../webapi/v1/demo/produkte",
+ 					type: "GET",
+ 					dataType: "json",
+ 					success: function(data, data2){
+ 						printBestandP(data);
+ 						
+ 					}
+ 				});
+ 			}
+ 			
+ 			function printBestandP(data){
+ 				var cont  = document.getElementById('contentBestandP');
+ 				var s ="";
+ 				//???
+ 				for(var produkt in data){
+ 					
+ 					s += 	'<li class="list-group-item">'+ data[produkt].name+
+ 								'<span class="badge">'+
+ 									'12'+
+ 								'</span>'+
+ 							'</li>';
+ 				}
+ 				cont.innerHTML = s;
+ 			}
 
 		</script>
 
@@ -40,13 +67,11 @@
 		
 		<!-- Liste des Produktbestandes -->
 		<div class="row">
-			<ul class="list-group col-sm-4">
-			<li class="list-group-item">Holzstuhl <span class="badge">12</span></li>
-			<li class="list-group-item">Stoffstuhl <span class="badge">5</span></li>
-			<li class="list-group-item">Holztisch <span class="badge">3</span></li>
+			<ul class="list-group col-sm-4" id = "contentBestandP">
+			
 			</ul> 
 			<div class="col-sm-6 align-self-center">
-			
+				<!-- Input Felder -->
 			</div>
 			<div class="col-sm-2 align-self-end">
 			<button type="button" class="btn">Neues Angebot einstellen</button>
