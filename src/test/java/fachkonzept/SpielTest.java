@@ -122,5 +122,20 @@ class SpielTest {
         assertEquals(Integer.valueOf(-1), testSpiel.zugBeendet());
 
     }
+    
+    @Test
+    void rangliste() {
+        testSpiel.getUnternehmen().get(0).kosten(17, "Test");
+        testSpiel.getUnternehmen().get(1).umsatz(17, "Test");
+        testSpiel.rundenStart();
+        assertEquals(3, testSpiel.getRangliste().size());
+        assertEquals(17, testSpiel.getRangliste().get(0).getGuv().rundenErgebnis());
+        assertEquals(0, testSpiel.getRangliste().get(1).getGuv().rundenErgebnis());
+        assertEquals(-17, testSpiel.getRangliste().get(2).getGuv().rundenErgebnis());
+        assertEquals("UnternehmenTest2", testSpiel.getRangliste().get(0).getName());
+        assertEquals("UnternehmenTest3", testSpiel.getRangliste().get(1).getName());
+        assertEquals("UnternehmenTest1", testSpiel.getRangliste().get(2).getName());
+        
+    }
 
 }

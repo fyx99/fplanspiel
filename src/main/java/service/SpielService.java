@@ -283,9 +283,9 @@ public class SpielService {
     @GET
     @Path("spielende")
     @Produces(MediaType.APPLICATION_JSON)
-    public static Object getSpielende() {
-        //@Jonas Breuer
-        return 0;
+    public static List<Unternehmen> getSpielende() {
+        //@Jonas Breuer - bisher eine rangliste nach gewinn
+        return s.getRangliste();
     } 
     
     public static Spiel getSpiel() {

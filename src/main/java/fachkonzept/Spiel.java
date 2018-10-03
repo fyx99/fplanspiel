@@ -3,6 +3,7 @@ package fachkonzept;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class Spiel {
 
@@ -11,6 +12,7 @@ public class Spiel {
     Unternehmen aktuellesUnternehmen = null;
     List<Unternehmen> unternehmen = new ArrayList<Unternehmen>();
     private Stack<Unternehmen> naechsteUnternehmen;
+    private List<Unternehmen> rangliste = new ArrayList<Unternehmen>();
 
     public Spiel() {
 
@@ -30,7 +32,7 @@ public class Spiel {
         else {
             Simulation.simuliere(this, unternehmen);
         }
-
+        ranglisteErstellen();
         this.naechsteUnternehmen = new Stack<Unternehmen>();
         for(int i = unternehmen.size() - 1; i >= 0; i--) {   // bisschen kompliziert damit der erste auch erster ist :D
 
@@ -63,11 +65,21 @@ public class Spiel {
     
     private boolean checkSpielende() {
         if(this.runde >= this.rundenAnzahl) {
+            ranglisteErstellen();
             return true;
         }
         // hier könnten noch umsatz oder gewinnziele
 
         return false;
+    }
+    
+    public List<Unternehmen> ranglisteErstellen() {
+        rangliste = new ArrayList<Unternehmen>();
+        rangliste = unternehmen.stream()
+                .sorted((u1, u2) -> Double.compare(u2.getGuv().rundenErgebnis(), u1.getGuv().rundenErgebnis()))
+                .collect(Collectors.toList());
+        
+        return rangliste;
     }
 
     public List<Unternehmen> getUnternehmen() {
@@ -102,6 +114,11 @@ public class Spiel {
     public void setRundenAnzahl(int rundenAnzahl) {
         this.rundenAnzahl = rundenAnzahl;
     }
+    
+    public List<Unternehmen> getRangliste() {
+        return rangliste;
+    }
+
 
     private static List<String> log = new ArrayList<String>();
 
