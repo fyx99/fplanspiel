@@ -264,6 +264,7 @@ public class SpielService {
     @GET
     @Path("zwischenstand")
     @Produces(MediaType.APPLICATION_JSON)
+    //Zwischenstand aller UN nach einer Runde
     public static ZwischenstandDTO getZwischenstand() {
         if(s == null)
             return null;
@@ -274,6 +275,7 @@ public class SpielService {
     @GET
     @Path("rundenresultat")
     @Produces(MediaType.APPLICATION_JSON)
+    //Übersicht für das eigene Unternehmen nach der Runde
     public static Object getRundenResultat() {
         if(s == null)
             return null;

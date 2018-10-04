@@ -11,7 +11,7 @@ public class Mitarbeiter extends Markteinheit {
     private String name;
     private double lohnkosten;
     private MitarbeiterFachgebiet mfg;
-    private int arbeitszeit;
+    private int arbeitszeit;	//in Minuten
     
         
     public Mitarbeiter(String name, double lohn, int arbeitszeit, MitarbeiterFachgebiet mfg) {

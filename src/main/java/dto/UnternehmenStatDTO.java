@@ -12,6 +12,7 @@ public class UnternehmenStatDTO {
     private double umsatz;
 	private double kapital;
 	private double gewinn;
+	
     public double getUmsatz() {
         return umsatz;
     }
