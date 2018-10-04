@@ -45,12 +45,12 @@ public abstract class Markt {
 
         vk.markteinheitEntfernen(a.getMarkteinheit(), menge);
 
-        umsatzFesthalten(a, menge, vk.getSpiel().getRunde());
+        umsatzFesthalten(a, menge, vk.getSpiel().getRunde(), vk);
         return verbleibendesAngebot;
     }
 
-    private void umsatzFesthalten(Angebot a, int menge, int runde) {
-        umsatzHistorie.add(new Umsatz(a, menge, runde));    // da simulation am ende
+    private void umsatzFesthalten(Angebot a, int menge, int runde, Unternehmen vk) {
+        umsatzHistorie.add(new Umsatz(a, menge, runde, vk));    // da simulation am ende
     }
 
     public void angebotEntfernen(Angebot a) {

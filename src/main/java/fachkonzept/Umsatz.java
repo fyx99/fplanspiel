@@ -6,12 +6,13 @@ public class Umsatz {
 	int menge;
 	int runde;		//!!! umsatz wird am anfang jeder neuen runde generiert - deswegen - 1 brachten
 	
-	public Umsatz(Angebot a, int menge, int runde) {
-		super();
-		this.angebot = a;
-		this.menge = menge;
-		this.runde = runde;
-	}
+    public Umsatz(Angebot a, int menge, int runde, Unternehmen verkaeufer) {
+        super();
+        this.angebot = a;
+        this.menge = menge;
+        this.runde = runde;
+    }
+
 
 	
 
