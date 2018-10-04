@@ -9,8 +9,8 @@ public class Spiel {
 
     private int runde = 0;
     private int rundenAnzahl = 10;
-    Unternehmen aktuellesUnternehmen = null;
-    List<Unternehmen> unternehmen = new ArrayList<Unternehmen>();
+    private Unternehmen aktuellesUnternehmen = null;
+    private List<Unternehmen> unternehmen = new ArrayList<Unternehmen>();
     private Stack<Unternehmen> naechsteUnternehmen;
     private List<Unternehmen> rangliste = new ArrayList<Unternehmen>();
 
