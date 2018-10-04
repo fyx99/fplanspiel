@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fachkonzept.util.MitarbeiterFachgebiet;
+
 class SimulationTest {
     Spiel s;
     Unternehmen u1;
@@ -65,6 +67,25 @@ class SimulationTest {
 
         assertEquals(-46000, u1.getGuv().rundenErgebnis());
         
+    }
+    
+    @Test
+    void lohnzahlungen() {
+        u1.setKapital(500000);
+        u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name1", 7000, 40000, MitarbeiterFachgebiet.MASCHINE)));
+        
+        Simulation.simuliereLohnzahlung(u1);
+        assertEquals(493000, u1.getKapital());
+        assertEquals(7000, u1.getGuv().getAusgaben().get(0).getSumme());
+        assertEquals("Lohnkosten", u1.getGuv().getAusgaben().get(0).getBeschreibung());
+        
+
+        u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name21",78820, 40000, MitarbeiterFachgebiet.MASCHINE)));
+        u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name13", 15478, 40000, MitarbeiterFachgebiet.MASCHINE)));
+        u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name14", 777.77, 40000, MitarbeiterFachgebiet.MASCHINE)));
+        Simulation.simuliereLohnzahlung(u1);
+        assertEquals(493000 - 78820 - 15478 - 777.77 - 7000, u1.getKapital());
+        assertEquals(5, u1.getGuv().getAusgaben().size());
     }
 
 }
