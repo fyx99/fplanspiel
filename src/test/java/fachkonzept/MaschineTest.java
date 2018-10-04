@@ -36,12 +36,18 @@ class MaschineTest {
     void init() {
         
         Maschine mTest = new Maschine(MaschinenArt.Holzstuhlmaschine, 487, p, pm, 15, 34);
+        mTest.setArbeitszeit(34);
         assertEquals(34, mTest.getArbeitszeit());
+        mTest.setAuslastung(0);
         assertEquals(0, mTest.getAuslastung());
+        mTest.setFertigungskosten(15);
         assertEquals(15, mTest.getFertigungskosten());
+        mTest.setKapazitaet(487);
         assertEquals(487, mTest.getKapazitaet());
         assertNotNull(mTest.getId());
         assertEquals(pm, mTest.getMatrix());
+        mTest.setMaschinenArt(MaschinenArt.Holzstuhlmaschine);
+        mTest.setP(p);
         assertEquals(MaschinenArt.Holzstuhlmaschine, mTest.getMaschinenArt());
         assertEquals("Holzstuhlmaschine", mTest.getName());
         assertEquals(ProduktArt.Edelstahlschrank, mTest.getP().getProduktArt());
