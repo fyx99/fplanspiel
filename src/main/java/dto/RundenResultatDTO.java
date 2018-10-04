@@ -95,14 +95,6 @@ public class RundenResultatDTO {
 		return mitarbeiterAnzahl;
 	}
 
-	public void setMitarbeiteranzahl(int mitarbeiteranzahl) {
-		this.mitarbeiterAnzahl = mitarbeiteranzahl;
-	}
-
-	public int getMitarbeiterKapazitMaschine() {
-		return mitarbeiterKapazitMaschine;
-	}
-
 	public void setMitarbeiterKapazitMaschine(int mitarbeiterKapazitMaschine) {
 		this.mitarbeiterKapazitMaschine = mitarbeiterKapazitMaschine;
 	}
