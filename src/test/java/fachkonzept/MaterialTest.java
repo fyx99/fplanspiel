@@ -33,5 +33,13 @@ class MaterialTest {
         assertEquals(m4, m.findeMarkteinheit(testid + 1));
         
     }
+    
+    @Test
+    void materialArt() {
+        Material m = new Material( MaterialArt.Stoff);
+        MaterialArt ma = MaterialArt.Edelstahl;
+        m.setMaterialArt(ma);
+        assertEquals(MaterialArt.Edelstahl, m.getMaterialArt() );
+    }
 
 }
