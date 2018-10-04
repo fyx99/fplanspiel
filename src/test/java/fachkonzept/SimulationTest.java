@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.ProduktArt;
+import fachkonzept.util.ProduktTyp;
 
 class SimulationTest {
     Spiel s;
@@ -86,6 +89,25 @@ class SimulationTest {
         Simulation.simuliereLohnzahlung(u1);
         assertEquals(493000 - 78820 - 15478 - 777.77 - 7000, u1.getKapital());
         assertEquals(5, u1.getGuv().getAusgaben().size());
+    }
+    @Test
+    void simuliereAbsatzmarkt() {
+        Absatzmarkt testMarkt1 = new Absatzmarkt();
+        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 77, 12));
+        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 20, 15));
+        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 5));
+        Absatzmarkt testMarkt2 = new Absatzmarkt();
+        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank), 20, 180));
+        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 20, 15));
+        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 5));
+        Absatzmarkt testMarkt3 = new Absatzmarkt();
+        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 30, 12));
+        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Lederstuhl, ProduktTyp.Stuhl), 40, 50.99));
+        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank), 5, 240));
+        u1.setVmarkt(testMarkt1);
+        u2.setVmarkt(testMarkt2);
+        u3.setVmarkt(testMarkt3);
+        Simulation.simuliereAbsatzmarkt(s.getUnternehmen());
     }
 
 }

@@ -2,25 +2,22 @@ package fachkonzept;
 
 public class Umsatz {
 	
-	Angebot angebot;
-	int menge;
-	int runde;		//!!! umsatz wird am anfang jeder neuen runde generiert - deswegen - 1 brachten
+	private Angebot angebot;
+	private int menge;
+	private int runde;
+	private Unternehmen verkaeufer;
+	
 	
     public Umsatz(Angebot a, int menge, int runde, Unternehmen verkaeufer) {
-        super();
         this.angebot = a;
         this.menge = menge;
         this.runde = runde;
+        this.verkaeufer = verkaeufer;
     }
-
-
-	
 
 	public Angebot getAngebot() {
 		return angebot;
 	}
-
-
 
 	public void setAngebot(Angebot angebot) {
 		this.angebot = angebot;
@@ -43,6 +40,14 @@ public class Umsatz {
 	public void setRunde(int runde) {
 		this.runde = runde;
 	}
+
+    public Unternehmen getVerkaeufer() {
+        return verkaeufer;
+    }
+
+    public void setVerkaeufer(Unternehmen verkaeufer) {
+        this.verkaeufer = verkaeufer;
+    }
 	
 	
 
