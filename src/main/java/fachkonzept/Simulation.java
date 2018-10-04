@@ -20,10 +20,6 @@ import fachkonzept.util.ProduktTyp;
 
 public class Simulation {
 
-    public Simulation() {
-        // TODO Auto-generated constructor stub
-    }
-
     private static List<String> simlog = new ArrayList();
 
     public static void simuliereSpielstart(Spiel s, List<Unternehmen> us) {
@@ -58,13 +54,19 @@ public class Simulation {
     }
 
     public static void simuliereKredittilgung(Unternehmen u) {
-        for(Verbindlichkeit v : u.getVerbindlichkeiten()) {
+        
+        Iterator<Verbindlichkeit> iter = u.getVerbindlichkeiten().iterator();
+
+        while(iter.hasNext()) {
+            Verbindlichkeit v = iter.next();
             // jeder kredit muss getilgt werden
-
-            u.kosten(v.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit()))
-                    + v.getKredit().getZinssatz() * v.getVerbleibendeSumme(), "Kreditkosten");
+            
+            u.kosten(v.getKredit().getZinssatz() * v.getVerbleibendeSumme()
+                    + v.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit())), "Kreditkosten");
             // irgendwie nicht die richtige formel :D
-
+            if(v.getAktuelleLaufzeit() == v.getKredit().getLaufzeit() || v.getVerbleibendeSumme() <= 0) {
+                iter.remove();
+            }
         }
     }
     

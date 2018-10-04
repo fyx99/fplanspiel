@@ -191,9 +191,7 @@ public class Unternehmen {
         else if (m instanceof Produkt) {
 
             produktEntfernen((Produkt)m, menge);
-        }
-
-        
+        }   
 	
 	}
 	
@@ -236,6 +234,7 @@ public class Unternehmen {
     public void setVerbindlichkeiten(List<Verbindlichkeit> verbindlichkeiten) {
         this.verbindlichkeiten = verbindlichkeiten;
     }
+   
 
     public void umsatz(double summe, String beschreibung) {
 		this.umsatz += summe;
@@ -310,7 +309,6 @@ public class Unternehmen {
 		this.spiel = sp;
 	}
 	
-	
 	public GuV getGuv() {
         return guv;
     }
@@ -334,8 +332,7 @@ public class Unternehmen {
 	    for(Maschine m : maschinen) {
 	        m.setAuslastung(0);
 	    }
-	    
-	    
+  
 	}
 
     public static UnternehmenDTO getDTO(Unternehmen u) {
@@ -355,8 +352,5 @@ public class Unternehmen {
 		uu.setMitarbeiter(new MitarbeiterGesamtDTO(u.getMitarbeiter(), u.getMitarbeiterKapazitaeten()));
 		return uu;
 	}
-
-	
-	
 
 }
