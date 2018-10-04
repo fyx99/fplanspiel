@@ -11,6 +11,10 @@ public class MitarbeiterTest {
 	@Test
 	void testen() {
 		Mitarbeiter m= new Mitarbeiter("test", 12.12, 8, MitarbeiterFachgebiet.MASCHINE);
+		Arbeitskraft mm= new Arbeitskraft(400, m);
+		mm.setAuslastung(400);
+		mm.setM(m);
+		assertEquals(400, mm.getAuslastung());
 		m.setName("test");
 		m.setLohnkosten(12.13);
 		m.setMfg(MitarbeiterFachgebiet.VERTRIEB);

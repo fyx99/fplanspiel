@@ -29,7 +29,7 @@ class UnternehmenTest {
         Unternehmen u = new Unternehmen("Test  Name", new Spiel(), "A");
         Unternehmen u2= new Unternehmen("Testtest", new Spiel(), "D");
         u.setKapital(10000.99);
-
+        
         assertEquals("Test  Name", u.getName());
         assertEquals(10000.99, u.getKapital());
     }
