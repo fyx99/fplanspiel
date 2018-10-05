@@ -21,7 +21,7 @@
  		});
 		function getKapital(){
 			jQuery.ajax({
-				url: "../webapi/v1/demo/unternehmen",
+				url: "../api/spiel/unternehmen",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
@@ -46,7 +46,7 @@
 
 		function getSpielername(){
 			jQuery.ajax({
-				url: "../webapi/v1/demo/unternehmen",
+				url: "../api/spiel/unternehmen",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
@@ -63,7 +63,7 @@
 
 		function getRunde(){
 			jQuery.ajax({
-				url: "../webapi/v1/demo/zwischenstand",
+				url: "../api/spiel/zwischenstand",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
@@ -80,7 +80,7 @@
 
 		function beendeZug(){
 			jQuery.ajax({
-				url: "../webapi/v1/demo/zugbeendet",
+				url: "../api/spiel/zugbeendet",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
@@ -106,7 +106,7 @@
 
 			function ladeErgebnisLetzteRunde(){
 			jQuery.ajax({
-				url: "../webapi/v1/demo/rundenresultat",
+				url: "../api/spiel/rundenresultat",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
