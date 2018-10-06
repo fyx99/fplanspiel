@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mitarbeiter</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+ </head>
+ 
+ <body onload="start()">
+    <script type="text/javascript" >
+      $(document).ready(function() {
+                $('#navbar').load('navbar.html');
+                $('#footer').load('footer.html');
+                });
+
+    </script>
+
+    <script>
+    function getData(){
+      jQuery.ajax({
+        url: "../api/spiel/unternehmen",
+        type: "GET",
+        dataType: "json",
+        success: function(data, data2){
+          printData(data.bmarkt.angebote);
+        }
+      });
+    }
+    function printData(data){
+      var cont  = document.getElementById('rohstoffContent');
+      var s ="";
+      var bilder = ["img/holz.jpg", "img/stoff.jpg", "img/leder.jpg", "img/plastik.jpg", "img/edelstahl.jpg", "img/glas.jpg"];
+      var index = 0;
+
+      for(var angebot in data){
+        /*s += '<div class="col-sm-6 col-md-4">' + 
+            '<div class="thumbnail">' + 
+            '<img src="' + bilder[index] +'" alt="' + data[angebot].markteinheit.name + '">' + 
+            '<div class="caption">' + 
+            '<h3>' + data[angebot].markteinheit.name + '</h3>' + 
+            '<p>Verfügbare Menge:</p>' + 
+            '<div class="progress">' + 
+            '<div class="progress-bar" id="progressbar' + data[angebot].markteinheit.name + '" role="progressbar" data-toggle="tooltip" title="' + data[angebot].menge + '/100" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:' + data[angebot].menge + '%;">25%</div>' + 
+            '</div>' + 
+            '<p><Button onclick="loadData()" data-toggle="modal" data-target="#verkaufen" class="btn btn-danger" role="button">Verkaufen</Button> <Button data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button></p>' + 
+            '</div></div></div>';*/
+
+            index++;
+      }
+      cont.innerHTML = s;
+    }
+    </script>
+  <Button onclick="getData()">Test</Button>
+ 
+    <!-- Fixed navbar -->
+    <div id="navbar">
+  </div>
+
+  <style>
+    .panelTop{
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+
+    .cardTop{
+      margin-top: 2px;
+    }
+  </style>
+    
+	<!-- Page Header -->
+	<div class="container">	
+    <div class="page-header">
+      <h1>Mitarbeiter</h1>
+    </div>
+    <!--Mitarbeiter Produktion ÜBERSICHT-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panelTop">Produktion</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row" id="Produktion">
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter1CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 1</h3>
+                <p>Arbeitet in der Produktion.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter1" onclick="saveEmployeeID(kündigenMitarbeiter1)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter1" onclick="setModalData(detailsMitarbeiter1)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter2CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 2</h3>
+                <p>Arbeitet in der Produktion.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter2" onclick="saveEmployeeID(kündigenMitarbeiter2)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter2" onclick="setModalData(detailsMitarbeiter2)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter3CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 3</h3>
+                <p>Arbeitet in der Produktion.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter3" onclick="saveEmployeeID(kündigenMitarbeiter3)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter3" onclick="setModalData(detailsMitarbeiter3)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!--Mitarbeiter Vertrieb ÜBERSICHT-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panelTop">Vertrieb</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row" id="Vertrieb">
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter4CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 4</h3>
+                <p>Arbeitet im Vertrieb.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter4" onclick="saveEmployeeID(kündigenMitarbeiter4)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter4" onclick="setModalData(detailsMitarbeiter4)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter5CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 5</h3>
+                <p>Arbeitet im Vertrieb.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter5" onclick="saveEmployeeID(kündigenMitarbeiter5)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter5" onclick="setModalData(detailsMitarbeiter5)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter6CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 6</h3>
+                <p>Arbeitet im Vertrieb.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter6" onclick="saveEmployeeID(kündigenMitarbeiter6)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter6" onclick="setModalData(detailsMitarbeiter6)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!--Mitarbeiter Verwaltung ÜBERSICHT-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panelTop">Verwaltung</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row" id="Verwaltung">
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter7CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 7</h3>
+                <p>Arbeitet in der Verwaltung.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter7" onclick="saveEmployeeID(kündigenMitarbeiter7)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter7" onclick="setModalData(detailsMitarbeiter7)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter8CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 8</h3>
+                <p>Arbeitet in der Verwaltung.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter8" onclick="saveEmployeeID(kündigenMitarbeiter8)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter8" onclick="setModalData(detailsMitarbeiter8)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4" id="mitarbeiter9CardID">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3 class="cardTop">Mitarbeiter 9</h3>
+                <p>Arbeitet in der Verwaltung.</p>
+                    <p>
+                      <Button id="kündigenMitarbeiter9" onclick="saveEmployeeID(kündigenMitarbeiter9)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button>
+                      <Button id="detailsMitarbeiter9" onclick="setModalData(detailsMitarbeiter9)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>
+                    </p>
+                </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+	</div>
+   
+    <!-- Fixed footer -->
+    <div id="footer">
+    </div>
+
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+<!--Modal-Details-->
+  <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+           <h2 class="modal-title" id="verkaufenDialogTitel">Details</h2>
+         </div>
+        <div class="modal-body">
+        	<div id="detailsContentID">
+        	<!--Inhalt im Dialog Mitarbeiter-->
+			</div>
+        </div>
+         <div class="modal-footer">
+            <p>
+              <button class="btn btn-primary" data-dismiss="modal" role="button">Schließen</button>
+            </p>  
+         </div>
+       </div>
+    </div>
+  </div>
+
+ <!--Modal-Kündigen-->
+  <div class="modal fade" id="kündigen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+           <h2 class="modal-title" id="kündigenDialogTitel">Mitarbeiter kündigen</h2>
+         </div>
+         <div class="modal-body">
+          <!--Mitarbeiter kündigen-->
+            <p>Sie sind dabei einen Mitarbeiter fristlos zu kündingen. Diese Aktion kann nicht rückgängig gemacht werden. Wollen Sie fortfahren?</p>
+
+            <div class="alert alert-danger" role="alert">
+              Warnung! Das Kündigen eines Mitarbeiters kann den Erfolg Ihres Unternehmens erheblich beeinträchtigen!
+            </div>
+
+            <p>Hinweis: Sie können Mitarbeiter nur dann kündigen, wenn Sie mindestens einen Mitarbeiter in dieser Abteilung haben.</p>
+
+         </div>
+         <div class="modal-footer">
+            <p>
+              <button class="btn btn-primary" data-dismiss="modal">Schließen</button>
+              <button class="btn btn-danger" onclick="fireEmployee()" id="kündigenButtonID" data-dismiss="modal">Kündigen</button>
+            </p>  
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+  <script>
+    var modalContent = document.getElementById('detailsContentID');
+    var panelID = null;
+
+    function setModalData(id){
+      panelID = $(id).parents().eq(4).attr("id");
+      if (panelID == "Produktion") {
+        modalContent.innerHTML = '<p>Mitarbeiter werden in der Produktion benötigt, um Produkte herzustellen. Sie besitzen das nötige Fachwissen, um die Produkte ohne Komplikationen herzustellen.<p>' + 
+        '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Größere Maschinenkapazitäten</li><li>Geringerer Materialverbrauch</li></div>';
+      } else if (panelID == "Vertrieb") {
+        modalContent.innerHTML = '<p>Mitarbeiter werden im Vertrieb benötigt, um Produkte zu verkaufen. Sie besitzen das nötige Fachwissen, um die Produkte schnell und einfach an den Mann zu bringen.<p>' + 
+        '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Bessere Verkaufschancen</li><li>Bessere Kundenbindung</li></div>';
+      } else if (panelID == "Verwaltung"){
+        modalContent.innerHTML = '<p>Mitarbeiter werden in der Verwaltung benötigt, um den Vertrieb und die Produktion zu verwalten. Sie besitzen das nötige Fachwissen, um ein Unternehmen am Leben zu erhalten.<p>' + 
+        '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Bessere Preiskalkulation</li><li>Verbesserte Marktforschung</li></div>';
+      }
+    }
+
+    var employeeID = null;
+    var employeeCountProduktion = 3;
+    var employeeCountVertrieb = 3;
+    var employeeCountVerwaltung = 3;
+
+    function saveEmployeeID(id){
+    	panelID = $(id).parents().eq(4).attr("id");
+    	
+    	if (panelID === "Produktion" && employeeCountProduktion > 1) {
+    		employeeCountProduktion--;
+    		employeeID = $(id).parents().eq(3).attr("id");
+    	} else if (panelID === "Vertrieb" && employeeCountVertrieb > 1) {
+    		employeeCountVertrieb--;
+    		employeeID = $(id).parents().eq(3).attr("id");
+    	} else if (panelID === "Verwaltung" && employeeCountVerwaltung > 1) {
+    		employeeCountVerwaltung--;
+    		employeeID = $(id).parents().eq(3).attr("id");
+    	}
+    }
+
+    function fireEmployee() {
+        document.getElementById(employeeID).style = "display: none";
+    }
+
+    function loadData(){
+      jQuery.ajax({
+        url: "../webapi/v1/demo/unternehmen",
+        type: "GET",
+        dataType: "json",
+        success: function(data, data2){
+          setValues(data.bmarkt.angebote);
+        }
+      });
+    }
+
+    function setValues(data){
+    	console.log(data[0].menge);
+    	console.log(data[0].preis);
+    	console.log("stop");
+    	console.log(data[1].menge);
+    	console.log(data[1].preis); //hier irgendwie Daten richtig zuordnen, aber funktioniert so erstmal
+    	console.log("stop1");
+    	for ( var test in data) {
+    	      mengeImLager = data[test].menge;
+    	      console.log(data[test].menge);
+    	      preisProMenge = data[test].preis;
+    	      console.log(data[test].preis);
+    	  	  document.getElementById('mengeImLagerID').innerHTML = mengeImLager + " ME";
+    	  	  document.getElementById('preisProMengeID').innerHTML = preisProMenge + " GE";
+    	      break;
+		}
+
+    }
+
+  	function rohstoffeVerkaufen(){
+  		berechneErlös();
+  		if (zuVerkaufendeMenge >= 0 && mengeImLager > 0) {
+  			mengeImLager = mengeImLager - zuVerkaufendeMenge;
+
+  			var progressbar = document.getElementById('progressbarHolz');
+
+  			$(progressbar).tooltip('hide')
+          		.attr('data-original-title', mengeImLager + "/100")
+         		.tooltip('fixTitle')
+          		.tooltip('show');
+
+  			progressbar.style = "width: " + (mengeImLager/100)*100 + "%;";
+
+
+
+  			document.getElementById('mengeImLagerID').innerHTML = mengeImLager + " ME";
+  		} else {
+  			document.getElementById('bemerkungBerechnen').innerHTML = "Bitte geben Sie eine Zahl größer oder gleich 0 ein!";
+  		}
+  	}
+  </script>
+  </body>
+</html>
