@@ -6,19 +6,19 @@ public class SimulationsKonstanten {
         double preis = 0;
         switch(produktArt) {
         case Holzstuhl:
-            preis = 40;
+            preis = 30;
             break;
         case Stoffstuhl:
             preis = 40;
             break;
         case Lederstuhl:
-            preis = 40;
+            preis = 75;
             break;
         case Holztisch:
             preis = 40;
             break;
         case Glastisch:
-            preis = 40;
+            preis = 99;
             break;
         case Kunststofftisch:
             preis = 40;
@@ -26,7 +26,7 @@ public class SimulationsKonstanten {
         case Holzschrank:
             break;
         case Edelstahlschrank:
-            preis = 40;
+            preis = 220;
             break;
         case Glasschrank:
             preis = 40;
@@ -41,19 +41,19 @@ public class SimulationsKonstanten {
         int volumen = 0;
         switch(produktArt) {
         case Holzstuhl:
-            volumen = 50;
+            volumen = 250;
             break;
         case Stoffstuhl:
             volumen = 8808;
             break;
         case Lederstuhl:
-            volumen = 40;
+            volumen = 55;
             break;
         case Holztisch:
             volumen = 40;
             break;
         case Glastisch:
-            volumen = 40;
+            volumen = 47;
             break;
         case Kunststofftisch:
             volumen = 40;

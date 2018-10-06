@@ -9,7 +9,6 @@ import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
 import fachkonzept.marketing.Marketingmaßnahme;
-import fachkonzept.marketing.Marketingmix;
 import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class RundenResultatDTO {
@@ -142,6 +141,10 @@ public class RundenResultatDTO {
     }
     public void setGuv(GuV guv) {
         this.guv = guv;
+    }
+
+    public int getMitarbeiterKapazitMaschine() {
+        return mitarbeiterKapazitMaschine;
     }
     
 

@@ -30,7 +30,7 @@ public class Spiel {
             runde++;    //um in die runde 1 zu starten
         }
         else {
-            Simulation.simuliere(this, unternehmen);
+            Simulation.simuliere(this);
         }
         ranglisteErstellen();
         this.naechsteUnternehmen = new Stack<Unternehmen>();

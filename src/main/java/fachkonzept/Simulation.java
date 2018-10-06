@@ -1,11 +1,11 @@
 package fachkonzept;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import fachkonzept.markt.Arbeitsmarkt;
@@ -38,9 +38,9 @@ public class Simulation {
 
     }
 
-    public static void simuliere(Spiel s, List<Unternehmen> us) {
+    public static void simuliere(Spiel s) {
 
-        Iterator<Unternehmen> i = us.iterator();
+        Iterator<Unternehmen> i = s.getUnternehmen().iterator();
         while(i.hasNext()) {
             Unternehmen n = i.next();
             // n.verringereKapital(6);
@@ -50,11 +50,11 @@ public class Simulation {
 
         }
         // gemeinsame konkurrenz dinge
-        simuliereAbsatzmarkt(us);
+        simuliereAbsatzmarkt(s.getUnternehmen());
 
     }
 
-    public static void simuliereKredittilgung(Unternehmen u) {
+    private static void simuliereKredittilgung(Unternehmen u) {
         
         Iterator<Verbindlichkeit> iter = u.getVerbindlichkeiten().iterator();
 
@@ -71,13 +71,13 @@ public class Simulation {
         }
     }
     
-    public static void simuliereLohnzahlung(Unternehmen u) {
+    private static void simuliereLohnzahlung(Unternehmen u) {
         for(Arbeitskraft ak : u.getMitarbeiter()) {
             u.kosten(ak.getM().getLohnkosten(), "Lohnkosten");
         }
     }
 
-    public static void simuliereAbsatzmarkt(List<Unternehmen> us) {
+    private static void simuliereAbsatzmarkt(List<Unternehmen> us) {
         for(ProduktArt produktArt : ProduktArt.values()) {
             // pro produkt gehen wir den spaß jetzt mal durch
             Map<Angebot, Unternehmen> produkt_angebote = new HashMap<Angebot, Unternehmen>();
@@ -90,74 +90,91 @@ public class Simulation {
 
             }
             // jetzt haben wir alle angebote der speziellen produkt art
-            log("vorhandene produktart size: " + produkt_angebote.size());
+            
+            if(produkt_angebote.isEmpty())
+                continue;
+            
             simuliereEinzelnesProdukt(produkt_angebote, SimulationsKonstanten.getProduktMarktvolumen(produktArt), 
                     SimulationsKonstanten.getProduktMarktpreis(produktArt));
         }
     }
 
-    public static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage, double grundpreis) {
-        int verbleibende_nachfrage = nachfrage;
-        int gedeckt = 0;
-        int preis = 0;
-        while(gedeckt < verbleibende_nachfrage) {
-
-            Map<Angebot, Unternehmen> pot_angebote = new HashMap<Angebot, Unternehmen>();
-            for(Entry<Angebot, Unternehmen> a : angebote.entrySet()) {		// erstmal angebote die preislich in frage kommen
-                if(a.getKey().getPreis() == preis) {
-                    pot_angebote.put(a.getKey(), a.getValue());
-
-                }
+    private static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage, double grundpreis) {
+        //als erstes die liste nach angebotsstärke sortieren
+        //hier bisher nur nach preis
+        List<Angebot> sortierteAngebote = angebote.keySet().stream()
+        .sorted((Angebot u1, Angebot u2) 
+                -> Double.compare(u1.getPreis(), u2.getPreis()))
+        .collect(Collectors.toList());
+        int verbleibendeNachfrage = nachfrage;
+        
+        for(int i = 0; i < sortierteAngebote.size(); i++) {
+            //bevor was gemacht wird sollte natürlich geschaut werden, ob der marktpreis überschritten ist und ob die nachfrage angepasst werden muss
+            if(sortierteAngebote.get(i).getPreis() > grundpreis) {
+                verbleibendeNachfrage -= nachfrageAnpassen(nachfrage, grundpreis, sortierteAngebote.get(i).getPreis());
             }
-            log("pot angebote: " + pot_angebote.size() + " bei preis " + preis);
-            // => verteilen
-            double kappungsindex = 1;
-            double kappungsfaktor = 1;
-            int volle = pot_angebote.size();
-            while(gedeckt < verbleibende_nachfrage && !pot_angebote.isEmpty() && volle > 0) {
-
-                // schneiden
-                int durchschnittliche_menge = (verbleibende_nachfrage - gedeckt) / pot_angebote.size();
-
-                for(Entry<Angebot, Unternehmen> aa : pot_angebote.entrySet()) {
-                    if(aa.getKey().getMenge() < durchschnittliche_menge)
-                        durchschnittliche_menge = aa.getKey().getMenge();
-                }
-
-                // verteilen
-                Iterator<Entry<Angebot, Unternehmen>> iter = pot_angebote.entrySet().iterator();
-
-                while(iter.hasNext()) {
-                    Entry<Angebot, Unternehmen> aa = iter.next();
-                    // Spiel.log("Unternehmen " + aa.getMarkttyp().getU().getName() + " verkauft " + aa.getMarkteinheit().getName() + " menge: "
-                    // + durchschnittliche_menge + " bei preis " + preis);
-                    gedeckt += durchschnittliche_menge;
-
-                    if(aa.getValue().getVmarkt().verkaufen(aa.getKey(), durchschnittliche_menge, aa.getValue()) == null) {
-                        iter.remove();
-                        volle--;
-                    }
-                    Spiel.log(volle + "");
-                }
-
+            if(verbleibendeNachfrage <= 0){
+                break;
             }
-            preis++;	// jetzt mal schauen ob es ein teureres gibt
-            if(preis > grundpreis) {
-                // hier wird jetzt die nachfrage gekappt, da kunden zwar x kaufen würden aber nicht zu denen preisen :D
-                verbleibende_nachfrage = 0;
-                // bsp direkte kappung
-                // hier wäre ein beispiel wie man es quadratisch abnehmen lassen kann - kappungsfaktor zum angleichen
-                /*
-                 * verbleibende_nachfrage = verbleibende_nachfrage - (int)(kappungsfaktor * kappungsindex * kappungsindex); kappungsindex++;
-                 */ }
+            List<Angebot> auswahl = angbotsAuswahl(sortierteAngebote.subList(i, sortierteAngebote.size()));
+            i += auswahl.size() - 1;
+            
+            //-> ab hier einfach abkaufen
+            while(verbleibendeNachfrage > 0 && !auswahl.isEmpty()) {
+                verbleibendeNachfrage = nachfrageVerteilen(auswahl, angebote, verbleibendeNachfrage);
+            }
+            
         }
     }
-
-
+    
+    private static int nachfrageAnpassen(int gesamtNachfrage, double grundpreis, double aktPreis) {
+        //funktion die den preis verringert
+        double kappungsfaktor = 3; //1% drüber -> 3 runter
+        double preisDifferenz = 1 - aktPreis / grundpreis;      //in prozent über grundpreis
+        return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
+        
+    }
 
     public static double getPeriodenverschiebung(int runde) {		// um die nachfragemenge zu verändern
         double randomStart = Math.random() * 2;
         return 1 + Math.sin(0.125 * Math.PI * runde + randomStart * Math.PI) * 0.5;
+    }
+    
+    private static List<Angebot> angbotsAuswahl(List<Angebot> angebote) {
+        //wählt unter den angeboten das/ evt. die günstigste/n aus
+        List<Angebot> ret = new ArrayList<Angebot>();
+        int referenzPreis = (int)angebote.get(0).getPreis();
+        for(Angebot a : angebote) {
+            if(((int)a.getPreis()) <= referenzPreis) {
+                ret.add(a);
+            }
+            else {
+                break;
+            }
+        }
+
+        return ret;
+    }
+    
+    private static int nachfrageVerteilen(List<Angebot> angebote, Map<Angebot, Unternehmen> unternehmen, int nachfrage) {
+        //hier wird auf eine liste mit n angeboten die gleichwertig sind die nachfrage verteilt
+        
+        int verbleibendeNachfrage = nachfrage;
+        int durchschnittlicheMenge = verbleibendeNachfrage / angebote.size();
+        int minMengeAngebote = angebote.stream().min(Comparator.comparing(Angebot::getMenge)).get().getMenge();
+        durchschnittlicheMenge = minMengeAngebote < durchschnittlicheMenge ? minMengeAngebote : durchschnittlicheMenge;
+        Iterator<Angebot> it = angebote.iterator();
+        while(it.hasNext()) {
+            Angebot a = it.next();
+            verbleibendeNachfrage -= durchschnittlicheMenge;
+            Unternehmen verkaeufer = unternehmen.get(a);
+            if(verkaeufer.getVmarkt().verkaufen(a, durchschnittlicheMenge, verkaeufer) == null) {
+                it.remove();
+            }
+        }
+        
+        //return wert verbleibende nachfrage
+        return verbleibendeNachfrage;
     }
 
     private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {

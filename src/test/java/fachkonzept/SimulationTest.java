@@ -1,6 +1,6 @@
 package fachkonzept;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +9,7 @@ import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
+import fachkonzept.util.SimulationsKonstanten;
 
 class SimulationTest {
     Spiel s;
@@ -23,6 +24,25 @@ class SimulationTest {
        s.unternehmenHinzufuegen(u2 = new Unternehmen("ts2t", s, "A"));
        s.unternehmenHinzufuegen(u3 = new Unternehmen("t3st", s, "A"));
        s.rundenStart();
+       
+    }
+    
+    void setUpAbsatzmarkt() {
+        Absatzmarkt testMarkt1 = new Absatzmarkt();
+        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 17, 12));
+        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 20, 15));
+        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 5));
+        Absatzmarkt testMarkt2 = new Absatzmarkt();
+        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank), 20, 180));
+        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 20, 15));
+        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 5));
+        Absatzmarkt testMarkt3 = new Absatzmarkt();
+        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 10, 12));
+        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Lederstuhl, ProduktTyp.Stuhl), 40, 50.99));
+        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank), 50, 240));
+        u1.setVmarkt(testMarkt1);
+        u2.setVmarkt(testMarkt2);
+        u3.setVmarkt(testMarkt3);
     }
     
     @Test
@@ -31,7 +51,7 @@ class SimulationTest {
         u1.verbindlichkeitHinzu(v1);
         u1.setKapital(1000000);
         assertEquals(0, u1.getGuv().rundenErgebnis());
-        Simulation.simuliereKredittilgung(u1);
+        Simulation.simuliere(s);
         assertEquals(1, u1.getGuv().getAusgaben().size());
         assertEquals(32000, u1.getVerbindlichkeiten().get(0).getVerbleibendeSumme());
         assertEquals(Integer.valueOf(3), u1.getVerbindlichkeiten().get(0).getAktuelleLaufzeit());
@@ -40,33 +60,33 @@ class SimulationTest {
         assertEquals(990000, u1.getKapital());
         assertEquals(-10000, u1.getGuv().rundenErgebnis());
 
-        Simulation.simuliereKredittilgung(u1);
+        Simulation.simuliere(s);
         assertEquals(24000, u1.getVerbindlichkeiten().get(0).getVerbleibendeSumme());
         assertEquals(Integer.valueOf(4), u1.getVerbindlichkeiten().get(0).getAktuelleLaufzeit());
         assertEquals(9600, u1.getGuv().getAusgaben().get(1).getSumme());
         assertEquals(980400, u1.getKapital());
         assertEquals(-19600, u1.getGuv().rundenErgebnis());
-        
-        Simulation.simuliereKredittilgung(u1);
+
+        Simulation.simuliere(s);
         assertEquals(16000, u1.getVerbindlichkeiten().get(0).getVerbleibendeSumme());
         assertEquals(Integer.valueOf(5), u1.getVerbindlichkeiten().get(0).getAktuelleLaufzeit());
         assertEquals(9200, u1.getGuv().getAusgaben().get(2).getSumme());
         assertEquals(971200, u1.getKapital());
         assertEquals(-28800, u1.getGuv().rundenErgebnis());
 
-        Simulation.simuliereKredittilgung(u1);
+        Simulation.simuliere(s);
         assertEquals(8000, u1.getVerbindlichkeiten().get(0).getVerbleibendeSumme());
         assertEquals(Integer.valueOf(6), u1.getVerbindlichkeiten().get(0).getAktuelleLaufzeit());
         assertEquals(8800, u1.getGuv().getAusgaben().get(3).getSumme());
         assertEquals(-37600, u1.getGuv().rundenErgebnis());
-        
-        Simulation.simuliereKredittilgung(u1);
+
+        Simulation.simuliere(s);
         assertEquals(8400, u1.getGuv().getAusgaben().get(4).getSumme());
         assertEquals(-46000, u1.getGuv().rundenErgebnis());
         //jetzt ist der eigentlich getilgt
         assertEquals(0, u1.getVerbindlichkeiten().size());
-        
-        Simulation.simuliereKredittilgung(u1);
+
+        Simulation.simuliere(s);
 
         assertEquals(-46000, u1.getGuv().rundenErgebnis());
         
@@ -76,8 +96,8 @@ class SimulationTest {
     void lohnzahlungen() {
         u1.setKapital(500000);
         u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name1", 7000, 40000, MitarbeiterFachgebiet.MASCHINE)));
-        
-        Simulation.simuliereLohnzahlung(u1);
+
+        Simulation.simuliere(s);
         assertEquals(493000, u1.getKapital());
         assertEquals(7000, u1.getGuv().getAusgaben().get(0).getSumme());
         assertEquals("Lohnkosten", u1.getGuv().getAusgaben().get(0).getBeschreibung());
@@ -86,28 +106,62 @@ class SimulationTest {
         u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name21",78820, 40000, MitarbeiterFachgebiet.MASCHINE)));
         u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name13", 15478, 40000, MitarbeiterFachgebiet.MASCHINE)));
         u1.arbeitskraftHinzu(new Arbeitskraft(1000, new Mitarbeiter("Name14", 777.77, 40000, MitarbeiterFachgebiet.MASCHINE)));
-        Simulation.simuliereLohnzahlung(u1);
+
+        Simulation.simuliere(s);
         assertEquals(493000 - 78820 - 15478 - 777.77 - 7000, u1.getKapital());
         assertEquals(5, u1.getGuv().getAusgaben().size());
     }
     @Test
     void simuliereAbsatzmarkt() {
-        Absatzmarkt testMarkt1 = new Absatzmarkt();
-        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 77, 12));
-        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 20, 15));
-        testMarkt1.anbieten(new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 5));
-        Absatzmarkt testMarkt2 = new Absatzmarkt();
-        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank), 20, 180));
-        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 20, 15));
-        testMarkt2.anbieten(new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 5));
-        Absatzmarkt testMarkt3 = new Absatzmarkt();
-        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Glastisch, ProduktTyp.Tisch), 30, 12));
-        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Lederstuhl, ProduktTyp.Stuhl), 40, 50.99));
-        testMarkt3.anbieten(new Angebot(new Produkt(ProduktArt.Edelstahlschrank, ProduktTyp.Schrank), 5, 240));
-        u1.setVmarkt(testMarkt1);
-        u2.setVmarkt(testMarkt2);
-        u3.setVmarkt(testMarkt3);
-        Simulation.simuliereAbsatzmarkt(s.getUnternehmen());
-    }
+        setUpAbsatzmarkt();
+        Simulation.simuliere(s);
+        assertEquals(47, SimulationsKonstanten.getProduktMarktvolumen(ProduktArt.Glastisch));
+        assertEquals(99, SimulationsKonstanten.getProduktMarktpreis(ProduktArt.Glastisch));
+        assertEquals(30, SimulationsKonstanten.getProduktMarktpreis(ProduktArt.Holzstuhl));
+        assertEquals(250, SimulationsKonstanten.getProduktMarktvolumen(ProduktArt.Holzstuhl));
+        assertEquals(220, SimulationsKonstanten.getProduktMarktpreis(ProduktArt.Edelstahlschrank));
+        assertEquals(40, SimulationsKonstanten.getProduktMarktvolumen(ProduktArt.Edelstahlschrank));
+        assertEquals(75, SimulationsKonstanten.getProduktMarktpreis(ProduktArt.Lederstuhl));
+        assertEquals(55, SimulationsKonstanten.getProduktMarktvolumen(ProduktArt.Lederstuhl));
+        
+        //jetzt wirds ernst :D --> Glastisch
+
+        assertEquals(1, u1.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).size());
+        assertEquals(1, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).size());
+        assertEquals(0, u3.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).size());
+        //andere angebots mengen
+        assertEquals(0, u1.getVmarkt().getAngeboteByProduktArt(ProduktArt.Holzstuhl).size());
+        assertEquals(0, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Holzstuhl).size());
+        assertEquals(0, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Edelstahlschrank).size());
+        assertEquals(1, u3.getVmarkt().getAngeboteByProduktArt(ProduktArt.Edelstahlschrank).size());    //beispiel für kappung
+        assertEquals(0, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Lederstuhl).size());
+        
+        //die restbestände
+        assertEquals(10, u1.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).get(0).getMenge());
+        assertEquals(10, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).get(0).getMenge());      
+        assertEquals(20, u3.getVmarkt().getAngeboteByProduktArt(ProduktArt.Edelstahlschrank).get(0).getMenge());
+        
+        //die umsätze
+
+        assertEquals(854, u1.getGuv().rundenErgebnis());
+        assertEquals(4250, u2.getGuv().rundenErgebnis());
+        assertEquals(9359.6, u3.getGuv().rundenErgebnis(), 0.001);
+    }   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
