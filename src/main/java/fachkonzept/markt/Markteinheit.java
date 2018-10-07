@@ -10,8 +10,9 @@ public abstract class Markteinheit {
 	private int id;
 	private String name;
 	protected static int nummer = 0;
+	
 	public Markteinheit() {
-		// TODO Auto-generated constructor stub
+
 
 		this.id = nummer;	//um eine id zu haben
 	    nummer++;

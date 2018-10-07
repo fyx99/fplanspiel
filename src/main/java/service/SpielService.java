@@ -290,6 +290,14 @@ public class SpielService {
         return s.getRangliste();
     } 
     
+    @GET
+    @Path("materialdetails")
+    @Produces(MediaType.APPLICATION_JSON)
+    public static List<String> getMaterialDetails(@QueryParam("material") String material) {
+
+        return s.getAktuellesUnternehmen().getMmarkt().getMaterialDetails(material, s);
+    }
+    
     public static Spiel getSpiel() {
         return s;
     }
