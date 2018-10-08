@@ -36,7 +36,7 @@
 
  		window.onload = function getDataVerarbeitung(){
 			jQuery.ajax({
-				url: "../webapi/v1/demo/unternehmen",
+				url: "../api/spiel/unternehmen",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
@@ -56,13 +56,17 @@
 			var verarbData = data;
 			var cont  = document.getElementById('contentVerarbeitung');
 			var s ="";
+			var bilder = ["img/holzstuhl2.jpg", "img/stoffstuhl.jpg", "img/lederstuhl.jpg", "img/holztisch.jpg", "img/glastisch.jpg", "img/kunststofftisch.JPG", "img/holzschrank.jpg", "img/edelstahlschrank.jpg", "img/glasschrank.jpg"];
+			var index = 0;
+			
 			for(var angebot in data){
 				maschinenid = data[angebot].markteinheit.id;
 				var inputid = "inputVerarbeitung"+maschinenid;
 				var outputid = "demo"+maschinenid;
+			
 				
 				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
-						'<img src="img/leder.jpg" alt="Leder">'+
+					'<img src="' + bilder[index] +'" alt="' + data[angebot].markteinheit.name + '">' + 
 						'<div class="caption">'+
 							'<div class="col-sm-12">'+
 								'<h3>'+ data[angebot].markteinheit.p.name+'</h3>'+
@@ -71,11 +75,11 @@
 								'<h4>Benötigtes Material:</h4>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<p>Leer</p>'+
+								'<p>'+data[angebot].markteinheit.matrix+'</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
 							//	'<p>'+ c +'</p>'+
-								'<p>Leer</p>'+
+								'<p>'+ data[angebot].markteinheit.matrix.matrix.Holz+'</p>'+
 							'</div>'+
 							
 							'<div class="col-sm-12">'+
@@ -108,7 +112,7 @@
 								'<br>'+
 							'</div>'+
 							'<div class="col-sm-4">'+
-								'<a href="#" class="btn btn-danger" onClick = "produziereMeldung('+maschinenid+','+angebot+')" data-toggle="modal" data-target="#modalProduzieren">Produzieren</a>'+
+								'<a href="#" class="btn btn-danger" onClick = "produzierenModal('+maschinenid+','+angebot+')" data-toggle="modal" data-target="#modalProduzieren">Produzieren</a>'+
 								'<br>'+
 							'</div>'+
 							
@@ -118,26 +122,30 @@
 							'</div>' +
 						'</div>' + 
 						'</div></div></div>';
+						
+						index++;
 				
 			}
 			cont.innerHTML = s;
 		}
 		
 		// Bei Klick auf Button "Produziere"
-		function produziereMeldung(id, angebot) {
+		function produzierenModal(id, angebot) {
 			
 			// Wert des Input-Feldes (Menge, die produziert werden soll)
 			var iV = document.getElementById("inputVerarbeitung"+id).value;
-			
+			var text;
 			if (isNaN(iV) || iV < 1 ) {
 				var cont  = document.getElementById('contentModal');
-		        text = "Eingabe ungültig!";
+		        text = "<h3>&nbsp;&nbsp;Eingabe ungültig!</h3>";
 		        cont.innerHTML = text;
 		        return;
 		    } else {
 		        text = iV;
 		    }
-		   // document.getElementById("demo").innerHTML = text;
+			
+			// FEHLT: Prüfung ob genug Material vorhanden
+		
 			
 			//Test: Input-Wert
 			document.getElementById("demo"+id).innerHTML = text;
@@ -187,8 +195,15 @@
 					'<div class="col-sm-6">'+
 						'<p>'+ kosten+'</p>'+
 						'<br>'+
-					'</div>'
-					 ;
+					'</div>'+
+					'<div class="row">'+
+						'<div class="col-sm-9">'+
+						'</div>'+
+						'<div class="col-sm-3">'+
+							'<button type="button" class="btn btn-danger" data-dismiss="modal" id="buttonBestätigung">Bestätigen</button>'+
+						'</div>'+
+					'</div>';
+					 
 		
 				cont.innerHTML = s;
 				
@@ -197,7 +212,7 @@
 		
 		function produziere(mengeProdukt, maschinenid) {
 	 		jQuery.ajax({
-		 		url: "../webapi/v1/demo/produziere/"+mengeProdukt+"/"+maschinenid,
+		 		url: "../api/spiel/produziere/"+mengeProdukt+"/"+maschinenid,
 		 		type: "GET",
 		 		dataType: "json",
 		 		sucess: function(data, data2) {
@@ -238,17 +253,8 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
-         <div id="contentModal">
+         <div class="modal-body" id="contentModal">
           </div>
-        <!-- Modal body -->
-        <div class="modal-body" >
-         
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer" >
-          <button type="button" class="btn btn-danger" data-dismiss="modal" id="buttonBestätigung">Bestätigen</button>
-        </div>
         
       </div>
     </div>
