@@ -71,5 +71,44 @@ public class SimulationsKonstanten {
         }
         return volumen;
     }
+    
+    public static int getMaschinenPreise(MaschinenArt ma) {
+    	int a = 0;
+    	switch (ma) {
+		case Holzstuhlmaschine:
+			a = 7000;
+			break;
+		case Lederstuhlmaschine:
+			a=8000;
+			break;
+		case Holzschrankmaschine:
+			a=11000;
+			break;
+		case Glastischmaschine:
+			a=11500;
+			break;
+		case Kunststofftischmaschine:
+			a=8500;
+			break;
+		case Stoffstuhlmaschine:
+			a=7500;
+			break;
+		case Holztischmaschine:
+			a=9500;
+			break;
+		case Edelstahlschrankmaschine:
+			a=12000;
+			break;
+		case Glasschrankmaschine:
+			a=12500;
+			break;
+
+		default:
+			break;
+		}
+    	return a;
+    }
+    
+    public static final int MATERIAL_MARKT_MENGE = 1000000;
 
 }

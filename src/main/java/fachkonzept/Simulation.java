@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
+import fachkonzept.markt.Markt;
 import fachkonzept.markt.Maschinenmarkt;
 import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MaterialArt;
@@ -47,7 +48,7 @@ public class Simulation {
 
             simuliereKredittilgung(n);
             simuliereLohnzahlung(n);
-
+            simuliereBeschaffungsmarkt(n.getBmarkt());
         }
         // gemeinsame konkurrenz dinge
         simuliereAbsatzmarkt(s.getUnternehmen());
@@ -176,6 +177,34 @@ public class Simulation {
         //return wert verbleibende nachfrage
         return verbleibendeNachfrage;
     }
+    
+    private static void simuliereBeschaffungsmarkt(Beschaffungsmarkt b) {
+    	for (Angebot a : b.getAngebote()) {
+    		int differenz = SimulationsKonstanten.MATERIAL_MARKT_MENGE - a.getMenge();
+    		a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
+    		a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
+			
+		}
+    }    
+    
+    private static void simuliereMaschinenmarkt(Maschinenmarkt b) {
+    	for (Angebot a : b.getAngebote()) {
+    		int differenz = SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()) - a.getMenge();
+    		a.setMenge(SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()));
+    		a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
+			
+		}
+    }
+    
+    
+    private static void simuliereMaschinenmarkt(Finanzmarkt b) {
+    	for (Angebot a : b.getAngebote()) {
+    		int differenz = SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()) - a.getMenge();
+    		a.setMenge(SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()));
+    		a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
+			
+		}
+    }
 
     private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
     	double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
@@ -187,12 +216,12 @@ public class Simulation {
         Material edelstahl = new Material(MaterialArt.Edelstahl);
 
         Beschaffungsmarkt b = new Beschaffungsmarkt();
-        b.anbieten(new Angebot(holz, 100, 3 * standortfaktor_material));
-        b.anbieten(new Angebot(stoff, 100, 3.50 * standortfaktor_material));
-        b.anbieten(new Angebot(leder, 100, 9 * standortfaktor_material));
-        b.anbieten(new Angebot(glas, 100, 14 * standortfaktor_material));
-        b.anbieten(new Angebot(kunststoff, 100, 1 * standortfaktor_material));
-        b.anbieten(new Angebot(edelstahl, 100, 6 * standortfaktor_material));
+        b.anbieten(new Angebot(holz, SimulationsKonstanten.MATERIAL_MARKT_MENGE, 3 * standortfaktor_material));
+        b.anbieten(new Angebot(stoff, SimulationsKonstanten.MATERIAL_MARKT_MENGE, 3.50 * standortfaktor_material));
+        b.anbieten(new Angebot(leder, SimulationsKonstanten.MATERIAL_MARKT_MENGE, 9 * standortfaktor_material));
+        b.anbieten(new Angebot(glas, SimulationsKonstanten.MATERIAL_MARKT_MENGE, 14 * standortfaktor_material));
+        b.anbieten(new Angebot(kunststoff, SimulationsKonstanten.MATERIAL_MARKT_MENGE, 1 * standortfaktor_material));
+        b.anbieten(new Angebot(edelstahl, SimulationsKonstanten.MATERIAL_MARKT_MENGE, 6 * standortfaktor_material));
 
         return b;
     }
@@ -296,15 +325,15 @@ public class Simulation {
 
         // Maschinen auf Maschinenmarkt anbieten
         Maschinenmarkt b = new Maschinenmarkt();
-        b.anbieten(new Angebot(m1, 3, 7000));
-        b.anbieten(new Angebot(m2, 1, 7500));
-        b.anbieten(new Angebot(m3, 1, 8000));
-        b.anbieten(new Angebot(m4, 1, 9500));
-        b.anbieten(new Angebot(m5, 1, 11500));
-        b.anbieten(new Angebot(m6, 1, 8500));
-        b.anbieten(new Angebot(m7, 1, 11000));
-        b.anbieten(new Angebot(m8, 1, 12000));
-        b.anbieten(new Angebot(m9, 1, 12500));
+        b.anbieten(new Angebot(m1, 3, SimulationsKonstanten.getMaschinenPreise(m1.getMaschinenArt())));
+        b.anbieten(new Angebot(m2, 1, SimulationsKonstanten.getMaschinenPreise(m2.getMaschinenArt())));
+        b.anbieten(new Angebot(m3, 1, SimulationsKonstanten.getMaschinenPreise(m3.getMaschinenArt())));
+        b.anbieten(new Angebot(m4, 1, SimulationsKonstanten.getMaschinenPreise(m4.getMaschinenArt())));
+        b.anbieten(new Angebot(m5, 1, SimulationsKonstanten.getMaschinenPreise(m5.getMaschinenArt())));
+        b.anbieten(new Angebot(m6, 1, SimulationsKonstanten.getMaschinenPreise(m6.getMaschinenArt())));
+        b.anbieten(new Angebot(m7, 1, SimulationsKonstanten.getMaschinenPreise(m7.getMaschinenArt())));
+        b.anbieten(new Angebot(m8, 1, SimulationsKonstanten.getMaschinenPreise(m8.getMaschinenArt())));
+        b.anbieten(new Angebot(m9, 1, SimulationsKonstanten.getMaschinenPreise(m9.getMaschinenArt())));
 
         return b;
     }

@@ -6,16 +6,16 @@ public class ProduktDTO {
 
 	public ProduktDTO(Produkt p, int menge) {
 		this.menge = menge;
-		this.p=p;
+		this.produkt=p;
 	}
 	
-	private Produkt p;
+	private Produkt produkt;
 	private int menge;
 	public Produkt getP() {
-		return p;
+		return produkt;
 	}
 	public void setP(Produkt p) {
-		this.p = p;
+		this.produkt = p;
 	}
 	public int getMenge() {
 		return menge;

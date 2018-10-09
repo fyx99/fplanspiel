@@ -8,6 +8,8 @@ import java.util.Map;
 import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
 import dto.MitarbeiterGesamtDTO;
+import dto.ProduktDTO;
+import dto.ProdukteGesamtDTO;
 import dto.UnternehmenDTO;
 import fachkonzept.marketing.Marketingmix;
 import fachkonzept.markt.Absatzmarkt;
@@ -297,8 +299,8 @@ public class Unternehmen {
 	public MaschinenGesamtDTO zeigeMaschinen() {
 		return new MaschinenGesamtDTO(this.maschinen);
 	}
-	public  Map<Produkt, Integer> zeigeProdukte() {
-		return this.produkte;
+	public  ProdukteGesamtDTO zeigeProdukte() {
+		return new ProdukteGesamtDTO(produkte);
 	}
 
 	public Spiel getSpiel() {

@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
+import dto.ProdukteGesamtDTO;
 import dto.RundenResultatDTO;
 import dto.UnternehmenDTO;
 import dto.ZwischenstandDTO;
@@ -214,7 +215,7 @@ public class SpielService {
     @GET
     @Path("produkte")
     @Produces(MediaType.APPLICATION_JSON)
-    public static Map<Produkt, Integer> getProdukte() {
+    public static ProdukteGesamtDTO getProdukte() {
         return s.getAktuellesUnternehmen().zeigeProdukte();
     }
 
