@@ -214,7 +214,7 @@ public class SpielService {
     @GET
     @Path("produkte")
     @Produces(MediaType.APPLICATION_JSON)
-    public static Map<String, Integer> getProdukte() {
+    public static Map<Produkt, Integer> getProdukte() {
         return s.getAktuellesUnternehmen().zeigeProdukte();
     }
 

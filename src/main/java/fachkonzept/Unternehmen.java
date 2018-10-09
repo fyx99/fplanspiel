@@ -38,7 +38,7 @@ public class Unternehmen {
 
 	private List<Maschine> maschinen = new ArrayList<Maschine>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
-	private Map<String, Integer> produkte = new HashMap<String, Integer>();		// falsches einfügen :D
+	private Map<Produkt, Integer> produkte = new HashMap<Produkt, Integer>();		// falsches einfügen :D
     private List<Arbeitskraft> mitarbeiter = new ArrayList<Arbeitskraft>();
     private List<Verbindlichkeit> verbindlichkeiten = new ArrayList();
 
@@ -129,10 +129,10 @@ public class Unternehmen {
 	}
 
     public void produktHinzu(Produkt m, Integer menge) {
-        if (this.produkte.containsKey(m.getName())) {
-            this.produkte.replace(m.getName(), menge + this.produkte.get(m.getName()));
+        if (this.produkte.containsKey(m)) {
+            this.produkte.replace(m, menge + this.produkte.get(m));
         } else
-            this.produkte.putIfAbsent(m.getName(), menge);
+            this.produkte.putIfAbsent(m, menge);
     }
 
     
@@ -162,10 +162,10 @@ public class Unternehmen {
 
     public void produktEntfernen(Produkt m, Integer menge) {
         if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
-            this.produkte.replace(m.getName(), this.produkte.get(m.getName()) - menge);
+            this.produkte.replace(m, this.produkte.get(m) - menge);
         }
-        else if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge <= 0) {
-            this.produkte.remove(m.getName());
+        else if (this.produkte.containsKey(m) && this.produkte.get(m) - menge <= 0) {
+            this.produkte.remove(m);
         }
     }
     
@@ -211,11 +211,11 @@ public class Unternehmen {
 		this.materialien = materialien;
 	}
 
-	public Map<String, Integer> getProdukte() {
+	public Map<Produkt, Integer> getProdukte() {
 		return produkte;
 	}
 
-	public void setProdukte(Map<String, Integer> produkte) {
+	public void setProdukte(Map<Produkt, Integer> produkte) {
 		this.produkte = produkte;
 	}
     
@@ -297,7 +297,7 @@ public class Unternehmen {
 	public MaschinenGesamtDTO zeigeMaschinen() {
 		return new MaschinenGesamtDTO(this.maschinen);
 	}
-	public  Map<String, Integer> zeigeProdukte() {
+	public  Map<Produkt, Integer> zeigeProdukte() {
 		return this.produkte;
 	}
 

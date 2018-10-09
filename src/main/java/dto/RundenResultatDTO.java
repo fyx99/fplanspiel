@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import fachkonzept.GuV;
+import fachkonzept.Produkt;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
@@ -21,7 +22,7 @@ public class RundenResultatDTO {
     private int mitarbeiterKapazitMaschine; 
     private int mitarbeiterKapazitVertieb;
     private int mitarbeiterKapazitVerwaltung;
-    private Map<String, Integer> produkte;
+    private Map<Produkt, Integer> produkte;
     private List<Verbindlichkeit> verbindlichkeiten;
     private List<Umsatz> umsatzHistorie;
     private List<Marketingmaßnahme> marketingMaßnahmen;
@@ -114,11 +115,11 @@ public class RundenResultatDTO {
 		this.mitarbeiterKapazitVerwaltung = mitarbeiterKapazitVerwaltung;
 	}
 
-	public Map<String, Integer> getProdukte() {
+	public Map<Produkt, Integer> getProdukte() {
 		return produkte;
 	}
 
-	public void setProdukte(Map<String, Integer> produkte) {
+	public void setProdukte(Map<Produkt, Integer> produkte) {
 		this.produkte = produkte;
 	}
 

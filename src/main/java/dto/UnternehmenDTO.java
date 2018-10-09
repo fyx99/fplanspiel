@@ -2,6 +2,7 @@ package dto;
 
 import java.util.Map;
 
+import fachkonzept.Produkt;
 import fachkonzept.marketing.Marketingmix;
 
 public class UnternehmenDTO {
@@ -23,7 +24,7 @@ public class UnternehmenDTO {
 
 	private Map<String, Integer> materialien;
 	private MaschinenGesamtDTO maschinen;
-	private  Map<String, Integer> produkte;
+	private  Map<Produkt, Integer> produkte;
 	private MitarbeiterGesamtDTO mitarbeiter;
 	public String getName() {
 		return name;
@@ -97,10 +98,10 @@ public class UnternehmenDTO {
     public void setMaterialien(Map<String, Integer> materialien) {
         this.materialien = materialien;
     }
-    public Map<String, Integer> getProdukte() {
+    public Map<Produkt, Integer> getProdukte() {
         return produkte;
     }
-    public void setProdukte(Map<String, Integer> produkte) {
+    public void setProdukte(Map<Produkt, Integer> produkte) {
         this.produkte = produkte;
     }
 	

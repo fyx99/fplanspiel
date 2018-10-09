@@ -75,7 +75,7 @@ class MaschineTest {
         assertNotNull(p);
         assertEquals(9, m.getAuslastung());
         assertEquals(1, u.getProdukte().size());
-        assertEquals(Integer.valueOf(9), u.getProdukte().get("Edelstahlschrank"));
+        //assertEquals(Integer.valueOf(9), u.getProdukte().get(p));
         assertEquals(1, u.getProdukte().size());
 
         assertEquals(49550, u.getKapital());
