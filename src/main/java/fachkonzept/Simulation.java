@@ -56,6 +56,8 @@ public class Simulation {
             simuliereLohnzahlung(n);
             simuliereBeschaffungsmarkt(n.getBmarkt());
             simuliereMarketingmix(n);
+            simuliereFinanzmarkt(n.getFmarkt());
+            simuliereMaschinenmarkt(n.getMmarkt());
         }
         // gemeinsame konkurrenz dinge
         simuliereAbsatzmarkt(s.getUnternehmen());
@@ -285,7 +287,7 @@ public class Simulation {
     }
     
     
-    private static void simuliereMaschinenmarkt(Finanzmarkt b) {
+    private static void simuliereFinanzmarkt(Finanzmarkt b) {
     	for (Angebot a : b.getAngebote()) {
     		int differenz = SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()) - a.getMenge();
     		a.setMenge(SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()));
