@@ -6,7 +6,6 @@ import java.util.List;
 
 import fachkonzept.Angebot;
 import fachkonzept.Maschine;
-import fachkonzept.Material;
 import fachkonzept.Spiel;
 import fachkonzept.Unternehmen;
 
