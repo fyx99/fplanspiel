@@ -8,7 +8,6 @@ import java.util.Map;
 import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
 import dto.MitarbeiterGesamtDTO;
-import dto.ProduktDTO;
 import dto.ProdukteGesamtDTO;
 import dto.UnternehmenDTO;
 import fachkonzept.marketing.Marketingmix;
