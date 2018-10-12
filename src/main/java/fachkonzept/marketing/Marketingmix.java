@@ -9,6 +9,8 @@ public class Marketingmix {
     
 
     private List<Marketingmaßnahme> marketing = new ArrayList<Marketingmaßnahme>();
+    private int marketingStaerke = 0;
+    
     
     public List<Marketingmaßnahme> getMarketing() {
         return marketing;
@@ -26,6 +28,16 @@ public class Marketingmix {
         this.marketing.remove(m);
     }
     
+    
+    
+    public int getMarketingStaerke() {
+        return marketingStaerke;
+    }
+
+    public void setMarketingStaerke(int marketingStaerke) {
+        this.marketingStaerke = marketingStaerke;
+    }
+
     public static void marketingBuchen(Marketingmaßnahme m, Unternehmen u) {
         //hier wird direkt bezahlt
         u.getMarketingmix().marketingHinzu(m);
