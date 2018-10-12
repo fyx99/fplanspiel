@@ -8,10 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import fachkonzept.marketing.Fernsehwerbung;
+import fachkonzept.marketing.Marketingmaßnahme;
+import fachkonzept.marketing.MessenKampagne;
+import fachkonzept.marketing.PRKampagne;
+import fachkonzept.marketing.Plakatwerbung;
+import fachkonzept.marketing.Radiowerbung;
+import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
-import fachkonzept.markt.Markt;
 import fachkonzept.markt.Maschinenmarkt;
 import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MaterialArt;
@@ -49,6 +55,7 @@ public class Simulation {
             simuliereKredittilgung(n);
             simuliereLohnzahlung(n);
             simuliereBeschaffungsmarkt(n.getBmarkt());
+            simuliereMarketingmix(n);
         }
         // gemeinsame konkurrenz dinge
         simuliereAbsatzmarkt(s.getUnternehmen());
@@ -77,6 +84,87 @@ public class Simulation {
             u.kosten(ak.getM().getLohnkosten(), "Lohnkosten");
         }
     }
+    
+
+    private static void simuliereMarketingmix(Unternehmen u) {
+        int marketingPunkte = 0;
+        Marketingmaßnahme m = null;
+        int volumen = 0;
+        for(int i = 0; i < u.getMarketingmix().getMarketingType(Fernsehwerbung.class.getName()).size(); i++) {
+            m = u.getMarketingmix().getMarketingType(Fernsehwerbung.class.getName()).get(i);
+            volumen += m.getBudget();
+        }
+        if(m != null && volumen > m.getVolumen()) {
+            marketingPunkte += m.getEffektivitaet();
+        }
+        else if(m != null){
+            marketingPunkte += m.getEffektivitaet() * (volumen / m.getVolumen());
+        }
+        volumen = 0;m=null;
+        
+        for(int i = 0; i < u.getMarketingmix().getMarketingType(Sponsoring.class.getName()).size(); i++) {
+            m = u.getMarketingmix().getMarketingType(Sponsoring.class.getName()).get(i);
+            volumen += m.getBudget();
+        }
+        if(m != null && volumen > m.getVolumen()) {
+            marketingPunkte += m.getEffektivitaet();
+        }
+        else if(m != null){
+            marketingPunkte += m.getEffektivitaet() * (volumen / m.getVolumen());
+        }
+        volumen = 0;m=null;
+        
+        for(int i = 0; i < u.getMarketingmix().getMarketingType(Plakatwerbung.class.getName()).size(); i++) {
+            m = u.getMarketingmix().getMarketingType(Plakatwerbung.class.getName()).get(i);
+            volumen += m.getBudget();
+        }
+        if(m != null && volumen > m.getVolumen()) {
+            marketingPunkte += m.getEffektivitaet();
+        }
+        else if(m != null){
+            marketingPunkte += m.getEffektivitaet() * (volumen / m.getVolumen());
+        }
+        volumen = 0;m=null;
+        
+        for(int i = 0; i < u.getMarketingmix().getMarketingType(Radiowerbung.class.getName()).size(); i++) {
+            m = u.getMarketingmix().getMarketingType(Radiowerbung.class.getName()).get(i);
+            volumen += m.getBudget();
+        }
+        if(m != null && volumen > m.getVolumen()) {
+            marketingPunkte += m.getEffektivitaet();
+        }
+        else if(m != null){
+            marketingPunkte += m.getEffektivitaet() * (volumen / m.getVolumen());
+        }
+        volumen = 0;m=null;
+        
+        for(int i = 0; i < u.getMarketingmix().getMarketingType(PRKampagne.class.getName()).size(); i++) {
+            m = u.getMarketingmix().getMarketingType(PRKampagne.class.getName()).get(i);
+            volumen += m.getBudget();
+        }
+        if(m != null && volumen > m.getVolumen()) {
+            marketingPunkte += m.getEffektivitaet();
+        }
+        else if(m != null){
+            marketingPunkte += m.getEffektivitaet() * (volumen / m.getVolumen());
+        }
+        volumen = 0;m = null;
+        
+        for(int i = 0; i < u.getMarketingmix().getMarketingType(MessenKampagne.class.getName()).size(); i++) {
+            m = u.getMarketingmix().getMarketingType(MessenKampagne.class.getName()).get(i);
+            volumen += m.getBudget();
+        }
+        if(m != null && volumen > m.getVolumen()) {
+            marketingPunkte += m.getEffektivitaet();
+        }
+        else if(m != null){
+            marketingPunkte += m.getEffektivitaet() * (volumen / m.getVolumen());
+        }
+        u.getMarketingmix().setMarketingStaerke(marketingPunkte);
+
+        
+    }
+
 
     private static void simuliereAbsatzmarkt(List<Unternehmen> us) {
         for(ProduktArt produktArt : ProduktArt.values()) {

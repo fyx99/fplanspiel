@@ -11,7 +11,6 @@ public class Marketingmix {
     private List<Marketingmaßnahme> marketing = new ArrayList<Marketingmaßnahme>();
     private int marketingStaerke = 0;
     
-    
     public List<Marketingmaßnahme> getMarketing() {
         return marketing;
     }
@@ -29,7 +28,6 @@ public class Marketingmix {
     }
     
     
-    
     public int getMarketingStaerke() {
         return marketingStaerke;
     }
@@ -42,6 +40,15 @@ public class Marketingmix {
         //hier wird direkt bezahlt
         u.getMarketingmix().marketingHinzu(m);
         u.kosten(m.getBudget(), "Marketingkosten");
+    }
+    
+    public List<Marketingmaßnahme> getMarketingType(String type){
+        List<Marketingmaßnahme> ret = new ArrayList();
+        for(Marketingmaßnahme m : marketing) {
+            if(m.getClass().getName().equals(type))
+                ret.add(m);
+        }
+        return ret;
     }
 
 }
