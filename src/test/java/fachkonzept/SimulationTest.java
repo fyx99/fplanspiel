@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fachkonzept.marketing.Fernsehwerbung;
+import fachkonzept.marketing.MessenKampagne;
+import fachkonzept.marketing.PRKampagne;
+import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
@@ -113,28 +117,7 @@ class SimulationTest {
         assertEquals(5, u1.getGuv().getAusgaben().size());
     }
     
-//
-//    @BeforeEach
-//    public void settingUpMock() throws Exception {
-//
-//        MockitoAnnotations.initMocks(this);
-//    }
-//
-//    @Mock
-//    private SimulationsKonstanten bsp1 = new SimulationsKonstanten();
-//    
-//    @InjectMocks
-//    private Simulation ssss = new Simulation();
-//
-//    @Test
-//    public void test() {
-//
-//        //Mockito.when(SimulationsKonstanten.getProduktMarktpreis((ProduktArt)anyObject())).thenReturn(77d);
-//
-//        //assertEquals(7, bsp1.getProduktMarktpreis(ProduktArt.Edelstahlschrank));
-//
-//    }
-//    
+
     
     
     @Test
@@ -174,8 +157,45 @@ class SimulationTest {
         assertEquals(2375.6, u3.getGuv().rundenErgebnis(), 0.001);
     }   
     
+    @Test
+    void simuliereMArketingmix() {
+    	
+    	u1.getMarketingmix().marketingBuchen(new PRKampagne("Fußfdgdfgdf", 43000), u1);	//kapp 25
+    	u1.getMarketingmix().marketingBuchen(new Fernsehwerbung("werbnungg", 900),  u1);	//3
+    	u1.getMarketingmix().marketingBuchen(new MessenKampagne("werbsaddnungg", 1000),  u1);
+    	u1.getMarketingmix().marketingBuchen(new MessenKampagne("Fußball Tesdfdsfsdfnsoring", 3500),  u1);	//kapp 12
+    	u1.setKapital(55555);
+    	Simulation.simuliere(s);
+    	assertEquals(55555-48400, u1.getKapital());
+    	assertEquals(40, u1.getMarketingmix().getMarketingStaerke());
+    	Simulation.simuliere(s);
+    	assertEquals(40, u1.getMarketingmix().getMarketingStaerke());
+    	assertEquals(0, u2.getMarketingmix().getMarketingStaerke());
+    }
     
     
+    //
+//  @BeforeEach
+//  public void settingUpMock() throws Exception {
+//
+//      MockitoAnnotations.initMocks(this);
+//  }
+//
+//  @Mock
+//  private SimulationsKonstanten bsp1 = new SimulationsKonstanten();
+//  
+//  @InjectMocks
+//  private Simulation ssss = new Simulation();
+//
+//  @Test
+//  public void test() {
+//
+//      //Mockito.when(SimulationsKonstanten.getProduktMarktpreis((ProduktArt)anyObject())).thenReturn(77d);
+//
+//      //assertEquals(7, bsp1.getProduktMarktpreis(ProduktArt.Edelstahlschrank));
+//
+//  }
+//  
     
     
     
