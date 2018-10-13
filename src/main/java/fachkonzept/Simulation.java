@@ -211,8 +211,9 @@ public class Simulation {
             i += auswahl.size() - 1;
             
             //-> ab hier einfach abkaufen
-            while(verbleibendeNachfrage > 0 && !auswahl.isEmpty()) {
+            while(verbleibendeNachfrage > 0 && !auswahl.isEmpty() && verbleibendeNachfrage > auswahl.size()) {
                 verbleibendeNachfrage = nachfrageVerteilen(auswahl, angebote, verbleibendeNachfrage);
+                
             }
             
         }
@@ -222,7 +223,8 @@ public class Simulation {
         //funktion die den preis verringert
         double kappungsfaktor = 3; //1% drüber -> 3 runter
         double preisDifferenz = 1 - aktPreis / grundpreis;      //in prozent über grundpreis
-        return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
+//        return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
+        return gesamtNachfrage;
         
     }
 

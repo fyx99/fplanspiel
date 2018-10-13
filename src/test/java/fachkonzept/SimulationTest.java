@@ -140,7 +140,7 @@ class SimulationTest {
     @Test
     void simuliere2Absatzmarkt() {
         setUpAbsatzmarkt();
-        //Simulation.simuliere(s);
+        Simulation.simuliere(s);
         assertEquals(36, SimulationsKonstanten.getProduktMarktvolumen(ProduktArt.Glastisch));
         assertEquals(539, SimulationsKonstanten.getProduktMarktpreis(ProduktArt.Glastisch));
         assertEquals(60, SimulationsKonstanten.getProduktMarktpreis(ProduktArt.Holzstuhl));
@@ -156,22 +156,22 @@ class SimulationTest {
         assertEquals(1, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).size());
         assertEquals(0, u3.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).size());
         //andere angebots mengen
-        assertEquals(0, u1.getVmarkt().getAngeboteByProduktArt(ProduktArt.Holzstuhl).size());
-        assertEquals(0, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Holzstuhl).size());
+        assertEquals(1, u1.getVmarkt().getAngeboteByProduktArt(ProduktArt.Holzstuhl).size());
+        assertEquals(1, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Holzstuhl).size());
         assertEquals(0, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Edelstahlschrank).size());
         assertEquals(1, u3.getVmarkt().getAngeboteByProduktArt(ProduktArt.Edelstahlschrank).size());    //beispiel für kappung
         assertEquals(0, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Lederstuhl).size());
         
         //die restbestände
-        assertEquals(10, u1.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).get(0).getMenge());
-        assertEquals(10, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).get(0).getMenge());      
-        assertEquals(20, u3.getVmarkt().getAngeboteByProduktArt(ProduktArt.Edelstahlschrank).get(0).getMenge());
+        assertEquals(5, u1.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).get(0).getMenge());
+        assertEquals(5, u2.getVmarkt().getAngeboteByProduktArt(ProduktArt.Glastisch).get(0).getMenge());      
+        assertEquals(50, u3.getVmarkt().getAngeboteByProduktArt(ProduktArt.Edelstahlschrank).get(0).getMenge());
         
         //die umsätze
 
-        assertEquals(854, u1.getGuv().rundenErgebnis());
-        assertEquals(4250, u2.getGuv().rundenErgebnis());
-        assertEquals(9359.6, u3.getGuv().rundenErgebnis(), 0.001);
+        assertEquals(1295, u1.getGuv().rundenErgebnis());
+        assertEquals(25935, u2.getGuv().rundenErgebnis());
+        assertEquals(2375.6, u3.getGuv().rundenErgebnis(), 0.001);
     }   
     
     
