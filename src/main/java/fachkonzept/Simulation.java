@@ -56,8 +56,8 @@ public class Simulation {
             simuliereLohnzahlung(n);
             simuliereBeschaffungsmarkt(n.getBmarkt());
             simuliereMarketingmix(n);
-            simuliereFinanzmarkt(n.getFmarkt());
-            simuliereMaschinenmarkt(n.getMmarkt());
+            //simuliereFinanzmarkt(n.getFmarkt());
+            //simuliereMaschinenmarkt(n.getMmarkt());
         }
         // gemeinsame konkurrenz dinge
         simuliereAbsatzmarkt(s.getUnternehmen());
@@ -185,7 +185,7 @@ public class Simulation {
             if(produkt_angebote.isEmpty())
                 continue;
             
-            simuliereEinzelnesProdukt(produkt_angebote, SimulationsKonstanten.getProduktMarktvolumen(produktArt), 
+            simuliereEinzelnesProdukt(produkt_angebote, SimulationsKonstanten.getProduktMarktvolumen(produktArt) * us.size(), 
                     SimulationsKonstanten.getProduktMarktpreis(produktArt));
         }
     }
@@ -276,7 +276,7 @@ public class Simulation {
 			
 		}
     }    
-    
+    /*
     private static void simuliereMaschinenmarkt(Maschinenmarkt b) {
     	for (Angebot a : b.getAngebote()) {
     		int differenz = SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()) - a.getMenge();
@@ -286,15 +286,7 @@ public class Simulation {
 		}
     }
     
-    
-    private static void simuliereFinanzmarkt(Finanzmarkt b) {
-    	for (Angebot a : b.getAngebote()) {
-    		int differenz = SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()) - a.getMenge();
-    		a.setMenge(SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).getMaschinenArt()));
-    		a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
-			
-		}
-    }
+    */
 
     private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
     	double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
