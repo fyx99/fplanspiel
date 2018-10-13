@@ -5,9 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import fachkonzept.Angebot;
+import fachkonzept.Kredit;
 import fachkonzept.Maschine;
 import fachkonzept.Spiel;
+import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
+import fachkonzept.util.KreditArt;
+import fachkonzept.util.MaschinenArt;
 
 public class Maschinenmarkt extends Markt {
 
@@ -39,7 +43,18 @@ public class Maschinenmarkt extends Markt {
         }
         return maschinen;
 	}
-	
+
+	public static List<Umsatz> umsatzProMaschinenArt(MaschinenArt a) {
+		List<Umsatz> gefiltert = new ArrayList();
+		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {
+			if(u.getAngebot().getMarkteinheit() instanceof Maschine && ((Maschine)u.getAngebot().getMarkteinheit()).getMaschinenArt() == a) {
+				gefiltert.add(u);
+			}
+		}
+		return gefiltert;
+
+	}
+
 	
 	
 	

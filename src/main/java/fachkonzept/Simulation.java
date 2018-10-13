@@ -19,6 +19,7 @@ import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.util.KreditArt;
 import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MaterialArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
@@ -333,9 +334,9 @@ public class Simulation {
 	}
 
 	private static Finanzmarkt finanzmarktDemoDaten() {
-		Kredit k1 = new Kredit(100000, 0.05, 4, "Ultra-Cash");
-		Kredit k2 = new Kredit(5000, 0.02, 2, "Kurzes-Cash");
-		Kredit k3 = new Kredit(200000, 0.03, 8, "Mehr Cash");
+		Kredit k1 = new Kredit(100000, 0.05, 4, KreditArt.Ultra_Cash);
+		Kredit k2 = new Kredit(5000, 0.02, 2, KreditArt.Kurzes_Cash);
+		Kredit k3 = new Kredit(200000, 0.03, 8, KreditArt.Mehr_Cash);
 
 		Finanzmarkt fm = new Finanzmarkt();
 		fm.anbieten(new Angebot(k1, 1, 0));

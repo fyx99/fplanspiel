@@ -10,6 +10,7 @@ import fachkonzept.marketing.MessenKampagne;
 import fachkonzept.marketing.PRKampagne;
 import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Absatzmarkt;
+import fachkonzept.util.KreditArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
@@ -52,7 +53,7 @@ class SimulationTest {
     
     @Test
     void kreditTilgung() {
-        Verbindlichkeit v1 = new Verbindlichkeit(new Kredit(50000,0.05,7, "Test Kredit"), 40000, 2);
+        Verbindlichkeit v1 = new Verbindlichkeit(new Kredit(50000,0.05,7, KreditArt.Mehr_Cash), 40000, 2);
         u1.verbindlichkeitHinzu(v1);
         u1.setKapital(1000000);
         assertEquals(0, u1.getGuv().rundenErgebnis());

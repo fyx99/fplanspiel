@@ -1,23 +1,25 @@
 package fachkonzept;
 
 import fachkonzept.markt.Markteinheit;
+import fachkonzept.util.KreditArt;
 
 public class Kredit extends Markteinheit {
    
-    private String name;
+    private KreditArt kreditArt;
     private double volumen; //wv ausgezahlt wird
     private double zinssatz;    //0.05 -> 5 %
     private int laufzeit;    // -> quartale - 4 = ein jahr
     //die tilgungs + zins rate, die pro zeit gezahlt werden muss berechnet sich aus volumen, zinsen und laufzeit
     
         
-    public Kredit(double volumen, double zinssatz, int laufzeit, String name) {
+    public Kredit(double volumen, double zinssatz, int laufzeit, KreditArt kreditArt) {
         super();
         
         this.volumen = volumen;
         this.zinssatz = zinssatz;
         this.laufzeit = laufzeit;
-        this.name = name;
+        this.kreditArt = kreditArt;
+        this.setName(kreditArt.name());
         
     }
 
@@ -52,15 +54,18 @@ public class Kredit extends Markteinheit {
     }
 
 
-    public String getName() {
-        return name;
-    }
+	public KreditArt getKreditArt() {
+		return kreditArt;
+	}
 
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    
+	public void setKreditArt(KreditArt kreditArt) {
+		this.kreditArt = kreditArt;
+
+        this.setName(kreditArt.name());
+	}
+
+
+
     
 }

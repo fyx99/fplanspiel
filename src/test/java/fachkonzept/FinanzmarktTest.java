@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.markt.Finanzmarkt;
+import fachkonzept.util.KreditArt;
 
 class FinanzmarktTest {
 
@@ -25,7 +26,7 @@ class FinanzmarktTest {
     
     @Test
     void kaufen() {
-        Kredit k = new Kredit(1000, 0.05, 10, "Bienen-Kredit");
+        Kredit k = new Kredit(1000, 0.05, 10, KreditArt.Kurzes_Cash);
         Angebot beispiel = new Angebot(k, 22, 10);
         
         assertNotNull(testU.getFmarkt());
@@ -42,7 +43,6 @@ class FinanzmarktTest {
         assertEquals(1, testU.getFmarkt().getAngebote().size());
         assertEquals(21, testU.getFmarkt().getAngebote().get(0).getMenge());
         assertEquals(10, testU.getFmarkt().getAngebote().get(0).getPreis());
-        assertEquals("Bienen-Kredit", testU.getFmarkt().getAngebote().get(0).getMarkteinheit().getName());
 
         assertEquals(1000, testU.getVerbindlichkeiten().get(0).getVerbleibendeSumme());
         assertEquals(1000, testU.getVerbindlichkeiten().get(0).getKredit().getVolumen());

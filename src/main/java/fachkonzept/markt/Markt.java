@@ -11,7 +11,7 @@ import fachkonzept.Unternehmen;
 public abstract class Markt {
 
     private Unternehmen u;
-    private List<Umsatz> umsatzHistorie = new ArrayList<Umsatz>();
+    private static List<Umsatz> umsatzHistorie = new ArrayList<Umsatz>();
     private List<Angebot> angebote = new ArrayList<Angebot>();
 
     public void anbieten(Angebot a) {       // für simulation
@@ -31,6 +31,7 @@ public abstract class Markt {
         }
         Spiel.log(a.getId() + " gekaufet übrig " + a.getMenge());
         kaeufer.kosten(a.getPreis() * menge, ("Kauf von " + a.getMarkteinheit().getClass().getSimpleName()));
+        umsatzFesthalten(a, menge, kaeufer.getSpiel().getRunde(), kaeufer);
         // unternehmen bezahlt angebot
 
     }
@@ -77,7 +78,7 @@ public abstract class Markt {
         this.angebote.add(a);
     }
     
-    public List<Umsatz> getUmsatzHistorie() {
+    public static List<Umsatz> getUmsatzHistorie() {
         return umsatzHistorie;
     }
 
@@ -88,5 +89,6 @@ public abstract class Markt {
 
         return false;
     }
+    
 
 }

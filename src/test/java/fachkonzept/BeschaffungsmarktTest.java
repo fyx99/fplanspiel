@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.markt.Beschaffungsmarkt;
+import fachkonzept.markt.Finanzmarkt;
+import fachkonzept.util.KreditArt;
 import fachkonzept.util.MaterialArt;
 
 class BeschaffungsmarktTest {
@@ -15,7 +17,6 @@ class BeschaffungsmarktTest {
         Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
         bmarkt.anbieten(new Angebot(new Material(MaterialArt.Edelstahl), 500, 33));
         assertEquals(1, bmarkt.getAngebote().size());
-        assertEquals(0, bmarkt.getUmsatzHistorie().size());
         assertEquals(500, bmarkt.getAngebote().get(0).getMenge());
         assertEquals(33, bmarkt.getAngebote().get(0).getPreis());
         assertEquals("Edelstahl", bmarkt.getAngebote().get(0).getMarkteinheit().getName());
@@ -68,6 +69,43 @@ class BeschaffungsmarktTest {
     void verkaufen() {
         
         //todo
+    }
+    
+    @Test
+    void umsatzProMaterialArt() {
+    	int size = Beschaffungsmarkt.getUmsatzHistorie().size();
+    	int size2 = Beschaffungsmarkt.umsatzProMaterialArt(MaterialArt.Holz).size();
+    	int size3 = Beschaffungsmarkt.umsatzProMaterialArt(MaterialArt.Edelstahl).size();
+        Beschaffungsmarkt bmarkt = new Beschaffungsmarkt();
+        Angebot a1 = new Angebot(new Material(MaterialArt.Edelstahl), 500, 33);
+        Angebot a2 = new Angebot(new Material(MaterialArt.Holz), 50, 10);
+        bmarkt.anbieten(a1);
+        bmarkt.anbieten(a2);
+        
+        Finanzmarkt fmarkt = new Finanzmarkt();
+        Angebot a3 = new Angebot(new Kredit(1555,0.05, 5,KreditArt.Mehr_Cash), 22, 11);
+        fmarkt.anbieten(a3);
+
+        bmarkt.kaufen(a1, 10, new Unternehmen("a1", new Spiel(), "a"));
+        bmarkt.kaufen(a1, 15, new Unternehmen("a1", new Spiel(), "a"));
+        bmarkt.kaufen(a2, 10, new Unternehmen("a1", new Spiel(), "a"));
+        fmarkt.kaufen(a3, 10, new Unternehmen("a1", new Spiel(), "a"));
+        
+    	assertEquals(4 + size, Beschaffungsmarkt.getUmsatzHistorie().size());
+    	assertEquals(1 + size2, Beschaffungsmarkt.umsatzProMaterialArt(MaterialArt.Holz).size());
+    	assertEquals(2 + size3, Beschaffungsmarkt.umsatzProMaterialArt(MaterialArt.Edelstahl).size());
+    	
+
+    	assertEquals(10, Beschaffungsmarkt.umsatzProMaterialArt(MaterialArt.Edelstahl).get(0+size3).getMenge());
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     }
 
 }

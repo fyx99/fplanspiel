@@ -4,15 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import fachkonzept.util.KreditArt;
+
 class VerbindlichkeitTest {
 
     @Test
     void init() {
-        Kredit beispiel = new Kredit(10000, 0.06, 9, "Test kredit  ");
+        Kredit beispiel = new Kredit(10000, 0.06, 9, KreditArt.Ultra_Cash);
         
         Verbindlichkeit vTest = new Verbindlichkeit(beispiel);
         assertEquals(beispiel, vTest.getKredit());
-        assertEquals("Test kredit  ", vTest.getKredit().getName());
         assertEquals(9, vTest.getKredit().getLaufzeit());
         assertEquals(10000, vTest.getKredit().getVolumen());
         assertEquals(0.06, vTest.getKredit().getZinssatz());
@@ -29,7 +30,7 @@ class VerbindlichkeitTest {
     
     @Test
     void tilgen()  {
-        Kredit beispiel = new Kredit(10000, 0.06, 9, "Test kredit  ");
+        Kredit beispiel = new Kredit(10000, 0.06, 9, KreditArt.Kurzes_Cash);
         
         Verbindlichkeit vTest = new Verbindlichkeit(beispiel);
 
