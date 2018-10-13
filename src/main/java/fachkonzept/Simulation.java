@@ -54,10 +54,11 @@ public class Simulation {
 
 			simuliereKredittilgung(n);
 			simuliereLohnzahlung(n);
-			simuliereBeschaffungsmarkt(n.getBmarkt());
 			simuliereMarketingmix(n);
-			// simuliereFinanzmarkt(n.getFmarkt());
-			// simuliereMaschinenmarkt(n.getMmarkt());
+			simuliereBeschaffungsmarkt(n.getBmarkt());
+			simuliereFinanzmarkt(n.getFmarkt());
+			simuliereMaschinenmarkt(n.getMmarkt());
+			simuliereArbeitsmarkt(n.getAmarkt());
 		}
 		// gemeinsame konkurrenz dinge
 		simuliereAbsatzmarkt(s.getUnternehmen());
@@ -281,22 +282,35 @@ public class Simulation {
 		for (Angebot a : b.getAngebote()) {
 			int differenz = SimulationsKonstanten.MATERIAL_MARKT_MENGE - a.getMenge();
 			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
-			a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
+			//a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
 
 		}
 	}
-	/*
-	 * private static void simuliereMaschinenmarkt(Maschinenmarkt b) { for (Angebot
-	 * a : b.getAngebote()) { int differenz =
-	 * SimulationsKonstanten.getMaschinenPreise(((Maschine)a.getMarkteinheit()).
-	 * getMaschinenArt()) - a.getMenge();
-	 * a.setMenge(SimulationsKonstanten.getMaschinenPreise(((Maschine)a.
-	 * getMarkteinheit()).getMaschinenArt())); a.setPreis(a.getPreis() * (1 +
-	 * (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
-	 * 
-	 * } }
-	 * 
-	 */
+
+	private static void simuliereMaschinenmarkt(Maschinenmarkt b) {
+		for (Angebot a : b.getAngebote()) {
+			int differenz = SimulationsKonstanten.getMaschinenPreise(((Maschine) a.getMarkteinheit()).getMaschinenArt())
+					- a.getMenge();
+			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
+			//a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
+
+		}
+	}
+	
+	private static void simuliereFinanzmarkt(Finanzmarkt b) {
+		for (Angebot a : b.getAngebote()) {
+			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
+
+		}
+	}
+	
+	private static void simuliereArbeitsmarkt(Arbeitsmarkt b) {
+		for (Angebot a : b.getAngebote()) {
+
+			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
+
+		}
+	}
 
 	private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
 		double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
