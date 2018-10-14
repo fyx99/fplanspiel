@@ -73,8 +73,16 @@ public class SimulationsKonstanten {
         }
         return volumen;
     }
-    
+
     public static final int MATERIAL_MARKT_MENGE = 100000;
+    public static final int MASCHINEN_MARKT_MENGE = 100000;
+    public static final int FINANZ_MARKT_MENGE = 100000;
+    
+
+    public static final double MASCHINEN_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
+    public static final double MATERIAL_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
+    
+    
     public static int getMaschinenPreise(MaschinenArt ma) {
         int a = 0;
         switch (ma) {

@@ -44,6 +44,16 @@ public class Maschinenmarkt extends Markt {
         return maschinen;
 	}
 
+	public static List<Umsatz> umsatzProMaschinenArt(MaschinenArt a, int runde) {
+		List<Umsatz> gefiltert = new ArrayList();
+		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {
+			if(u.getAngebot().getMarkteinheit() instanceof Maschine && ((Maschine)u.getAngebot().getMarkteinheit()).getMaschinenArt() == a && u.getRunde() == runde) {
+				gefiltert.add(u);
+			}
+		}
+		return gefiltert;
+
+	}
 	public static List<Umsatz> umsatzProMaschinenArt(MaschinenArt a) {
 		List<Umsatz> gefiltert = new ArrayList();
 		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {

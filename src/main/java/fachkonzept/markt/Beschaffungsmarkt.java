@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import fachkonzept.Angebot;
 import fachkonzept.Material;
+import fachkonzept.Spiel;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.util.MaterialArt;
@@ -25,6 +26,17 @@ public class Beschaffungsmarkt extends Markt {
 		super.kaufen(a, menge, k);
 	}
 
+	public static List<Umsatz> umsatzProMaterialArt(MaterialArt a, int runde) {
+		List<Umsatz> gefiltert = new ArrayList();
+		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {
+			if(u.getAngebot().getMarkteinheit() instanceof Material && ((Material)u.getAngebot().getMarkteinheit()).getMaterialArt() == a && u.getRunde() == runde) {
+				gefiltert.add(u);
+			}
+		}
+		return gefiltert;
+
+	}
+
 	public static List<Umsatz> umsatzProMaterialArt(MaterialArt a) {
 		List<Umsatz> gefiltert = new ArrayList();
 		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {
@@ -35,5 +47,6 @@ public class Beschaffungsmarkt extends Markt {
 		return gefiltert;
 
 	}
+	
 
 }

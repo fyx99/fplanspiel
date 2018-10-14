@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fachkonzept.markt.Markteinheit;
+import fachkonzept.util.Werkzeuge;
 
 public class Angebot{
     
@@ -73,7 +74,7 @@ public class Angebot{
 		this.markteinheit = markteinheit;
 	}
 	public void setPreis(double preis) {
-		this.preis = preis;
+		this.preis = Werkzeuge.runde2Stellen(preis);
 	}//
 	
 	public static Angebot findeAngebot(int id) {

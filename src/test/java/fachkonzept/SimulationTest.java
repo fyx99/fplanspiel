@@ -10,11 +10,14 @@ import fachkonzept.marketing.MessenKampagne;
 import fachkonzept.marketing.PRKampagne;
 import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Absatzmarkt;
+import fachkonzept.markt.Maschinenmarkt;
 import fachkonzept.util.KreditArt;
+import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.Werkzeuge;
 
 class SimulationTest {
     Spiel s;
@@ -122,7 +125,7 @@ class SimulationTest {
     
     
     @Test
-    void simuliere2Absatzmarkt() {
+    void simuliereAbsatzmarkt() {
         setUpAbsatzmarkt();
         Simulation.simuliere(s);
         assertEquals(36, SimulationsKonstanten.getProduktMarktvolumen(ProduktArt.Glastisch));
@@ -159,7 +162,7 @@ class SimulationTest {
     }   
     
     @Test
-    void simuliereMArketingmix() {
+    void simuliereMarketingmix() {
     	
     	u1.getMarketingmix().marketingBuchen(new PRKampagne("Fußfdgdfgdf", 43000), u1);	//kapp 25
     	u1.getMarketingmix().marketingBuchen(new Fernsehwerbung("werbnungg", 900),  u1);	//3
@@ -173,6 +176,66 @@ class SimulationTest {
     	assertEquals(40, u1.getMarketingmix().getMarketingStaerke());
     	assertEquals(0, u2.getMarketingmix().getMarketingStaerke());
     }
+    
+    @Test
+    void simuliereMaschinenMarkt() {
+    	Simulation.simuliereSpielstart(s);
+    	
+		int gesamt = 0;
+		for (MaschinenArt a : MaschinenArt.values()) {
+			// wv pro produkt verkauft wurde
+			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge()).sum();
+		}
+		assertEquals(0, gesamt);
+
+    	Angebot a1 = u1.getMmarkt().getAngebote().get(0);
+    	u1.getMmarkt().kaufen(a1, 10, u1);
+    	u1.getMmarkt().kaufen(u1.getMmarkt().getAngebote().get(1), 5, u1);
+    	u1.getMmarkt().kaufen(u1.getMmarkt().getAngebote().get(2), 15, u1);
+    	u1.getMmarkt().kaufen(u1.getMmarkt().getAngebote().get(3), 60, u1);
+    	//9 maschinen
+
+    	assertEquals(7000, u1.getMmarkt().getAngebote().get(0).getPreis());
+    	assertEquals(7500, u1.getMmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(8000, u1.getMmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(9500, u1.getMmarkt().getAngebote().get(3).getPreis());
+    	assertEquals(11500, u1.getMmarkt().getAngebote().get(4).getPreis());
+    	
+    	Simulation.simuliere(s);
+
+    	assertEquals(7000, u1.getMmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
+    	assertEquals(7125, u1.getMmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(8400, u1.getMmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(10350, u1.getMmarkt().getAngebote().get(4).getPreis());
+    	assertEquals(SimulationsKonstanten.MASCHINEN_MARKT_MENGE, u1.getMmarkt().getAngebote().get(0).getMenge());
+    }
+    
+    @Test
+    void simuliereBeschaffungsMarkt() {
+    	Simulation.simuliereSpielstart(s);
+
+    	Angebot a1 = u1.getBmarkt().getAngebote().get(0);
+    	u1.getBmarkt().kaufen(a1, 10, u1);
+    	u1.getBmarkt().kaufen(u1.getBmarkt().getAngebote().get(1), 5, u1);
+    	u1.getBmarkt().kaufen(u1.getBmarkt().getAngebote().get(2), 15, u1);
+    	u1.getBmarkt().kaufen(u1.getBmarkt().getAngebote().get(3), 30, u1);
+    	//6 materialien
+
+    	assertEquals(3, u1.getBmarkt().getAngebote().get(0).getPreis());
+    	assertEquals(3.5, u1.getBmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(9, u1.getBmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(14, u1.getBmarkt().getAngebote().get(3).getPreis());
+    	assertEquals(1, u1.getBmarkt().getAngebote().get(4).getPreis());
+    	
+    	Simulation.simuliere(s);
+
+    	assertEquals(3, u1.getBmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
+    	assertEquals(3.33, u1.getBmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(9.45, u1.getBmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(0.9, u1.getBmarkt().getAngebote().get(4).getPreis());
+    	assertEquals(SimulationsKonstanten.MASCHINEN_MARKT_MENGE, u1.getBmarkt().getAngebote().get(0).getMenge());
+    }
+   
     
     
     //

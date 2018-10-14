@@ -26,7 +26,7 @@ public class Spiel {
         
         if(runde == 0) {
             //dann anfangs simulation
-            Simulation.simuliereSpielstart(this, this.getUnternehmen());
+            Simulation.simuliereSpielstart(this);
             runde++;    //um in die runde 1 zu starten
         }
         else {

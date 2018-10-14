@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 import fachkonzept.marketing.Fernsehwerbung;
@@ -26,14 +27,15 @@ import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.Werkzeuge;
 
 public class Simulation {
 
 	private static List<String> simlog = new ArrayList();
 
-	public static void simuliereSpielstart(Spiel s, List<Unternehmen> us) {
+	public static void simuliereSpielstart(Spiel s) {
 
-		Iterator<Unternehmen> i = us.iterator();
+		Iterator<Unternehmen> i = s.getUnternehmen().iterator();
 		while (i.hasNext()) {
 			Unternehmen n = i.next();
 			n.setKapital(1000);
@@ -56,9 +58,9 @@ public class Simulation {
 			simuliereKredittilgung(n);
 			simuliereLohnzahlung(n);
 			simuliereMarketingmix(n);
-			simuliereBeschaffungsmarkt(n.getBmarkt());
+			simuliereBeschaffungsmarkt(n.getBmarkt(),s );
 			simuliereFinanzmarkt(n.getFmarkt());
-			simuliereMaschinenmarkt(n.getMmarkt());
+			simuliereMaschinenmarkt(n.getMmarkt(),s);
 			simuliereArbeitsmarkt(n.getAmarkt());
 		}
 		// gemeinsame konkurrenz dinge
@@ -279,32 +281,55 @@ public class Simulation {
 		return verbleibendeNachfrage;
 	}
 
-	private static void simuliereBeschaffungsmarkt(Beschaffungsmarkt b) {
+	private static void simuliereBeschaffungsmarkt(Beschaffungsmarkt b, Spiel s) {
+		int gesamt = 0;
+		for (MaterialArt a : MaterialArt.values()) {
+			// wv pro produkt verkauft wurde
+			gesamt += Beschaffungsmarkt.umsatzProMaterialArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge()).sum();
+		}
+		double schnittMenge = gesamt / MaterialArt.values().length;
+		// was ist viel
+		// -> über alle drüber und
 		for (Angebot a : b.getAngebote()) {
-			int differenz = SimulationsKonstanten.MATERIAL_MARKT_MENGE - a.getMenge();
+			int artMenge = Beschaffungsmarkt.umsatzProMaterialArt(((Material) a.getMarkteinheit()).getMaterialArt(), s.getRunde())
+					.stream().mapToInt(u -> u.getMenge()).sum();
+			double mengenVerhältnis = (double)(artMenge - schnittMenge) / schnittMenge;
+			// bei 50% drüber soll preis 5% steigen
 			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
-			//a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
+			a.setPreis(a.getPreis()
+					+ (a.getPreis() * SimulationsKonstanten.MATERIAL_MARKT_PREISANPASSUNG * mengenVerhältnis));
 
 		}
 	}
 
-	private static void simuliereMaschinenmarkt(Maschinenmarkt b) {
+	private static void simuliereMaschinenmarkt(Maschinenmarkt b, Spiel s) {
+		int gesamt = 0;
+		for (MaschinenArt a : MaschinenArt.values()) {
+			// wv pro produkt verkauft wurde
+			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge()).sum();
+		}
+		double schnittMenge = gesamt / MaschinenArt.values().length;
+		// was ist viel
+		// -> über alle drüber und
 		for (Angebot a : b.getAngebote()) {
-			int differenz = SimulationsKonstanten.getMaschinenPreise(((Maschine) a.getMarkteinheit()).getMaschinenArt())
-					- a.getMenge();
-			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
-			//a.setPreis(a.getPreis() * (1 + (differenz / SimulationsKonstanten.MATERIAL_MARKT_MENGE)));
+			int artMenge = Maschinenmarkt.umsatzProMaschinenArt(((Maschine) a.getMarkteinheit()).getMaschinenArt(), s.getRunde())
+					.stream().mapToInt(u -> u.getMenge()).sum();
+			double mengenVerhältnis = (artMenge - schnittMenge) / schnittMenge;
+			// bei 50% drüber soll preis 5% steigen
+			a.setMenge(SimulationsKonstanten.MASCHINEN_MARKT_MENGE);
+			a.setPreis(a.getPreis()
+					+ (a.getPreis() * SimulationsKonstanten.MASCHINEN_MARKT_PREISANPASSUNG * mengenVerhältnis));
 
 		}
 	}
-	
+
 	private static void simuliereFinanzmarkt(Finanzmarkt b) {
 		for (Angebot a : b.getAngebote()) {
 			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
 
 		}
 	}
-	
+
 	private static void simuliereArbeitsmarkt(Arbeitsmarkt b) {
 		for (Angebot a : b.getAngebote()) {
 
@@ -444,15 +469,15 @@ public class Simulation {
 
 		// Maschinen auf Maschinenmarkt anbieten
 		Maschinenmarkt b = new Maschinenmarkt();
-		b.anbieten(new Angebot(m1, 3, SimulationsKonstanten.getMaschinenPreise(m1.getMaschinenArt())));
-		b.anbieten(new Angebot(m2, 1, SimulationsKonstanten.getMaschinenPreise(m2.getMaschinenArt())));
-		b.anbieten(new Angebot(m3, 1, SimulationsKonstanten.getMaschinenPreise(m3.getMaschinenArt())));
-		b.anbieten(new Angebot(m4, 1, SimulationsKonstanten.getMaschinenPreise(m4.getMaschinenArt())));
-		b.anbieten(new Angebot(m5, 1, SimulationsKonstanten.getMaschinenPreise(m5.getMaschinenArt())));
-		b.anbieten(new Angebot(m6, 1, SimulationsKonstanten.getMaschinenPreise(m6.getMaschinenArt())));
-		b.anbieten(new Angebot(m7, 1, SimulationsKonstanten.getMaschinenPreise(m7.getMaschinenArt())));
-		b.anbieten(new Angebot(m8, 1, SimulationsKonstanten.getMaschinenPreise(m8.getMaschinenArt())));
-		b.anbieten(new Angebot(m9, 1, SimulationsKonstanten.getMaschinenPreise(m9.getMaschinenArt())));
+		b.anbieten(new Angebot(m1, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m1.getMaschinenArt())));
+		b.anbieten(new Angebot(m2, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m2.getMaschinenArt())));
+		b.anbieten(new Angebot(m3, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m3.getMaschinenArt())));
+		b.anbieten(new Angebot(m4, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m4.getMaschinenArt())));
+		b.anbieten(new Angebot(m5, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m5.getMaschinenArt())));
+		b.anbieten(new Angebot(m6, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m6.getMaschinenArt())));
+		b.anbieten(new Angebot(m7, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m7.getMaschinenArt())));
+		b.anbieten(new Angebot(m8, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m8.getMaschinenArt())));
+		b.anbieten(new Angebot(m9, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m9.getMaschinenArt())));
 
 		return b;
 	}
