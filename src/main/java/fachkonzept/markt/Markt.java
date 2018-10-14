@@ -7,10 +7,11 @@ import fachkonzept.Angebot;
 import fachkonzept.Spiel;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
+import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.SimulationsKonstanten;
 
 public abstract class Markt {
 
-    private Unternehmen u;
     private static List<Umsatz> umsatzHistorie = new ArrayList<Umsatz>();
     private List<Angebot> angebote = new ArrayList<Angebot>();
 
@@ -23,6 +24,19 @@ public abstract class Markt {
         }
         this.angebote.add(a);
     }
+    
+    public void anbieten(Angebot a, Unternehmen anbieter) {       // für simulation
+        for(Angebot aa : this.angebote) {
+            if(vergleiche(a, aa)) {
+                aa.setMenge(a.getMenge() + aa.getMenge());
+                return;
+            }
+        }
+        anbieter.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERTRIEB, (int)(SimulationsKonstanten.VERTRIEBKOSTEN_PRO_EURO * a.getMenge() * a.getPreis()));
+        this.angebote.add(a);
+    }
+    
+    
     
     public void kaufen(Angebot a, int menge, Unternehmen kaeufer) {
         a.setMenge(a.getMenge() - menge);
@@ -56,14 +70,6 @@ public abstract class Markt {
 
     public void angebotEntfernen(Angebot a) {
         angebote.remove(a);
-    }
-
-    public Unternehmen getU() {
-        return u;
-    }
-
-    public void setU(Unternehmen u) {
-        this.u = u;
     }
 
     public List<Angebot> getAngebote() {

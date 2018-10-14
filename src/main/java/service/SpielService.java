@@ -185,13 +185,13 @@ public class SpielService {
         Markteinheit m = Markteinheit.findeMarkteinheit(id);
         if(m instanceof Material) {
             Angebot a = new Angebot((Material) m, menge, preis);
-            s.getAktuellesUnternehmen().getBmarkt().anbieten(a);
+            s.getAktuellesUnternehmen().getBmarkt().anbieten(a, s.getAktuellesUnternehmen());
         } else if(m instanceof Maschine) {
             Angebot a = new Angebot((Maschine) m, menge, preis);
-            s.getAktuellesUnternehmen().getMmarkt().anbieten(a);
+            s.getAktuellesUnternehmen().getMmarkt().anbieten(a, s.getAktuellesUnternehmen());
         } else if(m instanceof Produkt) {
             Angebot a = new Angebot((Produkt) m, menge, preis);
-            s.getAktuellesUnternehmen().getVmarkt().anbieten(a);
+            s.getAktuellesUnternehmen().getVmarkt().anbieten(a, s.getAktuellesUnternehmen());
         }
 
         return null;

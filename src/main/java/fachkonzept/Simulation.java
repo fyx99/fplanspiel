@@ -62,10 +62,16 @@ public class Simulation {
 			simuliereFinanzmarkt(n.getFmarkt());
 			simuliereMaschinenmarkt(n.getMmarkt(),s);
 			simuliereArbeitsmarkt(n.getAmarkt());
+			simuliereVerwaltungsaufwand(n,s);
 		}
 		// gemeinsame konkurrenz dinge
 		simuliereAbsatzmarkt(s.getUnternehmen());
 
+	}
+
+	private static void simuliereVerwaltungsaufwand(Unternehmen n, Spiel s) {
+		n.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG, (int)n.getGuv().rundenErgebnis(s.getRunde() - 1) / 100);
+		
 	}
 
 	private static void simuliereKredittilgung(Unternehmen u) {
