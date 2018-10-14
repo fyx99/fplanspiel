@@ -2,6 +2,11 @@ package fachkonzept;
 
 public class Standort{
 	
+	public Standort(double mmarkt, double bmarkt, double vmarkt, double fix) {
+		
+		
+	}
+	
 	private String name;
 	private double faktor_mitarbeiterkosten = 1;
 	private double faktor_materialkosten = 1;
