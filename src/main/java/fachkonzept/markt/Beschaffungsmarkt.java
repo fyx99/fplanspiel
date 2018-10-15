@@ -2,11 +2,9 @@ package fachkonzept.markt;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import fachkonzept.Angebot;
 import fachkonzept.Material;
-import fachkonzept.Spiel;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.util.MaterialArt;

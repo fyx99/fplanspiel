@@ -35,7 +35,7 @@ public class Unternehmen {
 	
 	private Marketingmix marketingmix = new Marketingmix();
 	private GuV guv = new GuV();
-	private Standort standort;
+//	private Standort standort;
 
 	private List<Maschine> maschinen = new ArrayList<Maschine>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
@@ -43,10 +43,9 @@ public class Unternehmen {
     private List<Arbeitskraft> mitarbeiter = new ArrayList<Arbeitskraft>();
     private List<Verbindlichkeit> verbindlichkeiten = new ArrayList();
 
-	public Unternehmen(String name, Spiel s, String standort) {
+	public Unternehmen(String name, Spiel s) {
 		spiel = s;
 		this.name = name;
-		this.standort = new Standort(standort);
 	}
 
 	private double kapital = 0;
@@ -314,14 +313,7 @@ public class Unternehmen {
         return guv;
     }
 	
-	public String getStandortName() {
-		return standort.getName();
-	}
-	
-	public Standort getStandort() {
-		return standort;
-	}
-	
+
 	
 	public void rundenReset() {
 	    //nach jeder runde müssen bestimmte werte zurückgesetzt werden
@@ -340,7 +332,7 @@ public class Unternehmen {
 		// TODO Auto-generated constructor stub
 		UnternehmenDTO uu = new UnternehmenDTO();
 		uu.setName(u.getName());
-		uu.setStandort(u.getStandortName());
+		uu.setStandort("leer");
 		uu.setBmarkt(new MarktDTO(u.getBmarkt().getAngebote()));
 		uu.setVmarkt(new MarktDTO(u.getVmarkt().getAngebote()));
 		uu.setMmarkt(new MarktDTO(u.getMmarkt().getAngebote()));

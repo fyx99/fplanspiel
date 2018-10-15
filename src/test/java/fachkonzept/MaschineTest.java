@@ -68,7 +68,7 @@ class MaschineTest {
     
     @Test
     void produziere() {
-        Unternehmen u = new Unternehmen("a", new Spiel(), "A");
+        Unternehmen u = new Unternehmen("a", new Spiel());
         u.arbeitskraftHinzu(new Arbeitskraft(0, new Mitarbeiter("name test", 777.88, 70000, MitarbeiterFachgebiet.MASCHINE)));
         u.setKapital(50000);
         Produkt p = m.produziere(9, u);

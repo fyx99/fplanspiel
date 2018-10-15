@@ -15,7 +15,7 @@ class UnternehmenTest {
     @BeforeEach
     void setUp() {
         Spiel s = new Spiel();
-        s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s, "A"));
+        s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s));
         s.rundenStart();    // -> anfangs simulation triggern
 
         testUnternehmen.arbeitskraftHinzu(new Arbeitskraft(new Mitarbeiter("test na2me", 3333, 2002, MitarbeiterFachgebiet.MASCHINE)));
@@ -26,8 +26,8 @@ class UnternehmenTest {
 
     @Test
     void unternehmenErstellen() {
-        Unternehmen u = new Unternehmen("Test  Name", new Spiel(), "A");
-        Unternehmen u2= new Unternehmen("Testtest", new Spiel(), "D");
+        Unternehmen u = new Unternehmen("Test  Name", new Spiel());
+        Unternehmen u2= new Unternehmen("Testtest", new Spiel());
         u.setKapital(10000.99);
         
         assertEquals("Test  Name", u.getName());

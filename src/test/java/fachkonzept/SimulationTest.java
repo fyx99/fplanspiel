@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import fachkonzept.marketing.Fernsehwerbung;
 import fachkonzept.marketing.MessenKampagne;
 import fachkonzept.marketing.PRKampagne;
-import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.markt.Maschinenmarkt;
 import fachkonzept.util.KreditArt;
@@ -17,7 +16,6 @@ import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 import fachkonzept.util.SimulationsKonstanten;
-import fachkonzept.util.Werkzeuge;
 
 class SimulationTest {
     Spiel s;
@@ -28,9 +26,9 @@ class SimulationTest {
     void setUp() {
         
        s= new Spiel();
-       s.unternehmenHinzufuegen(u1 = new Unternehmen("tst", s, "A"));
-       s.unternehmenHinzufuegen(u2 = new Unternehmen("ts2t", s, "A"));
-       s.unternehmenHinzufuegen(u3 = new Unternehmen("t3st", s, "A"));
+       s.unternehmenHinzufuegen(u1 = new Unternehmen("tst", s));
+       s.unternehmenHinzufuegen(u2 = new Unternehmen("ts2t", s));
+       s.unternehmenHinzufuegen(u3 = new Unternehmen("t3st", s));
        s.rundenStart();
        
     }

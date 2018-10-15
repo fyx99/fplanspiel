@@ -14,7 +14,7 @@ class MarketingMixTest {
 	@BeforeEach
 	void setUp() {
 		s = new Spiel();
-		u1 = new Unternehmen("name", s, "a");
+		u1 = new Unternehmen("name", s);
 	}
 	
 	@Test

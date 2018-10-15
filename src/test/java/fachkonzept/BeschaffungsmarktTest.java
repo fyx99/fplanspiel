@@ -47,7 +47,7 @@ class BeschaffungsmarktTest {
         bmarkt.anbieten(a1);
         bmarkt.anbieten(new Angebot(new Material( MaterialArt.Edelstahl), 40, 78));
         assertNotNull(Angebot.findeAngebot(a1.getId()));
-        Unternehmen kk = new Unternehmen("tests", new Spiel(), "A");
+        Unternehmen kk = new Unternehmen("tests", new Spiel());
         
         bmarkt.kaufen(a1, 100, kk);
         assertEquals(Integer.valueOf(100), kk.getMaterialien().get(MaterialArt.Edelstahl.name()));
@@ -86,10 +86,10 @@ class BeschaffungsmarktTest {
         Angebot a3 = new Angebot(new Kredit(1555,0.05, 5,KreditArt.Mehr_Cash), 22, 11);
         fmarkt.anbieten(a3);
 
-        bmarkt.kaufen(a1, 10, new Unternehmen("a1", new Spiel(), "a"));
-        bmarkt.kaufen(a1, 15, new Unternehmen("a1", new Spiel(), "a"));
-        bmarkt.kaufen(a2, 10, new Unternehmen("a1", new Spiel(), "a"));
-        fmarkt.kaufen(a3, 10, new Unternehmen("a1", new Spiel(), "a"));
+        bmarkt.kaufen(a1, 10, new Unternehmen("a1", new Spiel()));
+        bmarkt.kaufen(a1, 15, new Unternehmen("a1", new Spiel()));
+        bmarkt.kaufen(a2, 10, new Unternehmen("a1", new Spiel()));
+        fmarkt.kaufen(a3, 10, new Unternehmen("a1", new Spiel()));
         
     	assertEquals(4 + size, Beschaffungsmarkt.getUmsatzHistorie().size());
     	assertEquals(1 + size2, Beschaffungsmarkt.umsatzProMaterialArt(MaterialArt.Holz).size());

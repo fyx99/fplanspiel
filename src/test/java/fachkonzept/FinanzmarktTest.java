@@ -14,7 +14,7 @@ class FinanzmarktTest {
     Unternehmen testU;
     @BeforeEach
     void setup() {
-        testU = new Unternehmen("Test", new Spiel(), "A");
+        testU = new Unternehmen("Test", new Spiel());
         testU.setKapital(2500.01);
     }
     

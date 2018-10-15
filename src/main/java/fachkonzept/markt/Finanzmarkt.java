@@ -5,12 +5,10 @@ import java.util.List;
 
 import fachkonzept.Angebot;
 import fachkonzept.Kredit;
-import fachkonzept.Material;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
 import fachkonzept.util.KreditArt;
-import fachkonzept.util.MaterialArt;
 
 public class Finanzmarkt extends Markt {
 
@@ -27,7 +25,7 @@ public class Finanzmarkt extends Markt {
        
     }
 
-	public static List<Umsatz> umsatzProMaterialArt(KreditArt a) {
+	public static List<Umsatz> umsatzProKreditArt(KreditArt a) {
 		List<Umsatz> gefiltert = new ArrayList();
 		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {
 			if(u.getAngebot().getMarkteinheit() instanceof Kredit && ((Kredit)u.getAngebot().getMarkteinheit()).getKreditArt() == a) {

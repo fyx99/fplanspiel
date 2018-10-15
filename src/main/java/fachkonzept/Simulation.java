@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 import fachkonzept.marketing.Fernsehwerbung;
@@ -27,7 +26,6 @@ import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
 import fachkonzept.util.SimulationsKonstanten;
-import fachkonzept.util.Werkzeuge;
 
 public class Simulation {
 
@@ -54,7 +52,7 @@ public class Simulation {
 		while (i.hasNext()) {
 			Unternehmen n = i.next();
 			// n.verringereKapital(6);
-
+			n.rundenReset();
 			simuliereKredittilgung(n);
 			simuliereLohnzahlung(n);
 			simuliereMarketingmix(n);
@@ -63,6 +61,7 @@ public class Simulation {
 			simuliereMaschinenmarkt(n.getMmarkt(),s);
 			simuliereArbeitsmarkt(n.getAmarkt());
 			simuliereVerwaltungsaufwand(n,s);
+
 		}
 		// gemeinsame konkurrenz dinge
 		simuliereAbsatzmarkt(s.getUnternehmen());
@@ -345,7 +344,7 @@ public class Simulation {
 	}
 
 	private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
-		double standortfaktor_material = n.getStandort().getFaktor_materialkosten();
+		double standortfaktor_material = 1;//n.getStandort().getFaktor_materialkosten();
 		Material holz = new Material(MaterialArt.Holz);
 		Material stoff = new Material(MaterialArt.Stoff);
 		Material leder = new Material(MaterialArt.Leder);
@@ -378,7 +377,7 @@ public class Simulation {
 	}
 
 	private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
-		double standortfaktor_mitarbeiterkosten = n.getStandort().getFaktor_mitarbeiterkosten();
+		double standortfaktor_mitarbeiterkosten = 1;//n.getStandort().getFaktor_mitarbeiterkosten();
 		Mitarbeiter ma1 = new Mitarbeiter("Name unnötig", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
 		Mitarbeiter ma2 = new Mitarbeiter("Name unnötig", 400, 60000, MitarbeiterFachgebiet.MASCHINE); // bsp weniger
 																										// arbeitszeit

@@ -29,7 +29,7 @@ class MarktTest {
 
     @BeforeEach
     void setup() {
-        u = new Unternehmen("Testing U", new Spiel(), "A");
+        u = new Unternehmen("Testing U", new Spiel());
         m = new Maschinenmarkt();
         b = new Beschaffungsmarkt();
         a = new Arbeitsmarkt();

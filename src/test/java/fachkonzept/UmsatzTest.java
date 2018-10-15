@@ -13,7 +13,7 @@ class UmsatzTest {
     void init() {
         Angebot beispiel = new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 999.88);
         Umsatz testUmsatz = new Umsatz(beispiel, 49, 9, null);
-        Umsatz testUmsatz2 = new Umsatz(beispiel, 49, 9, new Unternehmen("beispiel unternehmen aggg", new Spiel(), "a"));
+        Umsatz testUmsatz2 = new Umsatz(beispiel, 49, 9, new Unternehmen("beispiel unternehmen aggg", new Spiel()));
         assertEquals(9, testUmsatz.getRunde());
         assertEquals(49, testUmsatz.getMenge());
         assertEquals("Holzstuhl", testUmsatz.getAngebot().getMarkteinheit().getName());

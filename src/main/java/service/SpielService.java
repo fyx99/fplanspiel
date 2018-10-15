@@ -68,7 +68,7 @@ public class SpielService {
                 }
             }
 
-            s.unternehmenHinzufuegen(new Unternehmen(name, s, standort));
+            s.unternehmenHinzufuegen(new Unternehmen(name, s));
         }
 
         return name;
@@ -296,7 +296,7 @@ public class SpielService {
     @Produces(MediaType.APPLICATION_JSON)
     public static List<String> getMaterialDetails(@QueryParam("material") String material) {
 
-        return s.getAktuellesUnternehmen().getMmarkt().getMaterialDetails(material, s);
+        return null;
     }
     
     public static Spiel getSpiel() {

@@ -5,11 +5,9 @@ import java.util.List;
 
 import fachkonzept.Angebot;
 import fachkonzept.Arbeitskraft;
-import fachkonzept.Kredit;
 import fachkonzept.Mitarbeiter;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
-import fachkonzept.util.KreditArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class Arbeitsmarkt extends Markt {
