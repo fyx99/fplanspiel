@@ -708,7 +708,6 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Hinweis</h4>
               </div>
               <div class="modal-body">
@@ -826,104 +825,136 @@
      			firma = document.getElementById("firma1").value;
      			if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung1").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung1"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung1").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung1"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung1").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung1"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung1").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung1"));
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen2"){
         		firma = document.getElementById("firma2").value;
         		if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung2").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung2"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung2").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung2"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung2").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung2"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung2").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung2"));
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen3"){
         		firma = document.getElementById("firma3").value;
         		if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung3").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung3"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung3").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung3"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung3").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung3"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung3").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung3"));
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen4"){
         		firma = document.getElementById("firma4").value;
         		if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung4").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung4"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung4").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung4"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung4").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung4"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung4").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung4"));
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen5"){
         		firma = document.getElementById("firma5").value;
         		if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung5").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung5"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung5").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung5"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung5").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung5"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung5").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung5"));
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen6"){
         		firma = document.getElementById("firma6").value;
         		if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung6").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung6"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung6").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung6"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung6").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung6"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung6").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung6"));
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen7"){
         		firma = document.getElementById("firma7").value; 
         		if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung7").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung7"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung7").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung7"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung7").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung7"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung7").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung7"));
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen8"){
         		firma = document.getElementById("firma8").value;
         		if (firma == "" && standort ==""){
      				document.getElementById("fehlermeldung8").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung8"));
      			} else if (standort ==""){
      				document.getElementById("fehlermeldung8").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung8"));
      			}else if (firma == "") {
      				document.getElementById("fehlermeldung8").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung8"));
      			} else {
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung8").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung8"));
      				standort = "";
      			}
         	}
@@ -932,6 +963,12 @@
      			console.log(standort);
      			console.log("standort3" + standort);
             
+        }
+        function setColourRed(element){
+        	element.style.color = "#FF0000";
+        }
+        function setColourBlack(element){
+        	element.style.color = "#000000";
         }
         
         function callAjax(firma, standort) {
