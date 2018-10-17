@@ -17,9 +17,45 @@
     <script type="text/javascript" >
       $(document).ready(function() {
                 $('#navbar').load('navbar.html');
+                getData();
                 $('#footer').load('footer.html');
                 });
 
+    </script>
+    
+    <script>
+    function getData(){
+      jQuery.ajax({
+        url: "../api/spiel/unternehmen",
+        type: "GET",
+        dataType: "json",
+        success: function(data, data2){
+          printData(data.maschinen.maschinen);
+        }
+      });
+    }
+    function printData(data){
+      var cont  = document.getElementById('maschinenContent');
+      var s ="";
+      var bilder = ["img/maschineeins.jpg", "img/maschinezwei.jpg", "img/maschinedrei.jpg", "img/maschineeins.jpg", "img/maschinezwei.jpg", "img/maschinedrei.jpg", "img/maschineeins.jpg", "img/maschinezwei.jpg", "img/maschinedrei.jpg"];
+      var index = 0;
+     
+      console.log(data[0].name);
+      
+      for(var maschine in data){
+        s += '<div class="col-sm-6 col-md-4">' + 
+            '<div class="thumbnail">' + 
+            '<img src="' + bilder[index] +'" alt="' + data[maschine].name + '">' + 
+            '<div class="caption">' + 
+            '<h3>' + data[maschine].name + '</h3>' + 
+            '<p>Produziert: <b>' + data[maschine].p.name + '</b></p>' + 
+            '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a class="btn btn-primary" onclick="loadData(' + index + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' + 
+            '</div></div></div>';
+
+            index++;
+      }
+      cont.innerHTML = s;
+    }
     </script>
 
   <!-- Fixed navbar -->
@@ -33,92 +69,9 @@
         </div>
         <!--MASCHINEN ÜBERSICHT-->
           <div class="well">
-            <div class="row">
-            <div class="col-sm-6 col-md-4" id="maschineEINS">
-              <div class="thumbnail">
-                  <img src="img/maschineeins.jpg" alt="Maschine Nr. 1">
-                <div class="caption">
-                    <h3>Maschine Nr. 1</h3>
-                    <p>Produziert Holzstühle</p>
-                    <p>
-                      <button class="btn btn-danger" id="maschinenPlatzEINS" onclick="saveMachineID(maschinenPlatzEINS)" data-toggle="modal" data-target="#verkaufenDialog" role="button">Verkaufen</button> 
-                      <button class="btn btn-primary" data-toggle="modal" data-target="#details" role="button">Details</button>
-                    </p>
-                  </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4" id="maschineZWEI">
-              <div class="thumbnail">
-                  <img src="img/maschinezwei.jpg" alt="Maschine Nr. 2">
-                <div class="caption">
-                    <h3>Maschine Nr. 2</h3>
-                    <p>Produziert Stoffstühle</p>
-                    <p>
-                      <button class="btn btn-danger" id="maschinenPlatzZWEI" onclick="saveMachineID(maschinenPlatzZWEI)" data-toggle="modal" data-target="#verkaufenDialog" role="button">Verkaufen</button> 
-                      <button class="btn btn-primary" data-toggle="modal" data-target="#details" role="button">Details</button>
-                    </p>
-                  </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4" id="maschineDREI">
-              <div class="thumbnail">
-                  <img src="img/maschinedrei.jpg" alt="Maschine Nr. 3">
-                <div class="caption">
-                    <h3>Maschine Nr. 3</h3>
-                    <p>Produziert Glasschränke</p>
-                    <p>
-                      <button class="btn btn-danger" id="maschinenPlatzDREI" onclick="saveMachineID(maschinenPlatzDREI)" data-toggle="modal" data-target="#verkaufenDialog" role="button">Verkaufen</button> 
-                      <button class="btn btn-primary" data-toggle="modal" data-target="#details" role="button">Details</button>
-                    </p>
-                  </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4" id="maschineVIER">
-              <div class="thumbnail">
-                  <img src="img/maschinedrei.jpg" alt="Maschine Nr. 4">
-                <div class="caption">
-                    <h3>Maschine Nr. 4</h3>
-                    <p>Produziert Plastiktische</p>
-                    <p>
-                      <button class="btn btn-danger" id="maschinenPlatzVIER" onclick="saveMachineID(maschinenPlatzVIER)" data-toggle="modal" data-target="#verkaufenDialog" role="button">Verkaufen</button> 
-                      <button class="btn btn-primary" data-toggle="modal" data-target="#details" role="button">Details</button>
-                    </p>
-                  </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4" id="maschineFÜNF">
-              <div class="thumbnail">
-                  <img src="img/maschinezwei.jpg" alt="Maschine Nr. 5">
-                <div class="caption">
-                    <h3>Maschine Nr. 5</h3>
-                    <p>Produziert Holzschränke</p>
-                    <p>
-                      <button class="btn btn-danger" id="maschinenPlatzFÜNF" onclick="saveMachineID(maschinenPlatzFÜNF)" data-toggle="modal" data-target="#verkaufenDialog" role="button">Verkaufen</button> 
-                      <button class="btn btn-primary" data-toggle="modal" data-target="#details" role="button">Details</button>
-                    </p>
-                  </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4" id="maschineSECHS">   <!--HIER ÄNDERUNG-->
-              <div class="thumbnail">
-                  <img src="img/maschineeins.jpg" alt="Maschine Nr. 6">
-                <div class="caption">
-                    <h3>Maschine Nr. 6</h3>
-                    <p>Produziert Lederstühle</p>
-                    <p>
-                      <button class="btn btn-danger" id="maschinenPlatzSECHS" onclick="saveMachineID(maschinenPlatzSECHS)" data-toggle="modal" data-target="#verkaufenDialog" role="button">Verkaufen</button> 
-                      <button class="btn btn-primary" data-toggle="modal" data-target="#details" role="button">Details</button>
-                    </p>
-                  </div>
-              </div>
-            </div>
-
-            <button onclick="addMachine()">Maschine kaufen</button>
+            <div class="row" id="maschinenContent">
+            
+            
         </div>
           </div>
     </div>
@@ -133,7 +86,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!--HIER ÄNDERUNG-->
     <script>
-      var machineID = null;
+    /*var machineID = null;
 
       function saveMachineID(id){
         machineID = $(id).parents().eq(3).attr("id");
@@ -155,7 +108,7 @@
             break;
           }
         }
-      }
+      }*/
     </script>
     <!-- Modal -->
   <div class="modal fade" id="verkaufenDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -189,18 +142,11 @@
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
-           <h2 class="modal-title" id="verkaufenDialogTitel">Details</h2>
+           <h2 class="modal-title" id="detailsDialogTitel">Details</h2>
          </div>
-         <div class="modal-body">
+         <div class="modal-body" id="detailsModalContent">
 
-            <p>Wollen Sie die gewählte Maschine wirklich verkaufen? Dies kann nicht rückgängig gemacht werden!</p>
-            <p></p>
-
-            <div class="progress">
-              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"  style="width: 40%">
-                <span class="sr-only">40% abgeschlossen (Erfolg)</span>
-              </div>
-            </div>
+            
 
          </div>
          <div class="modal-footer">
@@ -211,6 +157,70 @@
        </div>
     </div>
   </div>
+ 	
+ <script>
+     function loadData(index){
+      jQuery.ajax({
+        url: "../api/spiel/maschinen",
+        type: "GET",
+        dataType: "json",
+        success: function(data, data2){
+          setValues(data.maschinen, index);
+        }
+      });
+    }
+
+    function setValues(data, index){
+    	document.getElementById('detailsDialogTitel').innerHTML = "Details zu: " + data[index].name;
+   
+    	var inhalt = "";
+    	inhalt += '<h4>Für die Produktion werden folgende Materialien benötigt:</h4>' + 
+    	'<ul class="list-group">';
+    	
+    	if(data[index].matrix.matrix.Holz > 0){
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Holz' +
+    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Holz + '</span></li>';
+    	}
+    	if(data[index].matrix.matrix.Stoff > 0){
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Stoff' +
+    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Stoff + '</span></li>';
+    	}
+    	if(data[index].matrix.matrix.Leder > 0){
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Leder' +
+    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.matrix.Leder + '</span></li>';
+    	}
+    	if(data[index].matrix.matrix.Kunststoff > 0){
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Kunststoff' +
+    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Kunststoff + '</span></li>';
+    	}
+    	if(data[index].matrix.matrix.Edelstahl > 0){
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Edelstahl' +
+    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Edelstahl + '</span></li>';
+    	}
+    	if(data[index].matrix.matrix.Glas > 0){
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Glas' +
+    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Glas + '</span></li>';
+    	}
+
+    	
+    	inhalt += '</ul><hr><p><b>Eigenschaften:</b></p>';
+    	inhalt += '<table class="table">' + 
+		'<tr><td><b>Produziert: </b></td><td>' + data[index].p.name + '</td</tr>' + 
+		'<tr><td><b>Kapazität</b></td><td>' + data[index].kapazitaet + '</td></tr>' + 
+		'</table>';
+    	
+    	document.getElementById('detailsModalContent').innerHTML = inhalt;
+    	
+    	
+    }
+</script>
+
+    <style>
+    	.badge-primary{
+    		background-color: blue;
+    		font-size: 16px;
+    	}
+    </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

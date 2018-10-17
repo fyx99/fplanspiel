@@ -17,11 +17,69 @@
     <script type="text/javascript" >
       $(document).ready(function() {
                 $('#navbar').load('navbar.html');
+                getData();
                 $('#footer').load('footer.html');
                 });
 
     </script>
 
+	<script>
+    var maxLagerKapazität = 100;
+	
+    function getData(){
+      jQuery.ajax({
+        url: "../api/spiel/produkte",
+        type: "GET",
+        dataType: "json",
+        success: function(data, data2){
+          printData(data.produkte);
+        }
+      });
+    }
+    function printData(data){
+      var cont  = document.getElementById('fertigeErzContent');
+      var s ="";
+      var index = 0;
+      var bild = "";
+
+      for(var produkt in data){
+    	  if(data[produkt].p.name == "Holzstuhl"){
+    		  bild = "img/holzstuhl2.jpg";
+    	  } else if(data[produkt].p.name == "Stoffstuhl"){
+    		  bild = "img/stoffstuhl.jpg";
+    	  } else if(data[produkt].p.name == "Lederstuhl"){
+    		  bild = "img/lederstuhl.jpg";
+    	  } else if(data[produkt].p.name == "Holztisch"){
+    		  bild = "img/holztisch.jpg";
+    	  } else if(data[produkt].p.name == "Glastisch"){
+    		  bild = "img/glastisch.jpg";
+    	  } else if(data[produkt].p.name == "Kunststofftisch"){
+    		  bild = "img/kunststofftisch.jpg";
+    	  } else if(data[produkt].p.name == "Holzschrank"){
+    		  bild = "img/holzschrank.jpg";
+    	  } else if(data[produkt].p.name == "Edelstahlschrank"){
+    		  bild = "img/edelstahlschrank.jpg";
+    	  } else if(data[produkt].p.name == "Glasschrank"){
+    		  bild = "img/glasschrank.jpg";
+    	  }
+        s += '<div class="col-sm-6 col-md-4">' + 
+            '<div class="thumbnail">' + 
+            '<img src="' + bild +'" alt="' + data[produkt].p.name + '">' + 
+            '<div class="caption">' + 
+            '<h3>' + data[produkt].p.name + '</h3>' + 
+            '<p>Verfügbare Menge:</p>' + 
+            '<div class="progress">' + 
+            '<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="' + data[produkt].menge + '/' + maxLagerKapazität + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazität + '" style="width:' + (data[produkt].menge * 100)/maxLagerKapazität + '%;">' + Math.round((data[produkt].menge * 100)/maxLagerKapazität) + '%</div>' + 
+            '</div>' + 
+            '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a onclick="loadData(' + index + ')" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>' + 
+            '</div></div></div>';
+
+            index++;
+      }
+      cont.innerHTML = s;
+    }
+    </script>
+    
     <!-- Fixed navbar -->
     <div id="navbar">
   </div>
@@ -33,150 +91,8 @@
     	</div>
       <!--FERTIGE ERZEUGNISSE ÜBERSICHT-->
     	<div class="well">
-        		<div class="row">
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/holzstuhl2.jpg" alt="Holzstuhl">
-     						<div class="caption">
-       							<h3>Holzstuhl</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="60/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-   									60%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/stoffstuhl.jpg" alt="Stoffstuhl">
-     						<div class="caption">
-       							<h3>Stoffstuhl</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="95/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 95%;">
-   									95%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/lederstuhl.jpg" alt="Lederstuhl">
-     						<div class="caption">
-       							<h3>Lederstuhl</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="25/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-   									25%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/kunststofftisch.jpg" alt="Kunststofftisch">
-     						<div class="caption">
-       							<h3>Kunststofftisch</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="10/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
-   									10%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/holztisch.jpg" alt="Holztisch">
-     						<div class="caption">
-       							<h3>Holztisch</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="80/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-   									80%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/glastisch.jpg" alt="Glastisch">
-     						<div class="caption">
-       							<h3>Glastisch</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="50/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-   									50%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/holzschrank.jpg" alt="Holzschrank">
-     						<div class="caption">
-       							<h3>Holzschrank</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="50/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-   									50%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/edelstahlschrank.jpg" alt="Edelstahlschrank">
-     						<div class="caption">
-       							<h3>Edelstahlschrank</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="50/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-   									50%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
-
-  					<div class="col-sm-6 col-md-4">
-    					<div class="thumbnail">
-      						<img src="img/glasschrank.jpg" alt="Glasschrank">
-     						<div class="caption">
-       							<h3>Glasschrank</h3>
-        						<p>Verfügbare Menge:</p>
-        						<div class="progress">
-  									<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="50/100" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-   									50%
-  									</div>
-								</div>
-        						<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>
-      						</div>
-    					</div>
-  					</div>
+        		<div class="row" id="fertigeErzContent">
+        		
 
   				</div>
   		</div>
@@ -199,23 +115,11 @@
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
-           <h2 class="modal-title" id="verkaufenDialogTitel">Details</h2>
+           <h2 class="modal-title" id="DetailsDialogTitel">Details</h2>
          </div>
-         <div class="modal-body">
+         <div class="modal-body" id="modalBodyID">
 
-            <h4>Zur Produktion von Holzstühlen werden folgende Materialien benötigt:</h4>
-              <li>Holz</li>
-
-            <hr>
-            <h4>Verfügbare Menge an Holzstühlen:</h4>
-            <p>Im Lager: 60 ME</p>
-            <p>Größe des Lagers: 100 ME</p>
-
-            <div class="progress">
-              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"  style="width: 60%">60%
-                <span class="sr-only">60% abgeschlossen (Erfolg)</span>
-              </div>
-            </div>
+			
 
          </div>
          <div class="modal-footer">
@@ -229,6 +133,43 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    
+    <script>
+    function loadData(index){
+      jQuery.ajax({
+        url: "../api/spiel/produkte",
+        type: "GET",
+        dataType: "json",
+        success: function(data, data2){
+          setValues(data.produkte, index);
+        }
+      });
+    }
+    
+    function setValues(data, index){
+    	document.getElementById('DetailsDialogTitel').innerHTML = "Details zu: " + data[index].p.name;
+  
+    	var inhalt = "";
+	
+    	inhalt += '<table class="table">' + 
+		'<tr><td><b>Verfügbare Menge: </b></td><td>' + data[index].menge + '</td</tr>' + 
+		'<tr><td><b>Größe des Lagers</b></td><td>' + 100 + '</td></tr>' + 
+		'</table>' + 
+		'<div class="progress">' + 
+        '<div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="' + data[index].menge + '/' + maxLagerKapazität + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazität + '" style="width:' + (data[index].menge * 100)/maxLagerKapazität + '%;">' + Math.round((data[index].menge * 100)/maxLagerKapazität) + '%</div>' + 
+        '</div>';
+
+    	document.getElementById('modalBodyID').innerHTML = inhalt;
+    }
+    </script>
+    
+    <style>
+    	.badge-primary{
+    		background-color: blue;
+    		font-size: 16px;
+    	}
+    </style>
+    
     
     <script>
       $(document).ready(function(){
