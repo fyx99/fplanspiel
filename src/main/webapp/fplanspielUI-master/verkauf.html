@@ -22,13 +22,14 @@
                 $('#footer').load('footer.html');
                 });
  			
+ 			
  			window.onload = function getDataVerkauf(){
  				jQuery.ajax({
  					url: "../api/spiel/produkte",
  					type: "GET",
  					dataType: "json",
  					success: function(data, data2){
- 						printBestandP(data);
+ 						printBestandP(data.produkte);
  						
  					}
  				});
@@ -45,13 +46,13 @@
  				for(var produkt in data){
  					name = produkt;
  					vorhandeneMenge = data[produkt];
- 					s1 += 	'<li class="list-group-item">'+ name+
+ 					s1 += 	'<li class="list-group-item">'+ data[produkt].p.name+
  								'<span class="badge">'+
- 								 data[produkt]+
+ 								 data[produkt].menge+
  								'</span>'+
  							'</li>';
  							
- 					s2 += '<option>'+produkt+'</option>'
+ 					s2 += '<option>'+data[produkt].p.name+'</option>'
  				}
  				cont.innerHTML = s1;
  				contSel.innerHTML = s2;
@@ -63,6 +64,10 @@
  				var menge = document.getElementById("inputMenge").value;
  				var preis = document.getElementById("inputPreis").value;
  				
+ 				//Auslesen des Optionsfelds
+ 				var optionField =  document.getElementById("contentSelect");
+ 				var sIndex = optionFiled.selectedIndex; //Startet bei 0
+ 				var x = optionField.options[sIndex].text;
  				
  				if (isNaN(iV) || menge < 1 || menge > vorhandeneMenge){
  					var cont  = document.getElementById('label');
