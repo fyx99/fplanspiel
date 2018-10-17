@@ -25,7 +25,7 @@
             // Funktion, um Tabelle dynamisch zu erstellen, muss noch bearbeitet werden!
             window.onload = function () {
                 jQuery.ajax({
-                    url: "../webapi/v1/demo/zwischenstand",
+                    url: "../api/spiel/zwischenstand",
                     type: "GET",
                     dataType: "json",
                     success: function(data, data2){
@@ -44,7 +44,7 @@
                 });
 
                 jQuery.ajax({
-                url: "../webapi/v1/demo/zwischenstand",
+                url: "../api/spiel/zwischenstand",
                 type: "GET",
                 dataType: "json",
                 success: function(data, data2){

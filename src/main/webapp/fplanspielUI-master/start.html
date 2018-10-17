@@ -5,12 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Spiel starten</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   </head>
   <body>
     <!-- Fixed navbar -->
@@ -78,9 +80,9 @@
       				</div>
       				<div class="panel-body">
                     		<div class="btn-group" role="group" aria-label="rundenzahl">
-                            	<button type="button" onclick="changeRoundCount('6 Runden')" class="btn btn-primary">Kurz (6 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('12 Runden')" class="btn btn-primary">Mittel (12 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('20 Runden')" class="btn btn-primary">Lang (20 Runden)</button>
+                            	<button type="button" onclick="changeRoundCount('6')" class="btn btn-primary">Kurz (6 Runden)</button>
+                            	<button type="button" onclick="changeRoundCount('12')" class="btn btn-primary">Mittel (12 Runden)</button>
+                            	<button type="button" onclick="changeRoundCount('20')" class="btn btn-primary">Lang (20 Runden)</button>
                     	</div>
                     </div>
                 </div>
@@ -132,22 +134,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler1', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler1', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler1', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler1', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler1', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler1', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler1', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler1', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler1">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen1" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                            	<p></p>
+                            	<p id="fehlermeldung1"></p>
                             </td>
                         </tr>
                     </table>
@@ -199,22 +206,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler2', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler2', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler2', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler2', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler2', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler2', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler2', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler2', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler2">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen2" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                            	<p></p>
+                            	<p id="fehlermeldung2"></p>
                             </td>
                         </tr>
                     </table>
@@ -266,22 +278,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler3', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler3', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler3', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler3', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler3', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler3', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler3', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler3', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler3">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen3" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                            	<p></p>
+                            	<p id="fehlermeldung3"></p>
                             </td>
                         </tr>
                     </table>
@@ -333,22 +350,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler4', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler4', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler4', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler4', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler4', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler4', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler4', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler4', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler4">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen4" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                            	<p></p>
+                            	<p id="fehlermeldung4"></p>
                             </td>
                         </tr>
                     </table>
@@ -400,22 +422,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler5', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler5', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler5', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler5', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler5', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler5', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler5', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler5', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler5">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen5" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                            	<p></p>
+                            	<p id="fehlermeldung5"></p>
                             </td>
                         </tr>
                     </table>
@@ -467,22 +494,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler6', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler6', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler6', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler6', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler6', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler6', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler6', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler6', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler6">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen6" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                            	<p></p>
+                            	<p id="fehlermeldung6"></p>
                             </td>
                         </tr>
                     </table>
@@ -534,22 +566,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler7', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler7', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler7', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler7', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler7', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler7', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler7', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler7', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler7">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen7" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                            	<p></p>
+                            	<p id="fehlermeldung7"></p>
                             </td>
                         </tr>
                     </table>
@@ -601,22 +638,27 @@
                                 <table class="borderless" style="width: 75%">
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler8', 'Region 1')" class="btn btn-primary blockButton">I</button>
+                                            <button onclick="changeRegion('regionSpieler8', 'A')" class="btn btn-primary blockButton">A</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler8', 'Region 2')" class="btn btn-primary blockButton">II</button>
+                                            <button onclick="changeRegion('regionSpieler8', 'B')" class="btn btn-primary blockButton">B</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler8', 'Region 3')" class="btn btn-primary blockButton">III</button>
+                                            <button onclick="changeRegion('regionSpieler8', 'C')" class="btn btn-primary blockButton">C</button>
                                         </td>
                                         <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler8', 'Region 4')" class="btn btn-primary blockButton">IV</button>
+                                            <button onclick="changeRegion('regionSpieler8', 'D')" class="btn btn-primary blockButton">D</button>
                                         </td>
                                     </tr>
                                 </table>
                                 <p id="regionSpieler8">Gewählte Region:</p>
+                            </td>
+                            <td>
+                            	<button type="button" id="unternehmen8" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
+                           		<p></p>
+                            	<p id="fehlermeldung8"></p>
                             </td>
                         </tr>
                     </table>
@@ -652,14 +694,10 @@
 
                
 				<p></p>
-            	<a type="button" id="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalContent" onclick="loadNextPage()">Spiel starten</a>	<!--HIER NOCH DATEN ÜBERMITTELN-->
+            	<a type="button" id="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalContent" onclick="spielStarten()">Spiel starten</a>	<!--HIER NOCH DATEN ÜBERMITTELN-->
 
         <script type="text/javascript">
-        function loadNextPage(){
-             window.setTimeout(function(){
-            window.location.href = "einkauf.html";
-            }, 5000); //Test: 5sec 
-        }
+
 
     </script>
         </div>	
@@ -670,7 +708,6 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Hinweis</h4>
               </div>
               <div class="modal-body">
@@ -703,7 +740,54 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script>
+	    $(document).ready(function() {
+	    	jQuery.ajax({
+        		
+		 		url: "../api/spiel/neuesspiel",
+		 		type: "GET",
+		 		sucess: function() {
+		 			confirm("Neues Spiel eröffnet");
+		 			location.reload(true);
+		 		},
+			    error: function() {
+			        console.log("Fehler");
+			    }
+	 		});
+	        });
+    
+    
+    	var standort = "";
         var anzahlSpieler = 2;
+        var rundenAnzahl = 6;
+        
+        function spielStarten() {
+        	//http://localhost:8080/pplanspiel/api/spiel/starten?rundenZahl=20%20Runden
+        	console.log("rundenanzahl"+rundenAnzahl);
+        	jQuery.ajax({
+        		
+		 		url: "../api/spiel/starten?rundenZahl=" + rundenAnzahl,
+		 		type: "GET",
+		 		sucess: function() {
+		 			confirm("Unternehmen hinzugefuegt");
+		 			location.reload(true);
+		 			 console.log("Erfolg");
+		 		},
+			    error: function() {
+			        console.log("Fehler");
+			    }
+	 		});
+        	loadNextPage();
+        }
+        		
+        function loadNextPage(){
+             window.setTimeout(function(){
+            window.location.href = "einkauf.html";
+            }, 5000); //Test: 5sec 
+        }
+        
+        
+        
+        
         document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
 
         function changePlayerCount(checkBoxID) {
@@ -717,7 +801,8 @@
         }
 
         function changeRoundCount(count){
-        	document.getElementById('anzahlRundenText').innerHTML= count;
+        	document.getElementById('anzahlRundenText').innerHTML= count + " Runden";
+        	rundenAnzahl=count;
         }
 
         function changePlayerFirma(player, firma){
@@ -726,11 +811,188 @@
 
         function changeRegion(player, region){
         	document.getElementById(player).innerHTML = "Gewählte Region: <b>" + region + "</b>";
+        	standort = region;
+        	console.log(standort+"test");
+        }
+        
+        // Beim Klick auf Unternehmen hinzufuegen
+        function unternehmenHinzufuegen(ele){
+        	var firma;
+        	//var standort;
+    		//console.log(ele.id);
+ 			
+        	if (ele.id == "unternehmen1"){ 
+     			firma = document.getElementById("firma1").value;
+     			if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung1").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung1"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung1").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung1"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung1").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung1"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung1").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung1"));
+     				standort = "";
+     			}
+        	} else if (ele.id == "unternehmen2"){
+        		firma = document.getElementById("firma2").value;
+        		if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung2").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung2"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung2").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung2"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung2").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung2"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung2").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung2"));
+     				standort = "";
+     			}
+        	} else if (ele.id == "unternehmen3"){
+        		firma = document.getElementById("firma3").value;
+        		if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung3").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung3"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung3").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung3"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung3").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung3"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung3").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung3"));
+     				standort = "";
+     			}
+        	} else if (ele.id == "unternehmen4"){
+        		firma = document.getElementById("firma4").value;
+        		if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung4").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung4"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung4").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung4"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung4").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung4"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung4").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung4"));
+     				standort = "";
+     			}
+        	} else if (ele.id == "unternehmen5"){
+        		firma = document.getElementById("firma5").value;
+        		if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung5").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung5"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung5").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung5"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung5").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung5"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung5").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung5"));
+     				standort = "";
+     			}
+        	} else if (ele.id == "unternehmen6"){
+        		firma = document.getElementById("firma6").value;
+        		if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung6").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung6"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung6").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung6"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung6").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung6"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung6").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung6"));
+     				standort = "";
+     			}
+        	} else if (ele.id == "unternehmen7"){
+        		firma = document.getElementById("firma7").value; 
+        		if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung7").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung7"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung7").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung7"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung7").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung7"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung7").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung7"));
+     				standort = "";
+     			}
+        	} else if (ele.id == "unternehmen8"){
+        		firma = document.getElementById("firma8").value;
+        		if (firma == "" && standort ==""){
+     				document.getElementById("fehlermeldung8").innerHTML = "Bitte Firma und Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung8"));
+     			} else if (standort ==""){
+     				document.getElementById("fehlermeldung8").innerHTML = "Bitte Region auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung8"));
+     			}else if (firma == "") {
+     				document.getElementById("fehlermeldung8").innerHTML = "Bitte Firma auswählen!";
+     				setColourRed(document.getElementById("fehlermeldung8"));
+     			} else {
+     				callAjax(firma,standort);
+     				document.getElementById("fehlermeldung8").innerHTML = "Unternehmen wurde hinzugefügt!";
+     				setColourBlack(document.getElementById("fehlermeldung8"));
+     				standort = "";
+     			}
+        	}
+        
+     			console.log(firma);
+     			console.log(standort);
+     			console.log("standort3" + standort);
+            
+        }
+        function setColourRed(element){
+        	element.style.color = "#FF0000";
+        }
+        function setColourBlack(element){
+        	element.style.color = "#000000";
+        }
+        
+        function callAjax(firma, standort) {
+        	jQuery.ajax({
+        		
+       		 
+		 		url: "../api/spiel/neuesunternehmen?name=" + firma + "&standort=" + standort,
+		 		type: "GET",
+		 		sucess: function() {
+		 			confirm("Unternehmen hinzugefuegt");
+		 			location.reload(true);
+		 			 console.log("Erfolg");
+		 			
+		 			 console.log("standort2" + standort);
+		 		},
+			    error: function() {
+			        console.log("Fehler");
+			    }
+	 		});
+    	
         }
 
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
   </body>
 </html>

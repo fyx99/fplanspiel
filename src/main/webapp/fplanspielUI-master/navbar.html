@@ -113,12 +113,18 @@
 					var einnahmen  = document.getElementById('einnahmen');
 					var ausgaben  = document.getElementById('ausgaben');
 					var kapital  = document.getElementById('kapital');
+					var marketingMaßnahmen = document.getElementById('marketingMaßnahmen');
+					
 					var einnahmenData =data.guv.einnahmen;
 					var ausgabenData =data.guv.ausgaben;
 					var kapitalData =data.kapital;
+					var marketingMaßnahmenData = data.marketingMaßnahmen;
+					
 					einnahmen.innerHTML = einnahmenData;
 					ausgaben.innerHTML =ausgabenData;
 					kapital.innerHTML = kapitalData;
+					marketingMaßnahmen = marketingMaßnahmenData;
+					
 					//console.log(data.kapital);
 					//console.log(data.bmarkt.angebote);
 					//console.log(data.mmarkt.angebote);
@@ -220,7 +226,6 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Hinweis</h4>
               </div>
               <div class="modal-body">
@@ -256,8 +261,16 @@
                             <td id="ausgaben"> 0€</td>
                         </tr>
                         <tr>
-                            <th class="col-sm-1">Kapital</td>
+                            <th class="col-sm-1">Kapital</th>
                             <td id="kapital"> 0€</td>
+                        </tr>
+                        <tr>
+                        	<th class="col-sm-1">Marketingmaßnahmen</th>
+                            <td id="marketingMaßnahmen"></td>
+                        </tr>
+                        <tr>
+                        	<th class="col-sm-1">Mitarbeiteranzahl</th>
+                            <td id="mitarbeiterAnzahl"></td>
                         </tr>
                     </tbody>
                 </table>

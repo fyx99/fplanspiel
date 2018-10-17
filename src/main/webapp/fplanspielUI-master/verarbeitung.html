@@ -24,10 +24,6 @@
  		$(document).ready(function() {
             $('#navbar').load('navbar.html');
             $('#footer').load('footer.html');
-            $("#buttonBestätigung").click(function(){
-                
-                produziere(mengeProdukt, maschinenid);
-            });
         });
  		
  		var daten;
@@ -62,8 +58,6 @@
 			for(var angebot in data){
 				maschinenid = data[angebot].markteinheit.id;
 				var inputid = "inputVerarbeitung"+maschinenid;
-				var outputid = "demo"+maschinenid;
-			
 				
 				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
 					'<img src="' + bilder[index] +'" alt="' + data[angebot].markteinheit.name + '">' + 
@@ -116,10 +110,6 @@
 								'<br>'+
 							'</div>'+
 							
-							
-							'<div class="col-sm-12">'+
-							'<p id='+outputid+'>Test</p>'+
-							'</div>' +
 						'</div>' + 
 						'</div></div></div>';
 						
@@ -135,6 +125,7 @@
 			// Wert des Input-Feldes (Menge, die produziert werden soll)
 			var iV = document.getElementById("inputVerarbeitung"+id).value;
 			var text;
+			
 			if (isNaN(iV) || iV < 1 ) {
 				var cont  = document.getElementById('contentModal');
 		        text = "<h3>&nbsp;&nbsp;Eingabe ungültig!</h3>";
@@ -145,18 +136,14 @@
 		    }
 			
 			// FEHLT: Prüfung ob genug Material vorhanden
-		
-			
-			//Test: Input-Wert
-			document.getElementById("demo"+id).innerHTML = text;
 			
 			//Inhalt des Modal
 			var cont  = document.getElementById('contentModal');
 			var s ="";
 			
-			//Multipliziere mit eingebener Menge
+			//Menge von was?
 			var menge = daten[angebot].menge;
-			menge *= iV;
+			
 			var kosten = daten[angebot].markteinheit.fertigungskosten;
 			kosten *= iV;
 			
@@ -183,7 +170,7 @@
 						'<p>Benötigte Kapazität:</p>'+
 					'</div>'+
 					'<div class="col-sm-6">'+
-						'<p>'+ menge +'</p>'+
+						'<p>'+ iV +'</p>'+
 					'</div>'+	
 					
 					'<div class="col-sm-12">'+
@@ -200,7 +187,7 @@
 						'<div class="col-sm-9">'+
 						'</div>'+
 						'<div class="col-sm-3">'+
-							'<button type="button" class="btn btn-danger" data-dismiss="modal" id="buttonBestätigung">Bestätigen</button>'+
+							'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="produziere('+iV+', '+id+')" id="buttonBestätigung">Bestätigen</button>'+
 						'</div>'+
 					'</div>';
 					 
@@ -212,7 +199,7 @@
 		
 		function produziere(mengeProdukt, maschinenid) {
 	 		jQuery.ajax({
-		 		url: "../api/spiel/produziere/"+mengeProdukt+"/"+maschinenid,
+		 		url: "../api/spiel/produziere?menge="+mengeProdukt+"&maschinenid="+maschinenid,
 		 		type: "GET",
 		 		dataType: "json",
 		 		sucess: function(data, data2) {
