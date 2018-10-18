@@ -694,8 +694,12 @@
 
                
 				<p></p>
-            	<a type="button" id="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalContent" onclick="spielStarten()">Spiel starten</a>	<!--HIER NOCH DATEN ÜBERMITTELN-->
-
+						
+            	<button type="button" id="button" onclick="spielStarten()" class="btn btn-primary float-right" >Spiel starten</button>	<!--HIER NOCH DATEN ÜBERMITTELN-->
+				<p></p>
+				<!-- data-toggle="modal" data-target="#modalContent"  -->
+                <p id="fehlermeldungSpielStarten"></p>
+                            	
         <script type="text/javascript">
 
 
@@ -760,23 +764,42 @@
         var anzahlSpieler = 2;
         var rundenAnzahl = 6;
         
+        var erstesUnternehmenHinzugefuegt = false;
+        var zweitesUnternehmenHinzugefuegt = false;
+        
         function spielStarten() {
-        	//http://localhost:8080/pplanspiel/api/spiel/starten?rundenZahl=20%20Runden
-        	console.log("rundenanzahl"+rundenAnzahl);
-        	jQuery.ajax({
+        	
+        	if (erstesUnternehmenHinzugefuegt == true && zweitesUnternehmenHinzugefuegt == true) {
         		
-		 		url: "../api/spiel/starten?rundenZahl=" + rundenAnzahl,
-		 		type: "GET",
-		 		sucess: function() {
-		 			confirm("Unternehmen hinzugefuegt");
-		 			location.reload(true);
-		 			 console.log("Erfolg");
-		 		},
-			    error: function() {
-			        console.log("Fehler");
-			    }
-	 		});
-        	loadNextPage();
+            	//http://localhost:8080/pplanspiel/api/spiel/starten?rundenZahl=20%20Runden
+            	console.log("rundenanzahl"+rundenAnzahl);
+            	jQuery.ajax({
+            		
+    		 		url: "../api/spiel/starten?rundenZahl=" + rundenAnzahl,
+    		 		type: "GET",
+    		 		sucess: function() {
+    		 			confirm("Unternehmen hinzugefuegt");
+    		 			location.reload(true);
+    		 			 console.log("Erfolg");
+    		 		},
+    			    error: function() {
+    			        console.log("Fehler");
+    			    }
+    	 		});
+            	
+            	$('#modalContent').modal({
+            		  keyboard: true, //ESC-Taste schließt Modal
+            		  backdrop: true, //beim Klick außerhalb des Modals, wird dieses geschlossen (sonst "static")
+            		  show: true, //Modal wird nach dem Initialisieren angezeigt
+            		});
+            	
+            	loadNextPage();
+            	
+        	} else {
+        		document.getElementById('fehlermeldungSpielStarten').innerHTML = "Es müssen mindestens zwei Unternehmen hinzugefügt werden, um das Spiel zu starten.";
+        		setColourRed(document.getElementById('fehlermeldungSpielStarten'));
+        	}
+
         }
         		
         function loadNextPage(){
@@ -836,6 +859,7 @@
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung1").innerHTML = "Unternehmen wurde hinzugefügt!";
      				setColourBlack(document.getElementById("fehlermeldung1"));
+     				erstesUnternehmenHinzugefuegt = true;
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen2"){
@@ -853,6 +877,7 @@
      				callAjax(firma,standort);
      				document.getElementById("fehlermeldung2").innerHTML = "Unternehmen wurde hinzugefügt!";
      				setColourBlack(document.getElementById("fehlermeldung2"));
+     				zweitesUnternehmenHinzugefuegt = true;
      				standort = "";
      			}
         	} else if (ele.id == "unternehmen3"){
