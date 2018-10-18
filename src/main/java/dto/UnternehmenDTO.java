@@ -17,6 +17,8 @@ public class UnternehmenDTO {
 
 	private MarktDTO mmarkt;
 	
+	private MarktDTO amarkt;
+	
 	private Marketingmix marketingmix;
 
 	private double umsatz = 0;
@@ -58,6 +60,12 @@ public class UnternehmenDTO {
 	}
 	public void setMmarkt(MarktDTO mmarkt) {
 		this.mmarkt = mmarkt;
+	}
+	public MarktDTO getAmarkt() {
+		return amarkt;
+	}
+	public void setAmarkt(MarktDTO amarkt) {
+		this.amarkt = amarkt;
 	}
 	public double getUmsatz() {
 		return umsatz;

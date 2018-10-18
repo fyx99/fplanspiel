@@ -108,34 +108,34 @@ public class SpielService {
     }
 
     @GET
-    @Path("bmarkt")
+    @Path("bmarkt")		//Beschaffungsmarkt
     @Produces(MediaType.APPLICATION_JSON)
     public static MarktDTO getBMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getBmarkt().getAngebote());
     }
 
     @GET
-    @Path("vmarkt")
+    @Path("vmarkt")		//Vertriebs-/Absatzmarkt
     @Produces(MediaType.APPLICATION_JSON)
     public static MarktDTO getVMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getVmarkt().getAngebote());
     }
     
     @GET
-    @Path("fmarkt")
+    @Path("fmarkt")		//Finanzmarkt
     @Produces(MediaType.APPLICATION_JSON)
     public static MarktDTO getFMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getFmarkt().getAngebote());
     }
     
-    @Path("amarkt")
+    @Path("amarkt")		//Arbeitsmarkt
     @Produces(MediaType.APPLICATION_JSON)
     public static MarktDTO getAMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getAmarkt().getAngebote());
     }
 
     @GET
-    @Path("mmarkt")
+    @Path("mmarkt")		//Maschinenmarkt
     @Produces(MediaType.APPLICATION_JSON)
     public static MarktDTO getMMarkt() {
         return new MarktDTO(s.getAktuellesUnternehmen().getMmarkt().getAngebote());
@@ -295,7 +295,9 @@ public class SpielService {
     @Path("materialdetails")
     @Produces(MediaType.APPLICATION_JSON)
     public static List<String> getMaterialDetails(@QueryParam("material") String material) {
-
+    	//String to Enum MaschinenArt
+    	//MaterialArt.valueOf(material);
+    	//return s.getAktuellesUnternehmen().getMmarkt().getMaterialDetails(MaterialArt.valueOf(material), s);
         return null;
     }
     
