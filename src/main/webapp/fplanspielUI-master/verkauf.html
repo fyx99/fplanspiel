@@ -33,10 +33,23 @@
  						
  					}
  				});
+ 				
+ 				jQuery.ajax({
+ 					url: "../api/spiel/vmarkt",
+ 					type: "GET",
+ 					dataType: "json",
+ 					success: function(data, data2){
+ 						printAngebote(data.angebote);
+ 						
+ 					}
+ 				});
  			}
  			
- 			var name;
- 			var vorhandeneMenge;
+ 			 			
+ 			//Neues Objekt Dictionary
+ 			var dict = {};
+ 			var INDEX = 0;
+ 			
  			
  			function printBestandP(data){
  				var cont  = document.getElementById('contentBestandP');
@@ -44,8 +57,8 @@
  				var s1 ="";
  				var s2 ="";
  				for(var produkt in data){
- 					name = produkt;
- 					vorhandeneMenge = data[produkt];
+ 					//name = data[produkt].p.name;
+ 					vorhandeneMenge = data[produkt].menge;
  					s1 += 	'<li class="list-group-item">'+ data[produkt].p.name+
  								'<span class="badge">'+
  								 data[produkt].menge+
@@ -53,36 +66,90 @@
  							'</li>';
  							
  					s2 += '<option>'+data[produkt].p.name+'</option>'
+ 					
+ 					dict[ data[produkt].p.name ] = data[produkt].p.id;
+ 					
+ 					
  				}
  				cont.innerHTML = s1;
  				contSel.innerHTML = s2;
  				
+ 				for(var key in dict) {
+		 				var value = dict[key];
+		 				
+		 				console.log(value + " Eintrag in das Dict"+ INDEX);
+		 				INDEX ++;
+		 			}
+					INDEX=0;
  				
+ 			}
+ 			
+ 			function printAngebote(data) {
+ 				var cont = document.getElementById('contentAngebote');
+ 				var s ="";
+ 				for(var angebot in data){
+ 					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
+						
+						'<div class="caption">'+
+							'<div class="col-sm-12">'+
+								'<h4>Angebot '+data[angebot].id+'</h4>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+data[angebot].markteinheit.name+'</p>'+
+							'</div>'+
+							'<div class="col-sm-3">'+
+								'<p>'+ data[angebot].menge+'</p>'+
+							'</div>'+
+							'<div class="col-sm-3">'+
+								'<p>Stück</p>'+
+							'</div>'+
+										
+							'<div class="col-sm-6">'+
+								'<p>Preis</p>'+
+							'</div>'+
+							'<div class="col-sm-3">'+
+								'<p>'+ data[angebot].preis+'</p>'+
+							'</div>'+
+							'<div class="col-sm-3">'+
+							'<p>€</p>'+
+							'<br>'+
+						'</div>'+
+						'</div>' + 
+ 						'</div></div></div>';
+ 				}
+ 				cont.innerHTML = s;
  			}
  			
  			function anbieten() {
  				var menge = document.getElementById("inputMenge").value;
  				var preis = document.getElementById("inputPreis").value;
+ 				var meldung  = document.getElementById('label');
  				
  				//Auslesen des Optionsfelds
  				var optionField =  document.getElementById("contentSelect");
- 				var sIndex = optionFiled.selectedIndex; //Startet bei 0
+ 				var sIndex = optionField.selectedIndex; //Startet bei 0
  				var x = optionField.options[sIndex].text;
  				
- 				if (isNaN(iV) || menge < 1 || menge > vorhandeneMenge){
- 					var cont  = document.getElementById('label');
- 			        var text = "<h3>&nbsp;&nbsp;Nicht genug Produkte vorhanden!</h3>";
- 			        cont.innerHTML = text;
- 			        
+ 				var value = dict[x];
+		 		console.log(value + " Ausgabe der ID");
+		 			
+ 				
+ 				if (isNaN(menge) || isNaN(preis) || menge < 1 ){
+ 			        var text = "<h6>&nbsp;&nbsp;Nicht genug Produkte vorhanden!</h6>";
+ 			        meldung.innerHTML = text;
+ 			        return;
  				}
  				
+ 				var text = "";
+			    meldung.innerHTML = text;
+			    
  				jQuery.ajax({
- 					url: "../api/spiel/anbieten?menge=" + menge + "&produktid=" + id + "&preis=" + preis,
+ 					url: "../api/spiel/anbieten?menge=" + menge + "&produktid=" + value + "&preis=" + preis,
  					type: "GET",
  					dataType: "json",
  					success: function(data, data2){
- 						//Do something
  						
+ 						console.log("Menge wurde verringert");
  					}
  				});
  			}
@@ -101,8 +168,8 @@
         </div>
 		
 		<div>
-			<div class="col-sm-6"><h4>Bestand an Produkten:</h4></div>
-			<div class="col-sm-6"><h4>Angebote einstellen:</h4></div>
+			<div class="col-sm-6"><h3>Bestand an Produkten:</h3></div>
+			<div class="col-sm-6"><h3>Angebote einstellen:</h3></div>
 		</div>
 		
 		<div class="row"><br></div>
@@ -152,11 +219,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group">
-	  						
-	  							<label id="label"></label>
-	  						
-	  						
+					<div class ="col-sm-4"></div>
+					<div class ="col-sm-8">
+						<div class="form-group">
+		  						<label id="label"></label>
+						</div>
 					</div>
 				</div>
  				
@@ -168,106 +235,16 @@
 		</div>
 		
 		
-		<!-- Button neues Angebot -->
+		<!-- Bestehende Angebote -->
 		<br>
 		<div>
-			<h4>Bestehende Angebote:</h4>
+			<h3>Bestehende Angebote:</h3>
 		</div>
 		
-		
-		<!-- Row 3: Preis pro ME -->
-		<div class="row">
-			<div class="col-sm-4">
-				<h5>Angebot 1</h5>
-			</div>
-			
-			<div class="col-sm-4">
-				<h5>Angebot 2</h5>
-			</div>
-			
-			<div class="col-sm-4">
-				<h5>Angebot 3</h5>
-			</div>
-		</div>
-		
-		<!-- Row 4: Verfügbare ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Holzstuhl</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>200</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Holztisch</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>200</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Stoffstuhl</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>200</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>Stück</p>
-			</div>
-		</div>
-		
-		<!-- Row 4: Verfügbare ME -->
-		<div class="row">
-			<div class="col-sm-2">
-				<p>Preis</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>300 </p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>€ </p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>200</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>€</p>
-			</div>
-			
-			<div class="col-sm-2">
-				<p>Preis</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>200</p>
-			</div>
-			
-			<div class="col-sm-1">
-				<p>€</p>
-			</div>
-		</div>
-		
+		 <div class="well">
+        		<div class="row" id="contentAngebote">
+  				</div>
+  		</div>
 	</div>
 
     <!-- Fixed footer -->
