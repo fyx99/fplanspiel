@@ -329,23 +329,4 @@ public class Unternehmen {
   
 	}
 
-    public static UnternehmenDTO getDTO(Unternehmen u) {
-		UnternehmenDTO uu = new UnternehmenDTO();
-		uu.setName(u.getName());
-		uu.setStandort("leer");
-		uu.setBmarkt(new MarktDTO(u.getBmarkt().getAngebote()));
-		uu.setVmarkt(new MarktDTO(u.getVmarkt().getAngebote()));
-		uu.setMmarkt(new MarktDTO(u.getMmarkt().getAngebote()));
-		
-		uu.setMarketingmix(new MarketingmixDTO(u.getMarketingmix()));
-		
-		uu.setUmsatz(u.getUmsatz());
-		uu.setKapital(u.getKapital());
-		uu.setMaterialien(u.getMaterialien());
-		uu.setMaschinen(new MaschinenGesamtDTO(u.getMaschinen()));
-		uu.setProdukte(u.getProdukte());
-		uu.setMitarbeiter(new MitarbeiterGesamtDTO(u.getMitarbeiter(), u.getMitarbeiterKapazitaeten()));
-		return uu;
-	}
-
 }

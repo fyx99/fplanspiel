@@ -20,6 +20,8 @@ import dto.RundenResultatDTO;
 import dto.SpielDTO;
 import dto.UnternehmenDTO;
 import dto.ZwischenstandDTO;
+import dto.mapper.MarktMapper;
+import dto.mapper.UnternehmenMapper;
 import fachkonzept.Angebot;
 import fachkonzept.Arbeitskraft;
 import fachkonzept.Kredit;
@@ -119,7 +121,7 @@ public class SpielService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static UnternehmenDTO getUnternehmen() {
 		if (s != null && s.getAktuellesUnternehmen() != null)
-			return Unternehmen.getDTO(s.getAktuellesUnternehmen());
+			return UnternehmenMapper.toDTO(s.getAktuellesUnternehmen());
 		return null;
 
 	}
@@ -128,35 +130,35 @@ public class SpielService {
 	@Path("bmarkt") // Beschaffungsmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getBMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getBmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getBmarkt());
 	}
 
 	@GET
 	@Path("vmarkt") // Absatzmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getVMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getVmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getVmarkt());
 	}
 
 	@GET
 	@Path("fmarkt") // Finanzmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getFMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getFmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getFmarkt());
 	}
 
 	@GET
 	@Path("amarkt") // Arbeitsmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getAMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getAmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getAmarkt());
 	}
 
 	@GET
 	@Path("mmarkt") // Maschinenmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getMMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getMmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getMmarkt());
 	}
 
 	@GET
@@ -347,7 +349,7 @@ public class SpielService {
 	@Path("spielende")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<UnternehmenDTO> getSpielende() {
-		return s.getRangliste().stream().map(Unternehmen::getDTO).collect(Collectors.toList());
+		return s.getRangliste().stream().map(UnternehmenMapper::toDTO).collect(Collectors.toList());
 	}
 
 	@GET
