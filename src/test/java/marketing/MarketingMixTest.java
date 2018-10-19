@@ -1,10 +1,12 @@
-package fachkonzept;
+package marketing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fachkonzept.Spiel;
+import fachkonzept.Unternehmen;
 import fachkonzept.marketing.Fernsehwerbung;
 
 class MarketingMixTest {
