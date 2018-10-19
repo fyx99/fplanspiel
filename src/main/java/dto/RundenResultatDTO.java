@@ -15,13 +15,13 @@ import fachkonzept.util.MitarbeiterFachgebiet;
 public class RundenResultatDTO {
     
     private String name;    //name des unternehmens
-    private double kapital; //wv geld
+    private Double kapital; //wv geld
     private GuV guv;		//Gewinn
-    private int mitarbeiterAnzahl;
+    private Integer mitarbeiterAnzahl;
     //offene (nicht benötigte) Mitarbeiterkapazität in Minuten
-    private int mitarbeiterKapazitMaschine; 
-    private int mitarbeiterKapazitVertieb;
-    private int mitarbeiterKapazitVerwaltung;
+    private Integer mitarbeiterKapazitMaschine; 
+    private Integer mitarbeiterKapazitVertieb;
+    private Integer mitarbeiterKapazitVerwaltung;
     private Map<Produkt, Integer> produkte;
     private List<Verbindlichkeit> verbindlichkeiten;
     private List<Umsatz> umsatzHistorie;
@@ -41,21 +41,77 @@ public class RundenResultatDTO {
         this.umsatzHistorie = u.getVmarkt().getUmsatzHistorie();
         this.marketingMaßnahmen = u.getMarketingmix().getMarketing();
     }
-    
-    //etwas zum absatzmarkt
-    
-    //evt sowas wie 7 neue angebote auf dem markt für material ...
-    
-    //das wurde mit der menge verkauft für den und den preis
-    
-    //kostenaufstellung
-    
-    public int getMitarbeiterAnzahl() {
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Double getKapital() {
+		return kapital;
+	}
+
+	public void setKapital(Double kapital) {
+		this.kapital = kapital;
+	}
+
+	public GuV getGuv() {
+		return guv;
+	}
+
+	public void setGuv(GuV guv) {
+		this.guv = guv;
+	}
+
+	public Integer getMitarbeiterAnzahl() {
 		return mitarbeiterAnzahl;
 	}
 
-	public void setMitarbeiterAnzahl(int mitarbeiterAnzahl) {
+	public void setMitarbeiterAnzahl(Integer mitarbeiterAnzahl) {
 		this.mitarbeiterAnzahl = mitarbeiterAnzahl;
+	}
+
+	public Integer getMitarbeiterKapazitMaschine() {
+		return mitarbeiterKapazitMaschine;
+	}
+
+	public void setMitarbeiterKapazitMaschine(Integer mitarbeiterKapazitMaschine) {
+		this.mitarbeiterKapazitMaschine = mitarbeiterKapazitMaschine;
+	}
+
+	public Integer getMitarbeiterKapazitVertieb() {
+		return mitarbeiterKapazitVertieb;
+	}
+
+	public void setMitarbeiterKapazitVertieb(Integer mitarbeiterKapazitVertieb) {
+		this.mitarbeiterKapazitVertieb = mitarbeiterKapazitVertieb;
+	}
+
+	public Integer getMitarbeiterKapazitVerwaltung() {
+		return mitarbeiterKapazitVerwaltung;
+	}
+
+	public void setMitarbeiterKapazitVerwaltung(Integer mitarbeiterKapazitVerwaltung) {
+		this.mitarbeiterKapazitVerwaltung = mitarbeiterKapazitVerwaltung;
+	}
+
+	public Map<Produkt, Integer> getProdukte() {
+		return produkte;
+	}
+
+	public void setProdukte(Map<Produkt, Integer> produkte) {
+		this.produkte = produkte;
+	}
+
+	public List<Verbindlichkeit> getVerbindlichkeiten() {
+		return verbindlichkeiten;
+	}
+
+	public void setVerbindlichkeiten(List<Verbindlichkeit> verbindlichkeiten) {
+		this.verbindlichkeiten = verbindlichkeiten;
 	}
 
 	public List<Umsatz> getUmsatzHistorie() {
@@ -73,80 +129,15 @@ public class RundenResultatDTO {
 	public void setMarketingMaßnahmen(List<Marketingmaßnahme> marketingMaßnahmen) {
 		this.marketingMaßnahmen = marketingMaßnahmen;
 	}
-
-	public List<Verbindlichkeit> getVerbindlichkeiten() {
-		return verbindlichkeiten;
-	}
-
-
-	public void setVerbindlichkeiten(List<Verbindlichkeit> verbindlichkeiten) {
-		this.verbindlichkeiten = verbindlichkeiten;
-	}
-
-
-	
-	
-//	public void getVerkaeufe(Unternehmen u) {
-//		List<Umsatz> umsatzHistorie = u.getVmarkt().getUmsatzHistorie();
-//	}
     
+    //etwas zum absatzmarkt
     
-	public int getMitarbeiteranzahl() {
-		return mitarbeiterAnzahl;
-	}
-
-	public void setMitarbeiterKapazitMaschine(int mitarbeiterKapazitMaschine) {
-		this.mitarbeiterKapazitMaschine = mitarbeiterKapazitMaschine;
-	}
-
-	public int getMitarbeiterKapazitVertieb() {
-		return mitarbeiterKapazitVertieb;
-	}
-
-	public void setMitarbeiterKapazitVertieb(int mitarbeiterKapazitVertieb) {
-		this.mitarbeiterKapazitVertieb = mitarbeiterKapazitVertieb;
-	}
-
-	public int getMitarbeiterKapazitVerwaltung() {
-		return mitarbeiterKapazitVerwaltung;
-	}
-
-	public void setMitarbeiterKapazitVerwaltung(int mitarbeiterKapazitVerwaltung) {
-		this.mitarbeiterKapazitVerwaltung = mitarbeiterKapazitVerwaltung;
-	}
-
-	public Map<Produkt, Integer> getProdukte() {
-		return produkte;
-	}
-
-	public void setProdukte(Map<Produkt, Integer> produkte) {
-		this.produkte = produkte;
-	}
-
+    //evt sowas wie 7 neue angebote auf dem markt für material ...
     
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public double getKapital() {
-        return kapital;
-    }
-    public void setKapital(double kapital) {
-        this.kapital = kapital;
-    }
-    public GuV getGuv() {
-        return guv;
-    }
-    public void setGuv(GuV guv) {
-        this.guv = guv;
-    }
-
-    public int getMitarbeiterKapazitMaschine() {
-        return mitarbeiterKapazitMaschine;
-    }
+    //das wurde mit der menge verkauft für den und den preis
+    
+    //kostenaufstellung
+    
     
 
 
