@@ -337,7 +337,7 @@ public class SpielService {
 	@Path("rundenresultat")
 	@Produces(MediaType.APPLICATION_JSON)
 	// Übersicht für das eigene Unternehmen nach der Runde
-	public static Object getRundenResultat() {
+	public static RundenResultatDTO getRundenResultat() {
 		if (s == null)
 			return null;
 		return new RundenResultatDTO(s.getAktuellesUnternehmen());
