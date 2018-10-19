@@ -1,249 +1,115 @@
-<!--Entweder Button oder Checkbox!-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
-    <meta name="author" content="BootstrapBay.com">
-    <title>Verkauf</title>
+    <title>Mitarbeiter</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
  </head>
  
  <body onload="start()">
- 		<script type="text/javascript" >
- 			$(document).ready(function() {
+    <script type="text/javascript" >
+      $(document).ready(function() {
                 $('#navbar').load('navbar.html');
+                getData();
                 $('#footer').load('footer.html');
                 });
 
-		</script>
+    </script>
 
+	<script>
+    function getData(){
+      jQuery.ajax({
+        url: "../api/spiel/marketingmix",
+        type: "GET",
+        dataType: "json",
+        success: function(data, data2){
+          printDataMarketing(data.marketing);
+          
+        }
+      });
+    }
+    function printDataMarketing(data){
+      var cont  = document.getElementById('marketingContent');
+      var s ="";
+      var index = 0;
+
+      for(var angebot in data){
+    	  
+     s +='<div class="col-sm-6 col-md-4">' + 
+          '<div class="thumbnail">' + 
+            '<div class="caption">' + 
+              '<h3 class="cardTop">' + data[angebot].art+ '</h3>' +
+              '</div>'+
+				'<div class="col-sm-6">'+
+				'<p>Name: </p>'+
+			'</div>'+
+			'<div class="col-sm-6">'+
+				'<p>'+ data[angebot].name+'</p>'+
+          '</div>' +
+          
+				'<div class="col-sm-6">'+
+					'<p>Budget: </p>'+
+				'</div>'+
+				'<div class="col-sm-6">'+
+					'<p>'+ data[angebot].budget+'</p>'+
+              '</div>' +
+           '</div>' +
+        '</div>';
+
+
+            index++;
+      }
+      cont.innerHTML = s;
+    }
+    </script>
+ 
     <!-- Fixed navbar -->
     <div id="navbar">
-	</div>
+  </div>
+
+  <style>
+    .panelTop{
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+
+    .cardTop{
+      margin-top: 2px;
+    }
+  </style>
     
 	<!-- Page Header -->
 	<div class="container">	
-        <div class="page-header">
-            <h1>Marketing</h1>
+    <div class="page-header">
+      <h1>Marketing</h1>
+    </div>
+    <!--Marketing ÜBERSICHT-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panelTop">Marketingmaßnahmen</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row" id="marketingContent">
+		
+
         </div>
-		
-		<div>
-			<h3>Auswahl einer geeigneten Marketing-Strategie</h4>
-		</div>
-		
-		<div class="well">
-        		<div class="row" id="contentMarketing">
-  				</div>
-  		</div>
-
-  
-                  
-    <script type="text/javascript">
-    
-    var datenMarketing;
-    window.onload = getDataMarketing();
-    
-    function getDataMarketing(){
-			jQuery.ajax({
-				url: "../api/spiel/marketingangebote",
-				type: "GET",
-				dataType: "json",
-				success: function(data, data2){
-					datenMarketing=data;
-					printMarketing(datenMarketing);
-				}
-			});
-    }
-		function printMarketing(data){
-				var cont  = document.getElementById('contentMarketing');
-				var s ="";
-				var marketingMaßnahme;
-				
-				for(var angebot in data){
-					marketingMaßnahme = data[angebot];
-					
-					
-					//var outputid = "demo"+kreditid;
-					//var= "hallo";
-					
-					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
-						
-							'<div class="caption">'+
-								'<div class="col-sm-12">'+
-									'<h3>'+ data[angebot]+'</h3>'+
-								'</div>'+
-								'<div class="col-sm-12">'+
-							
-								'<p>Diese Kampagne verspricht einen höheren Umsatz.</p>'+
-								'<p>Wie viel Geld möchtest Du investieren?</p>'+
-							'</div>'+
-							
-								
-								/* '<div class="col-sm-6">'+
-									'<p>Preis in €</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-								'</div>'+
-											
-								'<div class="col-sm-6">'+
-									'<p>Verfügbar</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-									'<br>'+
-								'</div>'+
-								
-								'<div class="col-sm-6">'+
-								'<p>Laufzeit</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-								'</div>'+	
-								'<div class="col-sm-6">'+
-								'<p>Volumen</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-								'</div>'+	
-								'<div class="col-sm-6">'+
-								'<p>Zinssatz</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-									'<br>'+
-								'</div>'+	 */
-								'<br></br>'+							
-		        				'<div class="col-sm-3">'+
-									'<input class="form-control input-sm" type="text" id =inputid'+ angebot+'>'+
-									'<br>'+
-								'</div>'+
-								'<div class="col-sm-3">'+
-									'<p>Euro </p>'+
-									'<br>'+
-								'</div>'+
-								'<div class="col-sm-4">'+
-									'<a href="#" class="btn btn-danger"  onClick = "marketingModal('+angebot+')" data-toggle="modal" data-target="#modalKaufen">Buchen</a>'+
-									'<br>'+
-								'</div>'+
-								//'<div class="col-sm-12">'+
-								//'<p id='+outputid+'>Test</p>'+
-								//'</div>' +
-							'</div>' + 
-							'</div></div></div>';
-							
-							
-				}
-				cont.innerHTML = s;
-			}   
-		
-		// Bei Klick auf Button "Marketingmaßnahme tätigen"
-			function marketingModal(marketingID) {
-			
-				var budget = document.getElementById("inputid" +marketingID).value;
-			 	var cont  = document.getElementById('contentModal');
-				var s ="";
-				var art = datenMarketing[marketingID];
-				//var budget= 50;
-				var name= "ui";
-				
-				if (isNaN(budget) || budget < 1) { 
- 			        text = "<h3>&nbsp;&nbsp;Eingabe ungültig!</h3>";
- 			        cont.innerHTML = text;
- 			        return;
-				}
- 			        
-				//Multipliziere Preis mit eingebener Menge
-				//var kosten = markt[angebot].preis;
-				//kosten *= iV;
-				
-				//var angebotsid = markt[angebot].id;
-				
-					s += 
-						'<div class="col-sm-12">'+
-				'<h3>Bestätigung für ' +  datenMarketing[marketingID] +':</h3><div><br></div>'+
-				'</div>'+
-				'<div class="col-sm-12">'+
-				'<h4>Budget: '+ budget+' Euro</h4>'+			
-				'</div>'+	
-				'<div class="col-sm-6">'+
-				'<h4>Name für Marketingmaßnahme: </h4>'+
-				'</div>'+
-				'<div class="col-sm-6">'+
-				'<input class="form-control input-sm" type="text" id =nameMarketing> '+
-				'</div>'+	
-				
-				
-				'<div class="row">'+
-					'<div class="col-sm-9">'+
-					'</div>'+
-					'<div class="col-sm-3">'+
-						'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="marketingDurchführen('+marketingID+','+budget+')">Bestätigen</button>'+
-					'</div>'+
-				'</div>';
-			
-					cont.innerHTML = s; 
-					
-					
-			}
-		
-			function marketingDurchführen(marketingID, budget){
-				var art = datenMarketing[marketingID];
-				//var name = "hi";
-				var name = document.getElementById("nameMarketing").value;
- 				jQuery.ajax({
- 			 		url: "../api/spiel/buchenmarketingmaßnahme?art=" + art + "&budget=" + budget + "&name=" + name,
- 			 		type: "GET",
- 			 		dataType: "json",
- 			 		sucess: function() {
- 			 			console.log("Success");
- 			 			location.reload(true);
- 			 			
- 			 		
- 				    }
- 		 		});
- 				
-
- 				
- 				
- 			}
-    </script>
-
-		
-		
-	</div>
-	
-		<!-- The Modal -->
-  <div class="modal" id="modalKaufen">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-         <div class="modal-body" id="contentModal">
-          </div>
-       
-        
       </div>
     </div>
-  </div>
 
+	</div>
+   
     <!-- Fixed footer -->
     <div id="footer">
-	</div>
-        
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    </div>
+
+
   </body>
 </html>
