@@ -32,7 +32,7 @@ public abstract class Markt {
                 return;
             }
         }
-        anbieter.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERTRIEB, (int)(SimulationsKonstanten.VERTRIEBKOSTEN_PRO_EURO * a.getMenge() * a.getPreis()));
+        anbieter.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERTRIEB, (int)(SimulationsKonstanten.VERTRIEBSMINUTEN_PRO_EURO * a.getMenge() * a.getPreis()));
         this.angebote.add(a);
     }
     

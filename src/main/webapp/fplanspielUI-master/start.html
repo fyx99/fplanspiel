@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Spiel starten</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+       <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>--> 
+   	<script src="jquery/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -87,587 +88,101 @@
                     </div>
                 </div>
 
-    <!--Spielerauswahl-->            
+    <!--Spielerauswahl--> 
 	<div class="panel-group" id="accordion">
-
-		<!--Panel Spieler 1-->
-  		<div class="panel panel-default">
-    		<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-        			Spieler 1
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse1" class="panel-collapse collapse in">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" disabled checked>
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma1" name="firmaSpieler1" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler1">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler1', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler1', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler1', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler1', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler1', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler1', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler1', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler1', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler1', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler1', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler1', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler1">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen1" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                            	<p></p>
-                            	<p id="fehlermeldung1"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-
-    	<!--Panel Spieler 2-->
-  		<div class="panel panel-default">
-  			<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-        			Spieler 2
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse2" class="panel-collapse collapse">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled checked>
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma2" name="firmaSpieler2" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler2">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler2', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler2', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler2', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler2', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler2', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler2', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler2', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler2', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler2', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler2', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler2', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler2">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen2" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                            	<p></p>
-                            	<p id="fehlermeldung2"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-  		
-  		<!--Panel Spieler 3-->
-  		<div class="panel panel-default">
-  			<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-        			Spieler 3
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse3" class="panel-collapse collapse">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck3')" id="defaultCheck3">
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma3" name="firmaSpieler3" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler3">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler3', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler3', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler3', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler3', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler3', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler3', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler3', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler3', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler3', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler3', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler3', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler3">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen3" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                            	<p></p>
-                            	<p id="fehlermeldung3"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-
-    	<!--Panel Spieler 4-->
-  		<div class="panel panel-default">
-  			<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
-        			Spieler 4
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse4" class="panel-collapse collapse">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck4')" id="defaultCheck4">
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma4" name="firmaSpieler4" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler4">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler4', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler4', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler4', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler4', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler4', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler4', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler4', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler4', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler4', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler4', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler4', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler4">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen4" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                            	<p></p>
-                            	<p id="fehlermeldung4"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-
-  		<!--Panel Spieler 5-->
-  		<div class="panel panel-default">
-  			<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-        			Spieler 5
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse5" class="panel-collapse collapse">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck5')" id="defaultCheck5">
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma5" name="firmaSpieler5" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler5">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler5', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler5', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler5', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler5', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler5', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler5', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler5', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler5', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler5', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler5', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler5', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler5">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen5" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                            	<p></p>
-                            	<p id="fehlermeldung5"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-
-  		<!--Panel Spieler 6-->
-  		<div class="panel panel-default">
-  			<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
-        			Spieler 6
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse6" class="panel-collapse collapse">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck6')" id="defaultCheck6">
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma6" name="firmaSpieler6" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler6">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler6', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler6', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler6', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler6', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler6', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler6', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler6', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler6', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler6', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler6', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler6', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler6">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen6" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                            	<p></p>
-                            	<p id="fehlermeldung6"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-
-  		<!--Panel Spieler 7-->
-  		<div class="panel panel-default">
-  			<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
-        			Spieler 7
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse7" class="panel-collapse collapse">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck7')" id="defaultCheck7">
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma7" name="firmaSpieler7" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler7">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler7', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler7', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler7', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler7', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler7', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler7', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler7', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler7', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler7', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler7', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler7', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler7">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen7" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                            	<p></p>
-                            	<p id="fehlermeldung7"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-
-  		<!--Panel Spieler 8-->
-  		<div class="panel panel-default">
-  			<div class="panel-heading">
-      			<h4 class="panel-title">
-        			<a data-toggle="collapse" data-parent="#accordion" href="#collapse8">
-        			Spieler 8
-        			</a>
-      			</h4>
-    		</div>
-    		<div id="collapse8" class="panel-collapse collapse">
-	      		<div class="panel-body">
-  					
-	      			<table style="row">
-                        <tr>
-                            <td style="text-align: center; width: 5%">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" onclick="changePlayerCount('defaultCheck8')" id="defaultCheck8">
-                                </div>
-                            </td>
-                            <td>
-                            	<input id="firma8" name="firmaSpieler8" placeholder="Firma" style="width: 200px">
-                            	<p></p>
-                                <div class="dropdown" padding="20px" style="width: 200px">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Unternehmensform
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler8">
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler8', 'AG')">AG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler8', 'GmbH')">GmbH</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler8', 'OHG')">OHG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler8', 'KG')">KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler8', 'eK')">eK</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler8', 'GmbH & Co.KG')">GmbH & Co.KG</a></li>
-                                        <li><a onclick="changePlayerFirma('dropdownMenuSpieler8', 'UG')">UG</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!
-                                <table class="borderless" style="width: 75%">
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler8', 'A')" class="btn btn-primary blockButton">A</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler8', 'B')" class="btn btn-primary blockButton">B</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: right;">
-                                            <button onclick="changeRegion('regionSpieler8', 'C')" class="btn btn-primary blockButton">C</button>
-                                        </td>
-                                        <td style="text-align: left;">
-                                            <button onclick="changeRegion('regionSpieler8', 'D')" class="btn btn-primary blockButton">D</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p id="regionSpieler8">Gewählte Region:</p>
-                            </td>
-                            <td>
-                            	<button type="button" id="unternehmen8" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>
-                           		<p></p>
-                            	<p id="fehlermeldung8"></p>
-                            </td>
-                        </tr>
-                    </table>
-  				</div>
-    		</div>
-    	</div>
-
+		<div class="panel panel-default" id="contentStartseite">
+		
+  		</div>
 	</div>
+	
+	<script>
+	
+	function printMitarbeiter(){
+			var cont  = document.getElementById('contentStartseite');
+			var s ="";
+			
+		for(var i =1; i <= 8; i++){
+				
+				s += 		'<!--Panel Spieler' + i + '-->' +
+		  		'<div class="panel panel-default">' +
+	    		'<div class="panel-heading">' +
+	      			'<h4 class="panel-title">' +
+	        			'<a data-toggle="collapse" data-parent="#accordion" href="#collapse' + i +'">' +
+	        			'Spieler ' + i + 
+	        			'</a>' +
+	      			'</h4>' +
+	    		'</div>' +
+	    		'<div id="collapse'+i +'" class="panel-collapse collapse">'+
+	    		'<div class="panel-body">' +
+	  					
+	    		'<table style="row">' +
+	    		' <tr>' +
+	    		' <td style="text-align: center; width: 5%">' +
+	    		' <div class="form-check">' +
+	    		'<input class="form-check-input" type="checkbox" value="" id="defaultCheck' + i + '" disabled checked>'+
+	            '                    </div>' +
+	              '              </td>' +
+	              '<td>' +
+	              '<input id="firma' + i + '" name="firmaSpieler' + i + '" placeholder="Firma" style="width: 200px">' +
+	              '<p></p>' +
+	              '<div class="dropdown" padding="20px" style="width: 200px">' +
+	              '<button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler' + i +'"" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' + 
+	              'Unternehmensform' +
+	              '<span class="caret"></span>' +
+	              '</button>' +
+	              '<ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler' + i+ '">' +
+	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' +  i + '\x27, \x27AG\x27)">AG</a></li>'+
+	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27GmbH\x27)">GmbH</a></li>'+
+	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27OHG\x27)">OHG</a></li>'+
+	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27KG\x27)">KG</a></li>'+
+	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27eK\x27)">eK</a></li>'+
+	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27GmbH & Co.KG\x27)">GmbH & Co.KG</a></li>'+
+	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27UG\x27)">UG</a></li>'+
+	              '</ul>' +
+	              '</div>' +
+	              '</td>' +
 
+	              '<td>' +
+	              '<p>Bitte wählen Sie eine Region aus! Jede Region hat seine Vor- und Nachteile!' +
+	              '<table class="borderless" style="width: 75%">' +
+	              '<tr>' +
+	              '<td style="text-align: right;">' +
+	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27A\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="left" title="Standort A">A</button>' +
+	              
+	              
+	              
+	              '</td>' +
+	              ' <td style="text-align: left;">' +
+	            
+	              '<button onclick="changeRegion(\x27regionSpieler'+i +'\x27, \x27B\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="right" title="Standort B">B</button>'+
+	              '</td>' +
+	              '</tr>' +
+	              '<tr>' +
+	              '<td style="text-align: right;"> ' +
+	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27C\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="left" title="Standort C">C</button>' + 
+	              '</td>' +
+	              '<td style="text-align: left;">' +
+	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, "\x27D\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="right" title="Standort D">D</button>' +
+	              '</td>' +
+	              '</tr>' +
+	              '</table>' +
+	              '<p id="regionSpieler' + i +'">Gewählte Region:</p>' +
+	              '</td>' +
+	              '<td>' +
+	              '<button type="button" id="unternehmen' + i + '" onclick="unternehmenHinzufuegen(this)" class="btn btn-primary">Unternehmen hinzufügen</button>' +
+	              '<p></p>'+
+	              '<p id="fehlermeldung' + i +'"></p>' +
+	              '</td>' +
+	              '</tr>' +
+	              '</table>' +
+	              '</div>' +
+	              '</div>' +
+	              '</div>' 
+		}
+		cont.innerHTML = s;
+		
+		}
+	</script>
 
 				<hr>
                 <h3>Übersicht</h3>
@@ -745,6 +260,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script>
 	    $(document).ready(function() {
+	    	printMitarbeiter();
+	    	$('[data-toggle="tooltip"]').tooltip();
+	    	
 	    	jQuery.ajax({
         		
 		 		url: "../api/spiel/neuesspiel",
@@ -798,6 +316,10 @@
         	} else {
         		document.getElementById('fehlermeldungSpielStarten').innerHTML = "Es müssen mindestens zwei Unternehmen hinzugefügt werden, um das Spiel zu starten.";
         		setColourRed(document.getElementById('fehlermeldungSpielStarten'));
+        		
+        		console.log(erstesUnternehmenHinzugefuegt+"test1");
+     			
+
         	}
 
         }
@@ -808,9 +330,7 @@
             }, 5000); //Test: 5sec 
         }
         
-        
-        
-        
+
         document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
 
         function changePlayerCount(checkBoxID) {
@@ -843,152 +363,37 @@
         	var firma;
         	//var standort;
     		//console.log(ele.id);
+    		
+    		for (var i=1;i<=8; i++){
+    			if (ele.id == "unternehmen"+i){ 
+         			firma = document.getElementById("firma"+i).value;
+         			if (firma == "" && standort ==""){
+         				document.getElementById("fehlermeldung"+i).innerHTML = "Bitte Firma und Region auswählen!";
+         				setColourRed(document.getElementById("fehlermeldung" +i));
+         			} else if (standort ==""){
+         				document.getElementById("fehlermeldung" +i).innerHTML = "Bitte Region auswählen!";
+         				setColourRed(document.getElementById("fehlermeldung" +i));
+         			}else if (firma == "") {
+         				document.getElementById("fehlermeldung" +i).innerHTML = "Bitte Firma auswählen!";
+         				setColourRed(document.getElementById("fehlermeldung" +i));
+         			} else {
+         				callAjax(firma,standort);
+         				document.getElementById("fehlermeldung"+i).innerHTML = "Unternehmen wurde hinzugefügt!";
+         				setColourBlack(document.getElementById("fehlermeldung" +i));
+         				
+         				if (erstesUnternehmenHinzugefuegt == true) {
+         					zweitesUnternehmenHinzugefuegt = true;
+         				}
+         				erstesUnternehmenHinzugefuegt = true;
+         				
+         				standort = "";
+         			}
+    			}
  			
-        	if (ele.id == "unternehmen1"){ 
-     			firma = document.getElementById("firma1").value;
-     			if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung1").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung1"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung1").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung1"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung1").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung1"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung1").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung1"));
-     				erstesUnternehmenHinzugefuegt = true;
-     				standort = "";
-     			}
-        	} else if (ele.id == "unternehmen2"){
-        		firma = document.getElementById("firma2").value;
-        		if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung2").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung2"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung2").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung2"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung2").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung2"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung2").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung2"));
-     				zweitesUnternehmenHinzugefuegt = true;
-     				standort = "";
-     			}
-        	} else if (ele.id == "unternehmen3"){
-        		firma = document.getElementById("firma3").value;
-        		if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung3").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung3"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung3").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung3"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung3").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung3"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung3").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung3"));
-     				standort = "";
-     			}
-        	} else if (ele.id == "unternehmen4"){
-        		firma = document.getElementById("firma4").value;
-        		if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung4").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung4"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung4").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung4"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung4").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung4"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung4").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung4"));
-     				standort = "";
-     			}
-        	} else if (ele.id == "unternehmen5"){
-        		firma = document.getElementById("firma5").value;
-        		if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung5").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung5"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung5").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung5"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung5").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung5"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung5").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung5"));
-     				standort = "";
-     			}
-        	} else if (ele.id == "unternehmen6"){
-        		firma = document.getElementById("firma6").value;
-        		if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung6").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung6"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung6").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung6"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung6").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung6"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung6").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung6"));
-     				standort = "";
-     			}
-        	} else if (ele.id == "unternehmen7"){
-        		firma = document.getElementById("firma7").value; 
-        		if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung7").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung7"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung7").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung7"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung7").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung7"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung7").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung7"));
-     				standort = "";
-     			}
-        	} else if (ele.id == "unternehmen8"){
-        		firma = document.getElementById("firma8").value;
-        		if (firma == "" && standort ==""){
-     				document.getElementById("fehlermeldung8").innerHTML = "Bitte Firma und Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung8"));
-     			} else if (standort ==""){
-     				document.getElementById("fehlermeldung8").innerHTML = "Bitte Region auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung8"));
-     			}else if (firma == "") {
-     				document.getElementById("fehlermeldung8").innerHTML = "Bitte Firma auswählen!";
-     				setColourRed(document.getElementById("fehlermeldung8"));
-     			} else {
-     				callAjax(firma,standort);
-     				document.getElementById("fehlermeldung8").innerHTML = "Unternehmen wurde hinzugefügt!";
-     				setColourBlack(document.getElementById("fehlermeldung8"));
-     				standort = "";
-     			}
-        	}
-        
-     			console.log(firma);
-     			console.log(standort);
-     			console.log("standort3" + standort);
-            
+    		}
         }
+    		
+    
         function setColourRed(element){
         	element.style.color = "#FF0000";
         }

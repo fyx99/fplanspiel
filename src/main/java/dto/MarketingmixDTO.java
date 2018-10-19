@@ -1,5 +1,6 @@
 package dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fachkonzept.marketing.Marketingmaßnahme;
@@ -9,16 +10,22 @@ public class MarketingmixDTO {
 
 	
 	public MarketingmixDTO(Marketingmix mm) {
-		this.marketing = mm.getMarketing();
+		List<MarketingmaßnahmeDTO> list = new ArrayList<>();
+		for(Marketingmaßnahme m : mm.getMarketing()) {
+			list.add(new MarketingmaßnahmeDTO(m));
+		}
+		this.marketing = list;
 	}
-	private List<Marketingmaßnahme> marketing;
-
-	public List<Marketingmaßnahme> getMarketing() {
+	private List<MarketingmaßnahmeDTO> marketing;
+	
+	
+	public List<MarketingmaßnahmeDTO> getMarketing() {
 		return marketing;
 	}
-
-	public void setMarketing(List<Marketingmaßnahme> marketing) {
+	public void setMarketing(List<MarketingmaßnahmeDTO> marketing) {
 		this.marketing = marketing;
 	}
+
+	
 
 }
