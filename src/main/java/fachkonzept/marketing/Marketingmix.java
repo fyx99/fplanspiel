@@ -10,6 +10,7 @@ public class Marketingmix {
 
     private List<Marketingmaßnahme> marketing = new ArrayList<Marketingmaßnahme>();
     private int marketingStaerke = 0;	//0-150; 150 entspricht +15% angebotsstärke
+  
     
     public List<Marketingmaßnahme> getMarketing() {
         return marketing;
@@ -18,6 +19,7 @@ public class Marketingmix {
     public void setMarketing(List<Marketingmaßnahme> marketing) {
         this.marketing = marketing;
     }
+    
     
     public void marketingHinzu(Marketingmaßnahme m) {
         this.marketing.add(m);

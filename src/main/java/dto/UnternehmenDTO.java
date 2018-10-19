@@ -19,7 +19,7 @@ public class UnternehmenDTO {
 	
 	private MarktDTO amarkt;
 	
-	private Marketingmix marketingmix;
+	private MarketingmixDTO marketingmix;
 
 	private double umsatz = 0;
 	private double kapital = 0;
@@ -85,13 +85,14 @@ public class UnternehmenDTO {
 	public void setMaschinen(MaschinenGesamtDTO maschinen) {
 		this.maschinen = maschinen;
 	}
-    public Marketingmix getMarketingmix() {
-        return marketingmix;
-    }
-    public void setMarketingmix(Marketingmix marketingmix) {
-        this.marketingmix = marketingmix;
-    }
-    public MitarbeiterGesamtDTO getMitarbeiter() {
+   
+    public MarketingmixDTO getMarketingmix() {
+		return marketingmix;
+	}
+	public void setMarketingmix(MarketingmixDTO marketingmix) {
+		this.marketingmix = marketingmix;
+	}
+	public MitarbeiterGesamtDTO getMitarbeiter() {
         return mitarbeiter;
     }
     public void setMitarbeiter(MitarbeiterGesamtDTO mitarbeiter) {

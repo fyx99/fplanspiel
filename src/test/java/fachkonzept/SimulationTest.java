@@ -241,32 +241,10 @@ class SimulationTest {
     	assertEquals(5, u1.getAmarkt().getAngebote().size());
     	
     	Angebot a1 = u1.getAmarkt().getAngebote().get(0);
+    	//weitere Tests...
     }
    
     
-    
-    //
-//  @BeforeEach
-//  public void settingUpMock() throws Exception {
-//
-//      MockitoAnnotations.initMocks(this);
-//  }
-//
-//  @Mock
-//  private SimulationsKonstanten bsp1 = new SimulationsKonstanten();
-//  
-//  @InjectMocks
-//  private Simulation ssss = new Simulation();
-//
-//  @Test
-//  public void test() {
-//
-//      //Mockito.when(SimulationsKonstanten.getProduktMarktpreis((ProduktArt)anyObject())).thenReturn(77d);
-//
-//      //assertEquals(7, bsp1.getProduktMarktpreis(ProduktArt.Edelstahlschrank));
-//
-//  }
-//  
     
     
     

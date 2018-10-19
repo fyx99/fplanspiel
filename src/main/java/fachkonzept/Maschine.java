@@ -11,6 +11,7 @@ public class Maschine extends Markteinheit{
 	private MaschinenArt maschinenArt;
 	private int kapazitaet;
 	private int auslastung;
+	private Produktionsmatrix matrix;
 	private double fertigungskosten;
 	private int arbeitszeit;     //jede maschine hat einen bestimmten menschlichen arbeitsaufwand
 	        //könnte man jetzt untergliederin in maschinen bestücker usw.
@@ -39,7 +40,7 @@ public class Maschine extends Markteinheit{
 	    this.arbeitszeit = angebot.arbeitszeit;
 	}
 	
-	private Produktionsmatrix matrix;
+	
 
 	public Produktionsmatrix getMatrix() {
 		return matrix;

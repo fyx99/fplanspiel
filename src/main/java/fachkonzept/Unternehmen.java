@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dto.MarketingmixDTO;
 import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
 import dto.MitarbeiterGesamtDTO;
@@ -329,13 +330,14 @@ public class Unternehmen {
 	}
 
     public static UnternehmenDTO getDTO(Unternehmen u) {
-		// TODO Auto-generated constructor stub
 		UnternehmenDTO uu = new UnternehmenDTO();
 		uu.setName(u.getName());
 		uu.setStandort("leer");
 		uu.setBmarkt(new MarktDTO(u.getBmarkt().getAngebote()));
 		uu.setVmarkt(new MarktDTO(u.getVmarkt().getAngebote()));
 		uu.setMmarkt(new MarktDTO(u.getMmarkt().getAngebote()));
+		
+		uu.setMarketingmix(new MarketingmixDTO(u.getMarketingmix()));
 		
 		uu.setUmsatz(u.getUmsatz());
 		uu.setKapital(u.getKapital());
