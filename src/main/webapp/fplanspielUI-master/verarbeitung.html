@@ -43,13 +43,24 @@
 			});
 		}
  		
- 		//var c ="";
+ 		var imgProd = {};
+			imgProd[ "Holzstuhl" ] = "img/holzstuhl2.jpg";
+			imgProd[ "Stoffstuhl" ] = "img/stoffstuhl.jpg";
+			imgProd[ "Lederstuhl" ] = "img/lederstuhl.jpg";
+			
+			imgProd[ "Holztisch" ] = "img/holztisch.jpg";
+			imgProd[ "Glastisch" ] = "img/glastisch.jpg";
+			imgProd[ "Kunststofftisch" ] = "img/kunststofftisch.JPG";
+			
+			imgProd[ "Holzschrank" ] = "img/holzschrank.jpg";
+			imgProd[ "Edelstahlschrank" ] = "img/edelstahlschrank.jpg";
+			imgProd[ "Glasschrank" ] = "img/glasschrank.jpg";
+			
 		function printVerarbeitung(data){
 			
 			var verarbData = data;
 			var cont  = document.getElementById('contentVerarbeitung');
 			var s ="";
-			var bilder = ["img/holzstuhl2.jpg", "img/stoffstuhl.jpg", "img/lederstuhl.jpg", "img/holztisch.jpg", "img/glastisch.jpg", "img/kunststofftisch.JPG", "img/holzschrank.jpg", "img/edelstahlschrank.jpg", "img/glasschrank.jpg"];
 			var index = 0;
 			
 			for(var angebot in data){
@@ -60,7 +71,7 @@
 				
 				
 				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
-					'<img src="' + bilder[index] +'" alt="' + data[angebot].markteinheit.name + '">' + 
+					'<img src="' + imgProd[ data[angebot].markteinheit.p.name] +'" alt="' + data[angebot].markteinheit.p.name + '">' + 
 						'<div class="caption">'+
 							'<div class="col-sm-12">'+
 								'<h3>'+ data[angebot].markteinheit.p.name+'</h3>'+
@@ -120,8 +131,11 @@
 						'</div>' + 
 						'</div></div></div>';
 						
-						index++;
+						if(index == 2 || index ==5){
+							s+= '<div class="row"></div>';
+						}
 				
+						index++;
 						
 			}
 			cont.innerHTML = s;
