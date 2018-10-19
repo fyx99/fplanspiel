@@ -3,6 +3,7 @@ package dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.mapper.MarketingmaßnahmenMapper;
 import fachkonzept.marketing.Marketingmaßnahme;
 import fachkonzept.marketing.Marketingmix;
 
@@ -12,7 +13,7 @@ public class MarketingmixDTO {
 	public MarketingmixDTO(Marketingmix mm) {
 		List<MarketingmaßnahmeDTO> list = new ArrayList<>();
 		for(Marketingmaßnahme m : mm.getMarketing()) {
-			list.add(new MarketingmaßnahmeDTO(m));
+			list.add(MarketingmaßnahmenMapper.toDTO(m));
 		}
 		this.marketing = list;
 	}
