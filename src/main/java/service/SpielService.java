@@ -268,8 +268,8 @@ public class SpielService {
 	@GET
 	@Path("marketingmix")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static Marketingmix getMarketingmix() {
-		return s.getAktuellesUnternehmen().getMarketingmix();
+	public static MarketingmixDTO getMarketingmix() {
+		return new MarketingmixDTO(s.getAktuellesUnternehmen().getMarketingmix());
 	}
 
 	@GET

@@ -3,7 +3,8 @@ package fachkonzept.marketing;
 public abstract class Marketingmaßnahme {
     
     public Marketingmaßnahme(String name, double budget, int vol, int eff) {
-        this.id = nummer = nummer++;
+        this.id = nummer;
+        nummer++;
         this.name = name;
         this.budget = budget;
         this.volumen = vol;
