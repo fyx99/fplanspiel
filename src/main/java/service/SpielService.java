@@ -128,6 +128,7 @@ public class SpielService {
         return new MarktDTO(s.getAktuellesUnternehmen().getFmarkt().getAngebote());
     }
     
+    @GET
     @Path("amarkt")		//Arbeitsmarkt
     @Produces(MediaType.APPLICATION_JSON)
     public static MarktDTO getAMarkt() {
