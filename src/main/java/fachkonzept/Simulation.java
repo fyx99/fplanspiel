@@ -378,20 +378,21 @@ public class Simulation {
 
 	private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
 		double standortfaktor_mitarbeiterkosten = 1;//n.getStandort().getFaktor_mitarbeiterkosten();
-		Mitarbeiter ma1 = new Mitarbeiter("Name unnötig", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
-		Mitarbeiter ma2 = new Mitarbeiter("Name unnötig", 400, 60000, MitarbeiterFachgebiet.MASCHINE); // bsp weniger
+		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
+		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 400, 60000, MitarbeiterFachgebiet.MASCHINE); // bsp weniger
 																										// arbeitszeit
-		Mitarbeiter ma3 = new Mitarbeiter("Name unnötig", 200, 120000, MitarbeiterFachgebiet.VERTRIEB);
-		Mitarbeiter ma4 = new Mitarbeiter("Name unnötig", 300, 120000, MitarbeiterFachgebiet.VERTRIEB);
-		Mitarbeiter ma5 = new Mitarbeiter("Name unnötig", 250, 120000, MitarbeiterFachgebiet.VERWALTUNG);
+		Mitarbeiter ma3 = new Mitarbeiter("Mitarbeiter 3", 200, 120000, MitarbeiterFachgebiet.VERTRIEB);
+		Mitarbeiter ma4 = new Mitarbeiter("Mitarbeiter 4", 300, 120000, MitarbeiterFachgebiet.VERTRIEB);
+		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 250, 120000, MitarbeiterFachgebiet.VERWALTUNG);
 
 		Arbeitsmarkt am = new Arbeitsmarkt();
-		am.anbieten(new Angebot(ma1, 30, 20 * standortfaktor_mitarbeiterkosten)); // ist der preis hier nötig? oder
-																					// einfach 0
+		
+		am.anbieten(new Angebot(ma1, 30, 20 * standortfaktor_mitarbeiterkosten)); // ist der preis hier nötig? oder																			// einfach 0
 		am.anbieten(new Angebot(ma2, 30, 20 * standortfaktor_mitarbeiterkosten));
 		am.anbieten(new Angebot(ma3, 30, 20 * standortfaktor_mitarbeiterkosten));
 		am.anbieten(new Angebot(ma4, 30, 20 * standortfaktor_mitarbeiterkosten));
 		am.anbieten(new Angebot(ma5, 30, 20 * standortfaktor_mitarbeiterkosten));
+		
 		return am;
 	}
 

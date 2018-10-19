@@ -233,6 +233,15 @@ class SimulationTest {
     	assertEquals(0.9, u1.getBmarkt().getAngebote().get(4).getPreis());
     	assertEquals(SimulationsKonstanten.MASCHINEN_MARKT_MENGE, u1.getBmarkt().getAngebote().get(0).getMenge());
     }
+    
+    @Test
+    void simmuliereArbeitsmarkt() {
+    	Simulation.simuliereSpielstart(s);
+    	
+    	assertEquals(5, u1.getAmarkt().getAngebote().size());
+    	
+    	Angebot a1 = u1.getAmarkt().getAngebote().get(0);
+    }
    
     
     

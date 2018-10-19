@@ -14,8 +14,7 @@ public class Arbeitsmarkt extends Markt {
     
     public Arbeitsmarkt() {
         
-        
-        
+                
     }
     
     @Override
