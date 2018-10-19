@@ -28,14 +28,17 @@
  			var datenbMarkt;
  			var datenmMarkt;
  			var datenfMarkt;
+ 			var datenaMarkt;
  			
  	 		var mengeMaterial;
  	 		var mengeMaschine;
  			var mengeKredit;
+ 			var mengeMitarbeiter;
  	 		
  	 		var maschinenid;
  	 		var materialid;
  	 		var kreditid;
+ 	 		var mitarbeiterid;
  	 		
  			window.onload = getDataEinkauf();
  				
@@ -65,31 +68,42 @@
 	 				});
 	 				
 	 				jQuery.ajax({
-	 					url: "../api/spiel/mitarbeiter",
+	 					url: "../api/spiel/amarkt",
 	 					type: "GET",
 	 					dataType: "json",
 	 					success: function(data, data2){
-	 						
-	 						printMitarbeiter(data);
+	 						datenaMarkt = data.angebote;
+	 						printMitarbeiter(datenaMarkt);
 	 					}
 	 				});
 	 				
 	 				
  				}
+ 			var imgMat = {};
+ 			imgMat[ "Holz" ] = "img/holz.jpg";
+ 			imgMat[ "Stoff" ] = "img/stoff.jpg";
+ 			imgMat[ "Leder" ] = "img/leder.jpg";
+ 			imgMat[ "Glas" ] = "img/glas.jpg";
+ 			imgMat[ "Kunststoff" ] = "img/plastik.jpg";
+ 			imgMat[ "Edelstahl" ] = "img/edelstahl.jpg";
+ 			
  			
  			function printMaterial(data){
  				var cont  = document.getElementById('contentMaterial');
  				var s ="";
- 				var bilder = ["img/holz.jpg", "img/stoff.jpg", "img/leder.jpg", "img/glas.jpg", "img/plastik.jpg", "img/edelstahl.jpg"];
  			    var index = 0;
  			    
  				for(var angebot in data){
  					materialid = data[angebot].markteinheit.id;
  					var inputid = "inputEinkauf"+materialid;
  					//var outputid = "demo"+materialid;
+ 					var value = imgMat[ data[angebot].markteinheit.name];
+		 			
+		 				console.log(value);
+		 			
  					
  					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
- 							'<img src="' + bilder[index] +'" alt="' + data[angebot].markteinheit.name + '">' + 
+ 							'<img src="' + value +'" alt="' + data[angebot].markteinheit.name + '">' + 
  							'<div class="caption">'+
  								'<div class="col-sm-12">'+
  									'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
@@ -132,11 +146,23 @@
  				cont.innerHTML = s;
  			}
  			
+ 			var imgMas = {};
+ 			imgMas[ "Holzstuhlmaschine" ] = "img/maschineeins.jpg";
+ 			imgMas[ "Stoffstuhlmaschine" ] = "img/maschineeins.jpg";
+ 			imgMas[ "Lederstuhlmaschine" ] = "img/maschineeins.jpg";
+ 			
+ 			imgMas[ "Holztischmaschine" ] = "img/maschinezwei.jpg";
+ 			imgMas[ "Glastischmaschine" ] = "img/maschinezwei.jpg";
+ 			imgMas[ "Kunststofftischmaschine" ] = "img/maschinezwei.jpg";
+ 			
+ 			imgMas[ "Holzschrankmaschine" ] = "img/maschinedrei.jpg";
+ 			imgMas[ "Edelstahlschrankmaschine" ] = "img/maschinedrei.jpg";
+ 			imgMas[ "Glasschrankmaschine" ] = "img/maschinedrei.jpg";
+ 			
  			function printMaschinen(data){
  				
  				var cont  = document.getElementById('contentMaschine');
  				var s ="";
- 				var bilder = ["img/maschineeins.jpg", "img/maschineeins.jpg", "img/maschineeins.jpg", "img/maschinezwei.jpg", "img/maschinezwei.jpg", "img/maschinezwei.jpg", "img/maschinedrei.jpg", "img/maschinedrei.jpg", "img/maschinedrei.jpg"];
  			    var index = 0;
  			    
  				for(var angebot in data){
@@ -145,8 +171,10 @@
  					var inputid = "inputEinkauf"+maschinenid;
  					//var outputid = "demo"+maschinenid;
  					
+ 					var value = imgMas[ data[angebot].markteinheit.name];
+ 					
  					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
- 						'<img src="' + bilder[index] +'" alt="' + data[angebot].markteinheit.name + '">' + 
+ 						'<img src="' + value +'" alt="' + data[angebot].markteinheit.name + '">' + 
  							'<div class="caption">'+
  								'<div class="col-sm-12">'+
  									'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
@@ -279,9 +307,64 @@
  				var s ="";
  				
 				for(var angebot in data){
+					
+					mitarbeiterid = data[angebot].markteinheit.id;
+ 					var inputid = "inputEinkauf"+mitarbeiterid;
  					
  					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
- 					'</div></div>';
+		 					'<div class="caption">'+
+							'<div class="col-sm-12">'+
+								'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+							'<p>Fachgebiet</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+							'<p>'+ data[angebot].markteinheit.mfg+'</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>Preis in €</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+ data[angebot].preis+'</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>Verfügbar</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+ data[angebot].menge+'</p>'+
+								'<br>'+
+							'</div>'+
+							
+							'<div class="col-sm-6">'+
+							'<p>Arbeitszeit</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+							'<p>'+ data[angebot].markteinheit.arbeitszeit+'</p>'+
+							'</div>'+	
+							
+							'<div class="col-sm-6">'+
+							'<p>Lohnkosten</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+							'<p>'+ data[angebot].markteinheit.lohnkosten+'</p>'+
+							'</div>'+
+							
+							'<div class="col-sm-3">'+
+								'<input class="form-control input-sm" type="text" id ='+ inputid+'>'+
+								'<br>'+
+							'</div>'+
+							'<div class="col-sm-3">'+
+								'<p>Stück</p>'+
+								'<br>'+
+							'</div>'+
+							'<div class="col-sm-4">'+
+								'<a href="#" class="btn btn-danger"  onClick = "kaufeModal('+mitarbeiterid+','+angebot+', 4)" data-toggle="modal" data-target="#modalKaufen">Einstellen</a>'+
+								'<br>'+
+							'</div>'+
+							
+							'</div>'+
+	 					'</div></div>';
 						
 				}
 				cont.innerHTML = s;
@@ -306,6 +389,11 @@
  					
  					markt = datenfMarkt;
  					mengeKredit = iV;
+ 				} 
+				if(markt == 4) {
+ 					
+ 					markt = datenaMarkt;
+ 					mengeMitarbeiter = iV;
  				} 
  				
  				var text;
@@ -373,8 +461,6 @@
  				
  				$('#navbar').load('navbar.html');
  				getDataEinkauf();
- 				
- 				
  			}
 
 		</script>
