@@ -38,61 +38,206 @@
 		<div>
 			<h3>Auswahl einer geeigneten Marketing-Strategie</h4>
 		</div>
+		
+		<div class="well">
+        		<div class="row" id="contentMarketing">
+  				</div>
+  		</div>
 
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td class="col-sm-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check1">
-                                </div>
-                            </td>
-                            <td class="col-sm-2">
-                              Marketing A 
-                            </td>
-                            <td class="col-sm-8"> X</td>
-                            <td class="col-sm-2"> 0€</td>
-                            <td class="col-sm-2"> <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#contact">Auswählen</button>
-                            </td>
-                        </tr>
+  
+                  
+    <script type="text/javascript">
+    
+    var datenMarketing;
+    window.onload = getDataMarketing();
+    
+    function getDataMarketing(){
+			jQuery.ajax({
+				url: "../api/spiel/marketingangebote",
+				type: "GET",
+				dataType: "json",
+				success: function(data, data2){
+					datenMarketing=data;
+					printMarketing(datenMarketing);
+				}
+			});
+    }
+		function printMarketing(data){
+				var cont  = document.getElementById('contentMarketing');
+				var s ="";
+				var marketingMaßnahme;
+				
+				for(var angebot in data){
+					marketingMaßnahme = data[angebot];
+					
+					
+					//var outputid = "demo"+kreditid;
+					//var= "hallo";
+					
+					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
+						
+							'<div class="caption">'+
+								'<div class="col-sm-12">'+
+									'<h3>'+ data[angebot]+'</h3>'+
+								'</div>'+
+								'<div class="col-sm-12">'+
+							
+								'<p>Diese Kampagne verspricht einen höheren Umsatz.</p>'+
+								'<p>Wie viel Geld möchtest Du investieren?</p>'+
+							'</div>'+
+							
+								
+								/* '<div class="col-sm-6">'+
+									'<p>Preis in €</p>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<p>'+ data[angebot]+'</p>'+
+								'</div>'+
+											
+								'<div class="col-sm-6">'+
+									'<p>Verfügbar</p>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<p>'+ data[angebot]+'</p>'+
+									'<br>'+
+								'</div>'+
+								
+								'<div class="col-sm-6">'+
+								'<p>Laufzeit</p>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<p>'+ data[angebot]+'</p>'+
+								'</div>'+	
+								'<div class="col-sm-6">'+
+								'<p>Volumen</p>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<p>'+ data[angebot]+'</p>'+
+								'</div>'+	
+								'<div class="col-sm-6">'+
+								'<p>Zinssatz</p>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<p>'+ data[angebot]+'</p>'+
+									'<br>'+
+								'</div>'+	 */
+								'<br></br>'+							
+		        				'<div class="col-sm-3">'+
+									'<input class="form-control input-sm" type="text" id =inputid'+ angebot+'>'+
+									'<br>'+
+								'</div>'+
+								'<div class="col-sm-3">'+
+									'<p>Euro </p>'+
+									'<br>'+
+								'</div>'+
+								'<div class="col-sm-4">'+
+									'<a href="#" class="btn btn-danger"  onClick = "marketingModal('+angebot+')" data-toggle="modal" data-target="#modalKaufen">Buchen</a>'+
+									'<br>'+
+								'</div>'+
+								//'<div class="col-sm-12">'+
+								//'<p id='+outputid+'>Test</p>'+
+								//'</div>' +
+							'</div>' + 
+							'</div></div></div>';
+							
+							
+				}
+				cont.innerHTML = s;
+			}   
+		
+		// Bei Klick auf Button "Marketingmaßnahme tätigen"
+			function marketingModal(marketingID) {
+			
+				var budget = document.getElementById("inputid" +marketingID).value;
+			 	var cont  = document.getElementById('contentModal');
+				var s ="";
+				var art = datenMarketing[marketingID];
+				//var budget= 50;
+				var name= "ui";
+				
+				if (isNaN(budget) || budget < 1) { 
+ 			        text = "<h3>&nbsp;&nbsp;Eingabe ungültig!</h3>";
+ 			        cont.innerHTML = text;
+ 			        return;
+				}
+ 			        
+				//Multipliziere Preis mit eingebener Menge
+				//var kosten = markt[angebot].preis;
+				//kosten *= iV;
+				
+				//var angebotsid = markt[angebot].id;
+				
+					s += 
+						'<div class="col-sm-12">'+
+				'<h3>Bestätigung für ' +  datenMarketing[marketingID] +':</h3><div><br></div>'+
+				'</div>'+
+				'<div class="col-sm-12">'+
+				'<h4>Budget: '+ budget+' Euro</h4>'+			
+				'</div>'+	
+				'<div class="col-sm-6">'+
+				'<h4>Name für Marketingmaßnahme: </h4>'+
+				'</div>'+
+				'<div class="col-sm-6">'+
+				'<input class="form-control input-sm" type="text" id =nameMarketing> '+
+				'</div>'+	
+				
+				
+				'<div class="row">'+
+					'<div class="col-sm-9">'+
+					'</div>'+
+					'<div class="col-sm-3">'+
+						'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="marketingDurchführen('+marketingID+','+budget+')">Bestätigen</button>'+
+					'</div>'+
+				'</div>';
+			
+					cont.innerHTML = s; 
+					
+					
+			}
+		
+			function marketingDurchführen(marketingID, budget){
+				var art = datenMarketing[marketingID];
+				//var name = "hi";
+				var name = document.getElementById("nameMarketing").value;
+ 				jQuery.ajax({
+ 			 		url: "../api/spiel/buchenmarketingmaßnahme?art=" + art + "&budget=" + budget + "&name=" + name,
+ 			 		type: "GET",
+ 			 		dataType: "json",
+ 			 		sucess: function() {
+ 			 			console.log("Success");
+ 			 			location.reload(true);
+ 			 			
+ 			 		
+ 				    }
+ 		 		});
+ 				
 
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check2">
-                                </div>
-                            </td>
-                            <td>
-                              Marketing B 
-                            </td>
-                            <td>X</td>
-                            <td> 0€</td>
-                            <td> <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#contact">Auswählen</button>
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="check3">
-                                </div>
-                            </td>
-                            <td>
-                               Marketing C
-                            </td>
-                            <td>X</td>
-                            <td> 0€</td>
-                            <td> <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#contact">Auswählen</button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                  </table>
+ 				
+ 				
+ 			}
+    </script>
 
 		
 		
 	</div>
+	
+		<!-- The Modal -->
+  <div class="modal" id="modalKaufen">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+         <div class="modal-body" id="contentModal">
+          </div>
+       
+        
+      </div>
+    </div>
+  </div>
 
     <!-- Fixed footer -->
     <div id="footer">
