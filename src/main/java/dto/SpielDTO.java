@@ -2,14 +2,18 @@ package dto;
 
 import java.util.List;
 
+import fachkonzept.Spiel;
 import fachkonzept.Unternehmen;
 
 public class SpielDTO {
 
-	public SpielDTO() {
-		// TODO Auto-generated constructor stub
+	public SpielDTO(Spiel s) {
+		this.runde = s.getRunde();
+		this.quartal = s.getRunde() % 4;
+		this.jahr = s.getRunde() / 4;
+		
 	}
-	
+	private int runde;
 	private int quartal;
 	private int jahr;
 	
@@ -38,6 +42,14 @@ public class SpielDTO {
     public void setUnternehmen(List<Unternehmen> unternehmen) {
         this.unternehmen = unternehmen;
     }
+
+	public int getRunde() {
+		return runde;
+	}
+
+	public void setRunde(int runde) {
+		this.runde = runde;
+	}
 	
 	
 }

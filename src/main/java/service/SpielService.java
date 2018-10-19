@@ -17,6 +17,7 @@ import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
 import dto.ProdukteGesamtDTO;
 import dto.RundenResultatDTO;
+import dto.SpielDTO;
 import dto.UnternehmenDTO;
 import dto.ZwischenstandDTO;
 import fachkonzept.Angebot;
@@ -32,7 +33,6 @@ import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
 import fachkonzept.marketing.Fernsehwerbung;
 import fachkonzept.marketing.Marketingmaßnahme;
-import fachkonzept.marketing.Marketingmix;
 import fachkonzept.marketing.MessenKampagne;
 import fachkonzept.marketing.PRKampagne;
 import fachkonzept.marketing.Plakatwerbung;
@@ -94,6 +94,13 @@ public class SpielService {
 			s.setRundenAnzahl(rundenAnzahl);
 			s.rundenStart();
 		}
+	}
+	
+	@GET
+	@Path("spiel")
+	@Produces(MediaType.TEXT_PLAIN) // Application_Json
+	public static SpielDTO getSpielDTO() {
+		return new SpielDTO(s);
 	}
 
 	@GET
@@ -358,4 +365,7 @@ public class SpielService {
 	public static Spiel getSpiel() {
 		return s;
 	}
+	
+	
+
 }
