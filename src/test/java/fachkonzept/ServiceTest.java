@@ -100,6 +100,24 @@ class ServiceTest {
     }
     
     @Test
+    void marketingangebote() {
+    	assertEquals("Fernsehwerbung", SpielService.getMarketingAngebote().get(0));
+    }
+    
+    @Test
+    void buchenmarketingmaßnahme() {
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Sponsoring", 9999, "Sponsoring1"));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Fernsehwerbung", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("MessenKampagne", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Plakatwerbung", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("PRKampagne", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Radiowerbung", 9999, ""));
+    	//assertNull(SpielService.erstelleMarketingmaßnahme("", 1111, ""));
+    	
+    }
+    
+    
+    @Test
     void resultate() {
         //hier mal die rundenergebnisse für 1 spieler, für alle nach der simulation und das endergebnis
 
