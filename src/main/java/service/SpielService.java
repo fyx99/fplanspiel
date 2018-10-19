@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.DefaultValue;
@@ -43,7 +44,7 @@ import fachkonzept.util.MarketingmaßnahmenArt;
 @PermitAll
 @Path("spiel")
 public class SpielService {
-//
+	//
 	@DefaultValue("0")
 	@QueryParam("spielId")
 	private int spielId;
@@ -124,7 +125,7 @@ public class SpielService {
 	}
 
 	@GET
-	@Path("vmarkt") // Vertriebs-/Absatzmarkt
+	@Path("vmarkt") // Absatzmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getVMarkt() {
 		return new MarktDTO(s.getAktuellesUnternehmen().getVmarkt().getAngebote());
@@ -154,7 +155,7 @@ public class SpielService {
 	@GET
 	@Path("angebotkaufen")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static boolean kaufeAngebot(@DefaultValue("0") @QueryParam("menge") int menge,
+	public static boolean kaufeAngebot(@DefaultValue("-1") @QueryParam("menge") int menge,
 			@QueryParam("angebotsid") int id) {
 		// erstmal bezahlen
 
@@ -165,7 +166,7 @@ public class SpielService {
 		int tatsaechlichemenge = menge;
 		if (angebot.getMenge() < menge)
 			tatsaechlichemenge = angebot.getMenge(); // maximal was angeboten wird
-			
+
 		if (angebot.getMarkteinheit() instanceof Maschine) {
 			s.getAktuellesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, s.getAktuellesUnternehmen());
 			return true;
@@ -182,7 +183,8 @@ public class SpielService {
 			return false;
 		}
 
-		//Spiel.log("gekauft " + tatsaechlichemenge + " von " + angebot.getMarkteinheit().getName());
+		// Spiel.log("gekauft " + tatsaechlichemenge + " von " +
+		// angebot.getMarkteinheit().getName());
 
 	}
 
@@ -337,9 +339,8 @@ public class SpielService {
 	@GET
 	@Path("spielende")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<Unternehmen> getSpielende() {
-		// @Jonas Breuer - bisher eine rangliste nach gewinn
-		return s.getRangliste();
+	public static List<UnternehmenDTO> getSpielende() {
+		return s.getRangliste().stream().map(Unternehmen::getDTO).collect(Collectors.toList());
 	}
 
 	@GET

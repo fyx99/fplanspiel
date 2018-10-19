@@ -110,5 +110,13 @@ class ServiceTest {
         //die sollten auf jeden fall auf richtigkeit überprüft werden, solange man nicht nur eine methode aufruft, 
         //dann sollte man einfach die methode testen und hier nur kurz ob das mit den parametern klappt
     }
+    
+    @Test
+    void spielende() {
+
+    	assertEquals("Test Unternehmen AG 107", SpielService.getSpielende().get(0).getName());
+    	assertEquals("Test Unternehmen AG 108", SpielService.getSpielende().get(1).getName());
+    	assertEquals("Test Unternehmen AG 109", SpielService.getSpielende().get(2).getName());
+    }
 
 }
