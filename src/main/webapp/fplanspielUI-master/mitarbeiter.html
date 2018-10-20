@@ -5,108 +5,100 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mitarbeiter</title>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+    <script src="jquery/jquery-1.11.0.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
  </head>
  
  <body onload="start()">
-    <script type="text/javascript" >
+    <script>
       $(document).ready(function() {
                 $('#navbar').load('navbar.html');
                 getData();
                 $('#footer').load('footer.html');
-                });
-
+      });
     </script>
 
 	<script>
+	var fertigungCount = 0;
+	var vertriebCount = 0;
+	var verwaltungCount = 0;
+	
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
         type: "GET",
         dataType: "json",
         success: function(data, data2){
-          printDataProduktion(data.bmarkt.angebote);
-          printDataVertrieb(data.bmarkt.angebote);
-          printDataVerwaltung(data.bmarkt.angebote);//data.mitarbeiter.arbeiter
+          printDataAlles(data.mitarbeiter.arbeiter);
         }
       });
     }
-    function printDataProduktion(data){
-      var cont  = document.getElementById('ProduktionContent');
-      var s ="";
-      var index = 0;
+    function printDataAlles(data){
+        var contFertigung = document.getElementById('FertigungContent');
+        var contVertrieb = document.getElementById('VertriebContent');
+        var contVerwaltung = document.getElementById('VerwaltungContent');
+        var s ="";
+        var dialogID = "";
 
-      for(var angebot in data){
-    	  
-     s +='<div class="col-sm-6 col-md-4">' + 
-          '<div class="thumbnail">' + 
-            '<div class="caption">' + 
-              '<h3 class="cardTop">' + data[angebot].markteinheit.name + '</h3>' +
-              '<p>Arbeitet in der Produktion.</p>' + 
-                  '<p>' + 
-                    '<Button id="kündigenMitarbeiter7" onclick="saveEmployeeID(kündigenMitarbeiter7)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button> <Button id="detailsMitarbeiter7" onclick="setModalData(1)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>' + 
-                  '</p>' +
-              '</div>' +
-           '</div>' +
-        '</div>';
-
-
-            index++;
+        for(var mitarbeiter in data){
+        	if(data[mitarbeiter].m.mfg == "MASCHINE"){
+    			dialogID = 1;
+    			fertigungCount++;
+    		} else if(data[mitarbeiter].m.mfg == "VERTRIEB"){
+    			dialogID = 2;
+    			vertriebCount++;
+    		} else if(data[mitarbeiter].m.mfg == "VERWALTUNG"){
+    			dialogID = 3;
+    			verwaltungCount++;
+    		}
+      	  
+       s +='<div class="col-sm-6 col-md-4">' + 
+            '<div class="thumbnail">' + 
+              '<div class="caption">' + 
+                '<h3 class="cardTop">' + data[mitarbeiter].m.name + '</h3>' +
+                '<p style="margin-bottom: 2px"><b>Arbeitsgebiet:</b> ' + data[mitarbeiter].m.mfg + '</p>' + 
+                '<p style="margin-bottom: 2px"><b>Arbeitszeit:</b> ' + data[mitarbeiter].m.arbeitszeit + '</p>' + 
+                '<p><b>Lohnkosten:</b> ' + data[mitarbeiter].m.lohnkosten + '</p>' + 
+                    '<p>' + 
+                      '<Button data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button> <Button id="detailsMitarbeiter7" onclick="setModalData(' + dialogID + ')" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>' + 
+                    '</p>' +
+                '</div>' +
+             '</div>' +
+          '</div>';
+		
+		if(data[mitarbeiter].m.mfg == "MASCHINE"){
+			contFertigung.innerHTML += s;
+			s = "";
+		} else if(data[mitarbeiter].m.mfg == "VERTRIEB"){
+			contVertrieb.innerHTML += s;
+			s = "";
+		} else if(data[mitarbeiter].m.mfg == "VERWALTUNG"){
+			contVerwaltung.innerHTML += s;
+			s = "";
+		}
+        }
+		console.log(fertigungCount);
+		console.log(vertriebCount);
+		console.log(verwaltungCount);
+		
+		if(fertigungCount == 0){
+			contFertigung.innerHTML = "<h4 style='padding-left: 18px'>Keine Mitarbeiter in dieser Abteilung vorhanden!</h4>";
+		} 
+		if(vertriebCount == 0){
+			contVertrieb.innerHTML = "<h4 style='padding-left: 18px'>Keine Mitarbeiter in dieser Abteilung vorhanden!</h4>";
+		}
+		if(verwaltungCount == 0){
+			contVerwaltung.innerHTML = "<h4 style='padding-left: 18px'>Keine Mitarbeiter in dieser Abteilung vorhanden!</h4>";
+		}
       }
-      cont.innerHTML = s;
-    }
     
-    function printDataVertrieb(data){
-        var cont  = document.getElementById('VertriebContent');
-        var s ="";
-        var index = 0;
-
-        for(var angebot in data){
-        	s +='<div class="col-sm-6 col-md-4">' + 
-            '<div class="thumbnail">' + 
-              '<div class="caption">' + 
-                '<h3 class="cardTop">' + data[angebot].markteinheit.name + '</h3>' +
-                '<p>Arbeitet in der Produktion.</p>' + 
-                    '<p>' + 
-                      '<Button id="kündigenMitarbeiter7" onclick="saveEmployeeID(kündigenMitarbeiter7)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button> <Button id="detailsMitarbeiter7" onclick="setModalData(2)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>' + 
-                    '</p>' +
-                '</div>' +
-             '</div>' +
-          '</div>';
-
-              index++;
-        }
-        cont.innerHTML = s;
-    }
-    
-    function printDataVerwaltung(data){
-        var cont  = document.getElementById('VerwaltungContent');
-        var s ="";
-        var index = 0;
-
-        for(var angebot in data){
-        	s +='<div class="col-sm-6 col-md-4">' + 
-            '<div class="thumbnail">' + 
-              '<div class="caption">' + 
-                '<h3 class="cardTop">' + data[angebot].markteinheit.name + '</h3>' +
-                '<p>Arbeitet in der Produktion.</p>' + 
-                    '<p>' + 
-                      '<Button id="kündigenMitarbeiter7" onclick="saveEmployeeID(kündigenMitarbeiter7)" data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button> <Button id="detailsMitarbeiter7" onclick="setModalData(3)" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>' + 
-                    '</p>' +
-                '</div>' +
-             '</div>' +
-          '</div>';
-
-              index++;
-        }
-        cont.innerHTML = s;
-    }
     </script>
  
     <!-- Fixed navbar -->
@@ -129,13 +121,13 @@
     <div class="page-header">
       <h1>Mitarbeiter</h1>
     </div>
-    <!--Mitarbeiter Produktion ÜBERSICHT-->
+    <!--Mitarbeiter Fertigung ÜBERSICHT-->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panelTop">Produktion</h3>
+        <h3 class="panelTop">Fertigung</h3>
       </div>
       <div class="panel-body">
-        <div class="row" id="ProduktionContent">
+        <div class="row" id="FertigungContent">
 		
 
         </div>
@@ -188,10 +180,10 @@
            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
            </button>
-           <h2 class="modal-title" id="verkaufenDialogTitel">Details</h2>
+           <h2 class="modal-title" >Details</h2>
          </div>
         <div class="modal-body">
-        	<div id="detailsContentID">
+        	<div id="detailsContentID" style="font-size: 16px">
         	<!--Inhalt im Dialog Mitarbeiter-->
 			</div>
         </div>
@@ -235,84 +227,22 @@
     </div>
   </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-
   <script>
     var modalContent = document.getElementById('detailsContentID');
     var panelID = null;
 
     function setModalData(panelID){
-      //panelID = $(id).parents().eq(4).attr("id");
-      if (panelID == 1) { //1 = Produktion
-        modalContent.innerHTML = '<p>Mitarbeiter werden in der Produktion benötigt, um Produkte herzustellen. Sie besitzen das nötige Fachwissen, um die Produkte ohne Komplikationen herzustellen.<p>' + 
+      if (panelID == 1) { //1 = Fertigung
+        modalContent.innerHTML = '<p>Mitarbeiter werden in der Fertigung benötigt, um Produkte herzustellen. Sie besitzen das nötige Fachwissen, um die Produkte ohne Komplikationen herzustellen.<p>' + 
         '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Größere Maschinenkapazitäten</li><li>Geringerer Materialverbrauch</li></div>';
       } else if (panelID == 2) { //2 = Vertrieb
         modalContent.innerHTML = '<p>Mitarbeiter werden im Vertrieb benötigt, um Produkte zu verkaufen. Sie besitzen das nötige Fachwissen, um die Produkte schnell und einfach an den Mann zu bringen.<p>' + 
         '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Bessere Verkaufschancen</li><li>Bessere Kundenbindung</li></div>';
       } else if (panelID == 3){ //3 = Verwaltung
-        modalContent.innerHTML = '<p>Mitarbeiter werden in der Verwaltung benötigt, um den Vertrieb und die Produktion zu verwalten. Sie besitzen das nötige Fachwissen, um ein Unternehmen am Leben zu erhalten.<p>' + 
+        modalContent.innerHTML = '<p>Mitarbeiter werden in der Verwaltung benötigt, um den Vertrieb und die Fertigung zu verwalten. Sie besitzen das nötige Fachwissen, um ein Unternehmen am Leben zu erhalten.<p>' + 
         '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Bessere Preiskalkulation</li><li>Verbesserte Marktforschung</li></div>';
       }
     }
-
-    var employeeID = null;
-    var employeeCountProduktion = 3;
-    var employeeCountVertrieb = 3;
-    var employeeCountVerwaltung = 3;
-
-    function saveEmployeeID(id){
-    	panelID = $(id).parents().eq(4).attr("id");
-    	
-    	if (panelID === "Produktion" && employeeCountProduktion > 1) {
-    		employeeCountProduktion--;
-    		employeeID = $(id).parents().eq(3).attr("id");
-    	} else if (panelID === "Vertrieb" && employeeCountVertrieb > 1) {
-    		employeeCountVertrieb--;
-    		employeeID = $(id).parents().eq(3).attr("id");
-    	} else if (panelID === "Verwaltung" && employeeCountVerwaltung > 1) {
-    		employeeCountVerwaltung--;
-    		employeeID = $(id).parents().eq(3).attr("id");
-    	}
-    }
-
-    function fireEmployee() {
-        document.getElementById(employeeID).style = "display: none";
-    }
-
-    function loadData(){
-      jQuery.ajax({
-        url: "../webapi/v1/demo/unternehmen",
-        type: "GET",
-        dataType: "json",
-        success: function(data, data2){
-          setValues(data.bmarkt.angebote);
-        }
-      });
-    }
-
-    function setValues(data){
-    	console.log(data[0].menge);
-    	console.log(data[0].preis);
-    	console.log("stop");
-    	console.log(data[1].menge);
-    	console.log(data[1].preis); //hier irgendwie Daten richtig zuordnen, aber funktioniert so erstmal
-    	console.log("stop1");
-    	for ( var test in data) {
-    	      mengeImLager = data[test].menge;
-    	      console.log(data[test].menge);
-    	      preisProMenge = data[test].preis;
-    	      console.log(data[test].preis);
-    	  	  document.getElementById('mengeImLagerID').innerHTML = mengeImLager + " ME";
-    	  	  document.getElementById('preisProMengeID').innerHTML = preisProMenge + " GE";
-    	      break;
-		}
-
-    }
-
-  	function rohstoffeVerkaufen(){
-  
-  	}
   </script>
   </body>
 </html>

@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Maschinen</title>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+    <script src="jquery/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -14,13 +17,12 @@
  </head>
  
  <body onload="start()">
-    <script type="text/javascript" >
+    <script>
       $(document).ready(function() {
                 $('#navbar').load('navbar.html');
                 getData();
                 $('#footer').load('footer.html');
-                });
-
+      });
     </script>
     
     <script>
@@ -37,22 +39,26 @@
     function printData(data){
       var cont  = document.getElementById('maschinenContent');
       var s ="";
-      var bilder = ["img/maschineeins.jpg", "img/maschinezwei.jpg", "img/maschinedrei.jpg", "img/maschineeins.jpg", "img/maschinezwei.jpg", "img/maschinedrei.jpg", "img/maschineeins.jpg", "img/maschinezwei.jpg", "img/maschinedrei.jpg"];
-      var index = 0;
-     
-      console.log(data[0].name);
+      var maschinenCount = 0;
+      var bilder = [];
+      bilder["Stuhl"] = "img/maschineeins.jpg";
+      bilder["Tisch"] = "img/maschinezwei.jpg";
+      bilder["Schrank"] = "img/maschinedrei.jpg";
       
       for(var maschine in data){
         s += '<div class="col-sm-6 col-md-4">' + 
             '<div class="thumbnail">' + 
-            '<img src="' + bilder[index] +'" alt="' + data[maschine].name + '">' + 
+            '<img src="' + bilder[data[maschine].p.produktTyp] +'" alt="' + data[maschine].name + '">' + 
             '<div class="caption">' + 
             '<h3>' + data[maschine].name + '</h3>' + 
             '<p>Produziert: <b>' + data[maschine].p.name + '</b></p>' + 
-            '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a class="btn btn-primary" onclick="loadData(' + index + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' + 
+            '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a class="btn btn-primary" onclick="loadData(' + maschinenCount + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' + 
             '</div></div></div>';
 
-            index++;
+            maschinenCount++;
+      }
+      if(maschinenCount == 0){
+    	  s = "<h4 style='padding-left: 18px'>Keine Maschinen im Inventar vorhanden!</h4>";
       }
       cont.innerHTML = s;
     }
@@ -79,60 +85,12 @@
    
     <!-- Fixed footer -->
     <div id="footer">
-  </div>
+    </div>
     
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!--HIER ÄNDERUNG-->
-    <script>
-    /*var machineID = null;
-
-      function saveMachineID(id){
-        machineID = $(id).parents().eq(3).attr("id");
-      }
-
-      function deleteMachine() {
-        document.getElementById(machineID).style = "display: none";
-      }
-
-      function addMachine() {
-        var objectIDs = ["maschineEINS","maschineZWEI", "maschineDREI", "maschineVIER","maschineFÜNF", "maschineSECHS"];
-        for (var i = 0; i < objectIDs.length; i++) {
-          var element = document.getElementById(objectIDs[i]);
-          var style = window.getComputedStyle(element);
-          var display = style.getPropertyValue('display');
-          console.log(display);
-          if (display === "none") {
-            document.getElementById(objectIDs[i]).style ="display: run-in";
-            break;
-          }
-        }
-      }*/
-    </script>
-    <!-- Modal -->
-  <div class="modal fade" id="verkaufenDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-           <h2 class="modal-title" id="verkaufenDialogTitel">Maschine verkaufen</h2>
-         </div>
-         <div class="modal-body">
-           <p>Wollen Sie die gewählte Maschine wirklich verkaufen? Dies kann nicht rückgängig gemacht werden!</p>
-           <p></p>           
-         </div>
-         <div class="modal-footer">
-            <p>
-              <button class="btn btn-primary" data-dismiss="modal" role="button">Abbrechen</button> 
-              <button class="btn btn-danger" data-dismiss="modal" onclick="deleteMachine()" role="button">Verkaufen</button>
-            </p> 
-         </div>
-       </div>
-    </div>
-  </div>
 
 <!--Modal-Details-->
   <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -174,43 +132,42 @@
     	document.getElementById('detailsDialogTitel').innerHTML = "Details zu: " + data[index].name;
    
     	var inhalt = "";
-    	inhalt += '<h4>Für die Produktion werden folgende Materialien benötigt:</h4>' + 
+    	inhalt += '<h4 style="font-size: 20px">Für die Produktion werden folgende Materialien benötigt:</h4>' + 
     	'<ul class="list-group">';
     	
     	if(data[index].matrix.matrix.Holz > 0){
-    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Holz' +
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center font">Holz' +
     		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Holz + '</span></li>';
     	}
     	if(data[index].matrix.matrix.Stoff > 0){
-    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Stoff' +
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center font">Stoff' +
     		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Stoff + '</span></li>';
     	}
     	if(data[index].matrix.matrix.Leder > 0){
-    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Leder' +
-    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.matrix.Leder + '</span></li>';
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center font">Leder' +
+    		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Leder + '</span></li>';
     	}
     	if(data[index].matrix.matrix.Kunststoff > 0){
-    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Kunststoff' +
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center font">Kunststoff' +
     		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Kunststoff + '</span></li>';
     	}
     	if(data[index].matrix.matrix.Edelstahl > 0){
-    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Edelstahl' +
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center font">Edelstahl' +
     		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Edelstahl + '</span></li>';
     	}
     	if(data[index].matrix.matrix.Glas > 0){
-    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center">Glas' +
+    		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center font">Glas' +
     		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Glas + '</span></li>';
     	}
 
     	
-    	inhalt += '</ul><hr><p><b>Eigenschaften:</b></p>';
-    	inhalt += '<table class="table">' + 
+    	inhalt += '</ul><hr><p class="font"><b>Eigenschaften:</b></p>';
+    	inhalt += '<table class="table font">' + 
 		'<tr><td><b>Produziert: </b></td><td>' + data[index].p.name + '</td</tr>' + 
 		'<tr><td><b>Kapazität</b></td><td>' + data[index].kapazitaet + '</td></tr>' + 
 		'</table>';
     	
     	document.getElementById('detailsModalContent').innerHTML = inhalt;
-    	
     	
     }
 </script>
@@ -220,9 +177,9 @@
     		background-color: blue;
     		font-size: 16px;
     	}
+    	.font{
+    		font-size: 16px;
+    	}
     </style>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
