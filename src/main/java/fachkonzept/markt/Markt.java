@@ -2,6 +2,7 @@ package fachkonzept.markt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fachkonzept.Angebot;
 import fachkonzept.Spiel;
@@ -45,7 +46,7 @@ public abstract class Markt {
         }
         Spiel.log(a.getId() + " gekaufet übrig " + a.getMenge());
         kaeufer.kosten(a.getPreis() * menge, ("Kauf von " + a.getMarkteinheit().getClass().getSimpleName()));
-        umsatzFesthalten(a, menge, kaeufer.getSpiel().getRunde(), kaeufer);
+        umsatzFesthalten(a, menge, kaeufer.getSpiel().getRunde(), new Unternehmen("Simulation", new Spiel()));
         // unternehmen bezahlt angebot
 
     }
@@ -86,6 +87,10 @@ public abstract class Markt {
     
     public static List<Umsatz> getUmsatzHistorie() {
         return umsatzHistorie;
+    }
+    
+    public static List<Umsatz> getUmsatzHistorie(Unternehmen u) {
+        return umsatzHistorie.stream().filter(umsatz -> umsatz.getVerkaeufer().equals(u)).collect(Collectors.toList());
     }
 
 

@@ -1,9 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Materialien</title>
+    <title>Darlehen</title>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
-    <script src="jquery/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="jquery/jquery-1.11.0.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -15,15 +19,14 @@
  <body onload="start()">
     <script>
       $(document).ready(function() {
-                $('#navbar').load('navbar.html');
-        	    $('[data-toggle="tooltip"]').tooltip();
-                getData();
-                $('#footer').load('footer.html');
+        $('#navbar').load('navbar.html');
+        $('[data-toggle="tooltip"]').tooltip();
+        getData();
+        $('#footer').load('footer.html');
       });
     </script>
 
     <script>
-    var maxLagerKapazit‰t = 100000;
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
@@ -35,70 +38,9 @@
       });
     }
     function printData(data){
-      var bilder = [];
-      bilder["Holz"] = "img/holz.jpg";
-      bilder["Stoff"] = "img/stoff.jpg";;
-      bilder["Leder"] = "img/leder.jpg";
-      bilder["Kunststoff"] = "img/plastik.jpg";
-      bilder["Edelstahl"] = "img/edelstahl.jpg";
-      bilder["Glas"] = "img/glas.jpg";
-      
-      var index = 6;
-      var maxLagerKapazit‰t = 100000;
+      var index = 0;
       var name = "";
-      var menge = "";
-      var bild = "";
       
-    	  if(data.Holz > 0){
-    		  name = "Holz";
-    		  menge = data.Holz;
-    		  bild = bilder[name];
-    		  printCard(name, menge, bild);
-    		  index--;
-    	  } 
-    	  
-    	  if(data.Stoff > 0){
-    		  name = "Stoff";
-    		  menge = data.Stoff;
-    		  bild = bilder[name];
-    		  printCard(name, menge, bild);
-    		  index--;
-    	  }
-    	  
-    	  if(data.Leder > 0){
-    		  name = "Leder";
-    		  menge = data.Leder;
-    		  bild = bilder[name];
-    		  printCard(name, menge, bild);
-    		  index--;
-    	  }
-    	  
-    	  if(data.Kunststoff > 0){
-    		  name = "Kunststoff";
-    		  menge = data.Kunststoff;
-    		  bild = bilder[name];
-    		  printCard(name, menge, bild);
-    		  index--;
-    	  }
-    	  
-    	  if(data.Edelstahl > 0){
-    		  name = "Edelstahl";
-    		  menge = data.Edelstahl;
-    		  bild = bilder[name];
-    		  printCard(name, menge, bild);
-    		  index--;
-    	  }
-    	  
-    	  if(data.Glas > 0){
-    		  name = "Glas";
-    		  menge = data.Glas;
-    		  bild = bilder[name];
-    		  printCard(name, menge, bild);
-    		  index--;
-    	  }
-      if(index == 6){//keine Materialien vorhanden
-    	  document.getElementById('rohstoffContent').innerHTML = "<h4 style='padding-left: 18px'>Keine Materialien im Inventar vorhanden!</h4>";
-      }
     }
     function printCard(name, menge, bild){
     	var s ="";
@@ -108,14 +50,14 @@
         '<img src="' + bild + '" alt="' + name + '">' + 
         '<div class="caption">' + 
         '<h3>' + name + '</h3>' + 
-        '<p>Verf¸gbare Menge:</p>' + 
+        '<p>Verf√ºgbare Menge:</p>' + 
         '<div class="progress">' + 
-        '<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazit‰t + '" aria-valuenow="' + menge + '" aria-valuemin="0" aria-valuemax="' + maxLagerKapazit‰t + '" style="width:' + (menge * 100)/maxLagerKapazit‰t + '%;">' + Math.round((menge * 100)/maxLagerKapazit‰t) + '%</div>' + 
+        '<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazit√§t + '" aria-valuenow="' + menge + '" aria-valuemin="0" aria-valuemax="' + maxLagerKapazit√§t + '" style="width:' + (menge * 100)/maxLagerKapazit√§t + '%;">' + Math.round((menge * 100)/maxLagerKapazit√§t) + '%</div>' + 
         '</div>' + 
         '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" onclick="loadDataDetails(\x27' + name + '\x27)" data-target="#details" class="btn btn-primary" role="button">Details</a></p>' + 
         '</div></div></div>';
         
-        document.getElementById('rohstoffContent').innerHTML += s;
+        document.getElementById('darlehenContent').innerHTML += s;
     }
     </script>
  
@@ -126,11 +68,11 @@
 	<!-- Page Header -->
 	<div class="container">	
         <div class="page-header">
-            <h1>Materialien</h1>
+            <h1>Darlehen</h1>
         </div>
-        <!--Materialien ‹BERSICHT-->
+        <!--Darlehen √úBERSICHT-->
         	<div class="well">
-        		<div class="row" id="rohstoffContent">
+        		<div class="row" id="darlehenContent">
   					
   				</div>
         	</div>
@@ -162,12 +104,40 @@
          </div>
          <div class="modal-footer">
             <p>
-              <button class="btn btn-primary" data-dismiss="modal" role="button">Schlieﬂen</button>
+              <button class="btn btn-primary" data-dismiss="modal" role="button">Schlie√üen</button>
             </p>  
          </div>
        </div>
     </div>
   </div>
+
+ <!--Modal-Verkaufen-->
+  <div class="modal fade" id="verkaufen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+           <h2 class="modal-title" id="verkaufenDialogTitel">Materialien verkaufen</h2>
+         </div>
+
+         <div class="modal-body">
+
+
+
+			   </div>
+
+        </div>
+
+         <div class="modal-footer">
+            <p>
+              <button class="btn btn-primary" data-dismiss="modal">Schlie√üen</button>
+              <button class="btn btn-danger">Verkaufen</button>
+            </p>  
+         </div>
+       </div>
+    </div>
 
   <script>    
     function loadDataDetails(name){
@@ -183,30 +153,15 @@
 
       function setValuesDetails(data, name){
     	var content = "";
-    	var menge = "";
-    	
-    	if(name == "Holz"){
-    		menge = data.Holz;
-    	}else if(name == "Stoff"){
-    		menge = data.Stoff;
-    	}else if(name == "Leder"){
-    		menge = data.Leder;
-    	}else if(name == "Kunststoff"){
-    		menge = data.Kunststoff;
-    	}else if(name == "Edelstahl"){
-    		menge = data.Edelstahl;
-    	}else if(name == "Glas"){
-    		menge = data.Glas;
-    	}
     	
     	document.getElementById('detailsDialogTitel').innerHTML = "Details zu: " + name;
     	
     	content = '<table class="table">' + 
-		'<tr><td><b>Verf¸gbare Menge an ' + name + ': </b></td><td>' + menge + ' ME</td</tr>' + 
-		'<tr><td><b>Grˆﬂe des Lagers: </b></td><td>' + maxLagerKapazit‰t + ' ME</td</tr>' + 
+		'<tr><td><b>Verf√ºgbare Menge an ' + name + ': </b></td><td>' + menge + ' ME</td</tr>' + 
+		'<tr><td><b>Gr√∂√üe des Lagers: </b></td><td>' + maxLagerKapazit√§t + ' ME</td</tr>' + 
 		'</table>' +
 		'<div class="progress">' + 
-        '<div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazit‰t + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazit‰t + '" style="width:' + (menge * 100)/maxLagerKapazit‰t + '%;">' + Math.round((menge * 100)/maxLagerKapazit‰t) + '%</div>' + 
+        '<div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazit√§t + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazit√§t + '" style="width:' + (menge * 100)/maxLagerKapazit√§t + '%;">' + Math.round((menge * 100)/maxLagerKapazit√§t) + '%</div>' + 
         '</div>';
       	document.getElementById('detailsModalContent').innerHTML = content;
 

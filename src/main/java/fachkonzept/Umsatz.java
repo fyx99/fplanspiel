@@ -3,12 +3,12 @@ package fachkonzept;
 public class Umsatz {
 	
 	private Angebot angebot;
-	private int menge;
-	private int runde;
+	private Integer menge;
+	private Integer runde;
 	private Unternehmen verkaeufer;
 	
 	
-    public Umsatz(Angebot a, int menge, int runde, Unternehmen verkaeufer) {
+    public Umsatz(Angebot a, Integer menge, Integer runde, Unternehmen verkaeufer) {
         this.angebot = a;
         this.menge = menge;
         this.runde = runde;

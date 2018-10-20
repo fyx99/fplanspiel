@@ -51,10 +51,5 @@ public class MarketingmaßnahmeDTO {
 	}
 
 
-	public MarketingmaßnahmeDTO (Marketingmaßnahme m) {
-		this.name = m.getName();
-		this.budget = m.getBudget();
-		this.art = MarketingmaßnahmenArt.valueOf(m.getClass().getSimpleName());	
-		this.id = m.getId();
-	}
+
 }

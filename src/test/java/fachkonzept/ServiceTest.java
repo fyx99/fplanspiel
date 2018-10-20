@@ -100,6 +100,24 @@ class ServiceTest {
     }
     
     @Test
+    void marketingangebote() {
+    	assertEquals("Fernsehwerbung", SpielService.getMarketingAngebote().get(0));
+    }
+    
+    @Test
+    void buchenmarketingmaßnahme() {
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Sponsoring", 9999, "Sponsoring1"));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Fernsehwerbung", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("MessenKampagne", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Plakatwerbung", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("PRKampagne", 9999, ""));
+    	assertNotNull(SpielService.erstelleMarketingmaßnahme("Radiowerbung", 9999, ""));
+    	//assertNull(SpielService.erstelleMarketingmaßnahme("", 1111, ""));
+    	
+    }
+    
+    
+    @Test
     void resultate() {
         //hier mal die rundenergebnisse für 1 spieler, für alle nach der simulation und das endergebnis
 
@@ -109,6 +127,14 @@ class ServiceTest {
         
         //die sollten auf jeden fall auf richtigkeit überprüft werden, solange man nicht nur eine methode aufruft, 
         //dann sollte man einfach die methode testen und hier nur kurz ob das mit den parametern klappt
+    }
+    
+    @Test
+    void spielende() {
+
+    	assertEquals("Test Unternehmen AG 107", SpielService.getSpielende().get(0).getName());
+    	assertEquals("Test Unternehmen AG 108", SpielService.getSpielende().get(1).getName());
+    	assertEquals("Test Unternehmen AG 109", SpielService.getSpielende().get(2).getName());
     }
 
 }

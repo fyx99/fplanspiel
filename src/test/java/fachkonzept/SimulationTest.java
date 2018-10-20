@@ -54,7 +54,7 @@ class SimulationTest {
     
     @Test
     void kreditTilgung() {
-        Verbindlichkeit v1 = new Verbindlichkeit(new Kredit(50000,0.05,7, KreditArt.Mehr_Cash), 40000, 2);
+        Verbindlichkeit v1 = new Verbindlichkeit(new Kredit(50000,0.05,7, KreditArt.Mehr_Cash), 40000.0, 2);
         u1.verbindlichkeitHinzu(v1);
         u1.setKapital(1000000);
         assertEquals(0, u1.getGuv().rundenErgebnis());
@@ -243,6 +243,8 @@ class SimulationTest {
     	Angebot a1 = u1.getAmarkt().getAngebote().get(0);
     	//weitere Tests...
     }
+    
+
    
     
     

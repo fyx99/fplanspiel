@@ -147,22 +147,22 @@
 	              '<table class="borderless" style="width: 75%">' +
 	              '<tr>' +
 	              '<td style="text-align: right;">' +
-	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27A\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="left" title="Standort A">A</button>' +
+	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27A\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="left">A</button>' +
 	              
 	              
 	              
 	              '</td>' +
 	              ' <td style="text-align: left;">' +
 	            
-	              '<button onclick="changeRegion(\x27regionSpieler'+i +'\x27, \x27B\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="right" title="Standort B">B</button>'+
+	              '<button onclick="changeRegion(\x27regionSpieler'+i +'\x27, \x27B\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="right" >B</button>'+
 	              '</td>' +
 	              '</tr>' +
 	              '<tr>' +
 	              '<td style="text-align: right;"> ' +
-	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27C\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="left" title="Standort C">C</button>' + 
+	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27C\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="left">C</button>' + 
 	              '</td>' +
 	              '<td style="text-align: left;">' +
-	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, "\x27D\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="right" title="Standort D">D</button>' +
+	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27D\x27)" class="btn btn-primary blockButton" data-toggle="tooltip" data-placement="right" >D</button>' +
 	              '</td>' +
 	              '</tr>' +
 	              '</table>' +
@@ -261,7 +261,15 @@
     <script>
 	    $(document).ready(function() {
 	    	printMitarbeiter();
-	    	$('[data-toggle="tooltip"]').tooltip();
+	    	
+	    	// $('[data-toggle="tooltip"]').tooltip();
+	    	$('[data-toggle="tooltip"]').tooltip({
+	    	    title: hoverGetData(),
+	    	   // html: true,
+	    	    container: 'body',
+	    	    	
+	    		  
+	    		 });
 	    	
 	    	jQuery.ajax({
         		
@@ -276,7 +284,25 @@
 			    }
 	 		});
 	        });
-    
+	    
+	    
+	    function hoverGetData(){
+   		 console.log("test");
+ 		   $.ajax({
+ 		  /*   url:"../api/spiel/neuesspiel",
+ 		    type: "GET"
+ 			sucess: function() {
+		 			confirm("Unternehmen hinzugefuegt");
+		 			location.reload(true);
+		 			 console.log("Erfolg");
+		 		},
+			    error: function() {
+			        console.log("Fehler");
+			    } */
+	 		});
+ 		   
+ 		   return "Dieser Standort bietet folgende Vorteile:";
+	    }
     
     	var standort = "";
         var anzahlSpieler = 2;

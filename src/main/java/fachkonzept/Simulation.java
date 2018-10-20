@@ -56,11 +56,11 @@ public class Simulation {
 			simuliereKredittilgung(n);
 			simuliereLohnzahlung(n);
 			simuliereMarketingmix(n);
-			simuliereBeschaffungsmarkt(n.getBmarkt(),s );
+			simuliereBeschaffungsmarkt(n.getBmarkt(), s);
 			simuliereFinanzmarkt(n.getFmarkt());
-			simuliereMaschinenmarkt(n.getMmarkt(),s);
+			simuliereMaschinenmarkt(n.getMmarkt(), s);
 			simuliereArbeitsmarkt(n.getAmarkt());
-			simuliereVerwaltungsaufwand(n,s);
+			simuliereVerwaltungsaufwand(n, s);
 
 		}
 		// gemeinsame konkurrenz dinge
@@ -69,8 +69,9 @@ public class Simulation {
 	}
 
 	private static void simuliereVerwaltungsaufwand(Unternehmen n, Spiel s) {
-		n.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG, (int)n.getGuv().rundenErgebnis(s.getRunde() - 1) / 100);
-		
+		n.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG,
+				(int) n.getGuv().rundenErgebnis(s.getRunde() - 1) / 100);
+
 	}
 
 	private static void simuliereKredittilgung(Unternehmen u) {
@@ -290,15 +291,17 @@ public class Simulation {
 		int gesamt = 0;
 		for (MaterialArt a : MaterialArt.values()) {
 			// wv pro produkt verkauft wurde
-			gesamt += Beschaffungsmarkt.umsatzProMaterialArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge()).sum();
+			gesamt += Beschaffungsmarkt.umsatzProMaterialArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge())
+					.sum();
 		}
 		double schnittMenge = gesamt / MaterialArt.values().length;
 		// was ist viel
 		// -> über alle drüber und
 		for (Angebot a : b.getAngebote()) {
-			int artMenge = Beschaffungsmarkt.umsatzProMaterialArt(((Material) a.getMarkteinheit()).getMaterialArt(), s.getRunde())
-					.stream().mapToInt(u -> u.getMenge()).sum();
-			double mengenVerhältnis = (double)(artMenge - schnittMenge) / schnittMenge;
+			int artMenge = Beschaffungsmarkt
+					.umsatzProMaterialArt(((Material) a.getMarkteinheit()).getMaterialArt(), s.getRunde()).stream()
+					.mapToInt(u -> u.getMenge()).sum();
+			double mengenVerhältnis = (double) (artMenge - schnittMenge) / schnittMenge;
 			// bei 50% drüber soll preis 5% steigen
 			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
 			a.setPreis(a.getPreis()
@@ -317,8 +320,9 @@ public class Simulation {
 		// was ist viel
 		// -> über alle drüber und
 		for (Angebot a : b.getAngebote()) {
-			int artMenge = Maschinenmarkt.umsatzProMaschinenArt(((Maschine) a.getMarkteinheit()).getMaschinenArt(), s.getRunde())
-					.stream().mapToInt(u -> u.getMenge()).sum();
+			int artMenge = Maschinenmarkt
+					.umsatzProMaschinenArt(((Maschine) a.getMarkteinheit()).getMaschinenArt(), s.getRunde()).stream()
+					.mapToInt(u -> u.getMenge()).sum();
 			double mengenVerhältnis = (artMenge - schnittMenge) / schnittMenge;
 			// bei 50% drüber soll preis 5% steigen
 			a.setMenge(SimulationsKonstanten.MASCHINEN_MARKT_MENGE);
@@ -344,7 +348,7 @@ public class Simulation {
 	}
 
 	private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
-		double standortfaktor_material = 1;//n.getStandort().getFaktor_materialkosten();
+		double standortfaktor_material = 1;// n.getStandort().getFaktor_materialkosten();
 		Material holz = new Material(MaterialArt.Holz);
 		Material stoff = new Material(MaterialArt.Stoff);
 		Material leder = new Material(MaterialArt.Leder);
@@ -377,7 +381,7 @@ public class Simulation {
 	}
 
 	private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
-		double standortfaktor_mitarbeiterkosten = 1;//n.getStandort().getFaktor_mitarbeiterkosten();
+		double standortfaktor_mitarbeiterkosten = 1;// n.getStandort().getFaktor_mitarbeiterkosten();
 		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
 		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 400, 60000, MitarbeiterFachgebiet.MASCHINE); // bsp weniger
 																										// arbeitszeit
@@ -386,13 +390,14 @@ public class Simulation {
 		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 250, 120000, MitarbeiterFachgebiet.VERWALTUNG);
 
 		Arbeitsmarkt am = new Arbeitsmarkt();
-		
-		am.anbieten(new Angebot(ma1, 30, 20 * standortfaktor_mitarbeiterkosten)); // ist der preis hier nötig? oder																			// einfach 0
+
+		am.anbieten(new Angebot(ma1, 30, 20 * standortfaktor_mitarbeiterkosten)); // ist der preis hier nötig? oder //
+																					// einfach 0
 		am.anbieten(new Angebot(ma2, 30, 20 * standortfaktor_mitarbeiterkosten));
 		am.anbieten(new Angebot(ma3, 30, 20 * standortfaktor_mitarbeiterkosten));
 		am.anbieten(new Angebot(ma4, 30, 20 * standortfaktor_mitarbeiterkosten));
 		am.anbieten(new Angebot(ma5, 30, 20 * standortfaktor_mitarbeiterkosten));
-		
+
 		return am;
 	}
 
@@ -475,15 +480,24 @@ public class Simulation {
 
 		// Maschinen auf Maschinenmarkt anbieten
 		Maschinenmarkt b = new Maschinenmarkt();
-		b.anbieten(new Angebot(m1, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m1.getMaschinenArt())));
-		b.anbieten(new Angebot(m2, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m2.getMaschinenArt())));
-		b.anbieten(new Angebot(m3, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m3.getMaschinenArt())));
-		b.anbieten(new Angebot(m4, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m4.getMaschinenArt())));
-		b.anbieten(new Angebot(m5, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m5.getMaschinenArt())));
-		b.anbieten(new Angebot(m6, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m6.getMaschinenArt())));
-		b.anbieten(new Angebot(m7, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m7.getMaschinenArt())));
-		b.anbieten(new Angebot(m8, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m8.getMaschinenArt())));
-		b.anbieten(new Angebot(m9, SimulationsKonstanten.MASCHINEN_MARKT_MENGE, SimulationsKonstanten.getMaschinenPreise(m9.getMaschinenArt())));
+		b.anbieten(new Angebot(m1, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m1.getMaschinenArt())));
+		b.anbieten(new Angebot(m2, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m2.getMaschinenArt())));
+		b.anbieten(new Angebot(m3, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m3.getMaschinenArt())));
+		b.anbieten(new Angebot(m4, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m4.getMaschinenArt())));
+		b.anbieten(new Angebot(m5, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m5.getMaschinenArt())));
+		b.anbieten(new Angebot(m6, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m6.getMaschinenArt())));
+		b.anbieten(new Angebot(m7, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m7.getMaschinenArt())));
+		b.anbieten(new Angebot(m8, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m8.getMaschinenArt())));
+		b.anbieten(new Angebot(m9, SimulationsKonstanten.MASCHINEN_MARKT_MENGE,
+				SimulationsKonstanten.getMaschinenPreise(m9.getMaschinenArt())));
 
 		return b;
 	}

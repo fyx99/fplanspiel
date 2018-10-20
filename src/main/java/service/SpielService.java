@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.DefaultValue;
@@ -16,8 +17,11 @@ import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
 import dto.ProdukteGesamtDTO;
 import dto.RundenResultatDTO;
+import dto.SpielDTO;
 import dto.UnternehmenDTO;
 import dto.ZwischenstandDTO;
+import dto.mapper.MarktMapper;
+import dto.mapper.UnternehmenMapper;
 import fachkonzept.Angebot;
 import fachkonzept.Arbeitskraft;
 import fachkonzept.Kredit;
@@ -31,7 +35,6 @@ import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
 import fachkonzept.marketing.Fernsehwerbung;
 import fachkonzept.marketing.Marketingmaßnahme;
-import fachkonzept.marketing.Marketingmix;
 import fachkonzept.marketing.MessenKampagne;
 import fachkonzept.marketing.PRKampagne;
 import fachkonzept.marketing.Plakatwerbung;
@@ -43,7 +46,7 @@ import fachkonzept.util.MarketingmaßnahmenArt;
 @PermitAll
 @Path("spiel")
 public class SpielService {
-//
+	//
 	@DefaultValue("0")
 	@QueryParam("spielId")
 	private int spielId;
@@ -94,6 +97,13 @@ public class SpielService {
 			s.rundenStart();
 		}
 	}
+	
+	@GET
+	@Path("spiel")
+	@Produces(MediaType.TEXT_PLAIN) // Application_Json
+	public static SpielDTO getSpielDTO() {
+		return new SpielDTO(s);
+	}
 
 	@GET
 	@Path("zugbeendet")
@@ -111,7 +121,7 @@ public class SpielService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static UnternehmenDTO getUnternehmen() {
 		if (s != null && s.getAktuellesUnternehmen() != null)
-			return Unternehmen.getDTO(s.getAktuellesUnternehmen());
+			return UnternehmenMapper.toDTO(s.getAktuellesUnternehmen());
 		return null;
 
 	}
@@ -120,41 +130,41 @@ public class SpielService {
 	@Path("bmarkt") // Beschaffungsmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getBMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getBmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getBmarkt());
 	}
 
 	@GET
-	@Path("vmarkt") // Vertriebs-/Absatzmarkt
+	@Path("vmarkt") // Absatzmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getVMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getVmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getVmarkt());
 	}
 
 	@GET
 	@Path("fmarkt") // Finanzmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getFMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getFmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getFmarkt());
 	}
 
 	@GET
 	@Path("amarkt") // Arbeitsmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getAMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getAmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getAmarkt());
 	}
 
 	@GET
 	@Path("mmarkt") // Maschinenmarkt
 	@Produces(MediaType.APPLICATION_JSON)
 	public static MarktDTO getMMarkt() {
-		return new MarktDTO(s.getAktuellesUnternehmen().getMmarkt().getAngebote());
+		return MarktMapper.toDTO(s.getAktuellesUnternehmen().getMmarkt());
 	}
 
 	@GET
 	@Path("angebotkaufen")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static boolean kaufeAngebot(@DefaultValue("0") @QueryParam("menge") int menge,
+	public static boolean kaufeAngebot(@DefaultValue("-1") @QueryParam("menge") int menge,
 			@QueryParam("angebotsid") int id) {
 		// erstmal bezahlen
 
@@ -165,7 +175,7 @@ public class SpielService {
 		int tatsaechlichemenge = menge;
 		if (angebot.getMenge() < menge)
 			tatsaechlichemenge = angebot.getMenge(); // maximal was angeboten wird
-			
+
 		if (angebot.getMarkteinheit() instanceof Maschine) {
 			s.getAktuellesUnternehmen().getMmarkt().kaufen(angebot, tatsaechlichemenge, s.getAktuellesUnternehmen());
 			return true;
@@ -182,7 +192,8 @@ public class SpielService {
 			return false;
 		}
 
-		//Spiel.log("gekauft " + tatsaechlichemenge + " von " + angebot.getMarkteinheit().getName());
+		// Spiel.log("gekauft " + tatsaechlichemenge + " von " +
+		// angebot.getMarkteinheit().getName());
 
 	}
 
@@ -262,7 +273,7 @@ public class SpielService {
 	@Path("umsatzhistorievmarkt")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Umsatz> getUmsatzHistorie() {
-		return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie();
+		return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie(s.getAktuellesUnternehmen());
 	}
 
 	@GET
@@ -328,7 +339,7 @@ public class SpielService {
 	@Path("rundenresultat")
 	@Produces(MediaType.APPLICATION_JSON)
 	// Übersicht für das eigene Unternehmen nach der Runde
-	public static Object getRundenResultat() {
+	public static RundenResultatDTO getRundenResultat() {
 		if (s == null)
 			return null;
 		return new RundenResultatDTO(s.getAktuellesUnternehmen());
@@ -337,9 +348,8 @@ public class SpielService {
 	@GET
 	@Path("spielende")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<Unternehmen> getSpielende() {
-		// @Jonas Breuer - bisher eine rangliste nach gewinn
-		return s.getRangliste();
+	public static List<UnternehmenDTO> getSpielende() {
+		return s.getRangliste().stream().map(UnternehmenMapper::toDTO).collect(Collectors.toList());
 	}
 
 	@GET
@@ -357,4 +367,7 @@ public class SpielService {
 	public static Spiel getSpiel() {
 		return s;
 	}
+	
+	
+
 }

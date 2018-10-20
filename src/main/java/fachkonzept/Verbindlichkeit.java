@@ -3,7 +3,7 @@ package fachkonzept;
 public class Verbindlichkeit {
     
     
-    public Verbindlichkeit(Kredit kredit, double verbleibendeSumme, Integer aktuelleLaufzeit) {
+    public Verbindlichkeit(Kredit kredit, Double verbleibendeSumme, Integer aktuelleLaufzeit) {
         this.verbleibendeSumme = verbleibendeSumme;
         this.aktuelleLaufzeit = aktuelleLaufzeit;
         this.kredit = kredit;
@@ -19,7 +19,7 @@ public class Verbindlichkeit {
      * 
      * keine markteinheit -> wird bei kreditaufnahme verwendet
      * */
-    private double verbleibendeSumme;
+    private Double verbleibendeSumme;
     private Integer aktuelleLaufzeit;   //wieviele quartale vergangen sind
     private Kredit kredit;
     

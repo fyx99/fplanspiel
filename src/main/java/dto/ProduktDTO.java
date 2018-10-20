@@ -11,6 +11,7 @@ public class ProduktDTO {
 	
 	private Produkt produkt;
 	private int menge;
+	
 	public Produkt getP() {
 		return produkt;
 	}
