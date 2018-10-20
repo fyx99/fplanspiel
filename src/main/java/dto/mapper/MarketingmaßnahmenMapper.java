@@ -1,6 +1,11 @@
 package dto.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import dto.MarketingmaßnahmeDTO;
+import dto.UnternehmenDTO;
+import fachkonzept.Unternehmen;
 import fachkonzept.marketing.Marketingmaßnahme;
 import fachkonzept.util.MarketingmaßnahmenArt;
 
@@ -14,5 +19,9 @@ public class MarketingmaßnahmenMapper {
 		mm.setId(m.getId());
 		return mm;
 	}
+	
+    public static List<MarketingmaßnahmeDTO> toDTO(List<Marketingmaßnahme> us){
+    	return us.stream().map(MarketingmaßnahmenMapper::toDTO).collect(Collectors.toList());
+    }
 
 }
