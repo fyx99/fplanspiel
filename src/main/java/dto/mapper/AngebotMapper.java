@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package dto.mapper;
 
 import java.util.List;
@@ -48,4 +48,4 @@ public class AngebotMapper {
 	}
 
 }
->>>>>>> da8ad11c1a25afc2f38818fef0a655ed8eb1bb06
+
