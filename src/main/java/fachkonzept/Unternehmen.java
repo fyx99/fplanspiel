@@ -162,7 +162,7 @@ public class Unternehmen {
 	}
 
     public void produktEntfernen(Produkt m, Integer menge) {
-        if (this.produkte.containsKey(m.getName()) && this.produkte.get(m.getName()) - menge > 0) {
+        if (this.produkte.containsKey(m) && this.produkte.get(m) - menge > 0) {
             this.produkte.replace(m, this.produkte.get(m) - menge);
         }
         else if (this.produkte.containsKey(m) && this.produkte.get(m) - menge <= 0) {
