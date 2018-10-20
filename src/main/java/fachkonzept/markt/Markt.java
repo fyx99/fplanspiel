@@ -46,7 +46,7 @@ public abstract class Markt {
         }
         Spiel.log(a.getId() + " gekaufet übrig " + a.getMenge());
         kaeufer.kosten(a.getPreis() * menge, ("Kauf von " + a.getMarkteinheit().getClass().getSimpleName()));
-        umsatzFesthalten(a, menge, kaeufer.getSpiel().getRunde(), kaeufer);
+        umsatzFesthalten(a, menge, kaeufer.getSpiel().getRunde(), null);
         // unternehmen bezahlt angebot
 
     }
