@@ -8,8 +8,7 @@ public class Produkt extends Markteinheit{
 	
 	private ProduktArt produktArt;
 	private ProduktTyp produktTyp;
-	private double startPreis = 0;
-	private double preisEntwicklung = 1;	//langfristige veränderung übers spiel
+
 	
 	public Produkt(ProduktArt name, ProduktTyp pt) {		
 		super();
@@ -27,21 +26,5 @@ public class Produkt extends Markteinheit{
 		return produktTyp;
 	}
 
-	public double getStartPreis() {
-		return startPreis;
-	}
-
-	public void setStartPreis(double startPreis) {
-		this.startPreis = startPreis;
-	}
-	
-
-	public double getPreisEntwicklung() {
-        return preisEntwicklung;
-    }
-
-    public void setPreisEntwicklung(double preisEntwicklung) {
-        this.preisEntwicklung = preisEntwicklung;
-    }
 
 }

@@ -273,7 +273,7 @@ public class SpielService {
 	@Path("umsatzhistorievmarkt")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<Umsatz> getUmsatzHistorie() {
-		return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie();
+		return s.getAktuellesUnternehmen().getVmarkt().getUmsatzHistorie(s.getAktuellesUnternehmen());
 	}
 
 	@GET

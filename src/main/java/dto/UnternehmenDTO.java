@@ -1,9 +1,9 @@
 package dto;
 
+import java.util.List;
 import java.util.Map;
 
 import fachkonzept.Produkt;
-import fachkonzept.marketing.Marketingmix;
 
 public class UnternehmenDTO {
 
@@ -18,7 +18,7 @@ public class UnternehmenDTO {
 	private double kapital = 0;
 	private Map<String, Integer> materialien;
 	private MaschinenGesamtDTO maschinen;
-	private Map<Produkt, Integer> produkte;
+	private List<ProduktDTO> produkte;
 	private MitarbeiterGesamtDTO mitarbeiter;
 
 	public String getName() {
@@ -121,12 +121,14 @@ public class UnternehmenDTO {
 		this.materialien = materialien;
 	}
 
-	public Map<Produkt, Integer> getProdukte() {
+	public List<ProduktDTO> getProdukte() {
 		return produkte;
 	}
 
-	public void setProdukte(Map<Produkt, Integer> produkte) {
+	public void setProdukte(List<ProduktDTO> produkte) {
 		this.produkte = produkte;
 	}
+
+
 
 }

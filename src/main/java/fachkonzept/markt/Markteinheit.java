@@ -7,9 +7,9 @@ public abstract class Markteinheit {
 
 	//DAch für MAteroial, MAschine und Produkt
 
-	private int id;
+	private Integer id;
 	private String name;
-	protected static int nummer = 0;
+	protected static Integer nummer = 0;
 	
 	public Markteinheit() {
 

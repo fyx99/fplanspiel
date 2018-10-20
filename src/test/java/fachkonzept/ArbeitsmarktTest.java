@@ -84,8 +84,8 @@ public class ArbeitsmarktTest {
         fmarkt.kaufen(a3, 10, new Unternehmen("a1", new Spiel()));
         
         assertEquals(4 + size, Arbeitsmarkt.getUmsatzHistorie().size());
-    	assertEquals(1 + size2, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
-    	assertEquals(2 + size3, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
+    	assertEquals(2 + size2, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
+    	assertEquals(3 + size3, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
 	
 	}	
 }

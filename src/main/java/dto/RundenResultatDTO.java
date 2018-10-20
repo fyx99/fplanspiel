@@ -1,9 +1,11 @@
 package dto;
 
-
 import java.util.List;
 import java.util.Map;
 
+import dto.mapper.MarketingmaßnahmenMapper;
+import dto.mapper.ProduktMapper;
+import dto.mapper.UmsatzMapper;
 import fachkonzept.GuV;
 import fachkonzept.Produkt;
 import fachkonzept.Umsatz;
@@ -13,34 +15,38 @@ import fachkonzept.marketing.Marketingmaßnahme;
 import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class RundenResultatDTO {
-    
-    private String name;    //name des unternehmens
-    private Double kapital; //wv geld
-    private GuV guv;		//Gewinn
-    private Integer mitarbeiterAnzahl;
-    //offene (nicht benötigte) Mitarbeiterkapazität in Minuten
-    private Integer mitarbeiterKapazitMaschine; 
-    private Integer mitarbeiterKapazitVertieb;
-    private Integer mitarbeiterKapazitVerwaltung;
-    private Map<Produkt, Integer> produkte;
-    private List<Verbindlichkeit> verbindlichkeiten;
-    private List<Umsatz> umsatzHistorie;
-    private List<Marketingmaßnahme> marketingMaßnahmen;
-    
-    public RundenResultatDTO(Unternehmen u) {
-        
-        this.name = u.getName();
-        this.kapital = u.getKapital();
-        this.guv = u.getGuv();
-        this.mitarbeiterAnzahl = u.getMitarbeiter().size();
-        this.mitarbeiterKapazitMaschine = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE);
-        this.mitarbeiterKapazitVertieb = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB);
-        this.mitarbeiterKapazitVerwaltung = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG);
-        this.produkte = u.getProdukte();
-        this.verbindlichkeiten = u.getVerbindlichkeiten();
-        this.umsatzHistorie = u.getVmarkt().getUmsatzHistorie();
-        this.marketingMaßnahmen = u.getMarketingmix().getMarketing();
-    }
+
+	private String name; // name des unternehmens
+	private Double kapital; // wv geld
+	private GuV guv; // Gewinn
+	private Integer mitarbeiterAnzahl;
+	// offene (nicht benötigte) Mitarbeiterkapazität in Minuten
+	private Integer mitarbeiterKapazitMaschine;
+	private Integer mitarbeiterKapazitVertieb;
+	private Integer mitarbeiterKapazitVerwaltung;
+
+	private List<ProduktDTO> produkte;
+	
+	private List<Verbindlichkeit> verbindlichkeiten;
+	private List<UmsatzDTO> umsatzHistorie;
+
+	private List<MarketingmaßnahmeDTO> marketingMaßnahmen;
+
+	public RundenResultatDTO(Unternehmen u) {
+
+		this.name = u.getName();
+		this.kapital = u.getKapital();
+		this.guv = u.getGuv();
+		this.mitarbeiterAnzahl = u.getMitarbeiter().size();
+		this.mitarbeiterKapazitMaschine = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE);
+		this.mitarbeiterKapazitVertieb = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB);
+		this.mitarbeiterKapazitVerwaltung = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG);
+		this.produkte = ProduktMapper.toDTO(u.getProdukte());
+		this.verbindlichkeiten = u.getVerbindlichkeiten();
+		this.umsatzHistorie = UmsatzMapper.toDTO(u.getVmarkt().getUmsatzHistorie(u));
+
+		this.marketingMaßnahmen = MarketingmaßnahmenMapper.toDTO(u.getMarketingmix().getMarketing());
+	}
 
 	public String getName() {
 		return name;
@@ -98,11 +104,11 @@ public class RundenResultatDTO {
 		this.mitarbeiterKapazitVerwaltung = mitarbeiterKapazitVerwaltung;
 	}
 
-	public Map<Produkt, Integer> getProdukte() {
+	public List<ProduktDTO> getProdukte() {
 		return produkte;
 	}
 
-	public void setProdukte(Map<Produkt, Integer> produkte) {
+	public void setProdukte(List<ProduktDTO> produkte) {
 		this.produkte = produkte;
 	}
 
@@ -114,32 +120,28 @@ public class RundenResultatDTO {
 		this.verbindlichkeiten = verbindlichkeiten;
 	}
 
-	public List<Umsatz> getUmsatzHistorie() {
+	public List<UmsatzDTO> getUmsatzHistorie() {
 		return umsatzHistorie;
 	}
 
-	public void setUmsatzHistorie(List<Umsatz> umsatzHistorie) {
+	public void setUmsatzHistorie(List<UmsatzDTO> umsatzHistorie) {
 		this.umsatzHistorie = umsatzHistorie;
 	}
 
-	public List<Marketingmaßnahme> getMarketingMaßnahmen() {
+	public List<MarketingmaßnahmeDTO> getMarketingMaßnahmen() {
 		return marketingMaßnahmen;
 	}
 
-	public void setMarketingMaßnahmen(List<Marketingmaßnahme> marketingMaßnahmen) {
+	public void setMarketingMaßnahmen(List<MarketingmaßnahmeDTO> marketingMaßnahmen) {
 		this.marketingMaßnahmen = marketingMaßnahmen;
 	}
-    
-    //etwas zum absatzmarkt
-    
-    //evt sowas wie 7 neue angebote auf dem markt für material ...
-    
-    //das wurde mit der menge verkauft für den und den preis
-    
-    //kostenaufstellung
-    
-    
 
+	// etwas zum absatzmarkt
 
+	// evt sowas wie 7 neue angebote auf dem markt für material ...
+
+	// das wurde mit der menge verkauft für den und den preis
+
+	// kostenaufstellung
 
 }

@@ -16,20 +16,4 @@ public class ProduktTest {
 		assertEquals(ProduktTyp.Tisch, m.getProduktTyp());
 	}
 	
-	@Test
-	void startPreis() {
-		Produkt m = new Produkt(ProduktArt.Holztisch, ProduktTyp.Tisch);
-		m.getStartPreis();
-		assertEquals(0, m.getStartPreis());
-		
-		m.setStartPreis(15);
-		assertEquals(15,m.getStartPreis());
-	}
-	
-	@Test
-	void PreisEntwicklung() {
-		Produkt m = new Produkt(ProduktArt.Holztisch, ProduktTyp.Tisch);
-		m.setPreisEntwicklung(15);
-		assertEquals(15, m.getPreisEntwicklung());
-	}
 }
