@@ -353,7 +353,7 @@
         function loadNextPage(){
              window.setTimeout(function(){
             window.location.href = "einkauf.html";
-            }, 5000); //Test: 5sec 
+            }, 1000); //Test: 1sec 
         }
         
 
@@ -429,24 +429,17 @@
         
         function callAjax(firma, standort) {
         	jQuery.ajax({
-        		
-       		 
 		 		url: "../api/spiel/neuesunternehmen?name=" + firma + "&standort=" + standort,
 		 		type: "GET",
 		 		sucess: function() {
 		 			confirm("Unternehmen hinzugefuegt");
 		 			location.reload(true);
-		 			 console.log("Erfolg");
-		 			
-		 			 console.log("standort2" + standort);
 		 		},
 			    error: function() {
 			        console.log("Fehler");
 			    }
-	 		});
-    	
+	 		});   	
         }
-
     </script>
 
 

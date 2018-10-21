@@ -27,9 +27,9 @@
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
-					var cont  = document.getElementById('exampleContent');
+					var cont  = document.getElementById('kapitalContent');
 					var s =data.kapital;
-					cont.innerHTML += s;
+					cont.innerHTML += s + " €";
 					console.log(data.kapital);
 					//console.log(data.bmarkt.angebote);
 					//console.log(data.mmarkt.angebote);
@@ -107,7 +107,7 @@
 
 						window.setTimeout(function(){
 			            window.location.href = "einkauf.html";
-			            }, 5000); //Test: 5sec 
+			            }, 1000); //Test: 1sec 
 					} else {
 						window.location.href = "ergebnis_ende.html";
 					}
@@ -285,7 +285,7 @@
 						<ul class="dropdown-menu">
 						
 							<li><a id="runde">Runde: </a></li>
-							<li><a href="#budget" id="exampleContent">Kapital: </a></li>
+							<li><a href="#budget" id="kapitalContent">Kapital: </a></li>
 
 							<li class="divider"></li>		
 							<li><a class="btn float-right" onclick="beendeZug()" data-toggle="modal">Zug beenden</a> </li>
