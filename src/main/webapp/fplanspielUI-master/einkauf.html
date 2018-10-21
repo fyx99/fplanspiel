@@ -29,11 +29,6 @@
  			var datenmMarkt;
  			var datenfMarkt;
  			var datenaMarkt;
- 			
- 	 		var mengeMaterial;
- 	 		var mengeMaschine;
- 			var mengeKredit;
- 			var mengeMitarbeiter;
  	 		
  	 		var maschinenid;
  	 		var materialid;
@@ -76,9 +71,9 @@
 	 						printMitarbeiter(datenaMarkt);
 	 					}
 	 				});
-	 				
-	 				
  				}
+ 				
+ 			// Alle Bilder der Materialien
  			var imgMat = {};
  			imgMat[ "Holz" ] = "img/holz.jpg";
  			imgMat[ "Stoff" ] = "img/stoff.jpg";
@@ -87,7 +82,24 @@
  			imgMat[ "Kunststoff" ] = "img/plastik.jpg";
  			imgMat[ "Edelstahl" ] = "img/edelstahl.jpg";
  			
+ 			// Alle Bilder der Maschinen
+ 			var imgMas = {};
+ 			imgMas[ "Holzstuhlmaschine" ] = "img/maschineeins.jpg";
+ 			imgMas[ "Stoffstuhlmaschine" ] = "img/maschineeins.jpg";
+ 			imgMas[ "Lederstuhlmaschine" ] = "img/maschineeins.jpg";
  			
+ 			imgMas[ "Holztischmaschine" ] = "img/maschinezwei.jpg";
+ 			imgMas[ "Glastischmaschine" ] = "img/maschinezwei.jpg";
+ 			imgMas[ "Kunststofftischmaschine" ] = "img/maschinezwei.jpg";
+ 			
+ 			imgMas[ "Holzschrankmaschine" ] = "img/maschinedrei.jpg";
+ 			imgMas[ "Edelstahlschrankmaschine" ] = "img/maschinedrei.jpg";
+ 			imgMas[ "Glasschrankmaschine" ] = "img/maschinedrei.jpg";
+ 			
+ 			
+ 			/* 
+ 			 * function printMaterial()
+ 			 * */
  			function printMaterial(data){
  				var cont  = document.getElementById('contentMaterial');
  				var s ="";
@@ -99,9 +111,6 @@
  					//var outputid = "demo"+materialid;
  					var value = imgMat[ data[angebot].markteinheit.name];
 		 			
-		 				console.log(value);
-		 			
- 					
  					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
  							'<img src="' + value +'" alt="' + data[angebot].markteinheit.name + '">' + 
  							'<div class="caption">'+
@@ -146,19 +155,10 @@
  				cont.innerHTML = s;
  			}
  			
- 			var imgMas = {};
- 			imgMas[ "Holzstuhlmaschine" ] = "img/maschineeins.jpg";
- 			imgMas[ "Stoffstuhlmaschine" ] = "img/maschineeins.jpg";
- 			imgMas[ "Lederstuhlmaschine" ] = "img/maschineeins.jpg";
  			
- 			imgMas[ "Holztischmaschine" ] = "img/maschinezwei.jpg";
- 			imgMas[ "Glastischmaschine" ] = "img/maschinezwei.jpg";
- 			imgMas[ "Kunststofftischmaschine" ] = "img/maschinezwei.jpg";
- 			
- 			imgMas[ "Holzschrankmaschine" ] = "img/maschinedrei.jpg";
- 			imgMas[ "Edelstahlschrankmaschine" ] = "img/maschinedrei.jpg";
- 			imgMas[ "Glasschrankmaschine" ] = "img/maschinedrei.jpg";
- 			
+ 			/* 
+ 			 * function printMaschinen()
+ 			 * */
  			function printMaschinen(data){
  				
  				var cont  = document.getElementById('contentMaschine');
@@ -225,12 +225,13 @@
  			}
  			
 
- 			
+ 			/* 
+ 			 * function printKredite()
+ 			 * */
  			function printKredite(data){
  				
  				var cont  = document.getElementById('contentKredite');
  				var s ="";
- 				
  			    
  				for(var angebot in data){
  					
@@ -296,12 +297,14 @@
  								//'</div>' +
  							'</div>' + 
  							'</div></div></div>';
- 							
- 							
  				}
  				cont.innerHTML = s;
  			}
  			
+ 			
+ 			/* 
+ 			 * function printMitarbeiter()
+ 			 * */
  			function printMitarbeiter(data){
  				var cont  = document.getElementById('contentMitarbeiter');
  				var s ="";
@@ -348,6 +351,7 @@
 							'</div>'+
 							'<div class="col-sm-6">'+
 							'<p>'+ data[angebot].markteinheit.lohnkosten+'</p>'+
+							'<br>'+
 							'</div>'+
 							
 							'<div class="col-sm-3">'+
@@ -355,7 +359,7 @@
 								'<br>'+
 							'</div>'+
 							'<div class="col-sm-3">'+
-								'<p>Stück</p>'+
+								'<p>Arbeiter</p>'+
 								'<br>'+
 							'</div>'+
 							'<div class="col-sm-4">'+
@@ -369,31 +373,29 @@
 				}
 				cont.innerHTML = s;
  			}
+
+
  			
- 		// Bei Klick auf Button "Kaufen"
+ 			/* 
+ 			 * function kaufeModal()
+ 			 * */
  			function kaufeModal(id, angebot, markt) {
  			
- 			// Wert des Input-Feldes (Menge, die produziert werden soll)
+ 				// Wert des Input-Feldes auslesen(Menge, die gekauft werden soll)
  				var iV = document.getElementById("inputEinkauf"+id).value;
  			
+ 				//Entscheidung, auf welchem Beschaffungsmarkt wir uns befinden
  				if(markt == 1) {
  					markt = datenbMarkt;
- 					mengeMaterial = iV;
  				}
  				if(markt == 2) {
- 					
  					markt = datenmMarkt;
- 					mengeMaschine = iV;
  				}
  				if(markt == 3) {
- 					
  					markt = datenfMarkt;
- 					mengeKredit = iV;
  				} 
 				if(markt == 4) {
- 					
  					markt = datenaMarkt;
- 					mengeMitarbeiter = iV;
  				} 
  				
  				var text;
@@ -423,9 +425,8 @@
  				
  				var angebotsid = markt[angebot].id;
  				
- 					s += 
- 						'<div class="col-sm-12">'+
-					'<h3>Kauf von ' +  markt[angebot].markteinheit.name +':</h3><div><br></div>'+
+ 				s += '<div class="col-sm-12">'+
+						'<h3>Kauf von ' +  markt[angebot].markteinheit.name +':</h3><div><br></div>'+
 					'</div>'+
 					'<div class="col-sm-12">'+
 						'<h4>Menge: '+ iV+' Stück</h4>'+
@@ -442,10 +443,12 @@
 					'</div>';
  			
  					cont.innerHTML = s;
- 					
- 					
  			}
  		
+ 			
+ 			/* 
+ 			 * function kaufe()
+ 			 * */
  			function kaufe(menge, id){
  				jQuery.ajax({
  			 		url: "../api/spiel/angebotkaufen?menge=" + menge + "&angebotsid=" + id,

@@ -25,7 +25,10 @@
  			
  			window.onload = getDataVerkauf();
  			
+ 			var datenvMarkt;
+ 			
  			function getDataVerkauf(){
+ 				//Schnittstelle: Alle Produzierten Produkte
  				jQuery.ajax({
  					url: "../api/spiel/produkte",
  					type: "GET",
@@ -36,31 +39,45 @@
  					}
  				});
  				
+ 				//Schnittstelle: Alle Angebote, die der Nutzer erstellt hat
  				jQuery.ajax({
  					url: "../api/spiel/vmarkt",
  					type: "GET",
  					dataType: "json",
  					success: function(data, data2){
+ 						datenvMarkt = data;
  						printAngebote(data.angebote);
- 						
+ 					}
+ 				});
+ 			
+ 				//Schnittstelle: Alle Maschinen und Mitarbeiter, die der Nutzer gekauft hat
+ 				jQuery.ajax({
+ 					url: "../api/spiel/unternehmen",
+ 					type: "GET",
+ 					dataType: "json",
+ 					success: function(data, data2){
+ 						printMaschinen(data.maschinen.maschinen);
+ 						printMitarbeiter(data.mitarbeiter.arbeiter);
  					}
  				});
  			}
  			
  			 			
- 			//Neues Objekt Dictionary
+ 			//Neues Objekt Dictionary (Speichert später alle produzierten Produkte)
  			var dict = {};
- 			var INDEX = 0;
+ 			var mengeProdukte = {};
  			
  			
+ 			/* 
+ 			 * function printBestandP()
+ 			 * */
  			function printBestandP(data){
  				var cont  = document.getElementById('contentBestandP');
  				var contSel = document.getElementById('contentSelect');
  				var s1 ="";
  				var s2 ="";
+ 				
  				for(var produkt in data){
- 					//name = data[produkt].p.name;
- 					vorhandeneMenge = data[produkt].menge;
  					s1 += 	'<li class="list-group-item">'+ data[produkt].p.name+
  								'<span class="badge">'+
  								 data[produkt].menge+
@@ -69,29 +86,31 @@
  							
  					s2 += '<option>'+data[produkt].p.name+'</option>'
  					
+ 					// Speichere in das Dictionary den Name des Produktes als Key und die Id des Produktes als Wert
  					dict[ data[produkt].p.name ] = data[produkt].p.id;
- 					
- 					
+ 					mengeProdukte[ data[produkt].p.name ] = data[produkt].menge;
  				}
+ 				
  				cont.innerHTML = s1;
  				contSel.innerHTML = s2;
  				
- 				for(var key in dict) {
-		 				var value = dict[key];
-		 				
-		 				console.log(value + " Eintrag in das Dict"+ INDEX);
-		 				INDEX ++;
-		 			}
-					INDEX=0;
- 				
  			}
  			
+ 			var alleAngebote = {};
+ 			
+ 			/* 
+ 			 * function printAngebote()
+ 			 * */
  			function printAngebote(data) {
  				var cont = document.getElementById('contentAngebote');
  				var s ="";
  				var angebotsid;
  				for(var angebot in data){
  					angebotsid = data[angebot].id;
+ 					
+ 					//Speichere alle Angebote mit Key Produktname und Wert Anzahl
+ 					alleAngebote[data[angebot].markteinheit.name] = data[angebot].menge;
+ 					
  					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
 						
 						'<div class="caption">'+
@@ -117,20 +136,122 @@
 							'</div>'+
 							'<div class="col-sm-3">'+
 								'<p>€</p>'+
-								
 							'</div>'+
+							
 							'<div class="col-sm-6">'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalVerkauf" onClick="angebotEntfernenModal('+angebotsid+')">Angebot entfernen</button>'+
+								'<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalVerkauf" onClick="angebotEntfernenModal('+angebotsid+',0)">Angebot entfernen</button>'+
 								'<br>'+
 							'</div>'+
+							'<div class="row"></div>'+
 						'</div>' + 
  						'</div></div></div>';
  				}
  				cont.innerHTML = s;
  			}
  			
+ 			
+
+ 			/* 
+ 			 * function printMaschinen()
+ 			 * */
+ 			function printMaschinen(data){
+ 				var cont = document.getElementById('contentVKMaschinen');
+ 				var s ="";
+ 				var maschinenid;
+ 				for(var maschine in data){
+ 					maschinenid = data[maschine].id;
+ 					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
+						
+						'<div class="caption">'+
+							'<div class="col-sm-12">'+
+								'<h4>'+data[maschine].name+'  '+maschinenid+'</h4>'+
+							'</div>'+
+							'<br>'+
+								
+							'<div class="col-sm-6">'+
+								'<p>Kapazität</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+ data[maschine].kapazitaet+'</p>'+
+							'</div>'+
+							
+							'<div class="col-sm-6">'+
+								'<p>Auslastung:</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+data[maschine].auslastung+'</p>'+
+							'</div>'+
+							
+							'<div class="col-sm-8">'+
+							'</div>'+
+							'<div class="col-sm-4">'+
+								'<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalVerkauf" onClick="angebotEntfernenModal('+maschinenid+',1)">Verkaufen</button>'+
+								'<br>'+
+							'</div>'+
+							'<div class="row"></div>'+
+						'</div>' + 
+ 						'</div></div></div>';
+ 				}
+ 				cont.innerHTML = s;
+ 			}
+ 			
+ 			
+
+ 			/* 
+ 			 * function printMitarbeiter()
+ 			 * */
+ 			function printMitarbeiter(data){
+ 				var cont = document.getElementById('contentVKMitarbeiter');
+ 				var s ="";
+ 				var maschinenid;
+ 				for(var arbeiter in data){
+ 					arbeiterid = data[arbeiter].m.id;
+ 					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
+						
+						'<div class="caption">'+
+							'<div class="col-sm-12">'+
+								'<h4>'+data[arbeiter].m.name+'</h4>'+
+							'</div>'+
+							'<br>'+
+							'<div class="col-sm-6">'+
+								'<p>Fachgebiet</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+ data[arbeiter].m.mfg+'</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>Arbeitszeit:</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+data[arbeiter].m.arbeitszeit+'</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>Auslastung:</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+data[arbeiter].auslastung+'</p>'+
+							'</div>'+
+							
+							'<div class="col-sm-8">'+
+							'</div>'+
+							'<div class="col-sm-4">'+
+								'<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalVerkauf" onClick="angebotEntfernenModal('+arbeiterid+',2)">Kündigen</button>'+
+								'<br>'+
+							'</div>'+
+							'<div class="row"></div>'+
+						'</div>' + 
+ 						'</div></div></div>';
+ 				}
+ 				cont.innerHTML = s;
+ 			}
+ 			
+ 			
+ 			
+ 			/* 
+ 			 * function anbieten()
+ 			 * */
  			function anbieten() {
  				var menge = document.getElementById("inputMenge").value;
  				var preis = document.getElementById("inputPreis").value;
@@ -139,14 +260,23 @@
  				//Auslesen des Optionsfelds
  				var optionField =  document.getElementById("contentSelect");
  				var sIndex = optionField.selectedIndex; //Startet bei 0
- 				var x = optionField.options[sIndex].text;
+ 				var produktName = optionField.options[sIndex].text;
  				
- 				var value = dict[x];
-		 		console.log(value + " Ausgabe der ID");
-		 			
+ 				var produktid = dict[produktName];
  				
+ 				// Prüfen, ob ein neues Angebot für dieses Produkt zulässig ist (abhängig von der Menge)
+ 				var zulaessig = mengeProdukte[produktName]-alleAngebote[produktName];
+ 				if(zulaessig <= 0){
+ 					console.log("Ausgabe Fehlermeldung1");
+ 	 			        var text = "<h6>&nbsp;&nbsp;Ungültige Eingabe!</h6>";
+ 	 			        meldung.innerHTML = text;
+ 	 			      	return;
+ 					}
+ 				
+ 				// Prüfe ob eine positive Zahl eigegeben wurde
  				if (isNaN(menge) || isNaN(preis) || menge < 1 ){
- 			        var text = "<h6>&nbsp;&nbsp;Nicht genug Produkte vorhanden!</h6>";
+ 					console.log("Ausgabe Fehlermeldung2");
+ 			        var text = "<h6>&nbsp;&nbsp;Ungültige Eingabe!</h6>";
  			        meldung.innerHTML = text;
  			        return;
  				}
@@ -154,35 +284,59 @@
  				var text = "";
 			    meldung.innerHTML = text;
 			    
+			    // Wenn alle Angaben überprüft wurden -> Erstelle ein neues Angebot!
  				jQuery.ajax({
- 					url: "../api/spiel/anbieten?menge=" + menge + "&produktid=" + value + "&preis=" + preis,
+ 					url: "../api/spiel/anbieten?menge=" + menge + "&produktid=" + produktid + "&preis=" + preis,
  					type: "GET",
  					dataType: "json",
  					success: function(data, data2){
  						getDataVerkauf();
- 						console.log("Menge wurde verringert");
  					}
  				});
  			
  			}
  			
- 			function angebotEntfernenModal(angebotsid) {
+ 			
+ 			/* 
+ 			 * function angebotEntfernenModal()
+ 			 * */
+ 			function angebotEntfernenModal(id,index) {
  				var cont  = document.getElementById('contentModalVerk');
+ 				var text;
+ 				var func;
  				
- 				//Einbauen: If mit Index -> Maschinen und Mitarbeiter sind ebenfalls angebote, die entfernt werden?
+ 				if(index == 0) {
+ 					name = "Angebot "+id;
+ 					text = "Möchten Sie das Angebot wirklich entfernen?";
+ 					func = "angebotEntfernen("+id;
+ 				}
+ 				
+ 				if(index == 1) {
+ 					name = "Maschine "+id;
+ 					text = "Möchten Sie die Maschine wirklich verkaufen?";
+ 					// func = maschineVerkaufen(....)
+ 					return;
+ 				}
+ 				
+ 				if(index == 2) {
+ 					name = "Mitarbeiter "+id;
+ 					text = "Möchten Sie dem Mitarbeiter wirklich kündigen?";
+ 					// func = mitarbeiterKuendigen(...)
+ 					return;
+ 				}
  				
  				var s ='<div class="col-sm-12">'+
-				'<h3>Angebot'+angebotsid+' </h3><div><br></div>'+
+				'<h3>'+name+'</h3><div><br></div>'+
 				'</div>'+
 				'<div class="col-sm-12">'+
-					'<h4>Möchten Sie das Angebot wirklich entfernen?</h4>'+
+					'<h4>'+text+'</h4>'+
 				'</div>'+
 				
 				'<div class="row">'+
 					'<div class="col-sm-9">'+
 					'</div>'+
 					'<div class="col-sm-3">'+
-						'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="angebotEntfernen('+angebotsid+')">Bestätigen</button>'+
+						'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="'+func+')">Bestätigen</button>'+
 					'</div>'+
 				'</div>';
 				
@@ -190,8 +344,12 @@
 			
  			}
  			
+ 			
+ 			
+ 			/* 
+ 			 * function angebotEntfernen()
+ 			 * */
  			function angebotEntfernen(angebotsid) {
- 				
  				jQuery.ajax({
  					url: "../api/spiel/angebotentfernen?id=" + angebotsid,
  					type: "GET",
@@ -201,8 +359,9 @@
  						console.log("Angebot entfernt");
  					}
  				});
- 				getDataVerkauf();
  				
+ 				$('#navbar').load('navbar.html');
+ 				getDataVerkauf();
  			}
  			 
 
@@ -222,13 +381,19 @@
             <h2>Angebote</h2>
         </div>
 		
+		<!-- Sprungmarke für Navigation -->
+  		<div id="angebotNeu"></div>
+  		<br>
+  		<br>
+  		
 		<div>
 			<div class="col-sm-6"><h3>Bestand an Produkten:</h3></div>
 			<div class="col-sm-6"><h3>Angebote einstellen:</h3></div>
 		</div>
 		
-		<div class="row"><br></div>
 		
+		<div class="row"><br></div>
+		<div class="well">
 		<!-- Liste des Produktbestandes -->
 		<div class="row">
 				<ul class="list-group col-sm-4" id = "contentBestandP">
@@ -284,11 +449,17 @@
 			</div>
 			<div class="col-sm-1 align-self-center"></div>
 			<div class="col-sm-2 align-self-end">
-				<button type="button" class="btn" onClick="anbieten()">Neues Angebot einstellen</button>
+				<button type="button" class="btn btn-sm" onClick="anbieten()">Neues Angebot einstellen</button>
 			</div>
 		</div>
 		
+		</div>
 		
+		<!-- Sprungmarke für Navigation -->
+  		<div id="angebote"></div>
+  		<br>
+  		<br>
+  		
 		<!-- Bestehende Angebote -->
 		<br>
 		<div>
@@ -300,6 +471,11 @@
   				</div>
   		</div>
   		
+  		<!-- Sprungmarke für Navigation -->
+  		<div id="maschinen"></div>
+  		<br>
+  		<br>
+  		
   		<div class="page-header">
             <h2>Verkauf von Maschinen</h2>
         </div>
@@ -308,6 +484,11 @@
         		<div class="row" id="contentVKMaschinen">
   				</div>
   		</div>
+  		
+  		<!-- Sprungmarke für Navigation -->
+  		<div id="mitarbeiter"></div>
+  		<br>
+  		<br>
   		
   		<div class="page-header">
             <h2>Kündigen von Mitarbeitern</h2>

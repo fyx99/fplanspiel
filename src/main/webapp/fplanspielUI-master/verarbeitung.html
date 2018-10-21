@@ -26,23 +26,28 @@
             $('#footer').load('footer.html');
         });
  		
- 		var daten;
- 		var mengeProdukt;
+ 		var daten; // ../api/spiel/unternehmen
+ 		var datenmMarkt; // "../api/spiel/unternehmen".data.mmarkt.angebote
  		var maschinenid;
 
- 		window.onload = function getDataVerarbeitung(){
+ 		window.onload = getDataVerarbeitung();
+ 		
+ 		function getDataVerarbeitung(){
 			jQuery.ajax({
 				url: "../api/spiel/unternehmen",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
-					daten = data.mmarkt.angebote;
-					printVerarbeitung(daten);
+					daten = data;
+					datenmMarkt = data.mmarkt.angebote;
+					printVerarbeitung(data);
 					
 				}
 			});
+			
 		}
  		
+ 		// Alle Bilder
  		var imgProd = {};
 			imgProd[ "Holzstuhl" ] = "img/holzstuhl2.jpg";
 			imgProd[ "Stoffstuhl" ] = "img/stoffstuhl.jpg";
@@ -55,21 +60,29 @@
 			imgProd[ "Holzschrank" ] = "img/holzschrank.jpg";
 			imgProd[ "Edelstahlschrank" ] = "img/edelstahlschrank.jpg";
 			imgProd[ "Glasschrank" ] = "img/glasschrank.jpg";
+		
 			
+		/* 
+		 * function printVerarbeitung()
+		 * */
 		function printVerarbeitung(data){
+			data = data.mmarkt.angebote;
 			
-			var verarbData = data;
 			var cont  = document.getElementById('contentVerarbeitung');
 			var s ="";
 			var index = 0;
 			
 			for(var angebot in data){
 				maschinenid = data[angebot].markteinheit.id;
+				
+				//Vergabe von Unique-IDs für Input-Felder und Selections
 				var inputid = "inputVerarbeitung"+maschinenid;
+				var selectid = "contentSelect"+maschinenid;
+				
 				var value;
 				var key;
 				
-				
+				//Anzeige von Bild und Name des Produkts
 				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
 					'<img src="' + imgProd[ data[angebot].markteinheit.p.name] +'" alt="' + data[angebot].markteinheit.p.name + '">' + 
 						'<div class="caption">'+
@@ -79,31 +92,31 @@
 							'<div class="col-sm-12">'+
 								'<h4>Benötigtes Material:</h4>'+
 							'</div>';
-							
+				
+				// Ausgabe der Produktionsmatrix (Benötigte Materialien)
 				for (var key in data[angebot].markteinheit.matrix.matrix) {
 					var value = data[angebot].markteinheit.matrix.matrix[key];
 					console.log(key+value);
 					s+=
-						'<div class="col-sm-6">'+
-							'<p>'+key+'</p>'+
-						'</div>'+
-						'<div class="col-sm-6">'+
-							'<p>'+ value +'</p>'+
-						'</div>';
-						
+							'<div class="col-sm-6">'+
+								'<p>'+key+'</p>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<p>'+ value +'</p>'+
+							'</div>';
 				}			
 				
-							
+				// Ausgabe von benötigter Arbeitszeit und Fertigungskosten
 				s+=			'<div class="col-sm-12">'+
-								'<h4>Maschine:</h4>'+
+								'<h4>Mitarbeiter:</h4>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<p>Benötigte Kapazität</p>'+
+								'<p>Benötigte Arbeitszeit</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<p>'+ data[angebot].menge+'</p>'+
-								
+								'<p>'+ data[angebot].markteinheit.arbeitszeit+'</p>'+
 							'</div>'+	
+							
 							'<div class="col-sm-12">'+
 								'<h4>Sonstige Kosten:</h4>'+
 							'</div>'+
@@ -114,6 +127,31 @@
 								'<p>'+ data[angebot].markteinheit.fertigungskosten+'</p>'+
 								'<br>'+
 							'</div>'+	
+							
+							'<div class="col-sm-12">'+
+								'<h4>Maschine wählen:</h4>'+
+							'</div>'+
+							'<div class="col-sm-12">'+
+								'<select class="form-control" id="'+selectid+'">';
+				
+				// Ausgabe in einem Drop-Down, welche Maschinen zur Produktion zur Verfügung stehen
+				var maschInBesitz = daten.maschinen.maschinen
+						
+				for (maschine in maschInBesitz){
+					var auslastung = maschInBesitz[maschine].auslastung;
+					var kapazitaet = maschInBesitz[maschine].kapazitaet;
+							
+					// Zeige nur Maschinen zur Auswahl an, die genug Kapazität frei haben!
+					if(maschInBesitz[maschine].name == data[angebot].markteinheit.name && auslastung < kapazitaet){
+						s+=			'<option>'+maschInBesitz[maschine].id+' '+maschInBesitz[maschine].name+' ('+auslastung+'/'+kapazitaet+')</option>';
+					}
+				}
+					
+				//Ausgabe von Input-Feld und Button
+				s+=		  		'</select>'+
+								'<br>'+
+							'</div>'+
+							
 							
 		    				'<div class="col-sm-3">'+
 								'<input class="form-control input-sm" type="text" id ='+ inputid+'>'+
@@ -130,25 +168,28 @@
 							
 						'</div>' + 
 						'</div></div></div>';
-						
-						if(index == 2 || index ==5){
-							s+= '<div class="row"></div>';
-						}
 				
-						index++;
-						
+				// Immer nach 3 Produkten eine neue Zeile einfügen
+				if(index == 2 || index ==5){
+					s+= '<div class="row"></div>';
+				}
+				index++;	
 			}
 			cont.innerHTML = s;
 		}
 		
-		// Bei Klick auf Button "Produziere"
+		
+		
+		/* 
+		 * function produzierenModal()
+		 * */
 		function produzierenModal(id, angebot) {
-			var key;
-			var value;
+		
 			// Wert des Input-Feldes (Menge, die produziert werden soll)
 			var iV = document.getElementById("inputVerarbeitung"+id).value;
 			var text;
 			
+			//Prüfen, ob Eingabe korrekt war
 			if (isNaN(iV) || iV < 1 ) {
 				var cont  = document.getElementById('contentModal');
 		        text = "<h3>&nbsp;&nbsp;Eingabe ungültig!</h3>";
@@ -158,41 +199,103 @@
 		        text = iV;
 		    }
 			
-			// FEHLT: Prüfung ob genug Material vorhanden
 			
 			//Inhalt des Modal
 			var cont  = document.getElementById('contentModal');
 			var s ="";
 			
-			//Menge von was?
-			var menge = daten[angebot].menge;
-			
-			var kosten = daten[angebot].markteinheit.fertigungskosten;
+			var kosten = datenmMarkt[angebot].markteinheit.fertigungskosten;
 			kosten *= iV;
 			
-				s += 
-					'<div class="col-sm-12">'+
-						'<h3>Produktion von ' +iV+'x ' +  daten[angebot].markteinheit.p.name +':</h3><div><br></div>'+
+			s += 	'<div class="col-sm-12">'+
+						'<h3>Produktion von ' +iV+'x ' +  datenmMarkt[angebot].markteinheit.p.name +':</h3><div><br></div>'+
 					'</div>'+
 					
 					'<div class="col-sm-12">'+
 						'<h4>Benötigtes Material:</h4>'+
 					'</div>';
 					
-					for (var key in daten[angebot].markteinheit.matrix.matrix) {
-						var value = daten[angebot].markteinheit.matrix.matrix[key];
-						value *= iV;
-						s+=
-							'<div class="col-sm-6">'+
-								'<p>'+key+'</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-								'<p>'+ value +'</p>'+
-							'</div>';
+			var text ="";
+			
+			// Wenn von alle 3 Bedingungen erfüllt --> Es kann produziert werden
+			var produzierenErlaubt = true;
+			
+			
+			//*** 1. Prüfe, ob genug Material vorhanden ist ***
+			for (var key in datenmMarkt[angebot].markteinheit.matrix.matrix) {
+				var benoetigt = datenmMarkt[angebot].markteinheit.matrix.matrix[key];
+				benoetigt *= iV;
+				
+				// Falls kein Material vorhanden -> Fehler
+				text='<b>&nbsp;&nbsp; Nicht genug Material vorhanden!</b>';
+						
+				for (var material in daten.materialien) {
+					var anzahl = daten.materialien[material];
 							
-					}			
-					
-					
+					if(key == material){
+								
+						//Falls genug Material vorhanden -> Kein Fehler!
+						if(anzahl >= benoetigt){
+							text ="";
+							break;
+						}else{
+							break;
+						}
+								
+					} 
+							
+				}	//end for 2
+				
+				// Falls eine Fehlermeldung aufgetreten ist -> Produzieren verboten!
+				if(text == '<b>&nbsp;&nbsp; Nicht genug Material vorhanden!</b>'){
+					produzierenErlaubt = false;
+				}
+				
+				s+=		'<div class="col-sm-6">'+
+							'<p>'+key+'</p>'+
+						'</div>'+
+						'<div class="col-sm-6">'+
+							'<p>'+ benoetigt + text +'</p>'+
+						'</div>';
+			}	//end for 1
+	 		
+	 		
+	 		
+	 		//*** 2. Prüfe, ob eine Maschine mit genug Kapazität vorhanden ist ***
+	 		var optionField =  document.getElementById("contentSelect"+id); //Auslesen der Optionsfelder
+	 		var anzOptionen =  document.getElementById("contentSelect"+id).length; // Anzahl der Optionen im Select
+	 		
+	 		// Wenn mind. 1 Maschine vorhanden
+	 		if(anzOptionen > 0){
+		 		var sIndex = optionField.selectedIndex; //Startet bei 0
+		 	    var inhalt = optionField.options[sIndex].text; //Inhalt des Optionsfeldes: 38 Holzstuhlmaschine (0/100)
+		 		var parts = inhalt.split(" ");	// String bei den Leerzeichen aufsplitten
+		 		
+		 	    maschinenid = parts[0]; // Verwende die ausgewählte Maschine für die Produktion
+		 	    var maschInBesitz = daten.maschinen.maschinen;
+		 	    
+		 	    //Prüfe, ob die ausgewählte Maschine genug Kapazität hat oder ausgelastet ist
+		 	    for(maschine in maschInBesitz){
+		 	    	 if(parts[1] == maschInBesitz[maschine].name){
+						var auslastung = maschInBesitz[maschine].auslastung;
+						var kapazitaet = maschInBesitz[maschine].kapazitaet;
+						var rechnung = kapazitaet - auslastung - iV;
+						if(rechnung < 0){
+							text = "<b>&nbsp;&nbsp; Nicht genug Kapazität vorhanden!</b>";
+						}else{
+							text = "";
+						}
+					}
+		 	    }
+		 	    if(text =="<b>&nbsp;&nbsp; Nicht genug Kapazität vorhanden!</b>"){
+					produzierenErlaubt = false;
+		 	    }
+		 	} else{
+		 		text = "<b>&nbsp;&nbsp; Keine Maschine vorhanden!</b>";
+		 		produzierenErlaubt = false;
+		 	}
+	 		 
+	 	  
 			s+=		'<div class="col-sm-12">'+
 						'<h4>Maschine:</h4>'+
 					'</div>'+
@@ -200,7 +303,30 @@
 						'<p>Benötigte Kapazität:</p>'+
 					'</div>'+
 					'<div class="col-sm-6">'+
-						'<p>'+ iV +'</p>'+
+						'<p>'+ iV +' '+text +'</p>'+
+					'</div>';
+					
+					
+					
+			//*** 3. Prüfe, ob genug Arbeitszeit vorhanden ist ***
+			var arbeitszeit = datenmMarkt[angebot].markteinheit.arbeitszeit * iV; // Benötigte Arbeitszeit für Produktion der angegebenen Menge
+			var mitarbeiterKapa = daten.mitarbeiter.kapazitaeten.MASCHINE; // Vorhandene Kapazität an Arbeitszeit im Unternehmen
+			
+			if(mitarbeiterKapa > 0){
+				text ="";
+			} else{
+				text ="<b>&nbsp;&nbsp; Nicht genug Arbeitszeit vorhanden!</b>";
+				produzierenErlaubt = false;
+			}
+					
+			s+=		'<div class="col-sm-12">'+
+						'<h4>Mitarbeiter:</h4>'+
+					'</div>'+
+					'<div class="col-sm-6">'+
+						'<p>Benötigte Arbeitszeit</p>'+
+					'</div>'+
+					'<div class="col-sm-6">'+
+						'<p>'+arbeitszeit+ text +'</p>'+
 					'</div>'+	
 					
 					'<div class="col-sm-12">'+
@@ -213,30 +339,35 @@
 						'<p>'+ kosten+'</p>'+
 						'<br>'+
 					'</div>'+
-					'<div class="row">'+
-						'<div class="col-sm-9">'+
+					'<div class="row">';
+				
+			//Wenn Produzieren Erlaubt, dann zeige den Button an!
+			if(produzierenErlaubt == true){
+			s+=			'<div class="col-sm-9">'+
 						'</div>'+
 						'<div class="col-sm-3">'+
-							'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="produziere('+iV+', '+id+')" id="buttonBestätigung">Bestätigen</button>'+
-						'</div>'+
-					'</div>';
-					 
-		
-				cont.innerHTML = s;
+							'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="produziere('+iV+', '+maschinenid+')" id="buttonBestätigung">Bestätigen</button>'+
+						'</div>';
+			}	 
 				
-				mengeProdukt = iV;
+			s+= '</div>';
+		
+			cont.innerHTML = s;
 		}
 		
+		
+		/* 
+		 * function produziere()
+		 * */
 		function produziere(mengeProdukt, maschinenid) {
 	 		jQuery.ajax({
 		 		url: "../api/spiel/produziere?menge="+mengeProdukt+"&maschinenid="+maschinenid,
 		 		type: "GET",
 		 		dataType: "json",
 		 		sucess: function(data, data2) {
-		 			confirm("Produktion abgeschlossen");
-		 			location.reload(true);
 		 		}
-	 		})
+	 		});
+	 		getDataVerarbeitung();
 	 	}
 		
 	</script>
