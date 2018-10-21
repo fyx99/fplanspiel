@@ -21,24 +21,36 @@
             $(document).ready(function() {
                 $('#footer').load('footer.html');
                 });
+            
+
+           function printPlatzierung(data){
+             	 var inhaltTabelle  = document.getElementById('inhaltTabelle');
+             	 var glueckwunsch = document.getElementById('glueckwunsch');
+                  console.log(data);
+                  var s =" ";
+                  var platz =1;
+                  var ersterPlatz = data[0].name;
+                   for(var index in data){
+                 	  
+                       //s += "<tr><td>" + platz + "</td> <td>" + data[index].name + "</td><td>0€</td></tr>";
+                       s += '<tr><td >' + platz + '</td> <td>' + data[index].name + '</td></tr>';
+                       platz++;              
+                      }
+                      inhaltTabelle.innerHTML = s;
+                      
+                      glueckwunsch.innerHTML = "Herzlichen Glückwunsch an das Unternehmen " + ersterPlatz + "!";
+                      
+             }
+            
 
             // Funktion, um Tabelle dynamisch zu erstellen, muss noch bearbeitet werden!
             window.onload = function () {
                 jQuery.ajax({
-                    url: "../api/spiel/zwischenstand",
+                    url: "../api/spiel/spielende",
                     type: "GET",
                     dataType: "json",
                     success: function(data, data2){
-                        var inhaltTabelle  = document.getElementById('inhaltTabelle');
-                        console.log(data);
-                        var s =" ";
-                        var platz =1;
-                         for(var angebot in data){
-                             s += "<tr><td>" + platz + "</td> <td>Spieler 1</td><td>0€</td></tr>";
-                             platz++;
-                            
-                            }
-                            inhaltTabelle.innerHTML = s;
+                    	printPlatzierung(data);
                         
                     }
                 });
@@ -148,7 +160,7 @@
                     ]
                 });
                 //chart03.render();
-                var chart02 = new CanvasJS.Chart("chartContainer02",
+/*                 var chart02 = new CanvasJS.Chart("chartContainer02",
                 {
                     theme: "theme2",
                     title:{
@@ -219,9 +231,14 @@
                     }
                     ]
                 });
-                chart06.render();
-    }
+                chart06.render(); */
+    
+            
+            }
+            
 
+
+          
         </script>
    
     <!-- Fixed navbar -->
@@ -253,7 +270,7 @@
                         <tr>
                             <th>Platz </th>
                             <th>Spieler</th>
-                            <th>XXX</th>
+                           <!-- <th>XXX</th>-->
                         </tr>
                     </thead>
                     <tbody id="inhaltTabelle">
@@ -269,7 +286,7 @@
             </div>
 
             <br>
-            <p>Herzlichen Glückwunsch an Spieler 1!</p>
+            <p id="glueckwunsch">Herzlichen Glückwunsch an Spieler 1!</p>
             <br>
             <br>
         </div>
@@ -292,7 +309,7 @@
         <br>
         <br>
 
-        <div class="row">
+<!--         <div class="row">
             <div class="col-sm-4">
                  <div id="chartContainer02" style="height: 300px; width: 100%;"></div>
             </div>
@@ -302,7 +319,7 @@
              <div class="col-sm-4">
                <div id="chartContainer06" style="height: 300px; width: 100%;"></div>
             </div>
-        </div>
+        </div> -->
 
         <br>
         <br>

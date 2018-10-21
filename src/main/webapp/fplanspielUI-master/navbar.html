@@ -19,6 +19,8 @@
  			getSpielername();
  			getRunde();
  		});
+	
+	var rundenAnzahl;
 		function getKapital(){
 			jQuery.ajax({
 				url: "../api/spiel/unternehmen",
@@ -74,6 +76,16 @@
 					//console.log(data.bmarkt.angebote);
 					//console.log(data.mmarkt.angebote);
 					
+					rundenAnzahl = s;
+					
+					if (rundenAnzahl > 1) {
+						document.getElementById('ergebnisLetzteRunde').innerHTML = "Ergebnis der letzten Runde";
+						//Ergebnis der letzten Runde
+					} else {
+						return;
+					}
+					
+					
 				}
 			});
 		}
@@ -90,7 +102,7 @@
 						window.location.href = "ergebnis_runde.html";
 					} else if (runde==0) {
 						$(document).ready(function(){
-  								$('#modalContent').modal('show');
+  								$('#modalContentZugBeenden').modal('show');
 								});
 
 						window.setTimeout(function(){
@@ -110,20 +122,27 @@
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
-					var einnahmen  = document.getElementById('einnahmen');
-					var ausgaben  = document.getElementById('ausgaben');
+					//var einnahmen  = document.getElementById('einnahmen');
+					//var ausgaben  = document.getElementById('ausgaben');
 					var kapital  = document.getElementById('kapital');
-					var marketingMaßnahmen = document.getElementById('marketingMaßnahmen');
+					//var marketing = document.getElementById('marketingMaßnahmen');
+					var mitarbeiter = document.getElementById('mitarbeiterAnzahl');
 					
-					var einnahmenData =data.guv.einnahmen;
+					var einnahmenData =data.guv.einnahmen;				
 					var ausgabenData =data.guv.ausgaben;
 					var kapitalData =data.kapital;
-					var marketingMaßnahmenData = data.marketingMaßnahmen;
+					var marketingData = data.marketingMaßnahmen;
+					var mitarbeiterData = data.mitarbeiterAnzahl;
 					
-					einnahmen.innerHTML = einnahmenData;
-					ausgaben.innerHTML =ausgabenData;
-					kapital.innerHTML = kapitalData;
-					marketingMaßnahmen = marketingMaßnahmenData;
+					//einnahmen.innerHTML = einnahmenData;
+					//ausgaben.innerHTML =ausgabenData;
+					kapital.innerHTML = kapitalData + " €";
+					mitarbeiter.innerHTML = mitarbeiterData;
+					//marketing = marketingData;
+					
+					ladeEinnahmenData(einnahmenData);
+					ladeAusgabenData(ausgabenData);
+					ladeMarketingData(marketingData);
 					
 					//console.log(data.kapital);
 					//console.log(data.bmarkt.angebote);
@@ -132,6 +151,49 @@
 				}
 			});
 		}
+			
+			function ladeMarketingData(marketingData){
+				
+				var marketing = document.getElementById('marketingMaßnahmen');
+				var summeMarketing = 0;
+				
+				for(var index in marketingData){
+					
+					summeMarketing += marketingData[index].budget;
+				}
+				
+				marketing.innerHTML =summeMarketing + " €";
+				
+				// marketing = marketingData;
+			}
+			
+			
+			function ladeEinnahmenData(einnahmenData){
+				
+				var einnahmen  = document.getElementById('einnahmen');
+				var summeEinnahmen = 0;
+				
+				for(var index in einnahmenData){
+					
+					summeEinnahmen += einnahmenData[index].summe;
+				}
+				
+				einnahmen.innerHTML =summeEinnahmen + " €";
+			}
+			
+			
+			function ladeAusgabenData(ausgabenData){
+				
+				var ausgaben  = document.getElementById('ausgaben');
+				var summeAusgaben = 0;
+				
+				for(var index in ausgabenData){
+					
+					summeAusgaben += ausgabenData[index].summe;
+				}
+				
+				ausgaben.innerHTML =summeAusgaben + " €";
+			}
 
 		
 
@@ -197,17 +259,21 @@
 
 					<!--Inventar-->
 					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown">Inventar <b class="caret"></b></a>
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">Inventar <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="mitarbeiter.html">Mitarbeiter</a></li>
+							
 							<li><a href="rohstoffe.html">Material</a></li>
 							<li><a href="fertigeerzeugnisse.html">Fertige Erzeugnisse</a></li>
-							<li><a href="maschinen.html">Maschinen</a></li>	
+							<li><a href="maschinen.html">Maschinen</a></li>
+							<li class="divider"></li>	
+							<li><a href="mitarbeiter.html">Mitarbeiter</a></li>
+							<li class="divider"></li>
 							<li><a href="marketing.html">Marketing</a></li>
+							<li class="divider"></li>
 							<li><a href="darlehen.html">Darlehen</a></li>
 						</ul>
 					</li>
-					<li><a data-toggle="modal" href="#ergebnisLetzteRundeModal" onclick="ladeErgebnisLetzteRunde()">Ergebnis der letzten Runde</a></li>        
+					<li><a id ="ergebnisLetzteRunde" data-toggle="modal" href="#ergebnisLetzteRundeModal" onclick="ladeErgebnisLetzteRunde()"></a></li>        
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -223,7 +289,7 @@
 
 							<li class="divider"></li>		
 							<li><a class="btn float-right" onclick="beendeZug()" data-toggle="modal">Zug beenden</a> </li>
-							<!-- data-toggle="modal" data-target="#modalContent"-->
+							
 						</ul>
 					</li>        
 				</ul>
@@ -232,7 +298,7 @@
     </div>
 
     <!-- Modal -->
-        <div class="modal fade" id="modalContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="modalContentZugBeenden" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -265,15 +331,15 @@
                     <tbody>
                         <tr>
                         	<th class="col-sm-1">Einnahmen</th>
-                            <td id="einnahmen"> 0€</td>
+                            <td id="einnahmen"> </td>
                         </tr>
                         <tr>
                         	<th class="col-sm-1">Ausgaben</th>
-                            <td id="ausgaben"> 0€</td>
+                            <td id="ausgaben"> </td>
                         </tr>
                         <tr>
                             <th class="col-sm-1">Kapital</th>
-                            <td id="kapital"> 0€</td>
+                            <td id="kapital"> </td>
                         </tr>
                         <tr>
                         	<th class="col-sm-1">Marketingmaßnahmen</th>
