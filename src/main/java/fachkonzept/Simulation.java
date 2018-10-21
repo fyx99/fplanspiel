@@ -36,7 +36,7 @@ public class Simulation {
 		Iterator<Unternehmen> i = s.getUnternehmen().iterator();
 		while (i.hasNext()) {
 			Unternehmen n = i.next();
-			n.setKapital(1000);
+			n.setKapital(100000);
 			n.setBmarkt(beschaffungsmarktDemoDaten(n));
 			n.setMmarkt(maschinenmarktDemoDaten());
 			n.setFmarkt(finanzmarktDemoDaten());
