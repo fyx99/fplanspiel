@@ -26,6 +26,7 @@ public class UnternehmenMapper {
 		uu.setMaschinen(new MaschinenGesamtDTO(u.getMaschinen()));
 		uu.setProdukte(ProduktMapper.toDTO(u.getProdukte()));
 		uu.setMitarbeiter(new MitarbeiterGesamtDTO(u.getMitarbeiter(), u.getMitarbeiterKapazitaeten()));
+		uu.setVerbindlichkeiten(u.getVerbindlichkeiten());
 		return uu;
 	}
     

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import fachkonzept.Produkt;
+import fachkonzept.Verbindlichkeit;
 
 public class UnternehmenDTO {
 
@@ -20,6 +21,7 @@ public class UnternehmenDTO {
 	private MaschinenGesamtDTO maschinen;
 	private List<ProduktDTO> produkte;
 	private MitarbeiterGesamtDTO mitarbeiter;
+	private List<Verbindlichkeit> verbindlichkeiten;
 
 	public String getName() {
 		return name;
@@ -127,6 +129,14 @@ public class UnternehmenDTO {
 
 	public void setProdukte(List<ProduktDTO> produkte) {
 		this.produkte = produkte;
+	}
+
+	public List<Verbindlichkeit> getVerbindlichkeiten() {
+		return verbindlichkeiten;
+	}
+
+	public void setVerbindlichkeiten(List<Verbindlichkeit> verbindlichkeiten) {
+		this.verbindlichkeiten = verbindlichkeiten;
 	}
 
 
