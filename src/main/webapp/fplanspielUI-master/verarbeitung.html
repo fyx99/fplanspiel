@@ -102,7 +102,7 @@
 								'<p>'+key+'</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<p>'+ value +'</p>'+
+								'<p>'+ value +'&nbsp;&nbsp; ME</p>'+
 							'</div>';
 				}			
 				
@@ -114,7 +114,7 @@
 								'<p>Benötigte Arbeitszeit</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<p>'+ data[angebot].markteinheit.arbeitszeit+'</p>'+
+								'<p>'+ data[angebot].markteinheit.arbeitszeit+'&nbsp;&nbsp;h</p>'+
 							'</div>'+	
 							
 							'<div class="col-sm-12">'+
@@ -124,7 +124,7 @@
 								'<p>Fertigungskosten: </p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<p>'+ data[angebot].markteinheit.fertigungskosten+'</p>'+
+								'<p>'+ data[angebot].markteinheit.fertigungskosten+'&nbsp;&nbsp;€</p>'+
 								'<br>'+
 							'</div>'+	
 							
@@ -227,7 +227,7 @@
 				benoetigt *= iV;
 				
 				// Falls kein Material vorhanden -> Fehler
-				text='<b>&nbsp;&nbsp; Nicht genug Material vorhanden!</b>';
+				text='<b>&nbsp;&nbsp; Nicht genug Material!</b>';
 						
 				for (var material in daten.materialien) {
 					var anzahl = daten.materialien[material];
@@ -247,7 +247,7 @@
 				}	//end for 2
 				
 				// Falls eine Fehlermeldung aufgetreten ist -> Produzieren verboten!
-				if(text == '<b>&nbsp;&nbsp; Nicht genug Material vorhanden!</b>'){
+				if(text == '<b>&nbsp;&nbsp; Nicht genug Material!</b>'){
 					produzierenErlaubt = false;
 				}
 				
@@ -255,7 +255,7 @@
 							'<p>'+key+'</p>'+
 						'</div>'+
 						'<div class="col-sm-6">'+
-							'<p>'+ benoetigt + text +'</p>'+
+							'<p>'+ benoetigt +'&nbsp;ME'+ text +'</p>'+
 						'</div>';
 			}	//end for 1
 	 		
@@ -281,7 +281,7 @@
 						var kapazitaet = maschInBesitz[maschine].kapazitaet;
 						var rechnung = kapazitaet - auslastung - iV;
 						if(rechnung < 0){
-							text = "<b>&nbsp;&nbsp; Nicht genug Kapazität vorhanden!</b>";
+							text = "<b>&nbsp;&nbsp; Nicht genug Kapazität!</b>";
 						}else{
 							text = "";
 						}
@@ -303,7 +303,7 @@
 						'<p>Benötigte Kapazität:</p>'+
 					'</div>'+
 					'<div class="col-sm-6">'+
-						'<p>'+ iV +' '+text +'</p>'+
+						'<p>'+ iV +'&nbsp;E'+text +'</p>'+
 					'</div>';
 					
 					
@@ -315,7 +315,7 @@
 			if(mitarbeiterKapa > 0){
 				text ="";
 			} else{
-				text ="<b>&nbsp;&nbsp; Nicht genug Arbeitszeit vorhanden!</b>";
+				text ="<b>&nbsp;&nbsp; Nicht genug Arbeitszeit!</b>";
 				produzierenErlaubt = false;
 			}
 					
@@ -326,7 +326,7 @@
 						'<p>Benötigte Arbeitszeit</p>'+
 					'</div>'+
 					'<div class="col-sm-6">'+
-						'<p>'+arbeitszeit+ text +'</p>'+
+						'<p>'+arbeitszeit+'&nbsp;h'+ text +'</p>'+
 					'</div>'+	
 					
 					'<div class="col-sm-12">'+
@@ -336,7 +336,7 @@
 						'<p>Fertigungskosten: </p>'+
 					'</div>'+
 					'<div class="col-sm-6">'+
-						'<p>'+ kosten+'</p>'+
+						'<p>'+ kosten+'&nbsp;€</p>'+
 						'<br>'+
 					'</div>'+
 					'<div class="row">';
