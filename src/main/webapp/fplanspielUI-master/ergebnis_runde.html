@@ -7,6 +7,9 @@
     <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
     <meta name="author" content="BootstrapBay.com">
     <title>Ergebnis der Runde</title>
+       	<script src="jquery/jquery-1.11.0.min.js"></script>
+       	    <script src="js/bootstrap.min.js"></script>
+       	
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -51,7 +54,7 @@
                     var xWert = 1
                    
                     for(var angebot in unternehmenData){
-                        dataPoints01.push({ label: unternehmenData[angebot].name, y: unternehmenData[angebot].gewinn, x: xWert});
+                        //dataPoints01.push({ label: unternehmenData[angebot].name, y: unternehmenData[angebot].gewinn, x: xWert});
                         dataPoints03.push({ label: unternehmenData[angebot].name, y: unternehmenData[angebot].kapital, x: xWert});
                         dataPoints04.push({ label: unternehmenData[angebot].name, y: unternehmenData[angebot].umsatz, x: xWert});
                         console.log(angebot);
@@ -62,10 +65,10 @@
                     //console.log(nameUnternehmen);
                     //console.log(umsatzUnternehmen);
 
-                    chart01.options.data[0].dataPoints = dataPoints01;
+                  //  chart01.options.data[0].dataPoints = dataPoints01;
                     chart03.options.data[0].dataPoints = dataPoints03;
                     chart04.options.data[0].dataPoints = dataPoints04;
-                    chart01.render();
+                   // chart01.render();
                     chart03.render();
                     chart04.render();
 
@@ -73,14 +76,14 @@
                 }
             });
 
-                var dataPoints01 = [];
+               // var dataPoints01 = [];
                 var dataPoints02 = [];
                 var dataPoints03 = [];
                 var dataPoints04 = [];
                 var dataPoints05 = [];
                 var dataPoints06 = [];
 
-                var chart01 = new CanvasJS.Chart("chartContainer01",
+        /*         var chart01 = new CanvasJS.Chart("chartContainer01",
                 {
                     theme: "theme2",
                     title:{
@@ -97,7 +100,7 @@
                         ]
                     }
                     ]
-                });
+                }); */
                // chart01.render();
                  var chart04 = new CanvasJS.Chart("chartContainer04",
                 {
@@ -247,9 +250,9 @@
         </div>
 
          <div class="row">
-            <div class="col-sm-4">
+           <!--  <div class="col-sm-4">
                  <div id="chartContainer01" style="height: 300px; width: 100%;"></div>
-            </div>
+            </div> -->
             <div class="col-sm-4">
                <div id="chartContainer04" style="height: 300px; width: 100%;"></div>
             </div>
@@ -286,7 +289,7 @@
     </div>
         
 <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>--> 
-   	<script src="jquery/jquery-1.11.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
+
   </body>
 </html>
