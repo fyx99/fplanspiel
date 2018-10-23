@@ -57,7 +57,7 @@ public abstract class Markt {
         if(verbleibendesAngebot != null) {
             angebote.add(verbleibendesAngebot);
         }
-        vk.umsatz(a.getPreis() * menge, "Verkauf");
+        vk.umsatz(a.getPreis() * menge, "Verkauf "+a.getMarkteinheit().getName());
 
         vk.markteinheitEntfernen(a.getMarkteinheit(), menge);
 
