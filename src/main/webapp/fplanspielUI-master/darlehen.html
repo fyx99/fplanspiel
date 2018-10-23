@@ -54,7 +54,7 @@
     		'</table>' + 
         	'<table class="table">' +
     		'<h4>Aktuelle Eigenschaften</h4>' +
-    		'<tr><td class="col-md-6"><b>Restlaufzeit: </b></td><td class="col-md-2" style="color: red">' + data[kredit].aktuelleLaufzeit + ' Runden</td</tr>' + 
+    		'<tr><td class="col-md-6"><b>Restlaufzeit: </b></td><td class="col-md-2" style="color: red">' + (data[kredit].kredit.laufzeit - data[kredit].aktuelleLaufzeit)  + ' Runden</td</tr>' + 
     		'<tr><td class="col-md-6"><b>Restvolumen: </b></td><td class="col-md-2" style="color: red">' + data[kredit].verbleibendeSumme + ' €</td></tr>' + 
     		'</table>' + 
             '</div>' +
