@@ -2,16 +2,17 @@ package dto;
 
 public class UnternehmenStatDTO {
     
-	public UnternehmenStatDTO(double umsatz, double kapital, String name) {
+	public UnternehmenStatDTO(double umsatz, double kapital, String name, double gewinn) {
         super();
         this.umsatz = umsatz;
         this.kapital = kapital;
         this.name = name;
+        this.gewinn = gewinn;
     }
 	private String name;
     private double umsatz;
 	private double kapital;
-	private double gewinn;
+	private double gewinn;		//Gesamter Gewinn
 	
     public double getUmsatz() {
         return umsatz;
@@ -37,6 +38,7 @@ public class UnternehmenStatDTO {
     public void setName(String name) {
         this.name = name;
     }
+
 	
 	
 	

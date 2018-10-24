@@ -13,7 +13,7 @@ public class ZwischenstandDTO {
         this.runde = runde;
         List<UnternehmenStatDTO> dtos = new ArrayList();
         for(Unternehmen u : unternehmen) {
-            dtos.add(new UnternehmenStatDTO(u.getUmsatz(), u.getKapital(), u.getName()));
+            dtos.add(new UnternehmenStatDTO(u.getUmsatz(), u.getKapital(), u.getName(), u.getGuv().rundenErgebnis()));
         }
         this.unternehmen = dtos;
     }

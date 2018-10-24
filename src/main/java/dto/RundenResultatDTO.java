@@ -16,10 +16,13 @@ import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class RundenResultatDTO {
 
-	private String name; // name des unternehmens
-	private Double kapital; // wv geld
-	private GuV guv; // Gewinn
+	private String name;
+	private Double kapital; 
+	private GuV guv; 
+	private double gewinn;
+	private double rundenGewinn;
 	private Integer mitarbeiterAnzahl;
+	
 	// offene (nicht benötigte) Mitarbeiterkapazität in Minuten
 	private Integer mitarbeiterKapazitMaschine;
 	private Integer mitarbeiterKapazitVertieb;
@@ -37,6 +40,8 @@ public class RundenResultatDTO {
 		this.name = u.getName();
 		this.kapital = u.getKapital();
 		this.guv = u.getGuv();
+		this.gewinn = u.getGuv().rundenErgebnis();
+		this.rundenGewinn = u.getGuv().rundenErgebnis(u.getSpiel().getRunde()-1);	//Gewinn der letzten Runde
 		this.mitarbeiterAnzahl = u.getMitarbeiter().size();
 		this.mitarbeiterKapazitMaschine = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.MASCHINE);
 		this.mitarbeiterKapazitVertieb = u.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERTRIEB);
@@ -60,12 +65,28 @@ public class RundenResultatDTO {
 		return kapital;
 	}
 
+	public double getRundenGewinn() {
+		return rundenGewinn;
+	}
+
+	public void setRundenGewinn(double rundenGewinn) {
+		this.rundenGewinn = rundenGewinn;
+	}
+
 	public void setKapital(Double kapital) {
 		this.kapital = kapital;
 	}
 
 	public GuV getGuv() {
 		return guv;
+	}
+
+	public double getGewinn() {
+		return gewinn;
+	}
+
+	public void setGewinn(double gewinn) {
+		this.gewinn = gewinn;
 	}
 
 	public void setGuv(GuV guv) {
