@@ -16,49 +16,27 @@
 
 	$(document).ready(function() {
  			getKapital();
- 			getSpielername();
  			getRunde();
  		});
 	
 	var rundenAnzahl;
+	
+	var testRunde;
+	
+	
 		function getKapital(){
 			jQuery.ajax({
 				url: "../api/spiel/unternehmen",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
-					var cont  = document.getElementById('kapitalContent');
-					var s =data.kapital;
-					cont.innerHTML += s + " €";
-					console.log(data.kapital);
-					//console.log(data.bmarkt.angebote);
-					//console.log(data.mmarkt.angebote);
-
-						/*for(var angebot in data){
-				s += '<div class="col-sm-6 col-md-4"><div class="thumbnail"><img src="img/leder.jpg" alt="Leder"><div class="caption"><h3>' + data[angebot].markteinheit.name   +
-						'</h3><p>Kommentar ?</p>' + 
-						'<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">25%</div>' + 
-						'</div><p><a href="#" class="btn btn-danger" role="button">Verkaufen</a> <a href="#" class="btn btn-primary" role="button">Informationen</a></p>' + 
-						'</div></div></div>';
-			}*/
+					var kapitalCont  = document.getElementById('kapitalContent');
+					var kapitalData =data.kapital;
+					kapitalCont.innerHTML += kapitalData + " €";
 					
-				}
-			});
-		}
-
-		function getSpielername(){
-			jQuery.ajax({
-				url: "../api/spiel/unternehmen",
-				type: "GET",
-				dataType: "json",
-				success: function(data, data2){
-					var cont  = document.getElementById('spielerName');
-					var s =data.name;
-					cont.innerHTML += s;
-					//console.log(data.kapital);
-					//console.log(data.bmarkt.angebote);
-					//console.log(data.mmarkt.angebote);
-					
+					var spielerNameCont  = document.getElementById('spielerName');
+					var spielerNameData =data.name;
+					spielerNameCont.innerHTML += spielerNameData;
 				}
 			});
 		}
@@ -72,25 +50,30 @@
 					var cont  = document.getElementById('runde');
 					var s =data.runde;
 					cont.innerHTML += s;
-					console.log(data.runde);
-					//console.log(data.bmarkt.angebote);
-					//console.log(data.mmarkt.angebote);
-					
 					rundenAnzahl = s;
+					
+					testRunde = data.runde;
 					
 					if (rundenAnzahl > 1) {
 						document.getElementById('ergebnisLetzteRunde').innerHTML = "Ergebnis der letzten Runde";
 						//Ergebnis der letzten Runde
+						
+						console.log(rundenAnzahl +"rundenAnzahl");
+						console.log(testRunde +"testRunde");
+						
 					} else {
 						return;
-					}
-					
-					
+					}				
 				}
 			});
 		}
+		
+		console.log(rundenAnzahl +"rundenAnzahl6");
 
 		function beendeZug(){
+			
+			getRunde(); 
+			console.log(rundenAnzahl+"rundenAnzahl7");
 			jQuery.ajax({
 				url: "../api/spiel/zugbeendet",
 				type: "GET",
@@ -100,15 +83,28 @@
 					console.log(data);
 					if (runde>0) {
 						window.location.href = "ergebnis_runde.html";
-					} else if (runde==0) {
+					}  else if (runde==0 && rundenAnzahl > 1) {
 						$(document).ready(function(){
+							$('#modalContentZugBeenden').modal('show');
+						});
+
+				window.setTimeout(function(){
+	            window.location.href = "rundenresultat.html";
+	            }, 1000); //Test: 1sec 
+	            
+				console.log(rundenAnzahl +"rundenanzahl5");
+			} 
+					else if (runde==0) {
+												$(document).ready(function(){
   								$('#modalContentZugBeenden').modal('show');
 								});
 
 						window.setTimeout(function(){
 			            window.location.href = "einkauf.html";
 			            }, 1000); //Test: 1sec 
-					} else {
+			            
+						console.log(rundenAnzahl +"rundenAnzahl");
+					}else {
 						window.location.href = "ergebnis_ende.html";
 					}
 				}
@@ -122,10 +118,7 @@
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
-					//var einnahmen  = document.getElementById('einnahmen');
-					//var ausgaben  = document.getElementById('ausgaben');
 					var kapital  = document.getElementById('kapital');
-					//var marketing = document.getElementById('marketingMaßnahmen');
 					var mitarbeiter = document.getElementById('mitarbeiterAnzahl');
 					
 					var einnahmenData =data.guv.einnahmen;				
@@ -134,70 +127,47 @@
 					var marketingData = data.marketingMaßnahmen;
 					var mitarbeiterData = data.mitarbeiterAnzahl;
 					
-					//einnahmen.innerHTML = einnahmenData;
-					//ausgaben.innerHTML =ausgabenData;
 					kapital.innerHTML = kapitalData + " €";
 					mitarbeiter.innerHTML = mitarbeiterData;
-					//marketing = marketingData;
 					
 					ladeEinnahmenData(einnahmenData);
 					ladeAusgabenData(ausgabenData);
-					ladeMarketingData(marketingData);
-					
-					//console.log(data.kapital);
-					//console.log(data.bmarkt.angebote);
-					//console.log(data.mmarkt.angebote);
-					
+					ladeMarketingData(marketingData);					
 				}
 			});
 		}
 			
-			function ladeMarketingData(marketingData){
-				
+			function ladeMarketingData(marketingData){				
 				var marketing = document.getElementById('marketingMaßnahmen');
 				var summeMarketing = 0;
 				
-				for(var index in marketingData){
-					
+				for(var index in marketingData){				
 					summeMarketing += marketingData[index].budget;
-				}
-				
+				}				
 				marketing.innerHTML =summeMarketing + " €";
-				
-				// marketing = marketingData;
 			}
-			
-			
-			function ladeEinnahmenData(einnahmenData){
-				
+						
+			function ladeEinnahmenData(einnahmenData){				
 				var einnahmen  = document.getElementById('einnahmen');
 				var summeEinnahmen = 0;
 				
-				for(var index in einnahmenData){
-					
+				for(var index in einnahmenData){					
 					summeEinnahmen += einnahmenData[index].summe;
-				}
-				
+				}				
 				einnahmen.innerHTML =summeEinnahmen + " €";
 			}
-			
-			
-			function ladeAusgabenData(ausgabenData){
-				
+						
+			function ladeAusgabenData(ausgabenData){				
 				var ausgaben  = document.getElementById('ausgaben');
 				var summeAusgaben = 0;
 				
-				for(var index in ausgabenData){
-					
+				for(var index in ausgabenData){					
 					summeAusgaben += ausgabenData[index].summe;
-				}
-				
+				}				
 				ausgaben.innerHTML =summeAusgaben + " €";
 			}
-
-		
-
 </script>
+
      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -353,10 +323,6 @@
                 </table>
               </div>
             </div>
-
           </div>
         </div>
-
-
-
 </body>

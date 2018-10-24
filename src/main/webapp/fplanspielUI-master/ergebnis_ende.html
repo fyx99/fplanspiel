@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
-    <meta name="author" content="BootstrapBay.com">
     <title>Ergebnis</title>
+    <script src="jquery/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -70,14 +70,10 @@
                         console.log(angebot);
                         xWert++;
                     }
-                    //console.log(gewinnUnternehmen);
-                    //console.log(kapitalUnternehmen);
-                    //console.log(nameUnternehmen);
-                    //console.log(umsatzUnternehmen);
-
                     chart01.options.data[0].dataPoints = dataPoints01;
                     chart03.options.data[0].dataPoints = dataPoints03;
                     chart04.options.data[0].dataPoints = dataPoints04;
+                    
                     chart01.render();
                     chart03.render();
                     chart04.render();
@@ -85,7 +81,7 @@
 
                 }
             });
-
+                
                 var dataPoints01 = [];
                 var dataPoints02 = [];
                 var dataPoints03 = [];
@@ -274,14 +270,7 @@
                         </tr>
                     </thead>
                     <tbody id="inhaltTabelle">
-                                             
-                        
-                      
-                    </tbody>
-
-                    <tfoot>
-                
-
+                </tbody>
                 </table>
             </div>
 
@@ -331,9 +320,6 @@
     <!-- Fixed footer -->
     <div id="footer">
     </div>
-        
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>--> 
-   	<script src="jquery/jquery-1.11.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+ 
   </body>
 </html>

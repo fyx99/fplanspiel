@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
+    <meta name="author" content="BootstrapBay.com">
+    <title>Rundenresultat</title>
+    <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>--> 
+   	<script src="jquery/jquery-1.11.0.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
+ </head>
+ 
+ <body onload="start()">
+ 		<script type="text/javascript" >
+ 		
+ 			$(document).ready(function() {
+                $('#navbar').load('navbar.html');
+                $('#footer').load('footer.html');
+                });
+ 			
+            function printGuV(guvData, umsatzData){
+            	 var inhaltAusgaben  = document.getElementById('inhaltAusgaben2');
+            	 var inhaltEinnahmen  = document.getElementById('inhaltEinnahmen'); 
+            	 var s =" ";
+					
+					var laengeGuvData = guvData.length;
+					var laengeUmsatzData = umsatzData.length;
+					console.log(laengeGuvData + "olaf");
+					console.log(laengeUmsatzData + "olaf");
+					
+					var summeAusgaben = 0;
+					var summeEinnahmen = 0;
+	/* 				
+					if (isNaN(laengeGuvData))) { 
+	 			        text = "<h3>&nbsp;&nbsp;Eingabe ungültig!</h3>";
+	 			        cont.innerHTML = text;
+	 			        return;
+					} else if (isNaN(laengeGuvData)){  
+						
+					} else {
+						
+					} */
+					
+					if (laengeGuvData > laengeUmsatzData) {
+						
+						 for (var index = 0; index < laengeGuvData; index++) {
+							 
+						/* 	if (laengeUmsatzData == 0){
+								 var contSumme = document.getElementById("summeEinnahmen");
+								 console.log("test12346");
+								 contSumme.innerHTML = "Keine Einnahmen!";
+							 }
+							 else */ 
+								 
+								 if (umsatzData[index] == null){
+		                		  s+= '<td class="col-sm-3">' + guvData[index].beschreibung + '</td>'+
+							       '<td class="col-sm-3">' + guvData[index].summe + ' € </td>' +
+		                		  '<td class="col-sm-3">  </td>'+
+							       '<td class="col-sm-3">  </td>' +
+							       '<tr></tr>'
+							       
+							       summeAusgaben += guvData[index].summe;
+							       
+		  					} else {
+		  						 s+= '<td class="col-sm-3">' + guvData[index].beschreibung + '</td>'+
+							       '<td class="col-sm-3">' + guvData[index].summe + ' € </td>' +
+							       '<td class="col-sm-3">' + umsatzData[index].beschreibung + '</td>'+
+							       '<td class="col-sm-3">' + umsatzData[index].summe + ' € </td>' +
+							       
+							       '<tr></tr>'
+							       
+							       summeEinnahmen += umsatzData[index].summe;
+							       summeAusgaben += guvData[index].summe;
+		  					}
+							 
+						 }
+					} else {
+					/* 	 if (laengeUmsatzData == 0 && laengeGuvData == 0){
+							 var contSumme = document.getElementById("summeEinnahmen");
+							 var contSumme2 = document.getElementById("summeAusgaben");
+							 console.log("test12345");
+							 contSumme.innerHTML = "Keine Einnahmen!";
+							 contSumme2.innerHTML = "Keine Ausgaben!";
+							 
+							 return;
+							 
+						 } else  */
+							 
+							/*  if (laengeUmsatzData == 0){
+							 var contSumme = document.getElementById("summeAusgaben");
+							 contSumme.innerHTML = "Keine Ausgaben!";
+						 }
+						else */ 
+						if (guvData[index] == null){
+	                		  s+= '<td class="col-sm-3"></td>'+
+						       '<td class="col-sm-3"></td>' +
+	                		  '<td class="col-sm-3">' + umsatzData[index].beschreibung + ' </td>'+
+						       '<td class="col-sm-3">' + umsatzData[index].summe + ' € </td>' +
+						       '<tr></tr>'
+						       
+						       summeEinnahmen += umsatzData[index].summe
+						       
+	  					} else {
+	  						 s+= '<td class="col-sm-3">' + guvData[index].beschreibung + '</td>'+
+						       '<td class="col-sm-3">' + guvData[index].summe + '  € </td>' +
+						       '<td class="col-sm-3">' + umsatzData[index].beschreibung + '</td>'+
+						       '<td class="col-sm-3">' + umsatzData[index].summe + '  € </td>' +
+						       
+						       '<tr></tr>'
+						       
+						       summeEinnahmen += umsatzData[index].summe;
+						       summeAusgaben += guvData[index].summe;
+	  					}
+						 
+					}
+					
+                     inhaltAusgaben.innerHTML = s;                    
+                     
+                     var contSummeEinnahmen = document.getElementById("summeEinnahmenAusgabe");
+                     contSummeEinnahmen.innerHTML = summeEinnahmen + " €";
+                     
+                     var contSummeAusgaben = document.getElementById("summeAusgabenAusgabe");
+                     contSummeAusgaben.innerHTML = summeAusgaben  + " €";	
+
+            }
+           
+           // Funktion, um Tabelle dynamisch zu erstellen, muss noch bearbeitet werden!
+           window.onload = function () {
+               jQuery.ajax({
+                   url: "../api/spiel/rundenresultat",
+                   type: "GET",
+                   dataType: "json",
+                   success: function(data, data2){
+                	var guv = data.guv.ausgaben;
+                	var umsatz = data.guv.einnahmen;
+                	var test = data.guv;
+                   	printGuV(guv,umsatz);
+                       
+                   }
+               });
+           }			
+ 			</script>
+ 			
+ 			<style type="text/css">
+#wrap {
+   width:1100px;
+   margin:0 auto;
+}
+#left_col {
+   float:left;
+   width:550px;
+}
+#right_col {
+   float:right;
+   width:550px;
+}
+</style>
+
+ 			
+ 			 <!-- Fixed navbar -->
+    <div id="navbar">
+	  </div>
+    
+       
+	<!-- Page Header -->
+	<div class="container">	
+    <div class="page-header">
+      <h1>Dein Resultat der letzten Runde</h1>
+    </div>
+     		
+  	 <div class="well">	  		
+ 		<table class="table table-bordered table-sm m-0">
+                    <thead class="">
+                        <tr>
+                            <th colspan="2">Ausgaben </th>
+                            <th colspan="2">Einnahmen</th>
+                        </tr>
+                    </thead>
+                    <tbody id =inhaltAusgaben2>
+                    
+               		</tbody>
+                
+              <tfoot>
+		        <tr>
+		            <th id="summeAusgaben" scope="row">Summe</th>
+		            <td id="summeAusgabenAusgabe"></td>
+		            <th id="summeEinnahmen" scope="row">Summe</th>
+		            <td id="summeEinnahmenAusgabe"></td>
+		        </tr>
+    		</tfoot>
+                </table>
+                </div>
+    </div>
+   
+    <!-- Fixed footer -->
+    <div id="footer">
+	</div>  
+
+  </body>
+</html>
