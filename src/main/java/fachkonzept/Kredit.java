@@ -68,6 +68,11 @@ public class Kredit extends Markteinheit {
 	}
 
 
+	public int getVerwaltungsZeit() {
+		return verwaltungsZeit;
+	}
+
+
 
     
 }
