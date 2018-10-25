@@ -29,7 +29,7 @@ public class Angebot{
 
 	//preis pro einheit
 	public Angebot(Markteinheit m, int menge, double preis) {
-		this.preis = preis;
+		this.preis = Werkzeuge.runde2Stellen(preis);
 		this.menge = menge;
 		this.markteinheit = m;
 		this.id = angebotsnummer;

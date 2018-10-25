@@ -2,6 +2,7 @@ package fachkonzept;
 
 import fachkonzept.markt.Markteinheit;
 import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.Werkzeuge;
 
 public class Mitarbeiter extends Markteinheit {
     
@@ -15,7 +16,7 @@ public class Mitarbeiter extends Markteinheit {
         super();
         
         this.name= name;
-        this.lohnkosten = lohn;
+        this.lohnkosten = Werkzeuge.runde2Stellen(lohn);
         this.mfg = mfg;
         this.arbeitszeit = arbeitszeit;
     }
