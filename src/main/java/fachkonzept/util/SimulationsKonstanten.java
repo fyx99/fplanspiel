@@ -130,26 +130,26 @@ public class SimulationsKonstanten {
     		case A: 
     			list.add(0.8);	//MitarbeiterKostenFaktor
     			list.add(1.0);	//MaterialKostenFaktor
-    			list.add(1.1);	//MarketingsEinflussFaktor
+    			list.add(0.9);	//MarketingsEinflussFaktor
     			list.add(1.0);	//FertigungsKostenFaktor
     			list.add(1.03);	//Angebotsattraktivität
     			break;
     		case B:
     			list.add(1.0);
     			list.add(0.8);
-    			list.add(1.0);
+    			list.add(1.1);
     			list.add(1.1);
     			list.add(1.0);	
     			break;
     		case C:
     			list.add(1.1);
     			list.add(1.0);
-    			list.add(0.8);
-    			list.add(1.0);
-    			list.add(1.0);
+    			list.add(1.2);
+    			list.add(1.1);
+    			list.add(1.03);
     			break;
     		case D:
-    			list.add(1.0);
+    			list.add(0.8);
     			list.add(1.1);
     			list.add(1.0);
     			list.add(0.8);
