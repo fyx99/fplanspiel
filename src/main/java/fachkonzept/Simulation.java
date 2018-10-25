@@ -191,6 +191,7 @@ public class Simulation {
 					SimulationsKonstanten.getProduktMarktvolumen(produktArt) * us.size(),
 					SimulationsKonstanten.getProduktMarktpreis(produktArt));
 		}
+		
 	}
 
 	private static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage,
@@ -221,6 +222,7 @@ public class Simulation {
 			}
 
 		}
+
 	}
 
 	private static int nachfrageAnpassen(int gesamtNachfrage, double grundpreis, double aktPreis) {

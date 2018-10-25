@@ -287,12 +287,7 @@ class SimulationTest {
     	Angebot a1 = u1.getAmarkt().getAngebote().get(0);
     	//weitere Tests...
     }
-    
-    @Test
-    void simuliereVerwaltungsaufwand() {
-    	
-    }
-    
+
     
 
    
