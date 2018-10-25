@@ -114,12 +114,11 @@ public class SpielService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static void spielStart(@DefaultValue("10") @QueryParam("rundenZahl") Integer rundenAnzahl) {
 		if (s != null) {
-			for (Unternehmen u : s.getUnternehmen())
-				u.setSpiel(s);
 			s.setRundenAnzahl(rundenAnzahl);
 			s.rundenStart();
 		}
 	}
+	
 
 	@GET
 	@Path("spiel")

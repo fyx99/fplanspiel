@@ -12,6 +12,11 @@ import fachkonzept.Spiel;
 import fachkonzept.Standort;
 import fachkonzept.Unternehmen;
 import fachkonzept.marketing.Fernsehwerbung;
+import fachkonzept.marketing.MessenKampagne;
+import fachkonzept.marketing.PRKampagne;
+import fachkonzept.marketing.Plakatwerbung;
+import fachkonzept.marketing.Radiowerbung;
+import fachkonzept.marketing.Sponsoring;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;
 import fachkonzept.util.StandortArt;
@@ -31,6 +36,11 @@ class MarketingMixTest {
 
 		u1.arbeitskraftHinzu(new Arbeitskraft(new Mitarbeiter("name", 111, 14000, MitarbeiterFachgebiet.VERWALTUNG )));
 		Fernsehwerbung test1 = new Fernsehwerbung("Werbespot", 1420.544);
+		Radiowerbung test2 = new Radiowerbung("Werbespot", 7879);
+		PRKampagne test3 = new PRKampagne("Werbespot", 4666635);
+		Sponsoring test4 = new Sponsoring("Werbespot", 23423.544);
+		MessenKampagne test5 = new MessenKampagne("Werbespot", 14220.544);
+		Plakatwerbung test6 = new Plakatwerbung("Werbespot", 14240.544);
 		u1.getMarketingmix().marketingBuchen(test1, u1);
 		assertEquals(1420.544, u1.getMarketingmix().getMarketing().get(0).getBudget());
 		assertEquals(55, u1.getMarketingmix().getMarketing().get(0).getEffektivitaet());
@@ -41,3 +51,4 @@ class MarketingMixTest {
 		
 	}
 }
+

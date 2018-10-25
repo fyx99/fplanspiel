@@ -72,14 +72,6 @@ public class Unternehmen {
 		return standort;
 	}
 
-	public void setStandort(Standort standort) {
-		this.standort = standort;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Beschaffungsmarkt getBmarkt() {
 		return bmarkt;
 	}
@@ -213,20 +205,8 @@ public class Unternehmen {
         return maschinen;
     }
 
-    public void setMaschinen(List<Maschine> maschinen) {
-        this.maschinen = maschinen;
-    }
-
-    public void setMaterialien(Map<String, Integer> materialien) {
-		this.materialien = materialien;
-	}
-
 	public Map<Produkt, Integer> getProdukte() {
 		return produkte;
-	}
-
-	public void setProdukte(Map<Produkt, Integer> produkte) {
-		this.produkte = produkte;
 	}
     
     public List<Arbeitskraft> getMitarbeiter() {
@@ -239,10 +219,6 @@ public class Unternehmen {
 
     public List<Verbindlichkeit> getVerbindlichkeiten() {
         return verbindlichkeiten;
-    }
-
-    public void setVerbindlichkeiten(List<Verbindlichkeit> verbindlichkeiten) {
-        this.verbindlichkeiten = verbindlichkeiten;
     }
    
 
@@ -296,7 +272,6 @@ public class Unternehmen {
     }
 
 	public double getUmsatz() {
-		// TODO Auto-generated method stub
 		return umsatz;
 	}
 	
@@ -313,10 +288,6 @@ public class Unternehmen {
 
 	public Spiel getSpiel() {
 		return spiel;
-	}
-
-	public void setSpiel(Spiel sp) {
-		this.spiel = sp;
 	}
 	
 	public GuV getGuv() {
