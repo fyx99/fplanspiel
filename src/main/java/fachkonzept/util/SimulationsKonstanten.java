@@ -79,7 +79,6 @@ public class SimulationsKonstanten {
     public static final int MASCHINEN_MARKT_MENGE = 100000;
     public static final int FINANZ_MARKT_MENGE = 100000;
     
-
     public static final double MASCHINEN_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
     public static final double MATERIAL_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
 
@@ -133,17 +132,20 @@ public class SimulationsKonstanten {
     			list.add(1.0);	//MaterialKostenFaktor
     			list.add(1.1);	//MarketingsEinflussFaktor
     			list.add(1.0);	//FertigungsKostenFaktor
+    			list.add(1.03);	//Angebotsattraktivität
     			break;
     		case B:
     			list.add(1.0);
     			list.add(0.8);
     			list.add(1.0);
     			list.add(1.1);
+    			list.add(1.0);	
     			break;
     		case C:
     			list.add(1.1);
     			list.add(1.0);
     			list.add(0.8);
+    			list.add(1.0);
     			list.add(1.0);
     			break;
     		case D:
@@ -151,11 +153,13 @@ public class SimulationsKonstanten {
     			list.add(1.1);
     			list.add(1.0);
     			list.add(0.8);
+    			list.add(1.0);
     			break;
     		case NEUTRAL:
     			list.add(1.0);	
     			list.add(1.0);	
     			list.add(1.0);	
+    			list.add(1.0);
     			list.add(1.0);
     			break;
     		}
