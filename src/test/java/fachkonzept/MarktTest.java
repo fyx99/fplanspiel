@@ -18,6 +18,8 @@ import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MaterialArt;
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 class MarktTest {
      Unternehmen u;
@@ -29,7 +31,7 @@ class MarktTest {
 
     @BeforeEach
     void setup() {
-        u = new Unternehmen("Testing U", new Spiel());
+        u = new Unternehmen("Testing U", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL)));
         m = new Maschinenmarkt();
         b = new Beschaffungsmarkt();
         a = new Arbeitsmarkt();

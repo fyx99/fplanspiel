@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import fachkonzept.util.ProduktArt;
 import fachkonzept.util.ProduktTyp;
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 class UmsatzTest {
 
@@ -13,7 +15,7 @@ class UmsatzTest {
     void init() {
         Angebot beispiel = new Angebot(new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), 100, 999.88);
         Umsatz testUmsatz = new Umsatz(beispiel, 49, 9, null);
-        Umsatz testUmsatz2 = new Umsatz(beispiel, 49, 9, new Unternehmen("beispiel unternehmen aggg", new Spiel()));
+        Umsatz testUmsatz2 = new Umsatz(beispiel, 49, 9, new Unternehmen("beispiel unternehmen aggg", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
         assertEquals(9, testUmsatz.getRunde());
         assertEquals(49, testUmsatz.getMenge());
         assertEquals("Holzstuhl", testUmsatz.getAngebot().getMarkteinheit().getName());

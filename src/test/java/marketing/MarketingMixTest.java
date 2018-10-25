@@ -6,8 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.Spiel;
+import fachkonzept.Standort;
 import fachkonzept.Unternehmen;
 import fachkonzept.marketing.Fernsehwerbung;
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 class MarketingMixTest {
 
@@ -16,7 +19,7 @@ class MarketingMixTest {
 	@BeforeEach
 	void setUp() {
 		s = new Spiel();
-		u1 = new Unternehmen("name", s);
+		u1 = new Unternehmen("name", s, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL)));
 	}
 	
 	@Test

@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 
 import fachkonzept.Angebot;
 import fachkonzept.Spiel;
+import fachkonzept.Standort;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 public abstract class Markt {
 
@@ -46,7 +48,7 @@ public abstract class Markt {
         }
         Spiel.log(a.getId() + " gekaufet übrig " + a.getMenge());
         kaeufer.kosten(a.getPreis() * menge, ("Kauf von " + a.getMarkteinheit().getClass().getSimpleName()));
-        umsatzFesthalten(a, menge, kaeufer.getSpiel().getRunde(), new Unternehmen("Simulation", new Spiel()));
+        umsatzFesthalten(a, menge, kaeufer.getSpiel().getRunde(), new Unternehmen("Simulation", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
         // unternehmen bezahlt angebot
 
     }

@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.util.KreditArt;
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 class FinanzmarktTest {
 
     Unternehmen testU;
     @BeforeEach
     void setup() {
-        testU = new Unternehmen("Test", new Spiel());
+        testU = new Unternehmen("Test", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL)));
         testU.setKapital(2500.01);
     }
     
@@ -60,9 +62,9 @@ class FinanzmarktTest {
     	fmarkt.anbieten(a1);
     	fmarkt.anbieten(a2);
     	
-    	fmarkt.kaufen(a1, 2,new Unternehmen("a1", new Spiel()));
-    	fmarkt.kaufen(a1, 1, new Unternehmen("a1", new Spiel()));
-    	fmarkt.kaufen(a2, 1, new Unternehmen("a2", new Spiel()));
+    	fmarkt.kaufen(a1, 2,new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+    	fmarkt.kaufen(a1, 1, new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+    	fmarkt.kaufen(a2, 1, new Unternehmen("a2", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
     	
     	
 //    	assertEquals(size+3, Finanzmarkt.getUmsatzHistorie().size());

@@ -36,7 +36,7 @@ public class Unternehmen {
 	
 	private Marketingmix marketingmix = new Marketingmix();
 	private GuV guv = new GuV();
-//	private Standort standort;
+	private Standort standort;
 
 	private List<Maschine> maschinen = new ArrayList<Maschine>(); // jeweils mit mengen
 	private Map<String, Integer> materialien = new HashMap<String, Integer>(); // für den anfang string achtung nichts
@@ -44,9 +44,10 @@ public class Unternehmen {
     private List<Arbeitskraft> mitarbeiter = new ArrayList<Arbeitskraft>();
     private List<Verbindlichkeit> verbindlichkeiten = new ArrayList();
 
-	public Unternehmen(String name, Spiel s) {
+	public Unternehmen(String name, Spiel s, Standort st) {
 		spiel = s;
 		this.name = name;
+		this.standort = st;
 	}
 
 	private double kapital = 0;
@@ -65,6 +66,14 @@ public class Unternehmen {
 
 	public String getName() {
 		return name;
+	}
+
+	public Standort getStandort() {
+		return standort;
+	}
+
+	public void setStandort(Standort standort) {
+		this.standort = standort;
 	}
 
 	public void setName(String name) {

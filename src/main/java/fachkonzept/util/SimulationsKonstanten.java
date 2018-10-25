@@ -152,12 +152,12 @@ public class SimulationsKonstanten {
     			list.add(1.0);
     			list.add(0.8);
     			break;
-    		default:
+    		case NEUTRAL:
     			list.add(1.0);	
     			list.add(1.0);	
     			list.add(1.0);	
     			list.add(1.0);
-    			
+    			break;
     		}
     	return list;
     }

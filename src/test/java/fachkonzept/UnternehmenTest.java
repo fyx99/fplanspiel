@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 class UnternehmenTest {
 	Unternehmen testUnternehmen;
@@ -15,7 +17,7 @@ class UnternehmenTest {
 	@BeforeEach
 	void setUp() {
 		Spiel s = new Spiel();
-		s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s));
+		s.unternehmenHinzufuegen(testUnternehmen = new Unternehmen("TestU", s, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
 		s.rundenStart(); // -> anfangs simulation triggern
 
 		testUnternehmen.arbeitskraftHinzu(
@@ -30,8 +32,8 @@ class UnternehmenTest {
 
 	@Test
 	void unternehmenErstellen() {
-		Unternehmen u = new Unternehmen("Test  Name", new Spiel());
-		Unternehmen u2 = new Unternehmen("Testtest", new Spiel());
+		Unternehmen u = new Unternehmen("Test  Name", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL)));
+		Unternehmen u2 = new Unternehmen("Testtest", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL)));
 		u.setKapital(10000.99);
 
 		assertEquals("Test  Name", u.getName());

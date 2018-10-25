@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
+
 class SpielTest {
     Spiel testSpiel;
 
@@ -14,9 +17,9 @@ class SpielTest {
 
     void vorbereiten() {
         testSpiel = new Spiel(10);
-        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest1", testSpiel));
-        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest2", testSpiel));
-        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest3", testSpiel));
+        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest1", testSpiel, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest2", testSpiel, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+        testSpiel.unternehmenHinzufuegen(new Unternehmen("UnternehmenTest3", testSpiel, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
         testSpiel.rundenStart();
     }
 
@@ -30,7 +33,7 @@ class SpielTest {
     @Test
     void unternehmenHinzu() {
         Spiel spiel = new Spiel();
-        Unternehmen u1 = new Unternehmen("test", spiel);
+        Unternehmen u1 = new Unternehmen("test", spiel, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL)));
         spiel.unternehmenHinzufuegen(u1);
         spiel.rundenStart();
         assertEquals(1, spiel.getUnternehmen().size());

@@ -32,6 +32,7 @@ class ServiceTest {
         SpielService.neuesUnternehmen("Test Unternehmen AG 87", "A");
         assertEquals(1, SpielService.getSpiel().getUnternehmen().size());
         assertEquals("Test Unternehmen AG 87", SpielService.getSpiel().getUnternehmen().get(0).getName());
+        //assertEquals(0.8, SpielService.getSpiel().getAktuellesUnternehmen().getStandort().getMitarbeiterKosten());
 
         SpielService.neuesUnternehmen("Test Unternehmen AG 88", "B");
         SpielService.neuesUnternehmen("Test Unternehmen AG 89", "C");
@@ -136,5 +137,7 @@ class ServiceTest {
     	assertEquals("Test Unternehmen AG 108", SpielService.getSpielende().get(1).getName());
     	assertEquals("Test Unternehmen AG 109", SpielService.getSpielende().get(2).getName());
     }
+    
+    
 
 }

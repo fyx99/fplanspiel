@@ -11,6 +11,8 @@ import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.util.KreditArt;
 import fachkonzept.util.MaterialArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 public class ArbeitsmarktTest {
 	
@@ -51,7 +53,7 @@ public class ArbeitsmarktTest {
 
 
         assertNotNull(Angebot.findeAngebot(a1.getId()));
-        Unternehmen testUN = new Unternehmen("tests", new Spiel());
+        Unternehmen testUN = new Unternehmen("tests", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL)));
         
         assertEquals(22, am.getAngebote().get(0).getMenge());
         am.kaufen(a1, 10, testUN);
@@ -78,10 +80,10 @@ public class ArbeitsmarktTest {
         Angebot a3 = new Angebot(new Kredit(1555,0.05, 5,KreditArt.Mehr_Cash), 22, 11);
         fmarkt.anbieten(a3);
 		
-        amarkt.kaufen(a1, 10, new Unternehmen("a1", new Spiel()));
-        amarkt.kaufen(a1, 15, new Unternehmen("a1", new Spiel()));
-        amarkt.kaufen(a2, 10, new Unternehmen("a1", new Spiel()));
-        fmarkt.kaufen(a3, 10, new Unternehmen("a1", new Spiel()));
+        amarkt.kaufen(a1, 10, new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+        amarkt.kaufen(a1, 15, new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+        amarkt.kaufen(a2, 10, new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+        fmarkt.kaufen(a3, 10, new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
         
         assertEquals(4 + size, Arbeitsmarkt.getUmsatzHistorie().size());
     	assertEquals(2 + size2, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());

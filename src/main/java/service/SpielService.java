@@ -30,6 +30,7 @@ import fachkonzept.Material;
 import fachkonzept.Mitarbeiter;
 import fachkonzept.Produkt;
 import fachkonzept.Spiel;
+import fachkonzept.Standort;
 import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
@@ -42,6 +43,8 @@ import fachkonzept.marketing.Radiowerbung;
 import fachkonzept.marketing.Sponsoring;
 import fachkonzept.markt.Markteinheit;
 import fachkonzept.util.MarketingmaßnahmenArt;
+import fachkonzept.util.SimulationsKonstanten;
+import fachkonzept.util.StandortArt;
 
 @PermitAll
 @Path("spiel")
@@ -79,8 +82,28 @@ public class SpielService {
 					return "Doppelter Name";
 				}
 			}
+			StandortArt standortArt = StandortArt.valueOf(standort);
+			Standort st;
+			switch (standortArt) {
+			case A:
+				st = new Standort(SimulationsKonstanten.getStandortFaktoren(standortArt));
+				break;
+			case B:
+				st = new Standort(SimulationsKonstanten.getStandortFaktoren(standortArt));
+				break;
+			case C:
+				st = new Standort(SimulationsKonstanten.getStandortFaktoren(standortArt));
+				break;
+			case D:
+				st = new Standort(SimulationsKonstanten.getStandortFaktoren(standortArt));
+				break;
+			default:
+				st = new Standort(SimulationsKonstanten.getStandortFaktoren(standortArt));
+			}
+			
+			s.unternehmenHinzufuegen(new Unternehmen(name, s, st));
+			
 
-			s.unternehmenHinzufuegen(new Unternehmen(name, s));
 		}
 
 		return name;
@@ -97,7 +120,7 @@ public class SpielService {
 			s.rundenStart();
 		}
 	}
-	
+
 	@GET
 	@Path("spiel")
 	@Produces(MediaType.TEXT_PLAIN) // Application_Json
@@ -367,7 +390,5 @@ public class SpielService {
 	public static Spiel getSpiel() {
 		return s;
 	}
-	
-	
 
 }
