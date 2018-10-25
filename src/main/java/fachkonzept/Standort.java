@@ -19,33 +19,22 @@ public class Standort {
 		return mitarbeiterKosten;
 	}
 
-	public void setMitarbeiterKosten(double mitarbeiterKosten) {
-		this.mitarbeiterKosten = mitarbeiterKosten;
-	}
 
 	public double getMaterialKosten() {
 		return materialKosten;
 	}
 
-	public void setMaterialKosten(double materialKosten) {
-		this.materialKosten = materialKosten;
-	}
 
 	public double getMarketingEinfluss() {
 		return marketingEinfluss;
 	}
 
-	public void setMarketingEinfluss(double marketingEinfluss) {
-		this.marketingEinfluss = marketingEinfluss;
-	}
+
 
 	public double getFertigungsKosten() {
 		return fertigungsKosten;
 	}
 
-	public void setFertigungsKosten(double fertigungsKosten) {
-		this.fertigungsKosten = fertigungsKosten;
-	}
 	
 	
 }

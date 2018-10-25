@@ -32,11 +32,16 @@ class ServiceTest {
         SpielService.neuesUnternehmen("Test Unternehmen AG 87", "A");
         assertEquals(1, SpielService.getSpiel().getUnternehmen().size());
         assertEquals("Test Unternehmen AG 87", SpielService.getSpiel().getUnternehmen().get(0).getName());
-        //assertEquals(0.8, SpielService.getSpiel().getAktuellesUnternehmen().getStandort().getMitarbeiterKosten());
+        assertEquals(0.8, SpielService.getSpiel().getUnternehmen().get(0).getStandort().getMitarbeiterKosten());
 
         SpielService.neuesUnternehmen("Test Unternehmen AG 88", "B");
+        assertEquals(0.8, SpielService.getSpiel().getUnternehmen().get(1).getStandort().getMaterialKosten());
         SpielService.neuesUnternehmen("Test Unternehmen AG 89", "C");
-        assertEquals(3, SpielService.getSpiel().getUnternehmen().size());
+        assertEquals(0.8, SpielService.getSpiel().getUnternehmen().get(2).getStandort().getMarketingEinfluss());
+        SpielService.neuesUnternehmen("Test Unternehmen AG 90", "D");
+        assertEquals(0.8, SpielService.getSpiel().getUnternehmen().get(3).getStandort().getFertigungsKosten());
+        
+        assertEquals(4, SpielService.getSpiel().getUnternehmen().size());
         assertNull(SpielService.getSpiel().getAktuellesUnternehmen());
         
         SpielService.spielStart(2);
@@ -52,6 +57,9 @@ class ServiceTest {
         assertEquals(Integer.valueOf(0), SpielService.zugBeendet());
         assertEquals("Test Unternehmen AG 89", SpielService.getSpiel().getAktuellesUnternehmen().getName());
         
+        assertEquals(Integer.valueOf(0), SpielService.zugBeendet());
+        assertEquals("Test Unternehmen AG 90", SpielService.getSpiel().getAktuellesUnternehmen().getName());
+        
         assertEquals(Integer.valueOf(2), SpielService.zugBeendet());
         assertEquals("Test Unternehmen AG 87", SpielService.getSpiel().getAktuellesUnternehmen().getName());
         
@@ -61,6 +69,8 @@ class ServiceTest {
         assertEquals(Integer.valueOf(0), SpielService.zugBeendet());
         assertEquals("Test Unternehmen AG 89", SpielService.getSpiel().getAktuellesUnternehmen().getName());
         
+        assertEquals(Integer.valueOf(0), SpielService.zugBeendet());
+        assertEquals("Test Unternehmen AG 90", SpielService.getSpiel().getAktuellesUnternehmen().getName());
 
         assertEquals(Integer.valueOf(-1), SpielService.zugBeendet());
     }
