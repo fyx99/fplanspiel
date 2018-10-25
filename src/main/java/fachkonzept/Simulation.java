@@ -53,7 +53,6 @@ public class Simulation {
 		Iterator<Unternehmen> i = s.getUnternehmen().iterator();
 		while (i.hasNext()) {
 			Unternehmen n = i.next();
-			n.rundenReset();
 			simuliereKredittilgung(n);
 			simuliereLohnzahlung(n);
 			simuliereMarketingmix(n);
@@ -61,15 +60,8 @@ public class Simulation {
 			simuliereFinanzmarkt(n.getFmarkt());
 			simuliereMaschinenmarkt(n.getMmarkt(), s.getRunde());
 			simuliereArbeitsmarkt(n.getAmarkt());
-			simuliereVerwaltungsaufwand(n, s);
-
+			n.rundenReset();
 		}
-
-	}
-
-	private static void simuliereVerwaltungsaufwand(Unternehmen n, Spiel s) {
-		n.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG,
-				(int) n.getGuv().rundenErgebnis(s.getRunde() - 1) / 100);
 
 	}
 
@@ -107,7 +99,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Fernsehwerbung.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Fernsehwerbung.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -120,7 +111,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Sponsoring.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Sponsoring.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -133,7 +123,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Plakatwerbung.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Plakatwerbung.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -146,7 +135,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Radiowerbung.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Radiowerbung.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -159,7 +147,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(PRKampagne.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(PRKampagne.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -172,7 +159,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(MessenKampagne.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(MessenKampagne.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();

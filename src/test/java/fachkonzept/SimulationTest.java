@@ -162,17 +162,17 @@ class SimulationTest {
     
     @Test
     void simuliereMarketingmix() {
-    	
+    	u1.setKapital(55555);
     	u1.getMarketingmix().marketingBuchen(new PRKampagne("Fußfdgdfgdf", 43000), u1);	//kapp 25
     	u1.getMarketingmix().marketingBuchen(new Fernsehwerbung("werbnungg", 900),  u1);	//3
     	u1.getMarketingmix().marketingBuchen(new MessenKampagne("werbsaddnungg", 1000),  u1);
     	u1.getMarketingmix().marketingBuchen(new MessenKampagne("Fußball Tesdfdsfsdfnsoring", 3500),  u1);	//kapp 12
-    	u1.setKapital(55555);
+
     	Simulation.simuliere(s);
     	assertEquals(55555-48400, u1.getKapital());
     	assertEquals(40, u1.getMarketingmix().getMarketingStaerke());
     	Simulation.simuliere(s);
-    	assertEquals(40, u1.getMarketingmix().getMarketingStaerke());
+    	assertEquals(0, u1.getMarketingmix().getMarketingStaerke());
     	assertEquals(0, u2.getMarketingmix().getMarketingStaerke());
     }
     

@@ -10,11 +10,6 @@ import fachkonzept.util.ProduktArt;
 public class Absatzmarkt extends Markt {
 	
 	
-	//hier soll der spieler angtebote einstellen und die simulation welche wahrnehmen
-	
-	public Absatzmarkt() {
-	}
-	
     public List<Angebot> getAngeboteByProduktArt(ProduktArt pa){
 
         List<Angebot> produkt_angebote = new ArrayList<Angebot>();
