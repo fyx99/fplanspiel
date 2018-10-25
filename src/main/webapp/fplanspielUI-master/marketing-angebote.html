@@ -64,6 +64,9 @@
 				var s ="";
 				var marketingMaßnahme;
 				
+				//Vergabe von Unique-ID für Selections
+				//var selectid = "contentSelect"+maschinenid;
+				
 				for(var angebot in data){
 					marketingMaßnahme = data[angebot];
 					
@@ -79,43 +82,35 @@
 								'<p>Diese Kampagne verspricht einen höheren Umsatz.</p>'+
 								'<p>Wie viel Geld möchtest Du investieren?</p>'+
 							'</div>'+
-							
+								'<br></br>'+
 								
-								/* '<div class="col-sm-6">'+
-									'<p>Preis in €</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-								'</div>'+
+								'<div class="col-sm-12">'+
+								'<h4>Vertriebsmitarbeiter einsetzen:</h4>'+
+							'</div>'+
+							'<div class="col-sm-12">'+
+								/* '<select class="form-control" id="'+selectid+'">'; */
+								'<select class="form-control" id="">';
+				
+				 				// Ausgabe in einem Drop-Down, welche Mitarbeiter zur Verfügung stehen
+								
+							/* 	var mitarbeiterVertrieb = daten.maschinen.maschinen
+										
+								for (maschine in maschInBesitz){
+									var auslastung = maschInBesitz[maschine].auslastung;
+									var kapazitaet = maschInBesitz[maschine].kapazitaet;
 											
-								'<div class="col-sm-6">'+
-									'<p>Verfügbar</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-									'<br>'+
-								'</div>'+
-								
-								'<div class="col-sm-6">'+
-								'<p>Laufzeit</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-								'</div>'+	
-								'<div class="col-sm-6">'+
-								'<p>Volumen</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-								'</div>'+	
-								'<div class="col-sm-6">'+
-								'<p>Zinssatz</p>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot]+'</p>'+
-									'<br>'+
-								'</div>'+	 */
-								'<br></br>'+							
+									// Zeige nur Maschinen zur Auswahl an, die genug Kapazität frei haben!
+									if(maschInBesitz[maschine].name == data[angebot].markteinheit.name && auslastung < kapazitaet){
+										s+=			'<option>'+maschInBesitz[maschine].id+' '+maschInBesitz[maschine].name+' ('+auslastung+'/'+kapazitaet+')</option>';
+									}
+								} */ 
+									
+								//Ausgabe von Input-Feld und Button
+				s+=		  		'</select>'+
+								'<br>'+
+							'</div>'+
+							
+							
 		        				'<div class="col-sm-3">'+
 									'<input class="form-control input-sm" type="text" id =inputid'+ angebot+'>'+
 									'<br>'+

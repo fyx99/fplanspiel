@@ -26,9 +26,11 @@
                 $('#footer').load('footer.html');
                 });
  			
-            function printGuV(guvData, umsatzData){
+            function printGuV(guvData, umsatzData,gewinnGesamt,gewinnRunde){
             	 var inhaltAusgaben  = document.getElementById('inhaltAusgaben2');
             	 var inhaltEinnahmen  = document.getElementById('inhaltEinnahmen'); 
+            	 var inhaltGewinn = document.getElementById('contentGewinn');
+            	 var inhaltG = " ";
             	 var s =" ";
 					
 					var laengeGuvData = guvData.length;
@@ -122,14 +124,34 @@
 						 
 					}
 					
-                     inhaltAusgaben.innerHTML = s;                    
-                     
+					 inhaltAusgaben.innerHTML = s;  
+                                      
+                    
+							
+							
                      var contSummeEinnahmen = document.getElementById("summeEinnahmenAusgabe");
                      contSummeEinnahmen.innerHTML = summeEinnahmen + " €";
                      
                      var contSummeAusgaben = document.getElementById("summeAusgabenAusgabe");
                      contSummeAusgaben.innerHTML = summeAusgaben  + " €";	
 
+                     
+                    inhaltG += '<div class="col-sm-8 col-md-6"><div class="thumbnail">'+
+							'<div class="col-sm-12">'+
+								'<h4> Bisheriger Gewinn: ' + gewinnGesamt + ' €</h4>'+
+							'</div>'+
+							'</div>'+
+							'</div>'+
+							'<div class="col-sm-8 col-md-6"><div class="thumbnail">'+
+							'<div class="col-sm-12">'+
+							'<h4> Gewinn der letzten Runde: '+gewinnRunde+' € </h4>'+
+							'</div>'+		
+							'</div>'+
+							'</div>'+
+							'</div>'
+							
+					inhaltGewinn.innerHTML = inhaltG;		
+                     
             }
            
            // Funktion, um Tabelle dynamisch zu erstellen, muss noch bearbeitet werden!
@@ -141,8 +163,10 @@
                    success: function(data, data2){
                 	var guv = data.guv.ausgaben;
                 	var umsatz = data.guv.einnahmen;
+                	var gewinnGesamt = data.gewinn;
+                	var gewinnRunde = data.rundenGewinn;
                 	var test = data.guv;
-                   	printGuV(guv,umsatz);
+                   	printGuV(guv,umsatz,gewinnGesamt,gewinnRunde);
                        
                    }
                });
@@ -195,8 +219,12 @@
 		            <th id="summeEinnahmen" scope="row">Summe</th>
 		            <td id="summeEinnahmenAusgabe"></td>
 		        </tr>
-    		</tfoot>
+    			</tfoot>
                 </table>
+                
+                <div class="row" id="contentGewinn">
+  				</div>
+  				
                 </div>
     </div>
    

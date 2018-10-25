@@ -118,15 +118,21 @@
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
+					var gewinnLetzteRunde = document.getElementById('gewinnLetzteRunde');
+					var gewinnInsgesamt = document.getElementById('gewinnInsgesamt');
 					var kapital  = document.getElementById('kapital');
 					var mitarbeiter = document.getElementById('mitarbeiterAnzahl');
 					
+					var gewinnLetzteRundeData = data.rundenGewinn; 
+					var gewinnInsgesamtData = data.gewinn; 
 					var einnahmenData =data.guv.einnahmen;				
 					var ausgabenData =data.guv.ausgaben;
 					var kapitalData =data.kapital;
 					var marketingData = data.marketingMaßnahmen;
 					var mitarbeiterData = data.mitarbeiterAnzahl;
 					
+					gewinnLetzteRunde.innerHTML = gewinnLetzteRundeData + " €";
+					gewinnInsgesamt.innerHTML = gewinnInsgesamtData + " €";
 					kapital.innerHTML = kapitalData + " €";
 					mitarbeiter.innerHTML = mitarbeiterData;
 					
@@ -299,24 +305,32 @@
                     <br>
                     <table class="table table-bordered table-sm m-0">
                     <tbody>
+                    	<tr>
+                        	<th class="col-sm-2 col-md-6">Gewinn der letzten Runde</th>
+                            <td id="gewinnLetzteRunde"> </td>
+                        </tr>
+                     	<tr>
+                        	<th class="col-sm-2">Gewinn insgesamt</th>
+                            <td id="gewinnInsgesamt"> </td>
+                        </tr>
                         <tr>
-                        	<th class="col-sm-1">Einnahmen</th>
+                        	<th class="col-sm-2">Einnahmen</th>
                             <td id="einnahmen"> </td>
                         </tr>
                         <tr>
-                        	<th class="col-sm-1">Ausgaben</th>
+                        	<th class="col-sm-2">Ausgaben</th>
                             <td id="ausgaben"> </td>
                         </tr>
                         <tr>
-                            <th class="col-sm-1">Kapital</th>
+                            <th class="col-sm-2">Kapital</th>
                             <td id="kapital"> </td>
                         </tr>
                         <tr>
-                        	<th class="col-sm-1">Marketingmaßnahmen</th>
+                        	<th class="col-sm-2">Marketingmaßnahmen</th>
                             <td id="marketingMaßnahmen"></td>
                         </tr>
                         <tr>
-                        	<th class="col-sm-1">Mitarbeiteranzahl</th>
+                        	<th class="col-sm-2">Mitarbeiteranzahl</th>
                             <td id="mitarbeiterAnzahl"></td>
                         </tr>
                     </tbody>
