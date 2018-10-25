@@ -15,7 +15,7 @@ public class Angebot{
      * !!! außer bei material und produkt menge = 1!!
      * 
      * */
-	
+	private double attraktivitaet;
 	private double preis;
 	private int id;
 	private static int angebotsnummer = 0;
@@ -84,6 +84,17 @@ public class Angebot{
 		}
 		return null;
 	}
+
+	public double getAttraktivitaet(Unternehmen anbieter) {
+		return this.preis * ((anbieter.getMarketingmix().getMarketingStaerke() / 100) + 1) * anbieter.getStandort().getAngebotsAttraktivitaet();
+	}	
+	
+	public double getAttraktivitaet() {
+		return attraktivitaet;
+	}
+
+	
+	
 	
 	
 }

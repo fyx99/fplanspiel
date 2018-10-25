@@ -47,8 +47,7 @@ public class Simulation {
 	}
 
 	public static void simuliere(Spiel s) {
-		// gemeinsame konkurrenz dinge
-		simuliereAbsatzmarkt(s.getUnternehmen());
+
 		// rest
 		Iterator<Unternehmen> i = s.getUnternehmen().iterator();
 		while (i.hasNext()) {
@@ -62,6 +61,8 @@ public class Simulation {
 			simuliereArbeitsmarkt(n.getAmarkt());
 			n.rundenReset();
 		}
+		// gemeinsame konkurrenz dinge
+		simuliereAbsatzmarkt(s.getUnternehmen());
 
 	}
 
@@ -197,9 +198,10 @@ public class Simulation {
 	private static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage,
 			double grundpreis) {
 		// als erstes die liste nach angebotsstärke sortieren
-		// hier bisher nur nach preis
+		// hier jetzt nach standort, marketing und preis
+		// in der sortierten liste sind attraktivitaeten gesetzt
 		List<Angebot> sortierteAngebote = angebote.keySet().stream()
-				.sorted((Angebot u1, Angebot u2) -> Double.compare(u1.getPreis(), u2.getPreis()))
+				.sorted((Angebot u1, Angebot u2) -> Double.compare(u1.getAttraktivitaet(angebote.get(u1)), u2.getAttraktivitaet(angebote.get(u2))))
 				.collect(Collectors.toList());
 		int verbleibendeNachfrage = nachfrage;
 
@@ -242,9 +244,9 @@ public class Simulation {
 	private static List<Angebot> angbotsAuswahl(List<Angebot> angebote) {
 		// wählt unter den angeboten das/ evt. die günstigste/n aus
 		List<Angebot> ret = new ArrayList<Angebot>();
-		int referenzPreis = (int) angebote.get(0).getPreis();
+		int referenzAttr = (int) angebote.get(0).getAttraktivitaet();
 		for (Angebot a : angebote) {
-			if (((int) a.getPreis()) <= referenzPreis) {
+			if (((int) a.getAttraktivitaet()) <= referenzAttr) {
 				ret.add(a);
 			} else {
 				break;
