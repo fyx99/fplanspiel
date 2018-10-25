@@ -2,7 +2,9 @@ package dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import dto.mapper.UnternehmenMapper;
 import fachkonzept.Unternehmen;
 
 public class ZwischenstandDTO {
@@ -12,8 +14,9 @@ public class ZwischenstandDTO {
         super();
         this.runde = runde;
         List<UnternehmenStatDTO> dtos = new ArrayList();
+        
         for(Unternehmen u : unternehmen) {
-            dtos.add(new UnternehmenStatDTO(u.getUmsatz(), u.getKapital(), u.getName(), u.getGuv().rundenErgebnis()));
+            dtos.add(new UnternehmenStatDTO(u.getUmsatz(), u.getKapital(), u.getName(), u.getGuv().rundenErgebnis(), u.getVmarkt().getMarktanteile(u)));
         }
         this.unternehmen = dtos;
     }
