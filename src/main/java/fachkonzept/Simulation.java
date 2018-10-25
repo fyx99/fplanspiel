@@ -47,24 +47,23 @@ public class Simulation {
 	}
 
 	public static void simuliere(Spiel s) {
-
+		// gemeinsame konkurrenz dinge
+		simuliereAbsatzmarkt(s.getUnternehmen());
+		// rest
 		Iterator<Unternehmen> i = s.getUnternehmen().iterator();
 		while (i.hasNext()) {
 			Unternehmen n = i.next();
-			// n.verringereKapital(6);
 			n.rundenReset();
 			simuliereKredittilgung(n);
 			simuliereLohnzahlung(n);
 			simuliereMarketingmix(n);
-			simuliereBeschaffungsmarkt(n.getBmarkt(), s);
+			simuliereBeschaffungsmarkt(n.getBmarkt(), s.getRunde());
 			simuliereFinanzmarkt(n.getFmarkt());
-			simuliereMaschinenmarkt(n.getMmarkt(), s);
+			simuliereMaschinenmarkt(n.getMmarkt(), s.getRunde());
 			simuliereArbeitsmarkt(n.getAmarkt());
 			simuliereVerwaltungsaufwand(n, s);
 
 		}
-		// gemeinsame konkurrenz dinge
-		simuliereAbsatzmarkt(s.getUnternehmen());
 
 	}
 
@@ -100,8 +99,8 @@ public class Simulation {
 	}
 
 	private static void simuliereMarketingmix(Unternehmen u) {
-		double marketingsEinflussFaktor = u.getStandort().getMarketingEinfluss();	//abhängig vom Standort
-		
+		double marketingsEinflussFaktor = u.getStandort().getMarketingEinfluss(); // abhängig vom Standort
+
 		int marketingPunkte = 0;
 		Marketingmaßnahme m = null;
 		int volumen = 0;
@@ -180,7 +179,7 @@ public class Simulation {
 		} else if (m != null) {
 			marketingPunkte += m.getEffektivitaet() * ((double) volumen / (double) m.getVolumen());
 		}
-		marketingPunkte = (int)(marketingPunkte * marketingsEinflussFaktor);
+		marketingPunkte = (int) (marketingPunkte * marketingsEinflussFaktor);
 		u.getMarketingmix().setMarketingStaerke(marketingPunkte);
 
 	}
@@ -290,21 +289,25 @@ public class Simulation {
 		return verbleibendeNachfrage;
 	}
 
-	private static void simuliereBeschaffungsmarkt(Beschaffungsmarkt b, Spiel s) {
+	private static void simuliereBeschaffungsmarkt(Beschaffungsmarkt b, int runde) {
 		int gesamt = 0;
 		for (MaterialArt a : MaterialArt.values()) {
-			// wv pro produkt verkauft wurde
-			gesamt += Beschaffungsmarkt.umsatzProMaterialArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge())
-					.sum();
+			// wv pro produkt verkauft wurde (menge)
+			gesamt += Beschaffungsmarkt.umsatzProMaterialArt(a, runde).stream().mapToInt(u -> u.getMenge()).sum();
 		}
-		double schnittMenge = gesamt / MaterialArt.values().length;
+		
+		if(gesamt < MaterialArt.values().length)	//macht sonst wegen rundung keinen sinn
+			return;
+		double durchschnittsMenge = gesamt / MaterialArt.values().length;
+		
+
 		// was ist viel
 		// -> über alle drüber und
 		for (Angebot a : b.getAngebote()) {
 			int artMenge = Beschaffungsmarkt
-					.umsatzProMaterialArt(((Material) a.getMarkteinheit()).getMaterialArt(), s.getRunde()).stream()
+					.umsatzProMaterialArt(((Material) a.getMarkteinheit()).getMaterialArt(), runde).stream()
 					.mapToInt(u -> u.getMenge()).sum();
-			double mengenVerhältnis = (double) (artMenge - schnittMenge) / schnittMenge;
+			double mengenVerhältnis = (double) (artMenge - durchschnittsMenge) / durchschnittsMenge;
 			// bei 50% drüber soll preis 5% steigen
 			a.setMenge(SimulationsKonstanten.MATERIAL_MARKT_MENGE);
 			a.setPreis(a.getPreis()
@@ -313,18 +316,21 @@ public class Simulation {
 		}
 	}
 
-	private static void simuliereMaschinenmarkt(Maschinenmarkt b, Spiel s) {
+	private static void simuliereMaschinenmarkt(Maschinenmarkt b, int runde) {
 		int gesamt = 0;
 		for (MaschinenArt a : MaschinenArt.values()) {
 			// wv pro produkt verkauft wurde
-			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge()).sum();
+			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, runde).stream().mapToInt(u -> u.getMenge()).sum();
 		}
+		if(gesamt < MaschinenArt.values().length)	//macht sonst wegen rundung keinen sinn
+			return;
+		
 		double schnittMenge = gesamt / MaschinenArt.values().length;
 		// was ist viel
 		// -> über alle drüber und
 		for (Angebot a : b.getAngebote()) {
 			int artMenge = Maschinenmarkt
-					.umsatzProMaschinenArt(((Maschine) a.getMarkteinheit()).getMaschinenArt(), s.getRunde()).stream()
+					.umsatzProMaschinenArt(((Maschine) a.getMarkteinheit()).getMaschinenArt(), runde).stream()
 					.mapToInt(u -> u.getMenge()).sum();
 			double mengenVerhältnis = (artMenge - schnittMenge) / schnittMenge;
 			// bei 50% drüber soll preis 5% steigen
@@ -385,18 +391,24 @@ public class Simulation {
 
 	private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
 		double standortfaktor_mitarbeiterkosten = n.getStandort().getMitarbeiterKosten();
-		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 150 * standortfaktor_mitarbeiterkosten, 60000, MitarbeiterFachgebiet.MASCHINE);
-		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 300 * standortfaktor_mitarbeiterkosten, 120000, MitarbeiterFachgebiet.MASCHINE);
-		
-		Mitarbeiter ma3 = new Mitarbeiter("Mitarbeiter 3", 200 * standortfaktor_mitarbeiterkosten, 100000, MitarbeiterFachgebiet.VERWALTUNG);
-		Mitarbeiter ma4 = new Mitarbeiter("Mitarbeiter 4", 250 * standortfaktor_mitarbeiterkosten, 120000, MitarbeiterFachgebiet.VERWALTUNG);
-		
-		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 200 * standortfaktor_mitarbeiterkosten, 100000, MitarbeiterFachgebiet.VERTRIEB);
-		Mitarbeiter ma6 = new Mitarbeiter("Mitarbeiter 6", 300 * standortfaktor_mitarbeiterkosten, 120000, MitarbeiterFachgebiet.VERTRIEB);
+		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 150 * standortfaktor_mitarbeiterkosten, 60000,
+				MitarbeiterFachgebiet.MASCHINE);
+		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 300 * standortfaktor_mitarbeiterkosten, 120000,
+				MitarbeiterFachgebiet.MASCHINE);
+
+		Mitarbeiter ma3 = new Mitarbeiter("Mitarbeiter 3", 200 * standortfaktor_mitarbeiterkosten, 100000,
+				MitarbeiterFachgebiet.VERWALTUNG);
+		Mitarbeiter ma4 = new Mitarbeiter("Mitarbeiter 4", 250 * standortfaktor_mitarbeiterkosten, 120000,
+				MitarbeiterFachgebiet.VERWALTUNG);
+
+		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 200 * standortfaktor_mitarbeiterkosten, 100000,
+				MitarbeiterFachgebiet.VERTRIEB);
+		Mitarbeiter ma6 = new Mitarbeiter("Mitarbeiter 6", 300 * standortfaktor_mitarbeiterkosten, 120000,
+				MitarbeiterFachgebiet.VERTRIEB);
 
 		Arbeitsmarkt am = new Arbeitsmarkt();
 
-		am.anbieten(new Angebot(ma1, 10, 20)); 														
+		am.anbieten(new Angebot(ma1, 10, 20));
 		am.anbieten(new Angebot(ma2, 10, 20));
 		am.anbieten(new Angebot(ma3, 10, 20));
 		am.anbieten(new Angebot(ma4, 10, 20));
@@ -407,9 +419,9 @@ public class Simulation {
 	}
 
 	private static Maschinenmarkt maschinenmarktDemoDaten(Unternehmen n) {
-		
+
 		double fertigungsKostenFaktor = n.getStandort().getFertigungsKosten();
-		
+
 		Material holz = new Material(MaterialArt.Holz);
 		Material stoff = new Material(MaterialArt.Stoff);
 		Material leder = new Material(MaterialArt.Leder);
@@ -463,19 +475,19 @@ public class Simulation {
 		// Produktionsmatrix pm = new Produktionsmatrix(map);
 
 		// Stühle
-		Maschine m1 = new Maschine(MaschinenArt.Holzstuhlmaschine, 100, holzstuhl, new Produktionsmatrix(map_hst), 15 * fertigungsKostenFaktor,
-				1);
-		Maschine m2 = new Maschine(MaschinenArt.Stoffstuhlmaschine, 57, stoffstuhl, new Produktionsmatrix(map_sst), 20 * fertigungsKostenFaktor,
-				2);
-		Maschine m3 = new Maschine(MaschinenArt.Lederstuhlmaschine, 50, lederstuhl, new Produktionsmatrix(map_lst), 25 * fertigungsKostenFaktor,
-				3);
+		Maschine m1 = new Maschine(MaschinenArt.Holzstuhlmaschine, 100, holzstuhl, new Produktionsmatrix(map_hst),
+				15 * fertigungsKostenFaktor, 1);
+		Maschine m2 = new Maschine(MaschinenArt.Stoffstuhlmaschine, 57, stoffstuhl, new Produktionsmatrix(map_sst),
+				20 * fertigungsKostenFaktor, 2);
+		Maschine m3 = new Maschine(MaschinenArt.Lederstuhlmaschine, 50, lederstuhl, new Produktionsmatrix(map_lst),
+				25 * fertigungsKostenFaktor, 3);
 
 		// Tische
-		Maschine m4 = new Maschine(MaschinenArt.Holztischmaschine, 50, holztisch, new Produktionsmatrix(map_ht), 100 * fertigungsKostenFaktor,
-				4);
-		Maschine m5 = new Maschine(MaschinenArt.Glastischmaschine, 35, glastisch, new Produktionsmatrix(map_gt), 125 * fertigungsKostenFaktor,
-				5);
-		Maschine m6 = new Maschine(MaschinenArt.Kunststofftischmaschine, 180 , kunststofftisch,
+		Maschine m4 = new Maschine(MaschinenArt.Holztischmaschine, 50, holztisch, new Produktionsmatrix(map_ht),
+				100 * fertigungsKostenFaktor, 4);
+		Maschine m5 = new Maschine(MaschinenArt.Glastischmaschine, 35, glastisch, new Produktionsmatrix(map_gt),
+				125 * fertigungsKostenFaktor, 5);
+		Maschine m6 = new Maschine(MaschinenArt.Kunststofftischmaschine, 180, kunststofftisch,
 				new Produktionsmatrix(map_kt), 20 * fertigungsKostenFaktor, 6);
 
 		// Schränke

@@ -186,7 +186,10 @@ class SimulationTest {
 			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge()).sum();
 		}
 		assertEquals(0, gesamt);
-
+		
+		double schnittMenge = gesamt / MaschinenArt.values().length;
+		assertEquals(0, schnittMenge);
+		
     	Angebot a1 = u1.getMmarkt().getAngebote().get(0);
     	u1.getMmarkt().kaufen(a1, 10, u1);
     	u1.getMmarkt().kaufen(u1.getMmarkt().getAngebote().get(1), 5, u1);
@@ -199,14 +202,51 @@ class SimulationTest {
     	assertEquals(8000, u1.getMmarkt().getAngebote().get(2).getPreis());
     	assertEquals(9500, u1.getMmarkt().getAngebote().get(3).getPreis());
     	assertEquals(11500, u1.getMmarkt().getAngebote().get(4).getPreis());
-    	
-    	Simulation.simuliere(s);
 
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	
+		for (MaschinenArt a : MaschinenArt.values()) {
+			// wv pro produkt verkauft wurde
+			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, s.getRunde() -1 ).stream().mapToInt(u -> u.getMenge()).sum();
+		}
+		assertEquals(90, gesamt);
+		schnittMenge = gesamt / MaschinenArt.values().length;
+
+		assertEquals(10, schnittMenge);
+		
     	assertEquals(7000, u1.getMmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
     	assertEquals(7125, u1.getMmarkt().getAngebote().get(1).getPreis());
     	assertEquals(8400, u1.getMmarkt().getAngebote().get(2).getPreis());
     	assertEquals(10350, u1.getMmarkt().getAngebote().get(4).getPreis());
     	assertEquals(SimulationsKonstanten.MASCHINEN_MARKT_MENGE, u1.getMmarkt().getAngebote().get(0).getMenge());
+    	
+    	//jetzt den spaß nochmal
+    	
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	
+    	assertEquals(7000, u1.getMmarkt().getAngebote().get(0).getPreis());	
+    	assertEquals(7125, u1.getMmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(8400, u1.getMmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(10350, u1.getMmarkt().getAngebote().get(4).getPreis());
+    	
+
+    	u1.getMmarkt().kaufen(u1.getMmarkt().getAngebote().get(2), 9, u1);
+    	
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	
+    	assertEquals(6300, u1.getMmarkt().getAngebote().get(0).getPreis());	
+    	assertEquals(6412.5, u1.getMmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(15120, u1.getMmarkt().getAngebote().get(2).getPreis());
+    	
     }
     
     @Test
@@ -226,7 +266,10 @@ class SimulationTest {
     	assertEquals(14, u1.getBmarkt().getAngebote().get(3).getPreis());
     	assertEquals(1, u1.getBmarkt().getAngebote().get(4).getPreis());
     	
-    	Simulation.simuliere(s);
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
+    	s.zugBeendet();
 
     	assertEquals(3, u1.getBmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
     	assertEquals(3.33, u1.getBmarkt().getAngebote().get(1).getPreis());
@@ -243,6 +286,11 @@ class SimulationTest {
     	
     	Angebot a1 = u1.getAmarkt().getAngebote().get(0);
     	//weitere Tests...
+    }
+    
+    @Test
+    void simuliereVerwaltungsaufwand() {
+    	
     }
     
 

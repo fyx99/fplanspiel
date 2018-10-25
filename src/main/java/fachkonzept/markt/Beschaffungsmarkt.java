@@ -25,7 +25,7 @@ public class Beschaffungsmarkt extends Markt {
 	}
 
 	public static List<Umsatz> umsatzProMaterialArt(MaterialArt a, int runde) {
-		List<Umsatz> gefiltert = new ArrayList();
+		List<Umsatz> gefiltert = new ArrayList<Umsatz>();
 		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {
 			if(u.getAngebot().getMarkteinheit() instanceof Material && ((Material)u.getAngebot().getMarkteinheit()).getMaterialArt() == a && u.getRunde() == runde) {
 				gefiltert.add(u);
