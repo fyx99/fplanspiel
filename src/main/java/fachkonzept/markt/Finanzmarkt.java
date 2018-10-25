@@ -9,6 +9,8 @@ import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
 import fachkonzept.util.KreditArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.SimulationsKonstanten;
 
 public class Finanzmarkt extends Markt {
 
@@ -22,6 +24,7 @@ public class Finanzmarkt extends Markt {
         super.kaufen(a, menge, k);
         
         k.verbindlichkeitHinzu(new Verbindlichkeit((Kredit)a.getMarkteinheit()));
+        k.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG, (int)(((Kredit)a.getMarkteinheit()).getVolumen() * SimulationsKonstanten.VERWALTUNGSMINUTEN_PRO_EURO_KREDIT));
        
     }
 

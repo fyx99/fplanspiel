@@ -82,8 +82,10 @@ public class SimulationsKonstanten {
 
     public static final double MASCHINEN_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
     public static final double MATERIAL_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
-    
+
     public static final int VERTRIEBSMINUTEN_PRO_EURO = 2;	//Vertriebsmitarbeiter ist 2 Minuten beschäftigt pro Euro bei Angebot
+    public static final double VERWALTUNGSMINUTEN_PRO_EURO_MARKETINGBUDGET = 0.5;	//Vertriebsmitarbeiter ist 2 Minuten beschäftigt pro Euro bei Angebot
+    public static final double VERWALTUNGSMINUTEN_PRO_EURO_KREDIT = 0.25;	//Vertriebsmitarbeiter ist 2 Minuten beschäftigt pro Euro bei Angebot
     
     
     public static int getMaschinenPreise(MaschinenArt ma) {

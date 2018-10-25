@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fachkonzept.Unternehmen;
+import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.SimulationsKonstanten;
 
 public class Marketingmix {
     
@@ -41,8 +43,8 @@ public class Marketingmix {
     public static void marketingBuchen(Marketingmaßnahme m, Unternehmen u) {
         //hier wird direkt bezahlt
         u.getMarketingmix().marketingHinzu(m);
-        //u.kosten(m.getBudget(), "Marketingkosten");
-        //abgerechnet wird in der simulation laufend
+        u.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG, (int)(m.getBudget() * SimulationsKonstanten.VERWALTUNGSMINUTEN_PRO_EURO_MARKETINGBUDGET));
+
     }
     
     public List<Marketingmaßnahme> getMarketingType(String type){

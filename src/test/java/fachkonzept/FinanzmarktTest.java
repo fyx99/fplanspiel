@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import fachkonzept.markt.Finanzmarkt;
 import fachkonzept.util.KreditArt;
+import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;
 import fachkonzept.util.StandortArt;
 
@@ -28,6 +29,7 @@ class FinanzmarktTest {
     
     @Test
     void kaufen() {
+		testU.arbeitskraftHinzu(new Arbeitskraft(new Mitarbeiter("name", 8878, 8600, MitarbeiterFachgebiet.VERWALTUNG )));
         Kredit k = new Kredit(1000, 0.05, 10, KreditArt.Kurzes_Cash);
         Angebot beispiel = new Angebot(k, 22, 10);
         
@@ -48,13 +50,14 @@ class FinanzmarktTest {
 
         assertEquals(1000, testU.getVerbindlichkeiten().get(0).getVerbleibendeSumme());
         assertEquals(1000, testU.getVerbindlichkeiten().get(0).getKredit().getVolumen());
+        assertEquals(8350, testU.getMitarbeiterKapazitaeten(MitarbeiterFachgebiet.VERWALTUNG));
     }
     
     @Test 
     void umsatzProKreditArt() {
-    	int size = Finanzmarkt.getUmsatzHistorie().size();
-    	int size2 = Finanzmarkt.umsatzProKreditArt(KreditArt.Kurzes_Cash).size();
-    	int size3 = Finanzmarkt.umsatzProKreditArt(KreditArt.Mehr_Cash).size();
+//    	int size = Finanzmarkt.getUmsatzHistorie().size();
+//    	int size2 = Finanzmarkt.umsatzProKreditArt(KreditArt.Kurzes_Cash).size();
+//    	int size3 = Finanzmarkt.umsatzProKreditArt(KreditArt.Mehr_Cash).size();
     	Finanzmarkt fmarkt = new Finanzmarkt();
     	
     	Angebot a1 = new Angebot(new Kredit(1000, 0.05, 10, KreditArt.Kurzes_Cash), 22, 10);
@@ -66,11 +69,6 @@ class FinanzmarktTest {
     	fmarkt.kaufen(a1, 1, new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
     	fmarkt.kaufen(a2, 1, new Unternehmen("a2", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
     	
-    	
-//    	assertEquals(size+3, Finanzmarkt.getUmsatzHistorie().size());
-    	//Umsatzhistorie muss man bei einem einzelnen UN prüfen
-//    	assertEquals(2+size2, Finanzmarkt.umsatzProKreditArt(KreditArt.Kurzes_Cash).size());
-//    	assertEquals(3+size3, Finanzmarkt.umsatzProKreditArt(KreditArt.Mehr_Cash).size());
     	
     }
     
