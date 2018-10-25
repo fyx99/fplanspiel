@@ -2,6 +2,7 @@ package fachkonzept;
 
 import fachkonzept.markt.Markteinheit;
 import fachkonzept.util.KreditArt;
+import fachkonzept.util.SimulationsKonstanten;
 
 public class Kredit extends Markteinheit {
    
@@ -9,6 +10,7 @@ public class Kredit extends Markteinheit {
     private double volumen; //wv ausgezahlt wird
     private double zinssatz;    //0.05 -> 5 %
     private int laufzeit;    // -> quartale - 4 = ein jahr
+    private int verwaltungsZeit = 0;
     //die tilgungs + zins rate, die pro zeit gezahlt werden muss berechnet sich aus volumen, zinsen und laufzeit
     
         
@@ -20,7 +22,7 @@ public class Kredit extends Markteinheit {
         this.laufzeit = laufzeit;
         this.kreditArt = kreditArt;
         this.setName(kreditArt.name());
-        
+        this.verwaltungsZeit = (int)(volumen * SimulationsKonstanten.VERWALTUNGSMINUTEN_PRO_EURO_KREDIT);
     }
 
 
