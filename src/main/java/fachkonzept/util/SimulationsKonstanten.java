@@ -1,5 +1,8 @@
 package fachkonzept.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SimulationsKonstanten {
     public static double getProduktMarktpreis(ProduktArt produktArt) {
         // hier als vorläufiges beispiel mit dem string -> soll natürlich wenn dann als enum
@@ -119,6 +122,44 @@ public class SimulationsKonstanten {
             break;
         }
         return a;
+    }
+    
+    public static List<Double> getStandortFaktoren(StandortArt standort){
+    	List<Double> list = new ArrayList<Double>();
+    	
+    		switch(standort) {
+    		case A: 
+    			list.add(0.8);	//MitarbeiterKostenFaktor
+    			list.add(1.0);	//MaterialKostenFaktor
+    			list.add(1.0);	//MarketingsEinflussFaktor
+    			list.add(1.0);	//FertigungsKostenFaktor
+    			break;
+    		case B:
+    			list.add(1.0);
+    			list.add(0.8);
+    			list.add(1.0);
+    			list.add(1.0);
+    			break;
+    		case C:
+    			list.add(1.0);
+    			list.add(1.0);
+    			list.add(0.8);
+    			list.add(1.0);
+    			break;
+    		case D:
+    			list.add(1.0);
+    			list.add(1.0);
+    			list.add(1.0);
+    			list.add(0.8);
+    			break;
+    		default:
+    			list.add(1.0);	
+    			list.add(1.0);	
+    			list.add(1.0);	
+    			list.add(1.0);
+    			
+    		}
+    	return list;
     }
 
 
