@@ -141,6 +141,7 @@ public class Unternehmen {
     
     public void verbindlichkeitHinzu(Verbindlichkeit v) {
         verbindlichkeiten.add(v);
+        this.kapital += v.getVerbleibendeSumme();
     }
     
     public void arbeitskraftHinzu(Arbeitskraft ak) {
