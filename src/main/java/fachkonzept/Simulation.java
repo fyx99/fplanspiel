@@ -38,7 +38,7 @@ public class Simulation {
 			Unternehmen n = i.next();
 			n.setKapital(100000);
 			n.setBmarkt(beschaffungsmarktDemoDaten(n));
-			n.setMmarkt(maschinenmarktDemoDaten());
+			n.setMmarkt(maschinenmarktDemoDaten(n));
 			n.setFmarkt(finanzmarktDemoDaten());
 			n.setAmarkt(arbeitsmarktDemoDaten(n));
 
@@ -100,6 +100,8 @@ public class Simulation {
 	}
 
 	private static void simuliereMarketingmix(Unternehmen u) {
+		double marketingsEinflussFaktor = u.getStandort().getMarketingEinfluss();	//abhängig vom Standort
+		
 		int marketingPunkte = 0;
 		Marketingmaßnahme m = null;
 		int volumen = 0;
@@ -178,6 +180,7 @@ public class Simulation {
 		} else if (m != null) {
 			marketingPunkte += m.getEffektivitaet() * ((double) volumen / (double) m.getVolumen());
 		}
+		marketingPunkte = (int)(marketingPunkte * marketingsEinflussFaktor);
 		u.getMarketingmix().setMarketingStaerke(marketingPunkte);
 
 	}
@@ -348,7 +351,7 @@ public class Simulation {
 	}
 
 	private static Beschaffungsmarkt beschaffungsmarktDemoDaten(Unternehmen n) {
-		double standortfaktor_material = 1;// n.getStandort().getFaktor_materialkosten();
+		double standortfaktor_material = n.getStandort().getMaterialKosten();
 		Material holz = new Material(MaterialArt.Holz);
 		Material stoff = new Material(MaterialArt.Stoff);
 		Material leder = new Material(MaterialArt.Leder);
@@ -381,27 +384,32 @@ public class Simulation {
 	}
 
 	private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
-		double standortfaktor_mitarbeiterkosten = 1;// n.getStandort().getFaktor_mitarbeiterkosten();
-		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 300, 120000, MitarbeiterFachgebiet.MASCHINE);
-		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 400, 60000, MitarbeiterFachgebiet.MASCHINE); // bsp weniger
-																										// arbeitszeit
-		Mitarbeiter ma3 = new Mitarbeiter("Mitarbeiter 3", 200, 120000, MitarbeiterFachgebiet.VERTRIEB);
-		Mitarbeiter ma4 = new Mitarbeiter("Mitarbeiter 4", 300, 120000, MitarbeiterFachgebiet.VERTRIEB);
-		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 250, 120000, MitarbeiterFachgebiet.VERWALTUNG);
+		double standortfaktor_mitarbeiterkosten = n.getStandort().getMitarbeiterKosten();
+		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 150 * standortfaktor_mitarbeiterkosten, 60000, MitarbeiterFachgebiet.MASCHINE);
+		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 300 * standortfaktor_mitarbeiterkosten, 120000, MitarbeiterFachgebiet.MASCHINE);
+		
+		Mitarbeiter ma3 = new Mitarbeiter("Mitarbeiter 3", 200 * standortfaktor_mitarbeiterkosten, 100000, MitarbeiterFachgebiet.VERWALTUNG);
+		Mitarbeiter ma4 = new Mitarbeiter("Mitarbeiter 4", 250 * standortfaktor_mitarbeiterkosten, 120000, MitarbeiterFachgebiet.VERWALTUNG);
+		
+		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 200 * standortfaktor_mitarbeiterkosten, 100000, MitarbeiterFachgebiet.VERTRIEB);
+		Mitarbeiter ma6 = new Mitarbeiter("Mitarbeiter 6", 300 * standortfaktor_mitarbeiterkosten, 120000, MitarbeiterFachgebiet.VERTRIEB);
 
 		Arbeitsmarkt am = new Arbeitsmarkt();
 
-		am.anbieten(new Angebot(ma1, 30, 20 * standortfaktor_mitarbeiterkosten)); // ist der preis hier nötig? oder //
-																					// einfach 0
-		am.anbieten(new Angebot(ma2, 30, 20 * standortfaktor_mitarbeiterkosten));
-		am.anbieten(new Angebot(ma3, 30, 20 * standortfaktor_mitarbeiterkosten));
-		am.anbieten(new Angebot(ma4, 30, 20 * standortfaktor_mitarbeiterkosten));
-		am.anbieten(new Angebot(ma5, 30, 20 * standortfaktor_mitarbeiterkosten));
+		am.anbieten(new Angebot(ma1, 10, 20)); 														
+		am.anbieten(new Angebot(ma2, 10, 20));
+		am.anbieten(new Angebot(ma3, 10, 20));
+		am.anbieten(new Angebot(ma4, 10, 20));
+		am.anbieten(new Angebot(ma5, 10, 20));
+		am.anbieten(new Angebot(ma6, 10, 20));
 
 		return am;
 	}
 
-	private static Maschinenmarkt maschinenmarktDemoDaten() {
+	private static Maschinenmarkt maschinenmarktDemoDaten(Unternehmen n) {
+		
+		double fertigungsKostenFaktor = n.getStandort().getFertigungsKosten();
+		
 		Material holz = new Material(MaterialArt.Holz);
 		Material stoff = new Material(MaterialArt.Stoff);
 		Material leder = new Material(MaterialArt.Leder);
@@ -455,28 +463,28 @@ public class Simulation {
 		// Produktionsmatrix pm = new Produktionsmatrix(map);
 
 		// Stühle
-		Maschine m1 = new Maschine(MaschinenArt.Holzstuhlmaschine, 100, holzstuhl, new Produktionsmatrix(map_hst), 15,
+		Maschine m1 = new Maschine(MaschinenArt.Holzstuhlmaschine, 100, holzstuhl, new Produktionsmatrix(map_hst), 15 * fertigungsKostenFaktor,
 				1);
-		Maschine m2 = new Maschine(MaschinenArt.Stoffstuhlmaschine, 57, stoffstuhl, new Produktionsmatrix(map_sst), 20,
+		Maschine m2 = new Maschine(MaschinenArt.Stoffstuhlmaschine, 57, stoffstuhl, new Produktionsmatrix(map_sst), 20 * fertigungsKostenFaktor,
 				2);
-		Maschine m3 = new Maschine(MaschinenArt.Lederstuhlmaschine, 50, lederstuhl, new Produktionsmatrix(map_lst), 25,
+		Maschine m3 = new Maschine(MaschinenArt.Lederstuhlmaschine, 50, lederstuhl, new Produktionsmatrix(map_lst), 25 * fertigungsKostenFaktor,
 				3);
 
 		// Tische
-		Maschine m4 = new Maschine(MaschinenArt.Holztischmaschine, 50, holztisch, new Produktionsmatrix(map_ht), 100,
+		Maschine m4 = new Maschine(MaschinenArt.Holztischmaschine, 50, holztisch, new Produktionsmatrix(map_ht), 100 * fertigungsKostenFaktor,
 				4);
-		Maschine m5 = new Maschine(MaschinenArt.Glastischmaschine, 35, glastisch, new Produktionsmatrix(map_gt), 125,
+		Maschine m5 = new Maschine(MaschinenArt.Glastischmaschine, 35, glastisch, new Produktionsmatrix(map_gt), 125 * fertigungsKostenFaktor,
 				5);
-		Maschine m6 = new Maschine(MaschinenArt.Kunststofftischmaschine, 180, kunststofftisch,
-				new Produktionsmatrix(map_kt), 20, 6);
+		Maschine m6 = new Maschine(MaschinenArt.Kunststofftischmaschine, 180 , kunststofftisch,
+				new Produktionsmatrix(map_kt), 20 * fertigungsKostenFaktor, 6);
 
 		// Schränke
 		Maschine m7 = new Maschine(MaschinenArt.Holzschrankmaschine, 65, holzschrank, new Produktionsmatrix(map_hsc),
-				150, 7);
+				150 * fertigungsKostenFaktor, 7);
 		Maschine m8 = new Maschine(MaschinenArt.Edelstahlschrankmaschine, 50, edelstahlschrank,
-				new Produktionsmatrix(map_esc), 185, 8);
+				new Produktionsmatrix(map_esc), 185 * fertigungsKostenFaktor, 8);
 		Maschine m9 = new Maschine(MaschinenArt.Glasschrankmaschine, 38, glasschrank, new Produktionsmatrix(map_gsc),
-				215, 9);
+				215 * fertigungsKostenFaktor, 9);
 
 		// Maschinen auf Maschinenmarkt anbieten
 		Maschinenmarkt b = new Maschinenmarkt();

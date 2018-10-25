@@ -239,7 +239,7 @@ class SimulationTest {
     void simmuliereArbeitsmarkt() {
     	Simulation.simuliereSpielstart(s);
     	
-    	assertEquals(5, u1.getAmarkt().getAngebote().size());
+    	assertEquals(6, u1.getAmarkt().getAngebote().size());
     	
     	Angebot a1 = u1.getAmarkt().getAngebote().get(0);
     	//weitere Tests...

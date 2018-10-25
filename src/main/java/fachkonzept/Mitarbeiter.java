@@ -5,9 +5,6 @@ import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class Mitarbeiter extends Markteinheit {
     
-    
-    //frage wäre, welche attribute haben mitarbeiter noch?
-    
     private String name;
     private double lohnkosten;
     private MitarbeiterFachgebiet mfg;

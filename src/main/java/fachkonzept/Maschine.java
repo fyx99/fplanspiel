@@ -13,8 +13,8 @@ public class Maschine extends Markteinheit{
 	private int auslastung;
 	private Produktionsmatrix matrix;
 	private double fertigungskosten;
-	private int arbeitszeit;     //jede maschine hat einen bestimmten menschlichen arbeitsaufwand
-	        //könnte man jetzt untergliederin in maschinen bestücker usw.
+	private int arbeitszeit;     
+	//jede maschine hat einen bestimmten menschlichen arbeitsaufwand
 	//!!! pro produzierter einheit in minuten
 	
 	private Produkt p;

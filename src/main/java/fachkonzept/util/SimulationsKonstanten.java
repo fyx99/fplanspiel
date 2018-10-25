@@ -5,7 +5,6 @@ import java.util.List;
 
 public class SimulationsKonstanten {
     public static double getProduktMarktpreis(ProduktArt produktArt) {
-        // hier als vorläufiges beispiel mit dem string -> soll natürlich wenn dann als enum
         double preis = 0;
         switch(produktArt) {
         case Holzstuhl:
@@ -41,7 +40,6 @@ public class SimulationsKonstanten {
         return preis;
     }
     public static int getProduktMarktvolumen(ProduktArt produktArt) {
-        // hier als vorläufiges beispiel mit dem string -> soll natürlich wenn dann als enum
         int volumen = 0;
         switch(produktArt) {
         case Holzstuhl:
