@@ -4,13 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bootstrap 3 Tutorial from BootstrapBay.com">
-    <meta name="author" content="BootstrapBay.com">
     <title>Ergebnis der Runde</title>
-       <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
-       	<script src="jquery/jquery-1.11.0.min.js"></script>
-       	    <script src="js/bootstrap.min.js"></script>
-       	
+    <script src="jquery/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>       	
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -38,22 +34,38 @@
                 	rundeAnzeigen(data);
                     
                     var unternehmenData = data.unternehmen;
+                    var marktanteilData = data.unternehmen.marktanteile;             
                     var xWert = 1
                    
                     for(var index in unternehmenData){
                        	dataPoints01.push({ label: unternehmenData[index].name, y: unternehmenData[index].gewinn, x: xWert});
                         dataPoints03.push({ label: unternehmenData[index].name, y: unternehmenData[index].kapital, x: xWert});
                         dataPoints04.push({ label: unternehmenData[index].name, y: unternehmenData[index].umsatz, x: xWert});
+                        
+                        dataPoints02.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Stuhl});
+                        dataPoints06.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Tisch});
+                        dataPoints07.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Schrank});
+                        
+                        console.log("marktanteil" + unternehmenData[index].marktanteile.Stuhl);
                         xWert++;      
                     }
 
                   	chart01.options.data[0].dataPoints = dataPoints01;
                     chart03.options.data[0].dataPoints = dataPoints03;
                     chart04.options.data[0].dataPoints = dataPoints04;
+                    
+                    chart02.options.data[0].dataPoints = dataPoints02;
+                    chart06.options.data[0].dataPoints = dataPoints06;
+                    chart07.options.data[0].dataPoints = dataPoints07;
+                    
                    
                     chart01.render();
                     chart03.render();
-                    chart04.render();                  
+                    chart04.render(); 
+                    
+                    chart02.render();
+                    chart06.render();
+                    chart07.render(); 
                 }
             });
 				
@@ -70,9 +82,13 @@
                 var dataPoints04 = [];
                 var dataPoints05 = [];
                 var dataPoints06 = [];
+                var dataPoints07 = [];
+                var dataPoints08 = [];
 
                 var chart01 = new CanvasJS.Chart("chartContainer01",
                 {
+                	animationEnabled: true, 
+            		animationDuration: 2000,
                     theme: "theme2",
                     title:{
                         text: "Gewinn in €"
@@ -92,6 +108,8 @@
                 
                  var chart04 = new CanvasJS.Chart("chartContainer04",
                 {
+                	animationEnabled: true, 
+             		animationDuration: 2000,
                     theme: "theme2",
                     title:{
                         text: "Umsatz in €"
@@ -117,6 +135,8 @@
                 
                 var chart03 = new CanvasJS.Chart("chartContainer03",
                 {
+                	animationEnabled: true, 
+            		animationDuration: 2000,
                     theme: "theme2",
                     title:{
                         text: "Kapital in €"
@@ -139,11 +159,13 @@
                 });
                 //chart03.render();
                 
-                /* var chart02 = new CanvasJS.Chart("chartContainer02",
+                 var chart02 = new CanvasJS.Chart("chartContainer02",
                 {
+                	 animationEnabled: true, 
+             		animationDuration: 2000,
                     theme: "theme2",
                     title:{
-                        text: "Marktanteil in %"
+                        text: "Marktanteil der verkauften Stühle in %"
                     },      
                      data: [
                     {       
@@ -161,11 +183,13 @@
                     }
                     ]
                 });
-                chart02.render();
+               //chart02.render();
 
 
                  var chart05 = new CanvasJS.Chart("chartContainer05",
                 {
+                	 animationEnabled: true, 
+             		animationDuration: 2000,
                     theme: "theme2",
                     title:{
                         text: "Mitarbeiter"
@@ -190,9 +214,11 @@
 
                  var chart06 = new CanvasJS.Chart("chartContainer06",
                 {
+                	 animationEnabled: true, 
+             		animationDuration: 2000,
                     theme: "theme2",
                     title:{
-                        text: "Diagramm"
+                        text: "Marktanteil der verkauften Tische in %"
                     },      
                     data: [
                     {       
@@ -210,7 +236,60 @@
                     }
                     ]
                 });
-                chart06.render(); */
+                //chart06.render(); 
+                
+                var chart07 = new CanvasJS.Chart("chartContainer07",
+                        {
+		                	animationEnabled: true, 
+		            		animationDuration: 2000,
+                            theme: "theme2",
+                            title:{
+                                text: "Marktanteil der verkauften Schränke in %"
+                            },      
+                            data: [
+                            {       
+                                type: "pie",
+                                showInLegend: true,
+                                toolTipContent: "{y} Mitarbeiter",
+                                //yValueFormatString: "###,,.### ",
+                                legendText: "{indexLabel}",
+                                dataPoints: [
+                                    {  y: 4, indexLabel: "Spieler 1" },
+                                    {  y: 5, indexLabel: "Spieler 2" },
+                                    {  y: 2, indexLabel: "Spieler 3" },
+                                    {  y: 1, indexLabel: "Spieler 4"}
+                                ]
+                            }
+                            ]
+                        });
+                        //chart07.render(); 
+                        
+                        var chart08 = new CanvasJS.Chart("chartContainer08",
+                                {
+		                        	animationEnabled: true, 
+		                    		animationDuration: 2000,
+                                    theme: "theme2",
+                                    title:{
+                                        text: "Marktanteil Test in %"
+                                    },      
+                                    data: [
+                                    {       
+                                        type: "pie",
+                                        showInLegend: true,
+                                        toolTipContent: "{y} Mitarbeiter",
+                                        //yValueFormatString: "###,,.### ",
+                                        legendText: "{indexLabel}",
+                                        dataPoints: [
+                                            {  y: 4, indexLabel: "Spieler 1" },
+                                            {  y: 5, indexLabel: "Spieler 2" },
+                                            {  y: 2, indexLabel: "Spieler 3" },
+                                            {  y: 1, indexLabel: "Spieler 4"}
+                                        ]
+                                    }
+                                    ]
+                                });
+                                chart08.render(); 
+                        
     }
 
         </script>
@@ -237,7 +316,7 @@
             <h1 id="runde">Ergebnis Runde </h1>
         </div>
 
-         <div class="row">
+<!--          <div class="row">
            <div class="col-sm-4">
                  <div id="chartContainer01" style="height: 300px; width: 100%;"></div>
             </div>
@@ -253,7 +332,7 @@
         <br>
         <br>
 
-<!--         <div class="row">
+         <div class="row">
             <div class="col-sm-4">
                  <div id="chartContainer02" style="height: 300px; width: 100%;"></div>
             </div>
@@ -263,11 +342,71 @@
              <div class="col-sm-4">
                <div id="chartContainer06" style="height: 300px; width: 100%;"></div>
             </div>
-        </div> -->
+        </div> --> 
 
         <br>
         <br>
         <br>
+        
+              <div class="row">
+           <div class="col-sm-4 col-md-6">
+                 <div id="chartContainer01" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4 col-md-6">
+               <div id="chartContainer04" style="height: 300px; width: 100%;"></div>
+            </div>
+             
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+		<div class="row">
+            <div class="col-sm-4 col-md-6">
+                 <div id="chartContainer03" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4 col-md-6">
+               <div id="chartContainer05" style="height: 300px; width: 100%;"></div>
+            </div>
+             
+        </div>
+        
+        <br>
+        <br>
+        <br>
+         
+        
+        <div class="row">
+            <div class="col-sm-4 col-md-6">
+                 <div id="chartContainer02" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4 col-md-6">
+               <div id="chartContainer06" style="height: 300px; width: 100%;"></div>
+            </div>
+             
+        </div> 
+        
+        <br>
+        <br>
+        <br>
+        
+        <div class="row">
+            <div class="col-sm-4 col-md-6">
+                 <div id="chartContainer07" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="col-sm-4 col-md-6">
+               <div id="chartContainer08" style="height: 300px; width: 100%;"></div>
+            </div>
+             
+        </div> 
+        
+        <br>
+        <br>
+        <br>
+        
+        
+        
 
          <a class="btn btn-primary float-right" onclick="href='rundenresultat.html'">Nächste Runde starten</a>
     </div>    
