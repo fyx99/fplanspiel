@@ -133,35 +133,35 @@ public class SimulationsKonstanten {
     			list.add(1.0);	//MaterialKostenFaktor
     			list.add(0.9);	//MarketingsEinflussFaktor
     			list.add(1.0);	//FertigungsKostenFaktor
-    			list.add(1.03);	//Angebotsattraktivität
+    			list.add(30d);	//Angebotsattraktivität
     			break;
     		case B:
     			list.add(1.0);
     			list.add(0.8);
     			list.add(1.1);
     			list.add(1.1);
-    			list.add(1.0);	
+    			list.add(0d);	
     			break;
     		case C:
     			list.add(1.1);
     			list.add(1.0);
     			list.add(1.2);
     			list.add(1.1);
-    			list.add(1.03);
+    			list.add(30d);
     			break;
     		case D:
     			list.add(0.8);
     			list.add(1.1);
     			list.add(1.0);
     			list.add(0.8);
-    			list.add(1.0);
+    			list.add(0d);
     			break;
     		case NEUTRAL:
     			list.add(1.0);	
     			list.add(1.0);	
     			list.add(1.0);	
     			list.add(1.0);
-    			list.add(1.0);
+    			list.add(0d);
     			break;
     		}
     	return list;

@@ -84,9 +84,13 @@ public class Angebot{
 		}
 		return null;
 	}
+	
+	public void updateAttraktivitaet(Unternehmen anbieter) {
+		this.attraktivitaet = this.preis * ((1000 - anbieter.getMarketingmix().getMarketingStaerke() + anbieter.getStandort().getAngebotsAttraktivitaet()) / 1000);
+	}
 
 	public double getAttraktivitaet(Unternehmen anbieter) {
-		return this.preis * ((anbieter.getMarketingmix().getMarketingStaerke() / 100) + 1) * anbieter.getStandort().getAngebotsAttraktivitaet();
+		return this.preis * ((1000 - anbieter.getMarketingmix().getMarketingStaerke() + anbieter.getStandort().getAngebotsAttraktivitaet()) / 1000);
 	}	
 	
 	public double getAttraktivitaet() {

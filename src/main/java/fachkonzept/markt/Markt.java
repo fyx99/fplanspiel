@@ -37,6 +37,7 @@ public abstract class Markt {
         }
         anbieter.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERTRIEB, (int)(SimulationsKonstanten.VERTRIEBSMINUTEN_PRO_EURO * a.getMenge() * a.getPreis()));
         this.angebote.add(a);
+        a.updateAttraktivitaet(anbieter);
     }
     
     
