@@ -15,7 +15,7 @@ public class Angebot{
      * !!! außer bei material und produkt menge = 1!!
      * 
      * */
-	
+	private double attraktivitaet;
 	private double preis;
 	private int id;
 	private static int angebotsnummer = 0;
@@ -29,7 +29,7 @@ public class Angebot{
 
 	//preis pro einheit
 	public Angebot(Markteinheit m, int menge, double preis) {
-		this.preis = preis;
+		this.preis = Werkzeuge.runde2Stellen(preis);
 		this.menge = menge;
 		this.markteinheit = m;
 		this.id = angebotsnummer;
@@ -84,6 +84,21 @@ public class Angebot{
 		}
 		return null;
 	}
+	
+	public void updateAttraktivitaet(Unternehmen anbieter) {
+		this.attraktivitaet = this.preis * ((1000 - anbieter.getMarketingmix().getMarketingStaerke() + anbieter.getStandort().getAngebotsAttraktivitaet()) / 1000);
+	}
+
+	public double getAttraktivitaet(Unternehmen anbieter) {
+		return this.preis * ((1000 - anbieter.getMarketingmix().getMarketingStaerke() + anbieter.getStandort().getAngebotsAttraktivitaet()) / 1000);
+	}	
+	
+	public double getAttraktivitaet() {
+		return attraktivitaet;
+	}
+
+	
+	
 	
 	
 }

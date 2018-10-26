@@ -1,6 +1,7 @@
 package fachkonzept;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import fachkonzept.marketing.PRKampagne;
 import fachkonzept.marketing.Plakatwerbung;
 import fachkonzept.marketing.Radiowerbung;
 import fachkonzept.marketing.Sponsoring;
+import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
@@ -41,19 +43,17 @@ public class Simulation {
 			n.setMmarkt(maschinenmarktDemoDaten(n));
 			n.setFmarkt(finanzmarktDemoDaten());
 			n.setAmarkt(arbeitsmarktDemoDaten(n));
-
+			n.setVmarkt(absatzmarktDemoDaten());
 		}
 
 	}
 
 	public static void simuliere(Spiel s) {
-		// gemeinsame konkurrenz dinge
-		simuliereAbsatzmarkt(s.getUnternehmen());
+
 		// rest
 		Iterator<Unternehmen> i = s.getUnternehmen().iterator();
 		while (i.hasNext()) {
 			Unternehmen n = i.next();
-			n.rundenReset();
 			simuliereKredittilgung(n);
 			simuliereLohnzahlung(n);
 			simuliereMarketingmix(n);
@@ -61,15 +61,10 @@ public class Simulation {
 			simuliereFinanzmarkt(n.getFmarkt());
 			simuliereMaschinenmarkt(n.getMmarkt(), s.getRunde());
 			simuliereArbeitsmarkt(n.getAmarkt());
-			simuliereVerwaltungsaufwand(n, s);
-
+			n.rundenReset();
 		}
-
-	}
-
-	private static void simuliereVerwaltungsaufwand(Unternehmen n, Spiel s) {
-		n.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG,
-				(int) n.getGuv().rundenErgebnis(s.getRunde() - 1) / 100);
+		// gemeinsame konkurrenz dinge
+		simuliereAbsatzmarkt(s.getUnternehmen());
 
 	}
 
@@ -107,7 +102,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Fernsehwerbung.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Fernsehwerbung.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -120,7 +114,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Sponsoring.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Sponsoring.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -133,7 +126,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Plakatwerbung.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Plakatwerbung.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -146,7 +138,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(Radiowerbung.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(Radiowerbung.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -159,7 +150,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(PRKampagne.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(PRKampagne.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -172,7 +162,6 @@ public class Simulation {
 		for (int i = 0; i < u.getMarketingmix().getMarketingType(MessenKampagne.class.getName()).size(); i++) {
 			m = u.getMarketingmix().getMarketingType(MessenKampagne.class.getName()).get(i);
 			volumen += m.getBudget();
-			u.kosten(m.getBudget(), "Marketingkosten");
 		}
 		if (m != null && volumen > m.getVolumen()) {
 			marketingPunkte += m.getEffektivitaet();
@@ -202,17 +191,21 @@ public class Simulation {
 				continue;
 
 			simuliereEinzelnesProdukt(produkt_angebote,
-					SimulationsKonstanten.getProduktMarktvolumen(produktArt) * us.size(),
+					us.get(0).getVmarkt().getProduktVolumen().get(produktArt) * us.size(),
 					SimulationsKonstanten.getProduktMarktpreis(produktArt));
 		}
+		//noch die nachfrage am ende anpassen
+		us.forEach(u -> simuliereNachfrageAbsatzmarkt(u.getVmarkt(), u.getSpiel().getRunde()));
+		
 	}
 
 	private static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage,
 			double grundpreis) {
 		// als erstes die liste nach angebotsstärke sortieren
-		// hier bisher nur nach preis
+		// hier jetzt nach standort, marketing und preis
+		// in der sortierten liste sind attraktivitaeten gesetzt
 		List<Angebot> sortierteAngebote = angebote.keySet().stream()
-				.sorted((Angebot u1, Angebot u2) -> Double.compare(u1.getPreis(), u2.getPreis()))
+				.sorted((Angebot u1, Angebot u2) -> Double.compare(u1.getAttraktivitaet(angebote.get(u1)), u2.getAttraktivitaet(angebote.get(u2))))
 				.collect(Collectors.toList());
 		int verbleibendeNachfrage = nachfrage;
 
@@ -235,14 +228,14 @@ public class Simulation {
 			}
 
 		}
+
 	}
 
 	private static int nachfrageAnpassen(int gesamtNachfrage, double grundpreis, double aktPreis) {
 		// funktion die den preis verringert
 		double kappungsfaktor = 3; // 1% drüber -> 3 runter
 		double preisDifferenz = 1 - aktPreis / grundpreis; // in prozent über grundpreis
-		// return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
-		return gesamtNachfrage;
+		return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
 
 	}
 
@@ -254,9 +247,9 @@ public class Simulation {
 	private static List<Angebot> angbotsAuswahl(List<Angebot> angebote) {
 		// wählt unter den angeboten das/ evt. die günstigste/n aus
 		List<Angebot> ret = new ArrayList<Angebot>();
-		int referenzPreis = (int) angebote.get(0).getPreis();
+		int referenzAttr = (int) angebote.get(0).getAttraktivitaet();
 		for (Angebot a : angebote) {
-			if (((int) a.getPreis()) <= referenzPreis) {
+			if (((int) a.getAttraktivitaet()) <= referenzAttr) {
 				ret.add(a);
 			} else {
 				break;
@@ -287,6 +280,29 @@ public class Simulation {
 
 		// return wert verbleibende nachfrage
 		return verbleibendeNachfrage;
+	}
+	
+	private static void simuliereNachfrageAbsatzmarkt(Absatzmarkt b, int runde) {
+		int gesamt = 0;
+		for (ProduktArt a : ProduktArt.values()) {
+			// wv pro produkt verkauft wurde (menge)
+			gesamt += Absatzmarkt.getUmsaetzeByProduktArt(a, runde).stream().mapToInt(u -> u.getMenge()).sum();
+		}
+		
+		if(gesamt < ProduktArt.values().length)	//macht sonst wegen rundung keinen sinn
+			return;
+		double durchschnittsMenge = gesamt / ProduktArt.values().length;
+		
+
+		// was ist viel
+		// -> über alle drüber und
+		for(ProduktArt a : ProduktArt.values()) {
+			int artMenge = b.getProduktVolumen().get(a);
+			double mengenVerhältnis = (double) (artMenge - durchschnittsMenge) / durchschnittsMenge;
+			Map<ProduktArt, Integer> neueWerte = b.getProduktVolumen();
+			neueWerte.put(a, (artMenge + (int)(artMenge * SimulationsKonstanten.ABSATZ_MARKT_NACHFRAGEANPASSUNG * mengenVerhältnis)));
+			b.setProduktVolumen(neueWerte);
+		}
 	}
 
 	private static void simuliereBeschaffungsmarkt(Beschaffungsmarkt b, int runde) {
@@ -520,6 +536,12 @@ public class Simulation {
 				SimulationsKonstanten.getMaschinenPreise(m9.getMaschinenArt())));
 
 		return b;
+	}
+	
+	private static Absatzmarkt absatzmarktDemoDaten() {
+		Absatzmarkt am = new Absatzmarkt();
+		am.setProduktVolumen( Arrays.asList(ProduktArt.values()).stream().collect(Collectors.toMap(pa -> pa, pa -> SimulationsKonstanten.getProduktMarktvolumen(pa))));
+		return am;
 	}
 
 	public static List<String> getLog() {

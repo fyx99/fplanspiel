@@ -79,14 +79,14 @@ public class SimulationsKonstanten {
     public static final int MASCHINEN_MARKT_MENGE = 100000;
     public static final int FINANZ_MARKT_MENGE = 100000;
     
-
     public static final double MASCHINEN_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
     public static final double MATERIAL_MARKT_PREISANPASSUNG = 0.1;	//prozentzahl pro dopplung
+    public static final double ABSATZ_MARKT_NACHFRAGEANPASSUNG = 0.1;
 
-    public static final int VERTRIEBSMINUTEN_PRO_EURO = 2;	//Vertriebsmitarbeiter ist 2 Minuten beschäftigt pro Euro bei Angebot
-    public static final double VERWALTUNGSMINUTEN_PRO_EURO_MARKETINGBUDGET = 0.5;	//Vertriebsmitarbeiter ist 2 Minuten beschäftigt pro Euro bei Angebot
-    public static final double VERWALTUNGSMINUTEN_PRO_EURO_KREDIT = 0.25;	//Vertriebsmitarbeiter ist 2 Minuten beschäftigt pro Euro bei Angebot
-    
+    public static final double VERTRIEBSMINUTEN_PRO_EURO = 3.18;	//Vertriebsmitarbeiter ist 3,18 Minuten beschäftigt pro Euro bei Angebot
+    public static final double VERWALTUNGSMINUTEN_PRO_EURO_MARKETINGBUDGET = 0.2;	//Verwaltungsmitarbeiter ist 2 Minuten beschäftigt pro Euro bei Marketingmaßnahme
+    public static final double VERWALTUNGSMINUTEN_PRO_EURO_KREDIT = 0.25;	//Verwaltungsmitarbeiter ist 2,5 Minuten beschäftigt pro Euro bei Kredit
+     
     
     public static int getMaschinenPreise(MaschinenArt ma) {
         int a = 0;
@@ -131,32 +131,37 @@ public class SimulationsKonstanten {
     		case A: 
     			list.add(0.8);	//MitarbeiterKostenFaktor
     			list.add(1.0);	//MaterialKostenFaktor
-    			list.add(1.1);	//MarketingsEinflussFaktor
+    			list.add(0.9);	//MarketingsEinflussFaktor
     			list.add(1.0);	//FertigungsKostenFaktor
+    			list.add(30d);	//Angebotsattraktivität
     			break;
     		case B:
     			list.add(1.0);
     			list.add(0.8);
-    			list.add(1.0);
     			list.add(1.1);
+    			list.add(1.1);
+    			list.add(0d);	
     			break;
     		case C:
     			list.add(1.1);
     			list.add(1.0);
-    			list.add(0.8);
-    			list.add(1.0);
+    			list.add(1.2);
+    			list.add(1.1);
+    			list.add(30d);
     			break;
     		case D:
-    			list.add(1.0);
+    			list.add(0.8);
     			list.add(1.1);
     			list.add(1.0);
     			list.add(0.8);
+    			list.add(0d);
     			break;
     		case NEUTRAL:
     			list.add(1.0);	
     			list.add(1.0);	
     			list.add(1.0);	
     			list.add(1.0);
+    			list.add(0d);
     			break;
     		}
     	return list;

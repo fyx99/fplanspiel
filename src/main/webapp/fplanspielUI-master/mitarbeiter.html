@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mitarbeiter</title>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
     <script src="jquery/jquery-1.11.0.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/bootstrap.min.js"></script>
@@ -36,11 +35,11 @@
         type: "GET",
         dataType: "json",
         success: function(data, data2){
-          printDataAlles(data.mitarbeiter.arbeiter);
+          printDataAlles(data.mitarbeiter.arbeiter, data);
         }
       });
     }
-    function printDataAlles(data){
+    function printDataAlles(data, companyData){
         var contFertigung = document.getElementById('FertigungContent');
         var contVertrieb = document.getElementById('VertriebContent');
         var contVerwaltung = document.getElementById('VerwaltungContent');
@@ -67,7 +66,7 @@
                 '<p style="margin-bottom: 2px"><b>Arbeitszeit:</b> ' + data[mitarbeiter].m.arbeitszeit + '</p>' + 
                 '<p><b>Lohnkosten:</b> ' + data[mitarbeiter].m.lohnkosten + '</p>' + 
                     '<p>' + 
-                      '<Button data-toggle="modal" data-target="#kündigen" class="btn btn-danger" role="button">Kündigen</Button> <Button id="detailsMitarbeiter7" onclick="setModalData(' + dialogID + ')" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</Button>' + 
+                      '<a href="verkauf.html#mitarbeiter" class="btn btn-danger" role="button">Kündigen</a> <a onclick="setModalData(' + dialogID + ')" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a>' + 
                     '</p>' +
                 '</div>' +
              '</div>' +
@@ -84,6 +83,11 @@
 			s = "";
 		}
         }
+        
+        document.getElementById('FertigungHead').innerHTML = "Fertigung (aktuelle Kapazität: " + companyData.mitarbeiter.kapazitaeten.MASCHINE + " Stunden)";
+        document.getElementById('VertriebHead').innerHTML = "Vertrieb (aktuelle Kapazität: " + companyData.mitarbeiter.kapazitaeten.VERTRIEB + " Stunden)";
+        document.getElementById('VerwaltungHead').innerHTML = "Verwaltung (aktuelle Kapazität: " + companyData.mitarbeiter.kapazitaeten.VERWALTUNG + " Stunden)";
+        
 		
 		if(fertigungCount == 0){
 			contFertigung.innerHTML = "<h4 style='padding-left: 18px'>Keine Mitarbeiter in dieser Abteilung vorhanden!</h4>";
@@ -121,7 +125,7 @@
     <!--Mitarbeiter Fertigung ÜBERSICHT-->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panelTop">Fertigung</h3>
+        <h3 class="panelTop" id="FertigungHead">Fertigung</h3>
       </div>
       <div class="panel-body">
         <div class="row" id="FertigungContent">
@@ -136,7 +140,7 @@
     <!--Mitarbeiter Vertrieb ÜBERSICHT-->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panelTop">Vertrieb</h3>
+        <h3 class="panelTop" id="VertriebHead">Vertrieb</h3>
       </div>
       <div class="panel-body">
         <div class="row" id="VertriebContent">
@@ -149,7 +153,7 @@
     <!--Mitarbeiter Verwaltung ÜBERSICHT-->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panelTop">Verwaltung</h3>
+        <h3 class="panelTop" id="VerwaltungHead">Verwaltung</h3>
       </div>
       <div class="panel-body">
         <div class="row" id="VerwaltungContent">

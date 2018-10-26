@@ -1,4 +1,4 @@
-package marketing;
+package fachkonzept.marketing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -46,7 +46,7 @@ class MarketingMixTest {
 		assertEquals(55, u1.getMarketingmix().getMarketing().get(0).getEffektivitaet());
 		assertEquals(16000, u1.getMarketingmix().getMarketing().get(0).getVolumen());
 
-		assertEquals(Integer.valueOf(13290), u1.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.VERWALTUNG));
+		assertEquals(Integer.valueOf(13716), u1.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.VERWALTUNG));
 		
 		
 	}
