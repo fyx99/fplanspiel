@@ -14,7 +14,7 @@ import fachkonzept.util.ProduktTyp;
 
 public class Absatzmarkt extends Markt {
 	
-	
+	private Map<ProduktArt, Integer> produktVolumen = new HashMap<ProduktArt, Integer>();
     public List<Angebot> getAngeboteByProduktArt(ProduktArt pa){
 
         List<Angebot> produkt_angebote = new ArrayList<Angebot>();
@@ -26,6 +26,19 @@ public class Absatzmarkt extends Markt {
         }
         return produkt_angebote;
     }
+    
+    public static List<Umsatz> getUmsaetzeByProduktArt(ProduktArt pa, int runde){		//alle Umsätze ds Absatzmarkes holen
+
+        List<Umsatz> ums = new ArrayList<Umsatz>();
+        
+        for (Umsatz um : getUmsatzHistorie()) {
+            if(um.getAngebot().getMarkteinheit() instanceof Produkt && ((Produkt)um.getAngebot().getMarkteinheit()).getProduktArt().equals(pa) && um.getRunde() == runde) {
+            	ums.add(um);
+            }
+        }
+        return ums;
+    }
+    
     
     public static List<Umsatz> getUmsaetzeByProduktTyp(ProduktTyp pt){		//alle Umsätze ds Absatzmarkes holen
 
@@ -61,6 +74,16 @@ public class Absatzmarkt extends Markt {
     	}
     	return marktAnteile;
     }
+
+	public Map<ProduktArt, Integer> getProduktVolumen() {
+		return produktVolumen;
+	}
+
+	public void setProduktVolumen(Map<ProduktArt, Integer> produktVolumen) {
+		this.produktVolumen = produktVolumen;
+	}
+    
+    
     
     
 	

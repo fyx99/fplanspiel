@@ -1,6 +1,7 @@
 package fachkonzept;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import fachkonzept.marketing.PRKampagne;
 import fachkonzept.marketing.Plakatwerbung;
 import fachkonzept.marketing.Radiowerbung;
 import fachkonzept.marketing.Sponsoring;
+import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.markt.Arbeitsmarkt;
 import fachkonzept.markt.Beschaffungsmarkt;
 import fachkonzept.markt.Finanzmarkt;
@@ -41,7 +43,7 @@ public class Simulation {
 			n.setMmarkt(maschinenmarktDemoDaten(n));
 			n.setFmarkt(finanzmarktDemoDaten());
 			n.setAmarkt(arbeitsmarktDemoDaten(n));
-
+			n.setVmarkt(absatzmarktDemoDaten());
 		}
 
 	}
@@ -189,9 +191,11 @@ public class Simulation {
 				continue;
 
 			simuliereEinzelnesProdukt(produkt_angebote,
-					SimulationsKonstanten.getProduktMarktvolumen(produktArt) * us.size(),
+					us.get(0).getVmarkt().getProduktVolumen().get(produktArt) * us.size(),
 					SimulationsKonstanten.getProduktMarktpreis(produktArt));
 		}
+		//noch die nachfrage am ende anpassen
+		us.forEach(u -> simuliereNachfrageAbsatzmarkt(u.getVmarkt(), u.getSpiel().getRunde()));
 		
 	}
 
@@ -231,8 +235,7 @@ public class Simulation {
 		// funktion die den preis verringert
 		double kappungsfaktor = 3; // 1% drüber -> 3 runter
 		double preisDifferenz = 1 - aktPreis / grundpreis; // in prozent über grundpreis
-		// return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
-		return gesamtNachfrage;
+		return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
 
 	}
 
@@ -277,6 +280,29 @@ public class Simulation {
 
 		// return wert verbleibende nachfrage
 		return verbleibendeNachfrage;
+	}
+	
+	private static void simuliereNachfrageAbsatzmarkt(Absatzmarkt b, int runde) {
+		int gesamt = 0;
+		for (ProduktArt a : ProduktArt.values()) {
+			// wv pro produkt verkauft wurde (menge)
+			gesamt += Absatzmarkt.getUmsaetzeByProduktArt(a, runde).stream().mapToInt(u -> u.getMenge()).sum();
+		}
+		
+		if(gesamt < ProduktArt.values().length)	//macht sonst wegen rundung keinen sinn
+			return;
+		double durchschnittsMenge = gesamt / ProduktArt.values().length;
+		
+
+		// was ist viel
+		// -> über alle drüber und
+		for(ProduktArt a : ProduktArt.values()) {
+			int artMenge = b.getProduktVolumen().get(a);
+			double mengenVerhältnis = (double) (artMenge - durchschnittsMenge) / durchschnittsMenge;
+			Map<ProduktArt, Integer> neueWerte = b.getProduktVolumen();
+			neueWerte.put(a, (artMenge + (int)(artMenge * SimulationsKonstanten.ABSATZ_MARKT_NACHFRAGEANPASSUNG * mengenVerhältnis)));
+			b.setProduktVolumen(neueWerte);
+		}
 	}
 
 	private static void simuliereBeschaffungsmarkt(Beschaffungsmarkt b, int runde) {
@@ -510,6 +536,12 @@ public class Simulation {
 				SimulationsKonstanten.getMaschinenPreise(m9.getMaschinenArt())));
 
 		return b;
+	}
+	
+	private static Absatzmarkt absatzmarktDemoDaten() {
+		Absatzmarkt am = new Absatzmarkt();
+		am.setProduktVolumen( Arrays.asList(ProduktArt.values()).stream().collect(Collectors.toMap(pa -> pa, pa -> SimulationsKonstanten.getProduktMarktvolumen(pa))));
+		return am;
 	}
 
 	public static List<String> getLog() {
