@@ -215,9 +215,6 @@ public class Unternehmen {
         return mitarbeiter;
     }
 
-    public void setMitarbeiter(List<Arbeitskraft> mitarbeiter) {
-        this.mitarbeiter = mitarbeiter;
-    }
 
     public List<Verbindlichkeit> getVerbindlichkeiten() {
         return verbindlichkeiten;

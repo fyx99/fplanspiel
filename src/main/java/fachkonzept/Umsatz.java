@@ -37,17 +37,11 @@ public class Umsatz {
 		return runde;
 	}
 
-	public void setRunde(int runde) {
-		this.runde = runde;
-	}
 
     public Unternehmen getVerkaeufer() {
         return verkaeufer;
     }
 
-    public void setVerkaeufer(Unternehmen verkaeufer) {
-        this.verkaeufer = verkaeufer;
-    }
 	
 	
 

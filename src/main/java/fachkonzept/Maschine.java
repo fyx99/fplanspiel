@@ -47,9 +47,6 @@ public class Maschine extends Markteinheit{
 		return matrix;
 	}
 
-	public void setMatrix(Produktionsmatrix matrix) {
-		this.matrix = matrix;
-	}
 
 	public int getKapazitaet() {
 		return kapazitaet;

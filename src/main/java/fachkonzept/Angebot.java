@@ -70,9 +70,7 @@ public class Angebot{
 	public Markteinheit getMarkteinheit() {
 		return markteinheit;
 	}
-	public void setMarkteinheit(Markteinheit markteinheit) {
-		this.markteinheit = markteinheit;
-	}
+
 	public void setPreis(double preis) {
 		this.preis = Werkzeuge.runde2Stellen(preis);
 	}//

@@ -31,9 +31,6 @@ public class Kredit extends Markteinheit {
     }
 
 
-    public void setVolumen(double volumen) {
-        this.volumen = volumen;
-    }
 
 
     public double getZinssatz() {
@@ -41,9 +38,6 @@ public class Kredit extends Markteinheit {
     }
 
 
-    public void setZinssatz(double zinssatz) {
-        this.zinssatz = zinssatz;
-    }
 
 
     public int getLaufzeit() {
@@ -51,9 +45,6 @@ public class Kredit extends Markteinheit {
     }
 
 
-    public void setLaufzeit(int laufzeit) {
-        this.laufzeit = laufzeit;
-    }
 
 
 	public KreditArt getKreditArt() {
@@ -61,11 +52,6 @@ public class Kredit extends Markteinheit {
 	}
 
 
-	public void setKreditArt(KreditArt kreditArt) {
-		this.kreditArt = kreditArt;
-
-        this.setName(kreditArt.name());
-	}
 
 
 	public int getVerwaltungsZeit() {

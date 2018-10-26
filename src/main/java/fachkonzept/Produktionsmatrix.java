@@ -15,9 +15,6 @@ public class Produktionsmatrix {
 		return matrix;
 	}
 
-	public void setMatrix(Map<String, Integer> matrix) {
-		this.matrix = matrix;
-	}
 
 	
 	

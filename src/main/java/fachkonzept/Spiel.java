@@ -90,13 +90,6 @@ public class Spiel {
         return aktuellesUnternehmen;
     }
 
-    public void setAktuellesUnternehmen(Unternehmen u) {
-        this.aktuellesUnternehmen = u;
-    }
-
-    public void setUnternehmen(List<Unternehmen> unternehmen) {
-        this.unternehmen = unternehmen;
-    }
 
     public void unternehmenHinzufuegen(Unternehmen u) {
 
