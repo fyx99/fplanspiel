@@ -44,7 +44,7 @@ public class Marketingmix {
         //hier wird direkt bezahlt
         u.getMarketingmix().marketingHinzu(m);
         u.beschaeftigeMitarbeiter(MitarbeiterFachgebiet.VERWALTUNG, (int)(m.getBudget() * SimulationsKonstanten.VERWALTUNGSMINUTEN_PRO_EURO_MARKETINGBUDGET));
-
+		u.kosten(m.getBudget(), "Marketingkosten");
     }
     
     public List<Marketingmaßnahme> getMarketingType(String type){

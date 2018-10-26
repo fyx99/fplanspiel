@@ -66,6 +66,7 @@ public class SpielService {
 	@Path("neuesspiel")
 	@Produces(MediaType.TEXT_PLAIN) // Application_Json
 	public static void neuesSpiel() {
+		//@DefaultValue("0") @QueryParam("szenario") Integer szenario
 		s = new Spiel();
 	}
 

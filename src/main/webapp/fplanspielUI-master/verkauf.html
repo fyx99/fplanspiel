@@ -26,15 +26,30 @@
  			window.onload = getDataVerkauf();
  			
  			var datenvMarkt;
+ 			var datenUnternehmen;
  			
  			function getDataVerkauf(){
- 				//Schnittstelle: Alle Produzierten Produkte
+ 				
+ 				//Schnittstelle: Alle Maschinen und Mitarbeiter, die der Nutzer gekauft hat
  				jQuery.ajax({
- 					url: "../api/spiel/produkte",
+ 					url: "../api/spiel/unternehmen",
  					type: "GET",
  					dataType: "json",
  					success: function(data, data2){
- 						printBestandP(data.produkte);
+ 						datenUnternehmen = data;
+ 						console.log("datenUnternehmen funktioniert:"+datenUnternehmen.mitarbeiter.arbeiter);
+ 						printMaschinen(data.maschinen.maschinen);
+ 						printMitarbeiter(data.mitarbeiter.arbeiter);
+ 					}
+ 				});
+ 			
+ 				//Schnittstelle: Alle Produzierten Produkte
+ 				jQuery.ajax({
+ 					url: "../api/spiel/unternehmen",
+ 					type: "GET",
+ 					dataType: "json",
+ 					success: function(data, data2){
+ 						printBestandP(data);
  						
  					}
  				});
@@ -50,21 +65,13 @@
  					}
  				});
  			
- 				//Schnittstelle: Alle Maschinen und Mitarbeiter, die der Nutzer gekauft hat
- 				jQuery.ajax({
- 					url: "../api/spiel/unternehmen",
- 					type: "GET",
- 					dataType: "json",
- 					success: function(data, data2){
- 						printMaschinen(data.maschinen.maschinen);
- 						printMitarbeiter(data.mitarbeiter.arbeiter);
- 					}
- 				});
+ 				
  			}
  			
  			 			
  			//Neues Objekt Dictionary (Speichert später alle produzierten Produkte)
  			var dict = {};
+ 			
  			var mengeProdukte = {};
  			
  			
@@ -72,10 +79,16 @@
  			 * function printBestandP()
  			 * */
  			function printBestandP(data){
+ 				
+ 				var kapAlleArbeiter = data.mitarbeiter.kapazitaeten;
+ 				data = data.produkte;
+ 				
  				var cont  = document.getElementById('contentBestandP');
  				var contSel = document.getElementById('contentSelect');
+ 				var contSel2 = document.getElementById('contentSelect2');
  				var s1 ="";
  				var s2 ="";
+ 				var s3 ="";
  				
  				for(var produkt in data){
  					s1 += 	'<li class="list-group-item">'+ data[produkt].p.name+
@@ -84,16 +97,20 @@
  								'</span>'+
  							'</li>';
  							
- 					s2 += '<option>'+data[produkt].p.name+'</option>'
+ 					s2 += '<option>'+data[produkt].p.name+'</option>';
+ 					
+ 					s3 += '<p>'+kapAlleArbeiter.VERTRIEB+'</p>';
  					
  					// Speichere in das Dictionary den Name des Produktes als Key und die Id des Produktes als Wert
  					dict[ data[produkt].p.name ] = data[produkt].p.id;
  					mengeProdukte[ data[produkt].p.name ] = data[produkt].menge;
+ 					
+ 					
  				}
  				
  				cont.innerHTML = s1;
  				contSel.innerHTML = s2;
- 				
+ 				contSel2.innerHTML = s3;
  			}
  			
  			var alleAngebote = {};
@@ -253,14 +270,20 @@
  			 * function anbieten()
  			 * */
  			function anbieten() {
+ 				
+ 				//Anzahl an Zeit, die von einem Mitarbeiter für 1 Angebot verbraucht wird
+ 				var verbrauchZeit = 3;
+ 				
  				var menge = document.getElementById("inputMenge").value;
  				var preis = document.getElementById("inputPreis").value;
  				var meldung  = document.getElementById('label');
  				
- 				//Auslesen des Optionsfelds
+ 				//Auslesen des Optionsfelds für Produkte
  				var optionField =  document.getElementById("contentSelect");
  				var sIndex = optionField.selectedIndex; //Startet bei 0
  				var produktName = optionField.options[sIndex].text;
+ 				
+ 				
  				
  				var produktid = dict[produktName];
  				
@@ -280,6 +303,47 @@
  			        meldung.innerHTML = text;
  			        return;
  				}
+ 				
+ 				if(datenUnternehmen.mitarbeiter.kapazitaeten.VERTRIEB <= 0){
+ 					text = "<h6>&nbsp;&nbsp;Nicht genug Arbeitszeit!</h6><h6><b>&nbsp;&nbsp;Ein Angebot verbraucht 2 h!</b></h6>";
+					 meldung.innerHTML = text;
+ 			        return;
+ 				}
+ 				
+ 				/* //*** 2. Prüfe, ob ein Mitarbeiter des Vertriebs mit genug Kapazität vorhanden ist ***
+ 		 		var optionFieldM =  document.getElementById("contentSelect2"); //Auslesen der Optionsfelder
+ 		 		var anzOptionen =  document.getElementById("contentSelect2").length; // Anzahl der Optionen im Select
+ 		 		
+ 		 		// Wenn mind. 1 Mitarbeiter vorhanden
+ 		 		if(anzOptionen > 0){
+ 			 		var iIndex = optionFieldM.selectedIndex; //Startet bei 0
+ 			 	    var inhalt = optionFieldM.options[sIndex].text; //Inhalt des Optionsfeldes: 38 Holzstuhlmaschine (0/100)
+ 			 		var parts = inhalt.split(" ");	// String bei den Leerzeichen aufsplitten
+ 			 		
+ 			 		var mitarbeiterid = dictArbeiter[parts[0]];
+ 			 		
+ 			 	    
+ 			 	    //Prüfe, ob die ausgewählte Maschine genug Kapazität hat oder ausgelastet ist
+ 			 	    for(arbeiter in datenUnternehmen.mitarbeiter.arbeiter){
+ 			 	    	
+ 							var auslastung = [arbeiter].auslastung;
+ 							var kapazitaet = datenUnternehmen.mitarbeiter.arbeiter[arbeiter].m.arbeitszeit;
+ 							var rechnung = kapazitaet - auslastung - verbrauchZeit;
+ 							if(rechnung < 0){
+ 								text = "<b>&nbsp;&nbsp; Nicht genug Arbeitszeit!</b><b>&nbsp;&nbsp; Ein Angebot verbraucht 3 Stunden !</b>";
+ 								 meldung.innerHTML = text;
+ 			 			        return;
+ 							}else{
+ 								text = "";
+ 							}
+ 						
+ 			 	    }
+ 			 	   
+ 			 	} else{
+ 			 		text = "<b>&nbsp;&nbsp; Für das Einstellen eines Angebots wird ein Mitarbeiter des Vertriebs benötigt!</b>";
+ 			 		 meldung.innerHTML = text;
+  			        return;
+ 			 	} */
  				
  				var text = "";
 			    meldung.innerHTML = text;
@@ -404,12 +468,12 @@
 				<div class="row">
 				 	<div class="form-group">
 				 
-				 		<div class="col-sm-4 align-self-center">
+				 		<div class="col-sm-5 align-self-center">
   							  <label for="sel1">Produkt:</label>
   						</div>
-  						<div class="col-sm-8 align-self-center">
+  						<div class="col-sm-7 align-self-center">
   							 <select class="form-control" id="contentSelect">
-							   
+							  
 							  </select>
   						</div>
   						
@@ -418,10 +482,10 @@
 				
 				<div class="row">
 					<div class="form-group">
-	  						<div class="col-sm-4 align-self-center">
+	  						<div class="col-sm-5 align-self-center">
 	  							<label>Menge:</label>
 	  						</div>
-	  						<div class="col-sm-8 align-self-center">
+	  						<div class="col-sm-7 align-self-center">
 	  							<input type="text" class="form-control" id="inputMenge">
 	  						</div>
 					</div>
@@ -429,22 +493,39 @@
 				
 				<div class="row">
 					<div class="form-group">
-	  						<div class="col-sm-4 align-self-center">
+	  						<div class="col-sm-5 align-self-center">
 	  							<label>Preis:</label>
 	  						</div>
-	  						<div class="col-sm-8 align-self-center">
+	  						<div class="col-sm-7 align-self-center">
 	  							<input type="text" class="form-control" id="inputPreis">
 	  						</div>
 					</div>
 				</div>
+				
 				<div class="row">
-					<div class ="col-sm-4"></div>
-					<div class ="col-sm-8">
+					<div class="form-group">
+	  						<div class="col-sm-6 align-self-center">
+	  							<label>Vorhandene</label>
+	  							<label>Arbeitszeit Vertrieb:</label>
+	  							 
+	  						</div>
+	  						<div class="col-sm-6 align-self-center">
+	  							<br>
+	  							<label id="contentSelect2"></label>
+	  						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class ="col-sm-6"></div>
+					<div class ="col-sm-6">
 						<div class="form-group">
 		  						<label id="label"></label>
 						</div>
 					</div>
 				</div>
+				
+				
  				
 			</div>
 			<div class="col-sm-1 align-self-center"></div>

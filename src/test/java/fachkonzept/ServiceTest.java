@@ -37,7 +37,7 @@ class ServiceTest {
         SpielService.neuesUnternehmen("Test Unternehmen AG 88", "B");
         assertEquals(0.8, SpielService.getSpiel().getUnternehmen().get(1).getStandort().getMaterialKosten());
         SpielService.neuesUnternehmen("Test Unternehmen AG 89", "C");
-        assertEquals(0.8, SpielService.getSpiel().getUnternehmen().get(2).getStandort().getMarketingEinfluss());
+        assertEquals(1.2, SpielService.getSpiel().getUnternehmen().get(2).getStandort().getMarketingEinfluss());
         SpielService.neuesUnternehmen("Test Unternehmen AG 90", "D");
         assertEquals(0.8, SpielService.getSpiel().getUnternehmen().get(3).getStandort().getFertigungsKosten());
         

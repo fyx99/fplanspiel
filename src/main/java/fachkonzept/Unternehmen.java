@@ -11,6 +11,7 @@ import dto.MaschinenGesamtDTO;
 import dto.MitarbeiterGesamtDTO;
 import dto.ProdukteGesamtDTO;
 import dto.UnternehmenDTO;
+import fachkonzept.marketing.Marketingmaßnahme;
 import fachkonzept.marketing.Marketingmix;
 import fachkonzept.markt.Absatzmarkt;
 import fachkonzept.markt.Arbeitsmarkt;
@@ -140,6 +141,7 @@ public class Unternehmen {
     
     public void verbindlichkeitHinzu(Verbindlichkeit v) {
         verbindlichkeiten.add(v);
+        this.kapital += v.getVerbleibendeSumme();
     }
     
     public void arbeitskraftHinzu(Arbeitskraft ak) {
@@ -306,7 +308,10 @@ public class Unternehmen {
 	    for(Maschine m : maschinen) {
 	        m.setAuslastung(0);
 	    }
+	    
+	    this.getMarketingmix().setMarketing(new ArrayList<Marketingmaßnahme>());
   
 	}
+	
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import fachkonzept.markt.Markteinheit;
 import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
+import fachkonzept.util.Werkzeuge;
 
 public class Maschine extends Markteinheit{
 	
@@ -26,7 +27,7 @@ public class Maschine extends Markteinheit{
 		this.kapazitaet = k;
 		this.p = pt;
 		this.matrix = m;
-		this.fertigungskosten = fertigungskosten;
+		this.fertigungskosten = Werkzeuge.runde2Stellen(fertigungskosten);
 		this.arbeitszeit = minuten;
 	}
 	
