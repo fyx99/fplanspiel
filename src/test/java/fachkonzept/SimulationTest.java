@@ -188,10 +188,10 @@ class SimulationTest {
 			// wv pro produkt verkauft wurde
 			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, s.getRunde()).stream().mapToInt(u -> u.getMenge()).sum();
 		}
-		assertEquals(0, gesamt);
+		assertEquals(10, gesamt);
 		
 		double schnittMenge = gesamt / MaschinenArt.values().length;
-		assertEquals(0, schnittMenge);
+		assertEquals(1.0, schnittMenge);
 		
     	Angebot a1 = u1.getMmarkt().getAngebote().get(0);
     	u1.getMmarkt().kaufen(a1, 10, u1);
@@ -215,14 +215,14 @@ class SimulationTest {
 			// wv pro produkt verkauft wurde
 			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, s.getRunde() -1 ).stream().mapToInt(u -> u.getMenge()).sum();
 		}
-		assertEquals(90, gesamt);
+		assertEquals(110, gesamt);
 		schnittMenge = gesamt / MaschinenArt.values().length;
 
-		assertEquals(10, schnittMenge);
+		assertEquals(12, schnittMenge);
 		
-    	assertEquals(7000, u1.getMmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
-    	assertEquals(7125, u1.getMmarkt().getAngebote().get(1).getPreis());
-    	assertEquals(8400, u1.getMmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(7572.73, u1.getMmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
+    	assertEquals(7090.91, u1.getMmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(8290.91, u1.getMmarkt().getAngebote().get(2).getPreis());
     	assertEquals(10350, u1.getMmarkt().getAngebote().get(4).getPreis());
     	assertEquals(SimulationsKonstanten.MASCHINEN_MARKT_MENGE, u1.getMmarkt().getAngebote().get(0).getMenge());
     	
@@ -233,9 +233,9 @@ class SimulationTest {
     	s.zugBeendet();
     	s.zugBeendet();
     	
-    	assertEquals(7000, u1.getMmarkt().getAngebote().get(0).getPreis());	
-    	assertEquals(7125, u1.getMmarkt().getAngebote().get(1).getPreis());
-    	assertEquals(8400, u1.getMmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(7572.73, u1.getMmarkt().getAngebote().get(0).getPreis());	
+    	assertEquals(7090.91, u1.getMmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(8290.91, u1.getMmarkt().getAngebote().get(2).getPreis());
     	assertEquals(10350, u1.getMmarkt().getAngebote().get(4).getPreis());
     	
 
@@ -246,9 +246,9 @@ class SimulationTest {
     	s.zugBeendet();
     	s.zugBeendet();
     	
-    	assertEquals(6300, u1.getMmarkt().getAngebote().get(0).getPreis());	
-    	assertEquals(6412.5, u1.getMmarkt().getAngebote().get(1).getPreis());
-    	assertEquals(15120, u1.getMmarkt().getAngebote().get(2).getPreis());
+    	assertEquals(6815.46, u1.getMmarkt().getAngebote().get(0).getPreis());	
+    	assertEquals(6381.82, u1.getMmarkt().getAngebote().get(1).getPreis());
+    	assertEquals(14923.64, u1.getMmarkt().getAngebote().get(2).getPreis());
     	
     }
     
@@ -274,7 +274,7 @@ class SimulationTest {
     	s.zugBeendet();
     	s.zugBeendet();
 
-    	assertEquals(3, u1.getBmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
+    	assertEquals(3.15, u1.getBmarkt().getAngebote().get(0).getPreis());	//bei durchschnittsmenge 0%
     	assertEquals(3.33, u1.getBmarkt().getAngebote().get(1).getPreis());
     	assertEquals(9.45, u1.getBmarkt().getAngebote().get(2).getPreis());
     	assertEquals(0.9, u1.getBmarkt().getAngebote().get(4).getPreis());

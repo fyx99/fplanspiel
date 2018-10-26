@@ -1,4 +1,4 @@
-package fachkonzept;
+package fachkonzept.markt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -9,11 +9,14 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fachkonzept.markt.Absatzmarkt;
-import fachkonzept.markt.Arbeitsmarkt;
-import fachkonzept.markt.Beschaffungsmarkt;
-import fachkonzept.markt.Finanzmarkt;
-import fachkonzept.markt.Maschinenmarkt;
+import fachkonzept.Angebot;
+import fachkonzept.Maschine;
+import fachkonzept.Material;
+import fachkonzept.Produkt;
+import fachkonzept.Produktionsmatrix;
+import fachkonzept.Spiel;
+import fachkonzept.Standort;
+import fachkonzept.Unternehmen;
 import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MaterialArt;
 import fachkonzept.util.ProduktArt;

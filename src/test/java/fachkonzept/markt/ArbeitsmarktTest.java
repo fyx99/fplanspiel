@@ -1,15 +1,18 @@
-package fachkonzept;
+package fachkonzept.markt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import fachkonzept.markt.Arbeitsmarkt;
-import fachkonzept.markt.Beschaffungsmarkt;
-import fachkonzept.markt.Finanzmarkt;
+import fachkonzept.Angebot;
+import fachkonzept.Arbeitskraft;
+import fachkonzept.Kredit;
+import fachkonzept.Mitarbeiter;
+import fachkonzept.Spiel;
+import fachkonzept.Standort;
+import fachkonzept.Unternehmen;
 import fachkonzept.util.KreditArt;
-import fachkonzept.util.MaterialArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;
 import fachkonzept.util.StandortArt;
@@ -87,7 +90,7 @@ public class ArbeitsmarktTest {
         
         assertEquals(4 + size, Arbeitsmarkt.getUmsatzHistorie().size());
     	assertEquals(2 + size2, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
-    	assertEquals(3 + size3, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
+    	assertEquals(5 + size3, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
 	
 	}	
 }

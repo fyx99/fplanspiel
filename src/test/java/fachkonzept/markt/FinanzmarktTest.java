@@ -1,4 +1,4 @@
-package fachkonzept;
+package fachkonzept.markt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -6,7 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fachkonzept.markt.Finanzmarkt;
+import fachkonzept.Angebot;
+import fachkonzept.Arbeitskraft;
+import fachkonzept.Kredit;
+import fachkonzept.Mitarbeiter;
+import fachkonzept.Spiel;
+import fachkonzept.Standort;
+import fachkonzept.Unternehmen;
 import fachkonzept.util.KreditArt;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;

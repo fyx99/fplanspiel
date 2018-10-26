@@ -192,9 +192,10 @@ public class SpielService {
 		// erstmal bezahlen
 
 		Angebot angebot = Angebot.findeAngebot(id);
-		if (angebot == null)
+		if (angebot == null) {
 			Spiel.log("kein anbgebot mit der id");
-
+			return false;
+		}
 		int tatsaechlichemenge = menge;
 		if (angebot.getMenge() < menge)
 			tatsaechlichemenge = angebot.getMenge(); // maximal was angeboten wird

@@ -1,4 +1,4 @@
-package fachkonzept;
+package service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,7 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import service.SpielService;
+import fachkonzept.Maschine;
+import fachkonzept.Material;
+import fachkonzept.Produkt;
+import fachkonzept.Produktionsmatrix;
+import fachkonzept.util.MaschinenArt;
+import fachkonzept.util.MaterialArt;
+import fachkonzept.util.ProduktArt;
+import fachkonzept.util.ProduktTyp;
 
 class ServiceTest {
     
@@ -93,21 +100,85 @@ class ServiceTest {
         assertNotNull(SpielService.getUmsatzHistorie());
         assertNotNull(SpielService.getMarketingmix());
         //kosequenter weise könnte man alle nach richtigkeit untersuchen
+        
     }
     
     @Test
     void anbieten() {
-        //todo
+    	Maschine m = new Maschine(MaschinenArt.Holzstuhlmaschine, 5000, new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl), new Produktionsmatrix(null), 5.0, 500);
+    	int anzahlAngeboteMMarkt = SpielService.getUnternehmen().getMmarkt().getAngebote().size();
+        SpielService.angebotErstellen(50, m.getId(), 99);
+        assertEquals(anzahlAngeboteMMarkt+1, SpielService.getUnternehmen().getMmarkt().getAngebote().size());
+        
+        
+        
+        Material material = new Material(MaterialArt.Holz);
+        
+    	int alteMenge = SpielService.getUnternehmen().getBmarkt().getAngebote().get(0).getMenge();
+    	
+    	assertEquals(6, SpielService.getBMarkt().getAngebote().size());
+    	
+        SpielService.angebotErstellen(50, material.getId(), 3);
+        
+        //HIER Wird kein neues Material-Angebot erstellt, sondern die Menge des neues Angebots einfach auf das alte addiert
+        assertEquals(6, SpielService.getBMarkt().getAngebote().size());
+        
+        assertEquals(Integer.valueOf(alteMenge + 50), SpielService.getUnternehmen().getBmarkt().getAngebote().get(0).getMenge());
+        
+
+        Produkt p = new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl);
+
+    	int anzahlAngeboteVMarkt = SpielService.getVMarkt().getAngebote().size();
+        SpielService.angebotErstellen(50, p.getId(), 99);
+        assertEquals(anzahlAngeboteVMarkt+1, SpielService.getVMarkt().getAngebote().size());
+        
+    }
+    
+    @Test
+    void angebotEntfernen() {
+    	//zuerst was auf V-Markt anbieten:
+    	assertEquals(0, SpielService.getUnternehmen().getVmarkt().getAngebote().size());
+    	
+    	Produkt p = new Produkt(ProduktArt.Holzstuhl, ProduktTyp.Stuhl);
+    	SpielService.angebotErstellen(50, p.getId(), 50);
+    	assertEquals(1, SpielService.getUnternehmen().getVmarkt().getAngebote().size());
+    	
+        //nun Angebot aus VMarktentfernen
+    	int angebotsID = SpielService.getUnternehmen().getVmarkt().getAngebote().get(0).getId();
+    	int anzahlAngebote = SpielService.getVMarkt().getAngebote().size();
+    	
+    	SpielService.angebotEntfernen(angebotsID);
+    	assertEquals(anzahlAngebote-1, SpielService.getVMarkt().getAngebote().size());
     }
     
     @Test
     void kaufen() {
-        //todo
+        int mitarbeiterId = SpielService.getAMarkt().getAngebote().get(0).getId();
+ 
+        assertEquals(false, SpielService.kaufeAngebot(100, -1));
+        assertEquals(true, SpielService.kaufeAngebot(5, mitarbeiterId));
+        assertEquals(true, SpielService.kaufeAngebot(50000, mitarbeiterId));
+        
+        int materialId = SpielService.getBMarkt().getAngebote().get(0).getId();
+        assertEquals(true, SpielService.kaufeAngebot(5, materialId));
+        
+        int kreditId = SpielService.getFMarkt().getAngebote().get(0).getId();
+        assertEquals(true, SpielService.kaufeAngebot(5, kreditId));
+        
+        int maschinenId = SpielService.getMMarkt().getAngebote().get(0).getId();
+        assertEquals(true, SpielService.kaufeAngebot(5, maschinenId));
     }
     
     @Test
     void produziere() {
-        //todo
+    	
+    	int maschinenId = SpielService.getMMarkt().getAngebote().get(0).getId();
+    	assertEquals(true, SpielService.kaufeAngebot(5, maschinenId));
+        int maschinenIdInventar = SpielService.getUnternehmen().getMaschinen().getMaschinen().get(0).getId();
+        SpielService.produziere(100, maschinenIdInventar);
+        assertEquals(100, SpielService.getUnternehmen().getProdukte().get(0).getMenge());
+        
+        
     }
     
     @Test
@@ -147,6 +218,18 @@ class ServiceTest {
     	assertEquals("Test Unternehmen AG 108", SpielService.getSpielende().get(1).getName());
     	assertEquals("Test Unternehmen AG 109", SpielService.getSpielende().get(2).getName());
     }
+    
+   @Test 
+   void doppelterUnternehmensname() {
+	   assertEquals("1", SpielService.neuesUnternehmen("1", "A"));
+	   assertEquals("Doppelter Name", SpielService.neuesUnternehmen("1", "A"));
+	   
+   }
+   
+   @Test
+   void spielDTO() {
+	   assertEquals(1, SpielService.getSpielDTO().getRunde());
+   }
     
     
 

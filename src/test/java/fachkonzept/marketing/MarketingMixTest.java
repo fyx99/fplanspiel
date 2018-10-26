@@ -1,4 +1,4 @@
-package marketing;
+package fachkonzept.marketing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
