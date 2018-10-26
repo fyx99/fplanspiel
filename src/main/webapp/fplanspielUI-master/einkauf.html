@@ -27,6 +27,7 @@
  			var datenmMarkt;
  			var datenfMarkt;
  			var datenaMarkt;
+ 			var datenUnternehmen;
  	 		
  	 		var maschinenid;
  	 		var materialid;
@@ -41,6 +42,9 @@
 	 					type: "GET",
 	 					dataType: "json",
 	 					success: function(data, data2){
+	 						datenUnternehmen = data;
+	 						
+	 						console.log("datenUnternehmen funktioniert:"+datenUnternehmen.mitarbeiter.kapazitaeten.VERWALTUNG);
 	 						datenbMarkt=data.bmarkt.angebote;
 	 						datenmMarkt=data.mmarkt.angebote;
 	 						
@@ -258,6 +262,15 @@
  								'</div>'+
  								
  								'<div class="col-sm-6">'+
+									'<p>Benötigte Verwaltungszeit</p>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<p>'+ data[angebot].markteinheit.verwaltungsZeit+'</p>'+
+									'<br>'+
+									'<br>'+
+								'</div>'+
+ 								
+ 								'<div class="col-sm-6">'+
  								'<p>Laufzeit</p>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
@@ -377,22 +390,26 @@
  			 * function kaufeModal()
  			 * */
  			function kaufeModal(id, angebot, markt) {
- 			
+ 				var fMarkt;
  				// Wert des Input-Feldes auslesen(Menge, die gekauft werden soll)
  				var iV = document.getElementById("inputEinkauf"+id).value;
  			
  				//Entscheidung, auf welchem Beschaffungsmarkt wir uns befinden
  				if(markt == 1) {
  					markt = datenbMarkt;
+ 					fMarkt = false;
  				}
  				if(markt == 2) {
  					markt = datenmMarkt;
+ 					fMarkt = false;
  				}
  				if(markt == 3) {
  					markt = datenfMarkt;
+ 					fMarkt = true;
  				} 
 				if(markt == 4) {
  					markt = datenaMarkt;
+ 					fMarkt = false;
  				} 
  				
  				var text;
@@ -412,34 +429,111 @@
  				//Test: Input-Wert
  				//document.getElementById("demo"+id).innerHTML = text;
  				
- 				//Inhalt des Modal
- 				var cont  = document.getElementById('contentModal');
- 				var s ="";
- 				
- 				//Multipliziere Preis mit eingebener Menge
- 				var kosten = markt[angebot].preis;
- 				kosten *= iV;
- 				
- 				var angebotsid = markt[angebot].id;
- 				
- 				s += '<div class="col-sm-12">'+
-						'<h3>Kauf von ' +  markt[angebot].markteinheit.name +':</h3><div><br></div>'+
-					'</div>'+
-					'<div class="col-sm-12">'+
-						'<h4>Menge: '+ iV+' Stück</h4>'+
-					'</div>'+
-					'<div class="col-sm-12">'+
-					'<h4>Kosten: '+ kosten+' Euro</h4>'+
-					'</div>'+
-					'<div class="row">'+
-						'<div class="col-sm-9">'+
+ 			    
+ 			    // Material, Maschinen und Mitarbeiter erhalten die selbe Nachricht
+ 			    if(fMarkt == false){
+ 			    
+	 				//Inhalt des Modal
+	 				var cont  = document.getElementById('contentModal');
+	 				var s ="";
+	 				
+	 				//Multipliziere Preis mit eingebener Menge
+	 				var kosten = markt[angebot].preis;
+	 				kosten *= iV;
+	 				
+	 				var angebotsid = markt[angebot].id;
+	 				
+	 				s += '<div class="col-sm-12">'+
+							'<h3>Kauf von ' +  markt[angebot].markteinheit.name +':</h3><div><br></div>'+
 						'</div>'+
-						'<div class="col-sm-3">'+
-							'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="kaufe('+iV+', '+angebotsid+')">Bestätigen</button>'+
+						'<div class="col-sm-12">'+
+							'<h4>Menge: '+ iV+' Stück</h4>'+
 						'</div>'+
-					'</div>';
- 			
- 					cont.innerHTML = s;
+						'<div class="col-sm-12">'+
+						'<h4>Kosten: '+ kosten+' Euro</h4>'+
+						'</div>'+
+						'<div class="row">'+
+							'<div class="col-sm-9">'+
+							'</div>'+
+							'<div class="col-sm-3">'+
+								'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="kaufe('+iV+', '+angebotsid+')">Bestätigen</button>'+
+							'</div>'+
+						'</div>';
+	 			
+	 					cont.innerHTML = s;
+	 					
+	 			// Für den Kauf von Krediten, muss geprüft werden, ob ein Mitarbeiter der Verwaltung zur Verfügung steht
+ 			    } else {
+ 			    	//Inhalt des Modal
+	 				var cont  = document.getElementById('contentModal');
+	 				var s ="";
+	 				
+	 				//Multipliziere Preis mit eingebener Menge
+	 				var kosten = markt[angebot].preis;
+	 				kosten *= iV;
+	 				
+	 				// Gibt mir die benötigte und die vorhandene Verwaltungszeit
+	 				var bVerwaltungszeit = markt[angebot].markteinheit.verwaltungsZeit * iV;
+	 				var vVerwaltungszeit = datenUnternehmen.mitarbeiter.kapazitaeten.VERWALTUNG;
+	 				//vVerwaltungszeit *= 1;
+	 				console.log(vVerwaltungszeit);
+	 				
+	 				
+	 				var angebotsid = markt[angebot].id;
+	 				
+	 				
+	 				s += '<div class="col-sm-12">'+
+							'<h3>Kauf von ' +  markt[angebot].markteinheit.name +':</h3><div><br></div>'+
+						'</div>'+
+						
+						
+						'<div class="col-sm-6">'+
+						'<h4>Menge:</h4>'+
+						'</div>'+
+						'<div class="col-sm-6">'+
+						'<h4>'+ iV +' Stück</h4>'+
+						'</div>'+
+						
+						'<div class="col-sm-6">'+
+						'<h4>Kosten:</h4>'+
+						'</div>'+
+						'<div class="col-sm-6">'+
+						'<h4>'+ kosten +' Euro</h4>'+
+						'</div>'+
+						
+						'<div class="col-sm-6">'+
+						'<h4>Benötigte Verwaltungszeit:</h4>'+
+						'</div>'+
+						'<div class="col-sm-6">'+
+						'<h4>'+ bVerwaltungszeit +'</h4>'+
+						'</div>';
+						
+						// Falls genug Verwaltungszeit vorhanden
+						if(vVerwaltungszeit >= bVerwaltungszeit){
+						
+							s+='<div class="row">'+
+								'<div class="col-sm-9">'+
+								'</div>'+
+								'<div class="col-sm-3">'+
+									'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="kaufe('+iV+', '+angebotsid+')">Bestätigen</button>'+
+								'</div>'+
+							'</div>';
+						
+						// Falls NICHT genug Verwaltungszeit vorhanden
+						} else{
+							s+='<div class="row">'+
+								'<br>'+
+								'<div class="col-sm-6">'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+								'<h5>Nicht genug Verwaltungszeit vorhanden!</h5>'+
+								'<h5>Aktuell vorhandene Verwaltungszeit: '+vVerwaltungszeit+'</h5><div><br></div>'+
+								'</div>'+
+							'</div>';
+						}
+						
+	 					cont.innerHTML = s;
+ 			    }
  			}
  		
  			
