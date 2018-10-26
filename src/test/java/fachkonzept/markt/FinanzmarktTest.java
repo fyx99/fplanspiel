@@ -61,19 +61,26 @@ class FinanzmarktTest {
     
     @Test 
     void umsatzProKreditArt() {
-//    	int size = Finanzmarkt.getUmsatzHistorie().size();
-//    	int size2 = Finanzmarkt.umsatzProKreditArt(KreditArt.Kurzes_Cash).size();
-//    	int size3 = Finanzmarkt.umsatzProKreditArt(KreditArt.Mehr_Cash).size();
-    	Finanzmarkt fmarkt = new Finanzmarkt();
+    	Finanzmarkt finanzmarkt = testU.getFmarkt();
     	
-    	Angebot a1 = new Angebot(new Kredit(1000, 0.05, 10, KreditArt.Kurzes_Cash), 22, 10);
-    	Angebot a2 = new Angebot(new Kredit(1555,0.05, 5,KreditArt.Mehr_Cash), 22, 11);
-    	fmarkt.anbieten(a1);
-    	fmarkt.anbieten(a2);
+    	int size1 = finanzmarkt.umsatzProKreditArt(KreditArt.Ultra_Cash).size();
+    	assertEquals(1, size1);
     	
-    	fmarkt.kaufen(a1, 2,new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
-    	fmarkt.kaufen(a1, 1, new Unternehmen("a1", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
-    	fmarkt.kaufen(a2, 1, new Unternehmen("a2", new Spiel(), new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+    	//hier bereits 1x Umsatz von der KreditArt.UltraCash aus den anderen Tests
+    	
+    	//Angebot Anbieten:
+    	finanzmarkt.anbieten(new Angebot(new Kredit(5000, 5, 5, KreditArt.Ultra_Cash), 5, 500));
+    	Angebot an = finanzmarkt.getAngebote().get(0);
+    	
+    	//Angebot kaufen
+    	finanzmarkt.kaufen(an, 1, testU);
+    	assertEquals(size1 + 1, finanzmarkt.umsatzProKreditArt(KreditArt.Ultra_Cash).size());
+    	
+    	
+    	
+    	
+    	
+    	
     	
     	
     }

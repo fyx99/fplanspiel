@@ -1,6 +1,5 @@
 package dto;
 
-import fachkonzept.marketing.Marketingmaßnahme;
 import fachkonzept.util.MarketingmaßnahmenArt;
 
 public class MarketingmaßnahmeDTO {

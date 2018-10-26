@@ -1,7 +1,5 @@
 package dto;
 
-import fachkonzept.Angebot;
-
 public class UmsatzDTO {
 
 	private AngebotDTO angebot;

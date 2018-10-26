@@ -7,16 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import fachkonzept.Arbeitskraft;
 import fachkonzept.Mitarbeiter;
-import fachkonzept.Simulation;
 import fachkonzept.Spiel;
 import fachkonzept.Standort;
 import fachkonzept.Unternehmen;
-import fachkonzept.marketing.Fernsehwerbung;
-import fachkonzept.marketing.MessenKampagne;
-import fachkonzept.marketing.PRKampagne;
-import fachkonzept.marketing.Plakatwerbung;
-import fachkonzept.marketing.Radiowerbung;
-import fachkonzept.marketing.Sponsoring;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;
 import fachkonzept.util.StandortArt;
@@ -48,7 +41,8 @@ class MarketingMixTest {
 
 		assertEquals(Integer.valueOf(13716), u1.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.VERWALTUNG));
 		
-		
+		u1.getMarketingmix().marketingEntfernen(test1);
+		assertEquals(0, u1.getMarketingmix().getMarketing().size());
 	}
 }
 

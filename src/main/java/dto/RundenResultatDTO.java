@@ -1,17 +1,13 @@
 package dto;
 
 import java.util.List;
-import java.util.Map;
 
 import dto.mapper.MarketingmaßnahmenMapper;
 import dto.mapper.ProduktMapper;
 import dto.mapper.UmsatzMapper;
 import fachkonzept.GuV;
-import fachkonzept.Produkt;
-import fachkonzept.Umsatz;
 import fachkonzept.Unternehmen;
 import fachkonzept.Verbindlichkeit;
-import fachkonzept.marketing.Marketingmaßnahme;
 import fachkonzept.util.MitarbeiterFachgebiet;
 
 public class RundenResultatDTO {

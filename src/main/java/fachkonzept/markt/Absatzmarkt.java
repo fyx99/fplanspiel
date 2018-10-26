@@ -40,7 +40,7 @@ public class Absatzmarkt extends Markt {
     }
     
     
-    public static List<Umsatz> getUmsaetzeByProduktTyp(ProduktTyp pt){		//alle Umsätze ds Absatzmarkes holen
+    public static List<Umsatz> getUmsaetzeByProduktTyp(ProduktTyp pt){		//alle Umsätze des Absatzmarkes holen
 
         List<Umsatz> ums = new ArrayList<Umsatz>();
         
