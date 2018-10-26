@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dto.MarketingmixDTO;
-import dto.MarktDTO;
 import dto.MaschinenGesamtDTO;
 import dto.MitarbeiterGesamtDTO;
 import dto.UnternehmenDTO;

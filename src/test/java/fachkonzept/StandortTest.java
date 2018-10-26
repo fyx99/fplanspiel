@@ -1,21 +1,11 @@
 package fachkonzept;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.eclipse.jetty.server.UserIdentity.UnauthenticatedUserIdentity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fachkonzept.markt.Arbeitsmarkt;
-import fachkonzept.markt.Beschaffungsmarkt;
-import fachkonzept.markt.Finanzmarkt;
-import fachkonzept.util.KreditArt;
-import fachkonzept.util.MaterialArt;
-import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;
 import fachkonzept.util.StandortArt;
-import net.bytebuddy.description.annotation.AnnotationValue.ForEnumerationDescription.UnknownRuntimeEnumeration;
 
 public class StandortTest {
 	

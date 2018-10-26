@@ -7,16 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import fachkonzept.Arbeitskraft;
 import fachkonzept.Mitarbeiter;
-import fachkonzept.Simulation;
 import fachkonzept.Spiel;
 import fachkonzept.Standort;
 import fachkonzept.Unternehmen;
-import fachkonzept.marketing.Fernsehwerbung;
-import fachkonzept.marketing.MessenKampagne;
-import fachkonzept.marketing.PRKampagne;
-import fachkonzept.marketing.Plakatwerbung;
-import fachkonzept.marketing.Radiowerbung;
-import fachkonzept.marketing.Sponsoring;
 import fachkonzept.util.MitarbeiterFachgebiet;
 import fachkonzept.util.SimulationsKonstanten;
 import fachkonzept.util.StandortArt;

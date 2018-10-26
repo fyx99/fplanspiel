@@ -3,7 +3,6 @@ package dto;
 import java.util.List;
 import java.util.Map;
 
-import fachkonzept.Produkt;
 import fachkonzept.Verbindlichkeit;
 
 public class UnternehmenDTO {

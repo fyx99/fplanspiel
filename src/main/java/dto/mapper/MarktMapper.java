@@ -1,9 +1,6 @@
 package dto.mapper;
 
-import java.util.List;
-
 import dto.MarktDTO;
-import fachkonzept.Angebot;
 import fachkonzept.markt.Markt;
 
 public class MarktMapper {
