@@ -30,7 +30,7 @@ public class Finanzmarkt extends Markt {
 
 	public static List<Umsatz> umsatzProKreditArt(KreditArt a) {
 		List<Umsatz> gefiltert = new ArrayList();
-		for(Umsatz u : Beschaffungsmarkt.getUmsatzHistorie()) {
+		for(Umsatz u : Finanzmarkt.getUmsatzHistorie()) {
 			if(u.getAngebot().getMarkteinheit() instanceof Kredit && ((Kredit)u.getAngebot().getMarkteinheit()).getKreditArt() == a) {
 				gefiltert.add(u);
 			}

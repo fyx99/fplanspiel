@@ -48,7 +48,8 @@ class MarketingMixTest {
 
 		assertEquals(Integer.valueOf(13716), u1.getMitarbeiterKapazitaeten().get(MitarbeiterFachgebiet.VERWALTUNG));
 		
-		
+		u1.getMarketingmix().marketingEntfernen(test1);
+		assertEquals(0, u1.getMarketingmix().getMarketing().size());
 	}
 }
 
