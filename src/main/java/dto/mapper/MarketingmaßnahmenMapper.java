@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dto.MarketingmaßnahmeDTO;
-import dto.UnternehmenDTO;
-import fachkonzept.Unternehmen;
 import fachkonzept.marketing.Marketingmaßnahme;
 import fachkonzept.util.MarketingmaßnahmenArt;
 

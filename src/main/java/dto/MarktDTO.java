@@ -1,9 +1,6 @@
 package dto;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import fachkonzept.Angebot;
 
 public class MarktDTO {
 
