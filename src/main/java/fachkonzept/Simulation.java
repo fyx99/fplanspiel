@@ -492,27 +492,27 @@ public class Simulation {
 
 		// Stühle
 		Maschine m1 = new Maschine(MaschinenArt.Holzstuhlmaschine, 100, holzstuhl, new Produktionsmatrix(map_hst),
-				15 * fertigungsKostenFaktor, 1);
+				10 * fertigungsKostenFaktor, 1);
 		Maschine m2 = new Maschine(MaschinenArt.Stoffstuhlmaschine, 57, stoffstuhl, new Produktionsmatrix(map_sst),
-				20 * fertigungsKostenFaktor, 2);
+				15 * fertigungsKostenFaktor, 2);
 		Maschine m3 = new Maschine(MaschinenArt.Lederstuhlmaschine, 50, lederstuhl, new Produktionsmatrix(map_lst),
-				25 * fertigungsKostenFaktor, 3);
+				20 * fertigungsKostenFaktor, 3);
 
 		// Tische
 		Maschine m4 = new Maschine(MaschinenArt.Holztischmaschine, 50, holztisch, new Produktionsmatrix(map_ht),
-				100 * fertigungsKostenFaktor, 4);
+				95 * fertigungsKostenFaktor, 4);
 		Maschine m5 = new Maschine(MaschinenArt.Glastischmaschine, 35, glastisch, new Produktionsmatrix(map_gt),
-				125 * fertigungsKostenFaktor, 5);
+				120 * fertigungsKostenFaktor, 5);
 		Maschine m6 = new Maschine(MaschinenArt.Kunststofftischmaschine, 180, kunststofftisch,
-				new Produktionsmatrix(map_kt), 20 * fertigungsKostenFaktor, 6);
+				new Produktionsmatrix(map_kt), 15 * fertigungsKostenFaktor, 6);
 
 		// Schränke
 		Maschine m7 = new Maschine(MaschinenArt.Holzschrankmaschine, 65, holzschrank, new Produktionsmatrix(map_hsc),
-				150 * fertigungsKostenFaktor, 7);
+				145 * fertigungsKostenFaktor, 7);
 		Maschine m8 = new Maschine(MaschinenArt.Edelstahlschrankmaschine, 50, edelstahlschrank,
-				new Produktionsmatrix(map_esc), 185 * fertigungsKostenFaktor, 8);
+				new Produktionsmatrix(map_esc), 180 * fertigungsKostenFaktor, 8);
 		Maschine m9 = new Maschine(MaschinenArt.Glasschrankmaschine, 38, glasschrank, new Produktionsmatrix(map_gsc),
-				215 * fertigungsKostenFaktor, 9);
+				210 * fertigungsKostenFaktor, 9);
 
 		// Maschinen auf Maschinenmarkt anbieten
 		Maschinenmarkt b = new Maschinenmarkt();

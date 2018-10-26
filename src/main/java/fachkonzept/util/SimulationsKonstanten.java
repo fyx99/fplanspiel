@@ -8,31 +8,31 @@ public class SimulationsKonstanten {
         double preis = 0;
         switch(produktArt) {
         case Holzstuhl:
-            preis = 60;
+            preis = 70;
             break;
         case Stoffstuhl:
-            preis = 90;
+            preis = 100;
             break;
         case Lederstuhl:
-            preis = 135;
+            preis = 145;
             break;
         case Holztisch:
-            preis = 250;
+            preis = 260;
             break;
         case Glastisch:
-            preis = 539;
+            preis = 549;
             break;
         case Kunststofftisch:
-            preis = 64;
+            preis = 74;
             break;
         case Holzschrank:
-            preis = 440;
+            preis = 450;
             break;
         case Edelstahlschrank:
-            preis = 560;
+            preis = 570;
             break;
         case Glasschrank:
-            preis = 780;
+            preis = 790;
             break;
         default:
             return -1;
