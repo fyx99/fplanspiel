@@ -46,7 +46,12 @@
     
     var datenMarketing;
     var kapazitätVerwaltung;
+    var maximalesBudget = 0;
+   	var kapitalAktuell = 0;
+    
     window.onload = getDataMarketing();
+    
+	
     
     function getDataMarketing(){
 			jQuery.ajax({
@@ -65,8 +70,12 @@
 					type: "GET",
 					dataType: "json",
 					success: function(data, data2){
-						
+						kapitalAktuell = data.kapital;
 						kapazitätVerwaltung = data.mitarbeiter.kapazitaeten.VERWALTUNG;
+						window.maximalesBudget = parseInt(kapazitätVerwaltung / 0.2);
+						
+						if (kapitalAktuell < maximalesBudget) window.maximalesBudget = kapitalAktuell;
+						
 						
 						for (i=0;i<=5;i++){
 							var anzeigeKapazität = document.getElementById('anzeigeKapazität'+i);
@@ -74,15 +83,14 @@
 							
 							string = '<p>'+kapazitätVerwaltung+'</p>';
 							
-							if (kapazitätVerwaltung == 0) {
-								string += "Nicht genug Verwaltungsmitarbeiter eingestellt!";
-							}
 							document.getElementById('anzeigeKapazität'+i).innerHTML = string;
+							document.getElementById('maximalesBudget'+i).innerHTML = "Du kannst maximal " + maximalesBudget + " € investieren. ";
 						}
 					}
 				});
     }
 		function printMarketing(data){
+			
 				var cont  = document.getElementById('contentMarketing');
 				var s ="";
 				var marketingMaßnahme;
@@ -93,7 +101,6 @@
 				for(var angebot in data){
 					marketingMaßnahme = data[angebot];
 					
-					console.log(angebot+"angebot");
 					s += '<div class="col-sm-6 col-md-4"><div class="thumbnail">'+
 						
 							'<div class="caption">'+
@@ -107,7 +114,7 @@
 							'<br></br>'+
 							
 							'<div class="col-sm-12">'+
-							'<label>Vorhandene Arbeitszeit Vertrieb: </br> </label>' +
+							'<label>Vorhandene Arbeitszeit Vertrieb: </label>' +
 							
 						'</div>'+
 						'<div class="col-sm-12">'+
@@ -115,41 +122,16 @@
 						'</div>'+
 						
 						'<div class="col-sm-12">'+
+						'<label id="maximalesBudget'+angebot+'">Du kannst maximal € investieren <br> </label>' +
+						
+					'</div>'+
+					'<div class="col-sm-12">'+
+					'<label>  </label>' +					
+				'</div>'+						
+						'<div class="col-sm-12">'+
 						'<p>Wie viel Geld möchtest Du investieren?</p>'+
 						'</div>'+
 								'<br></br>'+
-								
-								
-								
-								
-							
-							
-							
-  						
-				/* 			'<div class="col-sm-12">'+
-								/* '<select class="form-control" id="'+selectid+'">'; */
-								/* '<select class="form-control" id="">'; */
-				
-				 				// Ausgabe in einem Drop-Down, welche Mitarbeiter zur Verfügung stehen
-								
-							/* 	var mitarbeiterVertrieb = daten.maschinen.maschinen
-										
-								for (maschine in maschInBesitz){
-									var auslastung = maschInBesitz[maschine].auslastung;
-									var kapazitaet = maschInBesitz[maschine].kapazitaet;
-											
-									// Zeige nur Maschinen zur Auswahl an, die genug Kapazität frei haben!
-									if(maschInBesitz[maschine].name == data[angebot].markteinheit.name && auslastung < kapazitaet){
-										s+=			'<option>'+maschInBesitz[maschine].id+' '+maschInBesitz[maschine].name+' ('+auslastung+'/'+kapazitaet+')</option>';
-									}
-								} */ 
-									
-								//Ausgabe von Input-Feld und Button
-				/* s+=		  		'</select>'+
-								'<br>'+
-							'</div>'+ */ 
-							
-							
 		        				'<div class="col-sm-3">'+
 									'<input class="form-control input-sm" type="text" id =inputid'+ angebot+'>'+
 									'<br>'+
@@ -176,8 +158,8 @@
 				var budget = document.getElementById("inputid" +marketingID).value;
 			 	var cont  = document.getElementById('contentModal');
 				var s ="";
-				
-				if (isNaN(budget) || budget < 1) { 
+								
+				if (isNaN(budget) || budget < 1 || budget > maximalesBudget) { 
  			        text = "<h3>&nbsp;&nbsp;Eingabe ungültig!</h3>";
  			        cont.innerHTML = text;
  			        return;
@@ -193,42 +175,42 @@
 				'<h4>Name für Marketingmaßnahme: </h4>'+
 				'</div>'+
 				'<div class="col-sm-6">'+
-				'<input class="form-control input-sm" type="text" id =nameMarketing>'+
+				'<input class="form-control input-sm" type="text" id="nameMarketing">'+
 				'</div>'+	
 				'<div class="row">'+
 					'<div class="col-sm-9">'+
 					'</div>'+
 					'<div class="col-sm-3">'+
-						'<button type="button" class="btn btn-danger" data-dismiss="modal" onClick="marketingDurchführen('+marketingID+','+budget+')">Bestätigen</button>'+
+						'<button id="marketingBestaetigen" type="button" class="btn btn-danger"  onClick="marketingDurchführen('+marketingID+','+budget+')">Bestätigen</button>'+
 					'</div>'+
+				'</div>'+
+				
+				
+				'<div class="col-sm-12">'+
+					'<label id="fehlermeldung"></label>'+
+					'<label ></label>'+
+			'</div>';
+
+					cont.innerHTML = s; 
 					
-					/* '<div class="col-sm-9">'+
-					'<p id="fehlermeldung">u</p>'+
-					'</div>'+ */
-				'</div>';
-			
-					cont.innerHTML = s; 	
 				}		
-		/* 	var name = document.getElementById("nameMarketing").value;
-				
-				console.log("name"+name);
-				
-				if (name == "") { 
-					document.getElementById("fehlermeldung").innerHTML ="Wähle einen Namen für die Marketingmaßnahme aus!";
-					//setColourRed(document.getElementById('fehlermeldung'));
-					
-					console.log("test500");
-					} */
 			}
 		
 			function marketingDurchführen(marketingID, budget){
 				var art = datenMarketing[marketingID];
 				//var name = "hi";
 				var name = document.getElementById("nameMarketing").value;
+
+				var trimName = name.trim();
+
 				
-				console.log("name"+name);
-				
-						jQuery.ajax({
+				if (trimName == ""){
+					document.getElementById("fehlermeldung").innerHTML = "Bitte einen Namen für Marketingmaßnahme auswählen!";
+					$('#modalKaufen').modal('show');
+
+					
+				} else {
+					jQuery.ajax({
 	 			 		url: "../api/spiel/buchenmarketingmaßnahme?art=" + art + "&budget=" + budget + "&name=" + name,
 	 			 		type: "GET",
 	 			 		dataType: "json",
@@ -238,20 +220,18 @@
 
 	 				    }
 	 		 		});
+					//$('#modalKaufen').modal('close');
+					
+					$('#modalKaufen').modal('hide');
 	 				$('#navbar').load('navbar.html');
 	 				getDataMarketing();
-				
- 				
+				}	
  			}
 			
-
 			 function setColourRed(element){
 		        	element.style.color = "#FF0000";
 		        }
     </script>
-
-		
-		
 	</div>
 	
 		<!-- The Modal -->
