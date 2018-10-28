@@ -552,18 +552,19 @@ public class Simulation {
 	
 	//Startinventar für Szenario 1
 	private static void simuliereSzenario(Unternehmen un) {
+		//3 Maschinen hinzufügen
 		for (Angebot an: un.getMmarkt().getAngebote()) {
 			if(an.getMarkteinheit().getName().equals("Holzstuhlmaschine")) {
-				
-				un.maschineHinzu((Maschine)(an.getMarkteinheit()), 1);
+				Maschine m = new Maschine((Maschine)(an.getMarkteinheit()));
+				un.maschineHinzu(m, 1);
 			}
 			if(an.getMarkteinheit().getName().equals("Kunststofftischmaschine")) {
-				
-				un.maschineHinzu((Maschine)(an.getMarkteinheit()), 1);
+				Maschine m = new Maschine((Maschine)(an.getMarkteinheit()));
+				un.maschineHinzu(m, 1);
 			}
 			if(an.getMarkteinheit().getName().equals("Glasschrankmaschine")) {
-				
-				un.maschineHinzu((Maschine)(an.getMarkteinheit()), 1);
+				Maschine m = new Maschine((Maschine)(an.getMarkteinheit()));
+				un.maschineHinzu(m, 1);
 			}
 		}
 		

@@ -22,7 +22,10 @@
 			Unternehmen mit name ABC KGAA mit Stanndort B</a>
 	</p>
 	<p>
-		<a href="api/spiel/starten?rundenZahl=5">spiel starten</a>
+		<a href="api/spiel/starten?rundenZahl=5">spiel starten Szenario 0 </a>
+	</p>
+	<p>
+		<a href="api/spiel/starten?rundenZahl=5&szenario=1">spiel starten Szenario 1</a>
 	</p>
 	<p>
 		<a href="api/spiel/zugbeendet">zug beendet</a>
