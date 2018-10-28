@@ -27,7 +27,7 @@
     </script>
 
     <script>
-    var maxLagerKapazit�t = 100000;
+    var maxLagerKapazitaet = 100000;
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
@@ -48,7 +48,7 @@
       bilder["Glas"] = "img/glas.jpg";
       
       var index = 6;
-      var maxLagerKapazit�t = 100000;
+      var maxLagerKapazitaet = 100000;
       var name = "";
       var menge = "";
       var bild = "";
@@ -112,9 +112,9 @@
         '<img src="' + bild + '" alt="' + name + '">' + 
         '<div class="caption">' + 
         '<h3>' + name + '</h3>' + 
-        '<p>Verf�gbare Menge:</p>' + 
+        '<p>Verfügbare Menge:</p>' + 
         '<div class="progress">' + 
-        '<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazit�t + '" aria-valuenow="' + menge + '" aria-valuemin="0" aria-valuemax="' + maxLagerKapazit�t + '" style="width:' + (menge * 100)/maxLagerKapazit�t + '%;">' + Math.round((menge * 100)/maxLagerKapazit�t) + '%</div>' + 
+        '<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazitaet + '" aria-valuenow="' + menge + '" aria-valuemin="0" aria-valuemax="' + maxLagerKapazitaet + '" style="width:' + (menge * 100)/maxLagerKapazitaet + '%;">' + Math.round((menge * 100)/maxLagerKapazitaet) + '%</div>' + 
         '</div>' + 
         '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" onclick="loadDataDetails(\x27' + name + '\x27)" data-target="#details" class="btn btn-primary" role="button">Details</a></p>' + 
         '</div></div></div>';
@@ -132,7 +132,7 @@
         <div class="page-header">
             <h1>Materialien</h1>
         </div>
-        <!--Materialien �BERSICHT-->
+        <!--Materialien ÜBERSICHT-->
         	<div class="well">
         		<div class="row" id="rohstoffContent">
   					
@@ -166,7 +166,7 @@
          </div>
          <div class="modal-footer">
             <p>
-              <button class="btn btn-primary" data-dismiss="modal" role="button">Schlie�en</button>
+              <button class="btn btn-primary" data-dismiss="modal" role="button">Schließen</button>
             </p>  
          </div>
        </div>
@@ -206,11 +206,11 @@
     	document.getElementById('detailsDialogTitel').innerHTML = "Details zu: " + name;
     	
     	content = '<table class="table">' + 
-		'<tr><td><b>Verf�gbare Menge an ' + name + ': </b></td><td>' + menge + ' ME</td</tr>' + 
-		'<tr><td><b>Gr��e des Lagers: </b></td><td>' + maxLagerKapazit�t + ' ME</td</tr>' + 
+		'<tr><td><b>Verfügbare Menge an ' + name + ': </b></td><td>' + menge + ' ME</td</tr>' + 
+		'<tr><td><b>Größe des Lagers: </b></td><td>' + maxLagerKapazitaet + ' ME</td</tr>' + 
 		'</table>' +
 		'<div class="progress">' + 
-        '<div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazit�t + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazit�t + '" style="width:' + (menge * 100)/maxLagerKapazit�t + '%;">' + Math.round((menge * 100)/maxLagerKapazit�t) + '%</div>' + 
+        '<div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazitaet + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazitaet + '" style="width:' + (menge * 100)/maxLagerKapazitaet + '%;">' + Math.round((menge * 100)/maxLagerKapazitaet) + '%</div>' + 
         '</div>';
       	document.getElementById('detailsModalContent').innerHTML = content;
 

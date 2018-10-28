@@ -50,9 +50,10 @@
             '<div class="caption">' + 
             '<h3>' + data[maschine].name + '</h3>' + 
             '<p>Produziert: <b>' + data[maschine].p.name + '</b></p>' + 
-            '<p><a href="verkauf.html#maschinen" class="btn btn-danger" role="button">Verkaufen</a> <a class="btn btn-primary" onclick="loadData(' + maschinenCount + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' + 
+            '<p><a class="btn btn-primary" onclick="loadData(' + maschinenCount + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' + 
             '</div></div></div>';
-
+			//'<p><a href="verkauf.html#maschinen" class="btn btn-danger" role="button">Verkaufen</a> <a class="btn btn-primary" onclick="loadData(' + maschinenCount + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' +
+            
             maschinenCount++;
       }
       if(maschinenCount == 0){
