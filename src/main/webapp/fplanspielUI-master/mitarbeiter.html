@@ -12,7 +12,6 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
  </head>
  
  <body onload="start()">
@@ -64,7 +63,7 @@
                 '<h3 class="cardTop">' + data[mitarbeiter].m.name + '</h3>' +
                 '<p style="margin-bottom: 2px"><b>Arbeitsgebiet:</b> ' + data[mitarbeiter].m.mfg + '</p>' + 
                 '<p style="margin-bottom: 2px"><b>Arbeitszeit:</b> ' + data[mitarbeiter].m.arbeitszeit + '</p>' + 
-                '<p><b>Lohnkosten:</b> ' + data[mitarbeiter].m.lohnkosten + '</p>' + 
+                '<p><b>Lohnkosten:</b> ' + data[mitarbeiter].m.lohnkosten + ' €</p>' + 
                     '<p>' + 
                       '<a href="verkauf.html#mitarbeiter" class="btn btn-danger" role="button">Kündigen</a> <a onclick="setModalData(' + dialogID + ')" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a>' + 
                     '</p>' +

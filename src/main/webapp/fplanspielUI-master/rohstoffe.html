@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Materialien</title>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
     <script src="jquery/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -13,21 +12,18 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
  </head>
  
  <body onload="start()">
     <script>
       $(document).ready(function() {
                 $('#navbar').load('navbar.html');
-        	    $('[data-toggle="tooltip"]').tooltip();
                 getData();
                 $('#footer').load('footer.html');
       });
     </script>
 
     <script>
-    var maxLagerKapazitaet = 100000;
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
@@ -48,7 +44,6 @@
       bilder["Glas"] = "img/glas.jpg";
       
       var index = 6;
-      var maxLagerKapazitaet = 100000;
       var name = "";
       var menge = "";
       var bild = "";
@@ -112,11 +107,8 @@
         '<img src="' + bild + '" alt="' + name + '">' + 
         '<div class="caption">' + 
         '<h3>' + name + '</h3>' + 
-        '<p>Verfügbare Menge:</p>' + 
-        '<div class="progress">' + 
-        '<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazitaet + '" aria-valuenow="' + menge + '" aria-valuemin="0" aria-valuemax="' + maxLagerKapazitaet + '" style="width:' + (menge * 100)/maxLagerKapazitaet + '%;">' + Math.round((menge * 100)/maxLagerKapazitaet) + '%</div>' + 
-        '</div>' + 
-        '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a data-toggle="modal" onclick="loadDataDetails(\x27' + name + '\x27)" data-target="#details" class="btn btn-primary" role="button">Details</a></p>' + 
+        '<p>Menge im Lager: <b>' + menge + ' ME</b></p>' +
+        '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> </p>' + 
         '</div></div></div>';
         
         document.getElementById('rohstoffContent').innerHTML += s;
@@ -150,71 +142,5 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-<!--Modal-Details-->
-  <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-           <h2 class="modal-title" id="detailsDialogTitel">Details</h2>
-         </div>
-         <div class="modal-body" id="detailsModalContent">
-
-
-         </div>
-         <div class="modal-footer">
-            <p>
-              <button class="btn btn-primary" data-dismiss="modal" role="button">Schließen</button>
-            </p>  
-         </div>
-       </div>
-    </div>
-  </div>
-
-  <script>    
-    function loadDataDetails(name){
-        jQuery.ajax({
-          url: "../api/spiel/unternehmen",
-          type: "GET",
-          dataType: "json",
-          success: function(data, data2){
-            setValuesDetails(data.materialien, name);
-          }
-        });
-      }
-
-      function setValuesDetails(data, name){
-    	var content = "";
-    	var menge = "";
-    	
-    	if(name == "Holz"){
-    		menge = data.Holz;
-    	}else if(name == "Stoff"){
-    		menge = data.Stoff;
-    	}else if(name == "Leder"){
-    		menge = data.Leder;
-    	}else if(name == "Kunststoff"){
-    		menge = data.Kunststoff;
-    	}else if(name == "Edelstahl"){
-    		menge = data.Edelstahl;
-    	}else if(name == "Glas"){
-    		menge = data.Glas;
-    	}
-    	
-    	document.getElementById('detailsDialogTitel').innerHTML = "Details zu: " + name;
-    	
-    	content = '<table class="table">' + 
-		'<tr><td><b>Verfügbare Menge an ' + name + ': </b></td><td>' + menge + ' ME</td</tr>' + 
-		'<tr><td><b>Größe des Lagers: </b></td><td>' + maxLagerKapazitaet + ' ME</td</tr>' + 
-		'</table>' +
-		'<div class="progress">' + 
-        '<div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="' + menge + '/' + maxLagerKapazitaet + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazitaet + '" style="width:' + (menge * 100)/maxLagerKapazitaet + '%;">' + Math.round((menge * 100)/maxLagerKapazitaet) + '%</div>' + 
-        '</div>';
-      	document.getElementById('detailsModalContent').innerHTML = content;
-
-      }
-  </script>
   </body>
 </html>

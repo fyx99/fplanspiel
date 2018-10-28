@@ -12,14 +12,12 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
  </head>
  
  <body onload="start()">
     <script>
       $(document).ready(function() {
         $('#navbar').load('navbar.html');
-        $('[data-toggle="tooltip"]').tooltip();
         getData();
         $('#footer').load('footer.html');
       });
@@ -59,9 +57,9 @@
             '</div>' +
          '</div>' +
       '</div>';
-      
       index++;
       }
+      
       if(index == 0){
     	  s = "<h4 style='padding-left: 18px'>Zur Zeit keine laufenden Darlehen!</h4>";
       }

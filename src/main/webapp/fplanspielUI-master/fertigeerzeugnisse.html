@@ -12,7 +12,6 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
  </head>
  
  <body onload="start()">
@@ -21,13 +20,10 @@
           $('#navbar').load('navbar.html');
           getData();
           $('#footer').load('footer.html');
-          //$('[data-toggle="tooltip"]').tooltip();
 	  });
     </script>
 
 	<script>
-    var maxLagerKapazität = 1000;
-	
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/produkte",
@@ -42,39 +38,27 @@
       var cont  = document.getElementById('fertigeErzContent');
       var s ="";
       var index = 0;
-      var bild = "";
+      var bilder = [];
+      bilder["Holzstuhl"] = "img/holzstuhl2.jpg";
+      bilder["Stoffstuhl"] = "img/stoffstuhl.jpg";
+      bilder["Lederstuhl"] = "img/lederstuhl.jpg";
+      
+      bilder["Holztisch"] = "img/holztisch.jpg";
+      bilder["Glastisch"] = "img/glastisch.jpg";
+      bilder["Kunststofftisch"] = "img/kunststofftisch.JPG";
+      
+      bilder["Holzschrank"] = "img/holzschrank.jpg";
+      bilder["Edelstahlschrank"] = "img/edelstahlschrank.jpg";
+      bilder["Glasschrank"] = "img/glasschrank.jpg";
 
       for(var produkt in data){
-    	  if(data[produkt].p.name == "Holzstuhl"){
-    		  bild = "img/holzstuhl2.jpg";
-    	  } else if(data[produkt].p.name == "Stoffstuhl"){
-    		  bild = "img/stoffstuhl.jpg";
-    	  } else if(data[produkt].p.name == "Lederstuhl"){
-    		  bild = "img/lederstuhl.jpg";
-    	  } else if(data[produkt].p.name == "Holztisch"){
-    		  bild = "img/holztisch.jpg";
-    	  } else if(data[produkt].p.name == "Glastisch"){
-    		  bild = "img/glastisch.jpg";
-    	  } else if(data[produkt].p.name == "Kunststofftisch"){
-    		  bild = "img/kunststofftisch.JPG";
-    	  } else if(data[produkt].p.name == "Holzschrank"){
-    		  bild = "img/holzschrank.jpg";
-    	  } else if(data[produkt].p.name == "Edelstahlschrank"){
-    		  bild = "img/edelstahlschrank.jpg";
-    	  } else if(data[produkt].p.name == "Glasschrank"){
-    		  bild = "img/glasschrank.jpg";
-    	  }
-    	  
         s += '<div class="col-sm-6 col-md-4">' + 
             '<div class="thumbnail">' + 
-            '<img src="' + bild +'" alt="' + data[produkt].p.name + '">' + 
+            '<img src="' + bilder[data[produkt].p.name] +'" alt="' + data[produkt].p.name + '">' + 
             '<div class="caption">' + 
             '<h3>' + data[produkt].p.name + '</h3>' + 
-            '<p>Verfügbare Menge:</p>' + 
-            '<div class="progress">' + 
-            '<div class="progress-bar" role="progressbar" data-toggle="tooltip" title="' + data[produkt].menge + '/' + maxLagerKapazität + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazität + '" style="width:' + (data[produkt].menge * 100)/maxLagerKapazität + '%;">' + Math.round((data[produkt].menge * 100)/maxLagerKapazität) + '%</div>' + 
-            '</div>' + 
-            '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a> <a onclick="loadData(' + index + ')" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a></p>' + 
+            '<p>Menge im Lager: <b>' + data[produkt].menge + ' ME</b></p>' +  
+            '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a></p>' + 
             '</div></div></div>';
 
             index++;
@@ -113,57 +97,5 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-<!--Modal-Details-->
-  <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-           <h2 class="modal-title" id="DetailsDialogTitel">Details</h2>
-         </div>
-         <div class="modal-body" id="modalBodyID" style="font-size: 16px;">
-
-			
-
-         </div>
-         <div class="modal-footer">
-            <p>
-              <button class="btn btn-primary" data-dismiss="modal" role="button">Schließen</button>
-            </p>  
-         </div>
-       </div>
-    </div>
-  </div>
-    
-    <script>
-    function loadData(index){
-      jQuery.ajax({
-        url: "../api/spiel/produkte",
-        type: "GET",
-        dataType: "json",
-        success: function(data, data2){
-          setValues(data.produkte, index);
-        }
-      });
-    }
-    
-    function setValues(data, index){
-    	document.getElementById('DetailsDialogTitel').innerHTML = "Details zu: " + data[index].p.name;
-  
-    	var inhalt = "";
-	
-    	inhalt += '<table class="table">' + 
-		'<tr><td><b>Verfügbare Menge: </b></td><td>' + data[index].menge + ' ME</td</tr>' + 
-		'<tr><td><b>Größe des Lagers</b></td><td>' + maxLagerKapazität + ' ME</td></tr>' + 
-		'</table>' + 
-		'<div class="progress">' + 
-        '<div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip" title="' + data[index].menge + '/' + maxLagerKapazität + '" aria-valuenow="100" aria-valuemin="0" aria-valuemax="' + maxLagerKapazität + '" style="width:' + (data[index].menge * 100)/maxLagerKapazität + '%;">' + Math.round((data[index].menge * 100)/maxLagerKapazität) + '%</div>' + 
-        '</div>';
-
-    	document.getElementById('modalBodyID').innerHTML = inhalt;
-    }
-    </script>
   </body>
 </html>
