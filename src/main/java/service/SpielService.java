@@ -344,7 +344,7 @@ public class SpielService {
 			return null;
 
 		}
-		s.getAktuellesUnternehmen().getMarketingmix().marketingHinzu(m);
+		s.getAktuellesUnternehmen().getMarketingmix().marketingBuchen(m, s.getAktuellesUnternehmen());
 		return new MarketingmixDTO(s.getAktuellesUnternehmen().getMarketingmix());
 	}
 
