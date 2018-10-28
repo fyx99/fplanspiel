@@ -37,7 +37,7 @@
         <div class="page-header">
             <h1>Neues Spiel</h1>
         </div>	
-            	<h3>Bitte wählen Sie die Länge des Spiels und die Anzahl der Spieler aus!</h3>
+            	<h3>Bitte wähle den Spielmodus, die Länge des Spiels und die Anzahl der Spieler aus!</h3>
 
                 <style> 
                 table {
@@ -73,19 +73,59 @@
         			}
                 </style>
                 
+                   <div class="panel panel-default">
+      				<div class="panel-heading">
+        				<h4 class="panelTop">Spielmodus</h4>
+      				</div>
+      				<div class="panel-body">
+							 <div class="btn-group btn-group-toggle" data-toggle="buttons">
+							  <label class="btn btn-primary active">
+							    <input onchange="changeSpielmodus('0')" type="radio" name="options" id="spielmodus1" autocomplete="off" checked> Spielmodus 1 (ohne Anfangsinventar)
+							  </label>
+							  <label class="btn btn-primary">
+							    <input onchange="changeSpielmodus('1')" type="radio" name="options" id="spielmodus2" autocomplete="off"> Spielmodus 2 (mit Anfangsinventar)
+							  </label>
+							</div>
+                    	</div>
+                    </div>
+                
+                
                 <div class="panel panel-default">
       				<div class="panel-heading">
         				<h4 class="panelTop">Länge des Spiels</h4>
       				</div>
       				<div class="panel-body">
-                    		<div class="btn-group" role="group" aria-label="rundenzahl">
-                    		<button type="button" onclick="changeRoundCount('2')" class="btn btn-primary">Demo (2 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('6')" class="btn btn-primary">Kurz (6 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('12')" class="btn btn-primary">Mittel (12 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('20')" class="btn btn-primary">Lang (20 Runden)</button>
-                    	</div>
+      				
+      					    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+							  <label class="btn btn-primary active">
+							    <input onchange="changeRoundCount('2')" type="radio" name="options" id="roundCount1" autocomplete="off" checked> Demo (2 Runden)
+							  </label>
+							  <label class="btn btn-primary">
+							    <input onchange="changeRoundCount('6')" type="radio" name="options" id="roundCount2" autocomplete="off"> Kurz (6 Runden)
+							  </label>
+							  <label class="btn btn-primary">
+							    <input onchange="changeRoundCount('12')" type="radio" name="options" id="roundCount3" autocomplete="off"> Mittel (12 Runden)
+							  </label>
+							  <label class="btn btn-primary">
+							    <input onchange="changeRoundCount('20')" type="radio" name="options" id="roundCount4" autocomplete="off"> Lang (20 Runden)
+							  </label>
+							</div>
+							
+                    		
                     </div>
                 </div>
+                
+                
+                
+               <!--  <div class="btn-group" role="group" aria-label="rundenzahl">
+                    		<button type="button" onclick="changeRoundCount('2')" class="btn btn-primary">Demo (2 Runden)</button>
+                            	<button type="button" onclick="changeRoundCount('2')" class="btn btn-primary">Kurz (6 Runden)</button>
+                            	<button type="button" onclick="changeRoundCount('12')" class="btn btn-primary">Mittel (12 Runden)</button>
+                            	<button type="button" onclick="changeRoundCount('20')" class="btn btn-primary">Lang (20 Runden)</button>
+                    	</div> -->
+                    	
+                    	
+                
 
     <!--Spielerauswahl--> 
 	<div class="panel-group" id="accordion">
@@ -97,7 +137,7 @@
 	
 	<script>
 	
-	function printMitarbeiter(){
+	function printStartseite(){
 			var cont  = document.getElementById('contentStartseite');
 			var s ="";
 			
@@ -208,13 +248,20 @@
 </div> -->
 
 				<div class="well well-sm">
+					<p class="gameSummary">Spielmodus:
+						<p style="font-weight: bold" id="spielmodusText">Spielmodus 1 (ohne Anfangsinventar)</p> <!--damit zwangsweise etwas ausgewählt ist-->
+					</p>
+					
+
+					<p class="gameSummary">Anzahl der Runden:
+						<p style="font-weight: bold" id="anzahlRundenText">2 Runden</p> <!--damit zwangsweise etwas ausgewählt ist-->
+					</p>
+					
 					<p class="gameSummary">Anzahl der Spieler: 				
 						<p style="font-weight: bold" id="anzahlSpielerText">2 Spieler</p> <!--damit zwangsweise etwas ausgewählt ist-->
 					</p>
-
-					<p class="gameSummary">Anzahl der Runden:
-						<p style="font-weight: bold" id="anzahlRundenText">6 Runden</p> <!--damit zwangsweise etwas ausgewählt ist-->
-					</p>
+					
+					
 				</div>
 
                 <p></p>
@@ -273,7 +320,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script>
 	    $(document).ready(function() {
-	    	printMitarbeiter();
+	    	printStartseite();
 	    	
 	    	
 	    	// Noch als Backup
@@ -351,7 +398,8 @@
     
     	var standort = "";
         var anzahlSpieler = 0;
-        var rundenAnzahl = 6;
+        var rundenAnzahl = 2;
+        var spielmodus = 0;
         
         var erstesUnternehmenHinzugefuegt = false;
         var zweitesUnternehmenHinzugefuegt = false;
@@ -362,9 +410,11 @@
         		
             	//http://localhost:8080/pplanspiel/api/spiel/starten?rundenZahl=20%20Runden
             	console.log("rundenanzahl"+rundenAnzahl);
-            	jQuery.ajax({
-            		
-    		 		url: "../api/spiel/starten?rundenZahl=" + rundenAnzahl,
+            	console.log("spielmodus"+spielmodus);
+            	console.log("rundenanzahl"+rundenAnzahl);
+            	
+            	jQuery.ajax({          				
+    		 		url: "../api/spiel/starten?rundenZahl=" + rundenAnzahl + "&szenario=" + spielmodus,
     		 		type: "GET",
     		 		sucess: function() {
     		 			confirm("Unternehmen hinzugefuegt");
@@ -417,6 +467,18 @@
         function changeRoundCount(count){
         	document.getElementById('anzahlRundenText').innerHTML= count + " Runden";
         	rundenAnzahl=count;
+        }
+        
+        function changeSpielmodus(count){
+        	spielmodus = count;
+        	
+        	if (spielmodus==0 ){
+        		document.getElementById('spielmodusText').innerHTML= "Spielmodus 1 (ohne Anfangsinventar)";
+        	} else {
+        		document.getElementById('spielmodusText').innerHTML= "Spielmodus 2 (mit Anfangsinventar)";
+        	}
+        	
+        	spielmodus = count;
         }
 
         function changePlayerFirma(player, firma){
