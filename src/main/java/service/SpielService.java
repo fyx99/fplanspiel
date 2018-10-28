@@ -66,7 +66,6 @@ public class SpielService {
 	@Path("neuesspiel")
 	@Produces(MediaType.TEXT_PLAIN) // Application_Json
 	public static void neuesSpiel() {
-		//@DefaultValue("0") @QueryParam("szenario") Integer szenario
 		s = new Spiel();
 	}
 
@@ -113,9 +112,10 @@ public class SpielService {
 	@GET
 	@Path("starten")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static void spielStart(@DefaultValue("10") @QueryParam("rundenZahl") Integer rundenAnzahl) {
+	public static void spielStart(@DefaultValue("10") @QueryParam("rundenZahl") Integer rundenAnzahl, @DefaultValue("0") @QueryParam("szenario") Integer szenario) {
 		if (s != null) {
 			s.setRundenAnzahl(rundenAnzahl);
+			s.setSzenario(szenario);
 			s.rundenStart();
 		}
 	}

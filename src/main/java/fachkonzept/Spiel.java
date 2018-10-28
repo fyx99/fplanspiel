@@ -9,6 +9,7 @@ public class Spiel {
 
     private int runde = 0;
     private int rundenAnzahl = 10;
+    private int szenario;
     private Unternehmen aktuellesUnternehmen = null;
     private List<Unternehmen> unternehmen = new ArrayList<Unternehmen>();
     private Stack<Unternehmen> naechsteUnternehmen;
@@ -122,5 +123,13 @@ public class Spiel {
     public static List<String> getLog() {
         return log;
     }
+
+	public int getSzenario() {
+		return szenario;
+	}
+
+	public void setSzenario(int szenario) {
+		this.szenario = szenario;
+	}
 
 }

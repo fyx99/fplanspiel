@@ -1,6 +1,8 @@
 package fachkonzept;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -288,6 +290,38 @@ class SimulationTest {
     	
     	Angebot a1 = u1.getAmarkt().getAngebote().get(0);
     	//weitere Tests...
+    }
+    
+    @Test
+    void simuliereSzenario() {
+    	Spiel spiel = new Spiel();
+    	spiel.setRundenAnzahl(8);
+    	spiel.setSzenario(1);
+    	spiel.unternehmenHinzufuegen(u1 = new Unternehmen("tst", s, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+    	spiel.unternehmenHinzufuegen(u2 = new Unternehmen("tst2", s, new Standort(SimulationsKonstanten.getStandortFaktoren(StandortArt.NEUTRAL))));
+    	spiel.rundenStart();
+    	spiel.zugBeendet();
+    	
+    	assertEquals(3, spiel.getAktuellesUnternehmen().getMaschinen().size());	//3 Maschinen
+    	assertEquals("Holzstuhlmaschine", spiel.getAktuellesUnternehmen().getMaschinen().get(0).getName());
+    	assertEquals("Kunststofftischmaschine", spiel.getAktuellesUnternehmen().getMaschinen().get(1).getName());
+    	assertEquals("Glasschrankmaschine", spiel.getAktuellesUnternehmen().getMaschinen().get(2).getName());
+    	
+    	assertEquals(2, spiel.getAktuellesUnternehmen().getMitarbeiter().size());
+    	assertEquals(MitarbeiterFachgebiet.MASCHINE, spiel.getAktuellesUnternehmen().getMitarbeiter().get(0).getM().getMfg());	//1x Mitarbeiter Fertigung
+    	assertEquals(MitarbeiterFachgebiet.VERTRIEB, spiel.getAktuellesUnternehmen().getMitarbeiter().get(1).getM().getMfg()); //1x Mitarbeiter Vertrieb
+    
+    	assertEquals(Integer.valueOf(1500), spiel.getAktuellesUnternehmen().getMaterialien().get("Holz"));
+    	assertEquals(Integer.valueOf(350), spiel.getAktuellesUnternehmen().getMaterialien().get("Glas"));
+    	assertEquals(Integer.valueOf(1000), spiel.getAktuellesUnternehmen().getMaterialien().get("Kunststoff"));
+    	assertEquals(Integer.valueOf(150), spiel.getAktuellesUnternehmen().getMaterialien().get("Stoff"));
+    	assertEquals(Integer.valueOf(100), spiel.getAktuellesUnternehmen().getMaterialien().get("Edelstahl"));
+    	
+    	
+    	assertNotNull(spiel.getAktuellesUnternehmen().getVerbindlichkeiten().get(0));
+    	assertEquals(105000, spiel.getAktuellesUnternehmen().getKapital());
+    	
+    	
     }
 
     

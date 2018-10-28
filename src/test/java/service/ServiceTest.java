@@ -24,7 +24,7 @@ class ServiceTest {
         SpielService.neuesUnternehmen("Test Unternehmen AG 107", "A");
         SpielService.neuesUnternehmen("Test Unternehmen AG 108", "B");
         SpielService.neuesUnternehmen("Test Unternehmen AG 109", "C");
-        SpielService.spielStart(3);
+        SpielService.spielStart(3, 0);
     }
 
     @Test
@@ -51,7 +51,9 @@ class ServiceTest {
         assertEquals(4, SpielService.getSpiel().getUnternehmen().size());
         assertNull(SpielService.getSpiel().getAktuellesUnternehmen());
         
-        SpielService.spielStart(2);
+        SpielService.spielStart(2, 1);
+        
+        assertEquals(1, SpielService.getSpiel().getSzenario());
 
         assertEquals(1, SpielService.getSpiel().getRunde());
         assertEquals(2, SpielService.getSpiel().getRundenAnzahl());

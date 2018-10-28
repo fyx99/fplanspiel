@@ -44,6 +44,10 @@ public class Simulation {
 			n.setFmarkt(finanzmarktDemoDaten());
 			n.setAmarkt(arbeitsmarktDemoDaten(n));
 			n.setVmarkt(absatzmarktDemoDaten());
+
+			if (s.getSzenario() == 1) {
+				simuliereSzenario(n);
+			}
 		}
 
 	}
@@ -62,6 +66,7 @@ public class Simulation {
 			simuliereMaschinenmarkt(n.getMmarkt(), s.getRunde());
 			simuliereArbeitsmarkt(n.getAmarkt());
 			n.rundenReset();
+
 		}
 		// gemeinsame konkurrenz dinge
 		simuliereAbsatzmarkt(s.getUnternehmen());
@@ -194,9 +199,9 @@ public class Simulation {
 					us.get(0).getVmarkt().getProduktVolumen().get(produktArt) * us.size(),
 					SimulationsKonstanten.getProduktMarktpreis(produktArt));
 		}
-		//noch die nachfrage am ende anpassen
+		// noch die nachfrage am ende anpassen
 		us.forEach(u -> simuliereNachfrageAbsatzmarkt(u.getVmarkt(), u.getSpiel().getRunde()));
-		
+
 	}
 
 	private static void simuliereEinzelnesProdukt(Map<Angebot, Unternehmen> angebote, int nachfrage,
@@ -204,8 +209,9 @@ public class Simulation {
 		// als erstes die liste nach angebotsstärke sortieren
 		// hier jetzt nach standort, marketing und preis
 		// in der sortierten liste sind attraktivitaeten gesetzt
-		List<Angebot> sortierteAngebote = angebote.keySet().stream()
-				.sorted((Angebot u1, Angebot u2) -> Double.compare(u1.getAttraktivitaet(angebote.get(u1)), u2.getAttraktivitaet(angebote.get(u2))))
+		List<Angebot> sortierteAngebote = angebote
+				.keySet().stream().sorted((Angebot u1, Angebot u2) -> Double
+						.compare(u1.getAttraktivitaet(angebote.get(u1)), u2.getAttraktivitaet(angebote.get(u2))))
 				.collect(Collectors.toList());
 		int verbleibendeNachfrage = nachfrage;
 
@@ -235,7 +241,7 @@ public class Simulation {
 		// funktion die den preis verringert
 		double kappungsfaktor = 3; // 1% drüber -> 3 runter
 		double preisDifferenz = 1 - aktPreis / grundpreis; // in prozent über grundpreis
-		return (int)(gesamtNachfrage * (preisDifferenz * kappungsfaktor));
+		return (int) (gesamtNachfrage * (preisDifferenz * kappungsfaktor));
 
 	}
 
@@ -281,26 +287,26 @@ public class Simulation {
 		// return wert verbleibende nachfrage
 		return verbleibendeNachfrage;
 	}
-	
+
 	private static void simuliereNachfrageAbsatzmarkt(Absatzmarkt b, int runde) {
 		int gesamt = 0;
 		for (ProduktArt a : ProduktArt.values()) {
 			// wv pro produkt verkauft wurde (menge)
 			gesamt += Absatzmarkt.getUmsaetzeByProduktArt(a, runde).stream().mapToInt(u -> u.getMenge()).sum();
 		}
-		
-		if(gesamt < ProduktArt.values().length)	//macht sonst wegen rundung keinen sinn
+
+		if (gesamt < ProduktArt.values().length) // macht sonst wegen rundung keinen sinn
 			return;
 		double durchschnittsMenge = gesamt / ProduktArt.values().length;
-		
 
 		// was ist viel
 		// -> über alle drüber und
-		for(ProduktArt a : ProduktArt.values()) {
+		for (ProduktArt a : ProduktArt.values()) {
 			int artMenge = b.getProduktVolumen().get(a);
 			double mengenVerhältnis = (double) (artMenge - durchschnittsMenge) / durchschnittsMenge;
 			Map<ProduktArt, Integer> neueWerte = b.getProduktVolumen();
-			neueWerte.put(a, (artMenge + (int)(artMenge * SimulationsKonstanten.ABSATZ_MARKT_NACHFRAGEANPASSUNG * mengenVerhältnis)));
+			neueWerte.put(a, (artMenge
+					+ (int) (artMenge * SimulationsKonstanten.ABSATZ_MARKT_NACHFRAGEANPASSUNG * mengenVerhältnis)));
 			b.setProduktVolumen(neueWerte);
 		}
 	}
@@ -311,11 +317,10 @@ public class Simulation {
 			// wv pro produkt verkauft wurde (menge)
 			gesamt += Beschaffungsmarkt.umsatzProMaterialArt(a, runde).stream().mapToInt(u -> u.getMenge()).sum();
 		}
-		
-		if(gesamt < MaterialArt.values().length)	//macht sonst wegen rundung keinen sinn
+
+		if (gesamt < MaterialArt.values().length) // macht sonst wegen rundung keinen sinn
 			return;
 		double durchschnittsMenge = gesamt / MaterialArt.values().length;
-		
 
 		// was ist viel
 		// -> über alle drüber und
@@ -338,9 +343,9 @@ public class Simulation {
 			// wv pro produkt verkauft wurde
 			gesamt += Maschinenmarkt.umsatzProMaschinenArt(a, runde).stream().mapToInt(u -> u.getMenge()).sum();
 		}
-		if(gesamt < MaschinenArt.values().length)	//macht sonst wegen rundung keinen sinn
+		if (gesamt < MaschinenArt.values().length) // macht sonst wegen rundung keinen sinn
 			return;
-		
+
 		double schnittMenge = gesamt / MaschinenArt.values().length;
 		// was ist viel
 		// -> über alle drüber und
@@ -537,11 +542,72 @@ public class Simulation {
 
 		return b;
 	}
-	
+
 	private static Absatzmarkt absatzmarktDemoDaten() {
 		Absatzmarkt am = new Absatzmarkt();
-		am.setProduktVolumen( Arrays.asList(ProduktArt.values()).stream().collect(Collectors.toMap(pa -> pa, pa -> SimulationsKonstanten.getProduktMarktvolumen(pa))));
+		am.setProduktVolumen(Arrays.asList(ProduktArt.values()).stream()
+				.collect(Collectors.toMap(pa -> pa, pa -> SimulationsKonstanten.getProduktMarktvolumen(pa))));
 		return am;
+	}
+	
+	//Startinventar für Szenario 1
+	private static void simuliereSzenario(Unternehmen un) {
+		for (Angebot an: un.getMmarkt().getAngebote()) {
+			if(an.getMarkteinheit().getName().equals("Holzstuhlmaschine")) {
+				
+				un.maschineHinzu((Maschine)(an.getMarkteinheit()), 1);
+			}
+			if(an.getMarkteinheit().getName().equals("Kunststofftischmaschine")) {
+				
+				un.maschineHinzu((Maschine)(an.getMarkteinheit()), 1);
+			}
+			if(an.getMarkteinheit().getName().equals("Glasschrankmaschine")) {
+				
+				un.maschineHinzu((Maschine)(an.getMarkteinheit()), 1);
+			}
+		}
+		
+		//2 Mitarbeiter hinzufügen
+		for(Angebot an: un.getAmarkt().getAngebote()) {
+			if(an.getMarkteinheit().getName().equals("Mitarbeiter 1")) {
+				Mitarbeiter mFertigung = (Mitarbeiter)(an.getMarkteinheit());
+				un.arbeitskraftHinzu(new Arbeitskraft(0, mFertigung));
+			}
+			if(an.getMarkteinheit().getName().equals("Mitarbeiter 6")) {
+				Mitarbeiter mVertrieb = (Mitarbeiter)(an.getMarkteinheit());
+				un.arbeitskraftHinzu(new Arbeitskraft(0, mVertrieb));
+			}
+		}
+		
+		//Materialien hinzufügen
+		for (Angebot an : un.getBmarkt().getAngebote()) {
+			if(an.getMarkteinheit().getName().equals("Holz")) {
+				un.materialHinzu((Material)(an.getMarkteinheit()), 1500);
+			}
+			if(an.getMarkteinheit().getName().equals("Glas")) {
+				un.materialHinzu((Material)(an.getMarkteinheit()), 350);
+			}
+			if(an.getMarkteinheit().getName().equals("Kunststoff")) {
+				un.materialHinzu((Material)(an.getMarkteinheit()), 1000);
+			}
+			if(an.getMarkteinheit().getName().equals("Stoff")) {
+				un.materialHinzu((Material)(an.getMarkteinheit()), 150);
+			}
+			if(an.getMarkteinheit().getName().equals("Edelstahl")) {
+				un.materialHinzu((Material)(an.getMarkteinheit()), 100);
+			}	
+		}
+		
+		//Kurzer Kredit aufnehmen
+		for (Angebot an : un.getFmarkt().getAngebote()) {
+			Kredit k = (Kredit)(an.getMarkteinheit());
+			if(k.getKreditArt().equals(KreditArt.Kurzes_Cash)) {
+				un.verbindlichkeitHinzu(new Verbindlichkeit(k));
+			}
+		}
+		
+		
+		
 	}
 
 	public static List<String> getLog() {
