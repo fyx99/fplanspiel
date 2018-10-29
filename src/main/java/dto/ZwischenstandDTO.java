@@ -14,7 +14,7 @@ public class ZwischenstandDTO {
         List<UnternehmenStatDTO> dtos = new ArrayList();
         
         for(Unternehmen u : unternehmen) {
-            dtos.add(new UnternehmenStatDTO(u.getUmsatz(), u.getKapital(), u.getName(), u.getGuv().rundenErgebnis(), u.getVmarkt().getMarktanteile(u)));
+            dtos.add(new UnternehmenStatDTO(u.getUmsatz(), u.getKapital(), u.getName(), u.getGuv().rundenErgebnis(), u.getVmarkt().getMarktanteile(u), u.getMitarbeiter().size()));
         }
         this.unternehmen = dtos;
     }

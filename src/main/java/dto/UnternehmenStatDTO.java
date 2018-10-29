@@ -6,18 +6,20 @@ import fachkonzept.util.ProduktTyp;
 
 public class UnternehmenStatDTO {
     
-	public UnternehmenStatDTO(double umsatz, double kapital, String name, double gewinn, Map<ProduktTyp, Integer> marktanteile) {
+	public UnternehmenStatDTO(double umsatz, double kapital, String name, double gewinn, Map<ProduktTyp, Integer> marktanteile, Integer mitarbeiter) {
         super();
         this.umsatz = umsatz;
         this.kapital = kapital;
         this.name = name;
         this.gewinn = gewinn;
         this.marktanteile = marktanteile;
+        this.mitarbeiter = mitarbeiter;
     }
 	private String name;
     private double umsatz;
 	private double kapital;
 	private double gewinn;		//Gesamter Gewinn
+	private int mitarbeiter;
 	private Map<ProduktTyp, Integer> marktanteile;
 	
     public double getUmsatz() {
@@ -50,6 +52,13 @@ public class UnternehmenStatDTO {
 	public void setMarktanteile(Map<ProduktTyp, Integer> marktanteile) {
 		this.marktanteile = marktanteile;
 	}
+	public int getMitarbeiter() {
+		return mitarbeiter;
+	}
+	public void setMitarbeiter(int mitarbeiter) {
+		this.mitarbeiter = mitarbeiter;
+	}
+	
 
 	
 	
