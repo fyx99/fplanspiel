@@ -5,14 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Marketing</title>
-       	<script src="jquery/jquery-1.11.0.min.js"></script>
+    <script src="jquery/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
 
  </head>
  
@@ -27,6 +26,7 @@
     </script>
 
 	<script>
+	// Funktion, um bereits durchgeführte Marketingmaßnahmen aufzurufen
     function getDataMarketing(){
       jQuery.ajax({
         url: "../api/spiel/marketingmix",
@@ -38,6 +38,8 @@
         }
       });
     }
+    
+ 	// Funktion, um bereits durchgeführte Marketingmaßnahmen auszugeben
     function printDataMarketing(data){
       var cont  = document.getElementById('marketingContent');
       var s ="";
@@ -66,7 +68,6 @@
            '</div>' +
         '</div>';
 
-
             index++;
       }
       
@@ -92,32 +93,17 @@
     }
   </style>
     
-	<!-- Page Header -->
+	
 	<div class="container">	
-    <div class="page-header">
-      <h1>Marketing</h1>
-    </div>
-    <!--Marketing ÜBERSICHT-->
-<!--     <div class="well">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panelTop">Marketingmaßnahmen</h3>
-      </div>
-      <div class="panel-body">
-        <div class="row" id="marketingContent">
-        </div>
-      </div>
-    </div>
-    </div> -->
-        <div class="well">
-   
-     
-      
-        <div class="row" id="marketingContent">
-        
-    
-    </div>
-    </div>
+		<!-- Page Header -->
+	    <div class="page-header">
+	      <h1>Marketing</h1>
+	    </div>
+	    
+	    <div class="well">
+			<div class="row" id="marketingContent">
+	    	</div>
+	    </div>
 	</div>
    
     <!-- Fixed footer -->

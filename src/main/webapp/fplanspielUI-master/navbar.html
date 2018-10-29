@@ -13,16 +13,14 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
- 			getKapital();
+ 			getKapitalAndName();
  			getRunde();
  		});
 	
 	var rundenAnzahl;
 	
-	var testRunde;
-	
-	
-		function getKapital(){
+	// Funktion, um Kapital und Spielername zu laden
+	function getKapitalAndName(){
 			jQuery.ajax({
 				url: "../api/spiel/unternehmen",
 				type: "GET",
@@ -39,6 +37,7 @@
 			});
 		}
 
+		// Funktion, um Rundenanzahl zu laden
 		function getRunde(){
 			jQuery.ajax({
 				url: "../api/spiel/zwischenstand",
@@ -46,18 +45,12 @@
 				dataType: "json",
 				success: function(data, data2){
 					var cont  = document.getElementById('runde');
-					var s =data.runde;
-					cont.innerHTML += s;
-					rundenAnzahl = s;
-					
-					testRunde = data.runde;
+					var aktuelleRundeData =data.runde;
+					cont.innerHTML += aktuelleRundeData;
+					rundenAnzahl = aktuelleRundeData;
 					
 					if (rundenAnzahl > 1) {
 						document.getElementById('ergebnisLetzteRunde').innerHTML = "Ergebnis der letzten Runde";
-						//Ergebnis der letzten Runde
-						
-						console.log(rundenAnzahl +"rundenAnzahl");
-						console.log(testRunde +"testRunde");
 						
 					} else {
 						return;
@@ -65,51 +58,43 @@
 				}
 			});
 		}
-		
-		console.log(rundenAnzahl +"rundenAnzahl6");
 
+		// Funktion, um einen Zug zu beenden
 		function beendeZug(){
 			
 			getRunde(); 
-			console.log(rundenAnzahl+"rundenAnzahl7");
 			jQuery.ajax({
 				url: "../api/spiel/zugbeendet",
 				type: "GET",
 				dataType: "json",
 				success: function(data, data2){
 					var runde = data;
-					console.log(data);
-					if (runde>0) {
+					
+					
+					if (runde>0) { //Wenn alle Spieler in der Runde gespielt haben (/zugbeendet liefert einen Wert > 0), dann wird das Rundenergebnis aller Spieler gezeigt
 						window.location.href = "ergebnis_runde.html";
-					}  else if (runde==0 && rundenAnzahl > 1) {
+					} else if (runde==0 && rundenAnzahl > 1) { //Wenn noch nicht alle Spieler in der Runde gespielt haben (/zugbeendet liefert den Wert 0) und jeder Spieler schon eine Runde gespielt hat, dann wird das Rundenresultat fuer den jeweiligen Spieler angezeigt
 						$(document).ready(function(){
 							$('#modalContentZugBeenden').modal('show');
 						});
-
-				window.setTimeout(function(){
-	            window.location.href = "rundenresultat.html";
-	            }, 1000); //Test: 1sec 
-	            
-				console.log(rundenAnzahl +"rundenanzahl5");
-			} 
-					else if (runde==0) {
-												$(document).ready(function(){
-  								$('#modalContentZugBeenden').modal('show');
-								});
-
+						window.setTimeout(function(){
+			            window.location.href = "rundenresultat.html";
+			            }, 1000); //Test: 1sec 
+					} else if (runde==0) { //Wenn noch nicht alle Spieler in der Runde gespielt haben (/zugbeendet liefert den Wert 0) und jeder Spieler noch nicht eine Runde gespielt hat, dann wird das Rundenresultat fuer den jeweiligen Spieler nicht angezeigt
+						$(document).ready(function(){
+  						$('#modalContentZugBeenden').modal('show');
+						});
 						window.setTimeout(function(){
 			            window.location.href = "einkauf.html";
 			            }, 1000); //Test: 1sec 
-			            
-						console.log(rundenAnzahl +"rundenAnzahl");
-					}else {
+					}else { // Das Spiel ist beendet und alle Runden wurden gespielt (/zugbeendet liefert den Wert -1)
 						window.location.href = "ergebnis_ende.html";
 					}
 				}
-
 			});
 			}
 
+			// Funktion, um das Rundenergbnis als Modal anzuzeigen (in der Navbar ueber Button "Ergebnis der letzten Runde")
 			function ladeErgebnisLetzteRunde(){
 			jQuery.ajax({
 				url: "../api/spiel/rundenresultat",
@@ -140,17 +125,7 @@
 				}
 			});
 		}
-			
-			function ladeMarketingData(marketingData){				
-				var marketing = document.getElementById('marketingMaßnahmen');
-				var summeMarketing = 0;
-				
-				for(var index in marketingData){				
-					summeMarketing += marketingData[index].budget;
-				}				
-				marketing.innerHTML =summeMarketing + " €";
-			}
-						
+								
 			function ladeEinnahmenData(einnahmenData){				
 				var einnahmen  = document.getElementById('einnahmen');
 				var summeEinnahmen = 0;
@@ -170,6 +145,16 @@
 				}				
 				ausgaben.innerHTML =summeAusgaben + " €";
 			}
+			
+			function ladeMarketingData(marketingData){				
+				var marketing = document.getElementById('marketingMaßnahmen');
+				var summeMarketing = 0;
+				
+				for(var index in marketingData){				
+					summeMarketing += marketingData[index].budget;
+				}				
+				marketing.innerHTML =summeMarketing + " €";
+			}
 </script>
 
      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -181,7 +166,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand">Unternehmensplanspiel</a>
+				<a class="navbar-brand" href="start.html">Unternehmensplanspiel</a>
 			</div>
 			<div class="navbar-collapse collapse">
 		
@@ -271,7 +256,7 @@
 		</div>       
     </div>
 
-    <!-- Modal -->
+    <!-- Modal, wenn der Spieler den Zug beendet -->
         <div class="modal fade" id="modalContentZugBeenden" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog">
             <!-- Modal content-->
@@ -289,7 +274,7 @@
           </div>
         </div>
 
-            <!-- Modal -->
+    <!-- Modal, wenn auf den Button "Ergebnis der letzten Runde" in der Navbar geklickt wird -->
         <div class="modal fade" id="ergebnisLetzteRundeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog">
             <!-- Modal content-->

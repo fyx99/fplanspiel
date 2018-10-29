@@ -20,15 +20,14 @@
                 $('#navbar').load('navbar.html');
                 $('#footer').load('footer.html');
                 });
-
 		</script>
 
     <!-- Fixed navbar -->
     <div id="navbar">
 	</div>
     
-	<!-- Page Header -->
 	<div class="container">	
+			<!-- Page Header -->
         <div class="page-header">
             <h1>Marketing</h1>
         </div>
@@ -50,9 +49,8 @@
    	var kapitalAktuell = 0;
     
     window.onload = getDataMarketing();
-    
-	
-    
+
+    // Funktion, um mit Hilfe von Ajax Daten aus JSON-File aufrufen
     function getDataMarketing(){
 			jQuery.ajax({
 				url: "../api/spiel/marketingangebote",
@@ -64,7 +62,7 @@
 				}
 			});
 			
-			// Kapazität Verwaltung
+			// Kapazität der Verwaltungsmitarbeiter
 			jQuery.ajax({
 					url: "../api/spiel/unternehmen",
 					type: "GET",
@@ -75,7 +73,6 @@
 						window.maximalesBudget = parseInt(kapazitätVerwaltung / 0.2);
 						
 						if (kapitalAktuell < maximalesBudget) window.maximalesBudget = kapitalAktuell;
-						
 						
 						for (i=0;i<=5;i++){
 							var anzeigeKapazität = document.getElementById('anzeigeKapazität'+i);
@@ -89,14 +86,13 @@
 					}
 				});
     }
-		function printMarketing(data){
+	
+    // Funktion, um Marketingdaten auszugeben
+    function printMarketing(data){
 			
 				var cont  = document.getElementById('contentMarketing');
 				var s ="";
 				var marketingMaßnahme;
-				
-				//Vergabe von Unique-ID für Selections
-				//var selectid = "contentSelect"+maschinenid;
 				
 				for(var angebot in data){
 					marketingMaßnahme = data[angebot];
@@ -107,17 +103,15 @@
 								'<div class="col-sm-12">'+
 									'<h3>'+ data[angebot]+'</h3>'+
 								'</div>'+
+								'<div class="col-sm-12">'+							
+									'<p>Diese Kampagne verbessert deine Verkaufschancen.</p>'+
+								'</div>'+
+								'<br></br>'+
+							
 								'<div class="col-sm-12">'+
-							
-								'<p>Diese Kampagne verbessert deine Verkaufschancen.</p>'+
-							'</div>'+
-							'<br></br>'+
-							
-							'<div class="col-sm-12">'+
-							'<label>Vorhandene Arbeitszeit Vertrieb: </label>' +
-							
-						'</div>'+
-						'<div class="col-sm-12">'+
+									'<label>Vorhandene Arbeitszeit Vertrieb: </label>' +							
+								'</div>'+
+								'<div class="col-sm-12">'+
 						'<p id="anzeigeKapazität'+angebot+'">   hi</p>' +
 						'</div>'+
 						
@@ -152,7 +146,7 @@
 				cont.innerHTML = s;
 			}   
 		
-		// Bei Klick auf Button "Marketingmaßnahme tätigen"
+		// Funktion, die bei einem Klick auf Button "Buchen" aufgerufen wird
 			function marketingModal(marketingID) {
 			
 				var budget = document.getElementById("inputid" +marketingID).value;
@@ -191,24 +185,21 @@
 					'<label ></label>'+
 			'</div>';
 
-					cont.innerHTML = s; 
-					
+					cont.innerHTML = s; 					
 				}		
 			}
 		
+			// Funktion, die bei einem Klick auf Button "Bestätigen" aufgerufen wird
 			function marketingDurchführen(marketingID, budget){
 				var art = datenMarketing[marketingID];
-				//var name = "hi";
 				var name = document.getElementById("nameMarketing").value;
 
 				var trimName = name.trim();
-
 				
+				// Falls ungültiger Name für Marketingmaßnahme, dann Fehlermeldung anzeigen; falls nicht, dann Schnittstelle aufrufen & Daten übergeben
 				if (trimName == ""){
 					document.getElementById("fehlermeldung").innerHTML = "Bitte einen Namen für Marketingmaßnahme auswählen!";
-					$('#modalKaufen').modal('show');
-
-					
+					$('#modalKaufen').modal('show');					
 				} else {
 					jQuery.ajax({
 	 			 		url: "../api/spiel/buchenmarketingmaßnahme?art=" + art + "&budget=" + budget + "&name=" + name,
@@ -217,37 +208,34 @@
 	 			 		sucess: function() {
 	 			 			console.log("Success");
 	 			 			location.reload(true);
-
 	 				    }
-	 		 		});
-					//$('#modalKaufen').modal('close');
-					
-					$('#modalKaufen').modal('hide');
-	 				$('#navbar').load('navbar.html');
-	 				getDataMarketing();
+	 		 		});					
+					$('#modalKaufen').modal('hide'); // Modal schließen
+	 				$('#navbar').load('navbar.html'); // Navbar aktualisieren
+	 				getDataMarketing(); // Marketing-Daten aktualisieren
 				}	
  			}
 			
 			 function setColourRed(element){
 		        	element.style.color = "#FF0000";
-		        }
+		     }
     </script>
 	</div>
 	
-		<!-- The Modal -->
-  <div class="modal" id="modalKaufen">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>       
-         <div class="modal-body" id="contentModal">
-          </div> 
-      </div>
-    </div>
-  </div>
+	<!-- Modal -->
+	  <div class="modal" id="modalKaufen">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        </div>       
+	         <div class="modal-body" id="contentModal">
+	          </div> 
+	      </div>
+	    </div>
+	  </div>
 
     <!-- Fixed footer -->
     <div id="footer">

@@ -73,12 +73,13 @@
         			}
                 </style>
                 
-                   <div class="panel panel-default">
-      				<div class="panel-heading">
-        				<h4 class="panelTop">Spielmodus</h4>
-      				</div>
+                <!-- Spielmodus auswaehlen -->
+                <div class="panel panel-default">
+	      			<div class="panel-heading">
+	        				<h4 class="panelTop">Spielmodus</h4>
+	      			</div>
       				<div class="panel-body">
-							 <div class="btn-group btn-group-toggle" data-toggle="buttons">
+							<div class="btn-group btn-group-toggle" data-toggle="buttons">
 							  <label class="btn btn-primary active">
 							    <input onchange="changeSpielmodus('0')" type="radio" name="options" id="spielmodus1" autocomplete="off" checked> Spielmodus 1 (ohne Anfangsinventar)
 							  </label>
@@ -86,17 +87,16 @@
 							    <input onchange="changeSpielmodus('1')" type="radio" name="options" id="spielmodus2" autocomplete="off"> Spielmodus 2 (mit Anfangsinventar)
 							  </label>
 							</div>
-                    	</div>
                     </div>
+                   </div>
                 
-                
+                <!--  Rundenanzahl auswaehlen -->
                 <div class="panel panel-default">
       				<div class="panel-heading">
         				<h4 class="panelTop">Länge des Spiels</h4>
       				</div>
-      				<div class="panel-body">
-      				
-      					    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      				<div class="panel-body">     				
+      					   <div class="btn-group btn-group-toggle" data-toggle="buttons">
 							  <label class="btn btn-primary active">
 							    <input onchange="changeRoundCount('2')" type="radio" name="options" id="roundCount1" autocomplete="off" checked> Demo (2 Runden)
 							  </label>
@@ -109,30 +109,14 @@
 							  <label class="btn btn-primary">
 							    <input onchange="changeRoundCount('20')" type="radio" name="options" id="roundCount4" autocomplete="off"> Lang (20 Runden)
 							  </label>
-							</div>
-							
-                    		
+							</div>							                    		
                     </div>
                 </div>
-                
-                
-                
-               <!--  <div class="btn-group" role="group" aria-label="rundenzahl">
-                    		<button type="button" onclick="changeRoundCount('2')" class="btn btn-primary">Demo (2 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('2')" class="btn btn-primary">Kurz (6 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('12')" class="btn btn-primary">Mittel (12 Runden)</button>
-                            	<button type="button" onclick="changeRoundCount('20')" class="btn btn-primary">Lang (20 Runden)</button>
-                    	</div> -->
-                    	
-                    	
-                
 
     <!--Spielerauswahl--> 
 	<div class="panel-group" id="accordion">
-		<div class="panel panel-default" id="contentStartseite">
-		
-  		</div>
-  		
+		<div class="panel panel-default" id="contentStartseite">		
+  		</div>  		
 	</div>
 	
 	<script>
@@ -165,23 +149,6 @@
 	              '<td>' +
 	              '<input id="firma' + i + '" name="firmaSpieler' + i + '" placeholder="Firma" style="width: 200px">' +
 	              '<p></p>' +
-	              
-	              
-	     /*          '<div class="dropdown" padding="20px" style="width: 200px">' +
-	              '<button class="btn btn-primary btn-sm dropdown-toggle" style="width: 200px" type="button" id="dropdownMenuSpieler' + i +'"" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' + 
-	              'Unternehmensform' +
-	              '<span class="caret"></span>' +
-	              '</button>' +
-	              '<ul class="dropdown-menu" aria-labelledby="dropdownMenuSpieler' + i+ '">' +
-	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' +  i + '\x27, \x27AG\x27)">AG</a></li>'+
-	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27GmbH\x27)">GmbH</a></li>'+
-	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27OHG\x27)">OHG</a></li>'+
-	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27KG\x27)">KG</a></li>'+
-	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27eK\x27)">eK</a></li>'+
-	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27GmbH & Co.KG\x27)">GmbH & Co.KG</a></li>'+
-	              '<li><a onclick="changePlayerFirma(\x27dropdownMenuSpieler' + i + '\x27, \x27UG\x27)">UG</a></li>'+
-	              '</ul>' +
-	              '</div>' + */
 	              '</td>' +
 
 	              '<td>' +
@@ -190,9 +157,6 @@
 	              '<tr>' +
 	              '<td style="text-align: right;">' +
 	              '<button onclick="changeRegion(\x27regionSpieler' + i+ '\x27, \x27A\x27)" class="btn btn-primary blockButton" data-tooltip-id="tooltip1" data-toggle="tooltip" data-placement ="left" title="- Niedrige Mitarbeiterkosten<br/>- Höhere Angebotsattraktivität<br/> - Aber: Ineffiziente Marketingmaßnahmen " >A</button>' +
-	              
-	              
-	              
 	              '</td>' +
 	              ' <td style="text-align: left;">' +
 	            
@@ -235,17 +199,6 @@
 						font-size: 15px;
 					}
 				</style>
-				
-<!-- 				<div class="container">
-				<img src="img/deutschland.jpg" width="145" height="126" alt="deutschland" usemap="#deutschlandmap">
-
-<map name="deutschlandmap">
-  <area shape="circle" coords="20,20,20" data-toggle="tooltip" data-placement="left" >
-  <area shape="circle" coords="20,40,20" data-toggle="tooltip" data-placement="right">
-  <area shape="circle" coords="40,20,20" data-toggle="tooltip" data-placement="left">
-  <area shape="circle" coords="40,40,20" data-toggle="tooltip" data-placement="right">
-</map>
-</div> -->
 
 				<div class="well well-sm">
 					<p class="gameSummary">Spielmodus:
@@ -259,29 +212,21 @@
 					
 					<p class="gameSummary">Anzahl der Spieler: 				
 						<p style="font-weight: bold" id="anzahlSpielerText">2 Spieler</p> <!--damit zwangsweise etwas ausgewählt ist-->
-					</p>
-					
-					
+					</p>					
 				</div>
 
                 <p></p>
                 <hr>
-
                
 				<p></p>
 						
             	<button type="button" id="button" onclick="spielStarten()" class="btn btn-primary float-right" >Spiel starten</button>	<!--HIER NOCH DATEN ÜBERMITTELN-->
 				<p></p>
-				<!-- data-toggle="modal" data-target="#modalContent"  -->
                 <p id="fehlermeldungSpielStarten"></p>
                             	
-        <script type="text/javascript">
-
-
-    </script>
         </div>	
 
-    <!-- Modal -->
+    <!-- Modal, nachdem auf Button "Spiel starten" geklickt wurde -->
         <div class="modal fade" id="modalContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog">
             <!-- Modal content-->
@@ -298,7 +243,6 @@
                     <p>Viel Erfolg!</p>
               </div>
             </div>
-
           </div>
         </div>
 	
@@ -310,56 +254,21 @@
                 <p>© 2018 </p>
             </div>
             <div class="navbar-text pull-right">
-                <a href="#help">Hilfe</a>       
+                <!-- <a href="#help">Hilfe</a> -->       
             </div>
         </div>
     </div>
     
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script>
 	    $(document).ready(function() {
-	    	printStartseite();
-	    	
-	    	
-	    	// Noch als Backup
-	    	
-	    	
-	    	// $('[data-toggle="tooltip"]').tooltip();
-	    	
-	  /*   	$('[data-toggle="tooltip"]').each(function () {
-			    // now have instance access to "this"
-			    var $this = $(this),
-			        tipId = $this.data('tooltip-id');
-			    
-			    console.log("tipId" + tipId);
-			    var tips = tipId;
-			    console.log("tips" + tips);
-			    // initialize instance of plugin
-			    
-			    if (tips == "tooltip1"){
-			    	console.log("hihi");
-			    	title: "hi";
-			    }
-			    
-			    $this.tooltip({
-			    	console.log("hi");
-			    	
-			    	
-			        
-			    });
-			}); */
-	    	
+	    	printStartseite();	    	
 
+	    	// Tooltip
 	     	$('[data-toggle="tooltip"]').tooltip({
 	    		track: true,
-	    	    //title: hoverGetData(),
-	    	   // html: true,
 	    	    container: 'body',
 	    	    html: true,
-
-	    		 }); 
+	    	}); 
 
 	    	
 	    	jQuery.ajax({
@@ -374,45 +283,22 @@
 			        console.log("Fehler");
 			    }
 	 		});
-	        });
-	    
-	    // Noch als Backup
-	    function hoverGetData(){
-   		 console.log("test");
-   		/*  $.ajax({
- 		    url:"../api/spiel/neuesspiel",
- 		    type: "GET"
- 			sucess: function() {
-		 			confirm("Unternehmen hinzugefuegt");
-		 			location.reload(true);
-		 			 console.log("Erfolg");
-		 		},
-			    error: function() {
-			        console.log("Fehler");
-			    } 
-	 		});*/
- 		   
-	 		
- 		   return "Dieser Standort bietet folgende Vorteile:";
-	    }
+	    });
     
-    	var standort = "";
-        var anzahlSpieler = 0;
-        var rundenAnzahl = 2;
+
         var spielmodus = 0;
+        var rundenAnzahl = 2;
+        var anzahlSpieler = 0;
+    	var standort = "";
+    	
+    	document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
         
         var erstesUnternehmenHinzugefuegt = false;
         var zweitesUnternehmenHinzugefuegt = false;
         
-        function spielStarten() {
-        	
-        	if (erstesUnternehmenHinzugefuegt == true && zweitesUnternehmenHinzugefuegt == true) {
-        		
-            	//http://localhost:8080/pplanspiel/api/spiel/starten?rundenZahl=20%20Runden
-            	console.log("rundenanzahl"+rundenAnzahl);
-            	console.log("spielmodus"+spielmodus);
-            	console.log("rundenanzahl"+rundenAnzahl);
-            	
+        function spielStarten() {       	
+        	// Wenn zwei Unternehmen hinzugefuegt wurden, dann kann das Spiel gestartet werden und die Schnittstelle wird aufgerufen
+        	if (erstesUnternehmenHinzugefuegt == true && zweitesUnternehmenHinzugefuegt == true) {           	
             	jQuery.ajax({          				
     		 		url: "../api/spiel/starten?rundenZahl=" + rundenAnzahl + "&szenario=" + spielmodus,
     		 		type: "GET",
@@ -426,6 +312,7 @@
     			    }
     	 		});
             	
+            	// Modal anzeigen
             	$('#modalContent').modal({
             		  keyboard: true, //ESC-Taste schließt Modal
             		  backdrop: true, //beim Klick außerhalb des Modals, wird dieses geschlossen (sonst "static")
@@ -434,41 +321,20 @@
             	
             	loadNextPage();
             	
-        	} else {
+        	} else { // Fehlermeldung, falls nicht min. zwei Spieler hinzugefuegt wurden
         		document.getElementById('fehlermeldungSpielStarten').innerHTML = "Es müssen mindestens zwei Unternehmen hinzugefügt werden, um das Spiel zu starten.";
         		setColourRed(document.getElementById('fehlermeldungSpielStarten'));
-        		
-        		console.log(erstesUnternehmenHinzugefuegt+"test1");
-     			
-
         	}
-
         }
-        		
+        
+        // Funktion, um nächste Seite zu laden
         function loadNextPage(){
-             window.setTimeout(function(){
+            window.setTimeout(function(){
             window.location.href = "einkauf.html";
             }, 1000); //Test: 1sec 
-        }
-        
+        }        
 
-        document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
-
-        function changePlayerCount(checkBoxID) {
-            var checkBoxObject = document.getElementById(checkBoxID);
-            if (checkBoxObject.checked == true) {
-                anzahlSpieler = anzahlSpieler + 1;
-            } else {
-                anzahlSpieler = anzahlSpieler - 1;
-            }
-            document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
-        }
-
-        function changeRoundCount(count){
-        	document.getElementById('anzahlRundenText').innerHTML= count + " Runden";
-        	rundenAnzahl=count;
-        }
-        
+     	// Funktion, um Spielmodus zu verändern
         function changeSpielmodus(count){
         	spielmodus = count;
         	
@@ -480,37 +346,48 @@
         	
         	spielmodus = count;
         }
-
-        function changePlayerFirma(player, firma){
-        	document.getElementById(player).innerHTML = firma;
+     	
+		// Funktion, um Spieleranzahl zu verändern
+        function changePlayerCount(checkBoxID) {
+            var checkBoxObject = document.getElementById(checkBoxID);
+            if (checkBoxObject.checked == true) {
+                anzahlSpieler = anzahlSpieler + 1;
+            } else {
+                anzahlSpieler = anzahlSpieler - 1;
+            }
+            document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
         }
 
+     	// Funktion, um Rundenanzahl zu verändern
+        function changeRoundCount(count){
+        	document.getElementById('anzahlRundenText').innerHTML= count + " Runden";
+        	rundenAnzahl=count;
+        }
+
+     	// Funktion, um Standort zu setzen und zu verändern
         function changeRegion(player, region){
         	document.getElementById(player).innerHTML = "Gewählte Region: <b>" + region + "</b>";
         	standort = region;
-        	console.log(standort+"test");
         }
         
         // Beim Klick auf Unternehmen hinzufuegen
         function unternehmenHinzufuegen(ele){
         	var firma;
-        	//var standort;
-    		//console.log(ele.id);
     		
     		for (var i=1;i<=8; i++){
-    			if (ele.id == "unternehmen"+i){ 
+    			if (ele.id == "unternehmen"+i){ // Richtige ID ansprechen
          			firma = document.getElementById("firma"+i).value;
-         			if (firma == "" && standort ==""){
+         			if (firma == "" && standort ==""){ // Falls keine Firma und Standort ausgewaehlt
          				document.getElementById("fehlermeldung"+i).innerHTML = "Bitte Firma und Region auswählen!";
          				setColourRed(document.getElementById("fehlermeldung" +i));
-         			} else if (standort ==""){
+         			} else if (standort ==""){ // Falls kein Standort ausgewaehlt
          				document.getElementById("fehlermeldung" +i).innerHTML = "Bitte Region auswählen!";
          				setColourRed(document.getElementById("fehlermeldung" +i));
-         			}else if (firma == "") {
+         			} else if (firma == "") { // Falls keine Firma ausgewaehlt
          				document.getElementById("fehlermeldung" +i).innerHTML = "Bitte Firma auswählen!";
          				setColourRed(document.getElementById("fehlermeldung" +i));
          			} else {
-         				callAjax(firma,standort);
+         				callUnternehmenHinzufuegen(firma,standort);
          				document.getElementById("fehlermeldung"+i).innerHTML = "Unternehmen wurde hinzugefügt!";
          				setColourBlack(document.getElementById("fehlermeldung" +i));
          				
@@ -521,12 +398,10 @@
          				
          				standort = "";
          			}
-    			}
- 			
+    			} 			
     		}
         }
-    		
-    
+    		    
         function setColourRed(element){
         	element.style.color = "#FF0000";
         }
@@ -534,7 +409,7 @@
         	element.style.color = "#000000";
         }
         
-        function callAjax(firma, standort) {
+        function callUnternehmenHinzufuegen(firma, standort) {
         	jQuery.ajax({
 		 		url: "../api/spiel/neuesunternehmen?name=" + firma + "&standort=" + standort,
 		 		type: "GET",
@@ -548,7 +423,5 @@
 	 		});   	
         }
     </script>
-
-
   </body>
 </html>
