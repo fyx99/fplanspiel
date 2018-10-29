@@ -65,7 +65,8 @@ public class ArbeitsmarktTest {
         assertEquals(2, am.getAngebote().size());
         assertEquals(25, am.getAngebote().get(1).getMenge());
         assertEquals(269, am.getAngebote().get(1).getPreis());
-//        assertEquals(-3300, kk.getGuv().rundenErgebnis());
+        
+        assertEquals(10, testUN.getMitarbeiter().size());
 	}
 	
 	@Test
