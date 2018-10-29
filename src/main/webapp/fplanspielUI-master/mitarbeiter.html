@@ -62,7 +62,7 @@
               '<div class="caption">' + 
                 '<h3 class="cardTop">' + data[mitarbeiter].m.name + '</h3>' +
                 '<p style="margin-bottom: 2px"><b>Arbeitsgebiet:</b> ' + data[mitarbeiter].m.mfg + '</p>' + 
-                '<p style="margin-bottom: 2px"><b>Arbeitszeit:</b> ' + data[mitarbeiter].m.arbeitszeit + '</p>' + 
+                '<p style="margin-bottom: 2px"><b>Arbeitszeit:</b> ' + data[mitarbeiter].m.arbeitszeit + ' Minuten (' + Math.round(data[mitarbeiter].m.arbeitszeit /60) + ' Stunden)</p>' + 
                 '<p><b>Lohnkosten:</b> ' + data[mitarbeiter].m.lohnkosten + ' €</p>' + 
                     '<p>' + 
                       '<a href="verkauf.html#mitarbeiter" class="btn btn-danger" role="button">Kündigen</a> <a onclick="setModalData(' + dialogID + ')" data-toggle="modal" data-target="#details" class="btn btn-primary" role="button">Details</a>' + 
@@ -83,9 +83,9 @@
 		}
         }
         
-        document.getElementById('FertigungHead').innerHTML = "Fertigung (aktuelle Kapazität: " + companyData.mitarbeiter.kapazitaeten.MASCHINE + " Stunden)";
-        document.getElementById('VertriebHead').innerHTML = "Vertrieb (aktuelle Kapazität: " + companyData.mitarbeiter.kapazitaeten.VERTRIEB + " Stunden)";
-        document.getElementById('VerwaltungHead').innerHTML = "Verwaltung (aktuelle Kapazität: " + companyData.mitarbeiter.kapazitaeten.VERWALTUNG + " Stunden)";
+        document.getElementById('FertigungHead').innerHTML = "Fertigung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.MASCHINE /60) + " Stunden)";
+        document.getElementById('VertriebHead').innerHTML = "Vertrieb (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERTRIEB /60) + " Stunden)";
+        document.getElementById('VerwaltungHead').innerHTML = "Verwaltung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERWALTUNG /60) + " Stunden)";
         
 		
 		if(fertigungCount == 0){
@@ -196,51 +196,20 @@
     </div>
   </div>
 
- <!--Modal-Kündigen-->
-  <div class="modal fade" id="kündigen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-           <h2 class="modal-title" id="kündigenDialogTitel">Mitarbeiter kündigen</h2>
-         </div>
-         <div class="modal-body">
-          <!--Mitarbeiter kündigen-->
-            <p>Sie sind dabei einen Mitarbeiter fristlos zu kündingen. Diese Aktion kann nicht rückgängig gemacht werden. Wollen Sie fortfahren?</p>
-
-            <div class="alert alert-danger" role="alert">
-              Warnung! Das Kündigen eines Mitarbeiters kann den Erfolg Ihres Unternehmens erheblich beeinträchtigen!
-            </div>
-
-            <p>Hinweis: Sie können Mitarbeiter nur dann kündigen, wenn Sie mindestens einen Mitarbeiter in dieser Abteilung haben.</p>
-
-         </div>
-         <div class="modal-footer">
-            <p>
-              <button class="btn btn-primary" data-dismiss="modal">Schließen</button>
-              <button class="btn btn-danger" onclick="fireEmployee()" id="kündigenButtonID" data-dismiss="modal">Kündigen</button>
-            </p>  
-         </div>
-       </div>
-    </div>
-  </div>
-
   <script>
     var modalContent = document.getElementById('detailsContentID');
     var panelID = null;
 
     function setModalData(panelID){
       if (panelID == 1) { //1 = Fertigung
-        modalContent.innerHTML = '<p>Mitarbeiter werden in der Fertigung benötigt, um Produkte herzustellen. Sie besitzen das nötige Fachwissen, um die Produkte ohne Komplikationen herzustellen.<p>' + 
-        '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Größere Maschinenkapazitäten</li><li>Geringerer Materialverbrauch</li></div>';
+        modalContent.innerHTML = '<p>Mitarbeiter werden in der Fertigung benötigt, um <b>Produkte herzustellen</b>. Sie besitzen das nötige Fachwissen, um die Produkte ohne Komplikationen herzustellen.<p>' + 
+        '<div class="alert alert-warning" role="alert">Es wird mindestens ein Mitarbeiter in dieser Abteilung benötigt um überhaupt <b>Produkte herstellen</b> zu können. Je mehr Mitarbeiter in der Produktion arbeiten, desto höher ist die Produktionskapazität.</div>';
       } else if (panelID == 2) { //2 = Vertrieb
-        modalContent.innerHTML = '<p>Mitarbeiter werden im Vertrieb benötigt, um Produkte zu verkaufen. Sie besitzen das nötige Fachwissen, um die Produkte schnell und einfach an den Mann zu bringen.<p>' + 
-        '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Bessere Verkaufschancen</li><li>Bessere Kundenbindung</li></div>';
+        modalContent.innerHTML = '<p>Mitarbeiter werden im Vertrieb benötigt, um <b>Produkte zu verkaufen</b>. Sie besitzen das nötige Fachwissen, um die Produkte schnell und einfach an den Mann zu bringen.<p>' + 
+        '<div class="alert alert-warning" role="alert">Es wird mindestens ein Mitarbeiter in dieser Abteilung benötigt um <b>Angebote auf dem Markt platzieren</b> zu können. Je mehr Mitarbeiter im Vertrieb arbeiten, desto mehr Angebote können auf dem Markt platziert werden.</div>';
       } else if (panelID == 3){ //3 = Verwaltung
         modalContent.innerHTML = '<p>Mitarbeiter werden in der Verwaltung benötigt, um den Vertrieb und die Fertigung zu verwalten. Sie besitzen das nötige Fachwissen, um ein Unternehmen am Leben zu erhalten.<p>' + 
-        '<div class="alert alert-success" role="alert">Mitarbeiter dieser Abteilung bringen folgende Vorteile: <li>Bessere Preiskalkulation</li><li>Verbesserte Marktforschung</li></div>';
+        '<div class="alert alert-warning" role="alert">Es wird mindestens ein Mitarbeiter in dieser Abteilung benötigt um <b>Darlehen aufnehmen</b> zu können und um <b>Marketingmaßnahmen tätigen</b> zu können. Je mehr Mitarbeiter in der Verwaltung arbeiten, desto mehr Darlehen und Marketingmaßnahmen können getätigt werden.</div>';
       }
     }
   </script>
