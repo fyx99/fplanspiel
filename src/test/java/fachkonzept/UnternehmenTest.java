@@ -168,5 +168,6 @@ class UnternehmenTest {
 		assertEquals(0, testUnternehmen.getGuv().rundenErgebnis(2));
 
 	}
+	
 
 }

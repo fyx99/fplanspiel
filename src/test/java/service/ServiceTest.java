@@ -11,6 +11,7 @@ import fachkonzept.Maschine;
 import fachkonzept.Material;
 import fachkonzept.Produkt;
 import fachkonzept.Produktionsmatrix;
+import fachkonzept.Spiel;
 import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MaterialArt;
 import fachkonzept.util.ProduktArt;
@@ -231,6 +232,25 @@ class ServiceTest {
    @Test
    void spielDTO() {
 	   assertEquals(1, SpielService.getSpielDTO().getRunde());
+   }
+   
+   @Test
+   void mitarbeiterKündigen() {
+	   int anzMitarbeiter = SpielService.getSpiel().getUnternehmen().get(0).getMitarbeiter().size();
+	   assertEquals(0, anzMitarbeiter);
+	   int idMitarbeiterAngebot = SpielService.getSpiel().getUnternehmen().get(0).getAmarkt().getAngebote().get(0).getId();
+	   SpielService.kaufeAngebot(5, idMitarbeiterAngebot);
+	   int idMitarbeiter = SpielService.getUnternehmen().getMitarbeiter().getArbeiter().get(0).getM().getId();
+	   
+	   String nameMitarbeiter2 = SpielService.getSpiel().getUnternehmen().get(0).getMitarbeiter().get(1).getM().getName();
+	   
+	   assertEquals(anzMitarbeiter+5, SpielService.getSpiel().getUnternehmen().get(0).getMitarbeiter().size());
+	   
+	   SpielService.mitarbeiterEntfernen(idMitarbeiter);
+	   assertEquals(anzMitarbeiter+4, SpielService.getSpiel().getUnternehmen().get(0).getMitarbeiter().size());
+	   
+	   //wurde der damalige 2. Mitarbeiter nun 1. Mitarbeiter?
+	   assertEquals(nameMitarbeiter2, SpielService.getSpiel().getUnternehmen().get(0).getMitarbeiter().get(0).getM().getName());
    }
     
     

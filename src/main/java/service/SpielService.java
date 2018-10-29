@@ -257,6 +257,21 @@ public class SpielService {
 		Angebot a = Angebot.findeAngebot(id);
 		s.getAktuellesUnternehmen().getVmarkt().angebotEntfernen(a);
 	}
+	
+	@GET
+	@Path("mitarbeiterEntfernen")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static void mitarbeiterEntfernen(@QueryParam("id") int id) {
+		
+		for (Arbeitskraft a: s.getAktuellesUnternehmen().getMitarbeiter()) {
+			if(a.getM().getId() == id) {
+				s.getAktuellesUnternehmen().arbeitskraftEntfernen(a);
+				break;
+			}
+		}
+		
+		
+	}
 
 	@GET
 	@Path("maschinen")

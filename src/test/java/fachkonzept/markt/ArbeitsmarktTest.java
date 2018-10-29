@@ -91,7 +91,7 @@ public class ArbeitsmarktTest {
         
         assertEquals(4 + size, Arbeitsmarkt.getUmsatzHistorie().size());
     	assertEquals(2 + size2, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
-    	assertEquals(5 + size3, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
+    	assertEquals(6 + size3, Arbeitsmarkt.umsatzProMitarbeiterFachgebiet(MitarbeiterFachgebiet.MASCHINE).size());
 	
 	}	
 }
