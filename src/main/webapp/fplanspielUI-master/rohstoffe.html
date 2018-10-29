@@ -24,6 +24,7 @@
     </script>
 
     <script>
+	//Daten aus der Schnittstelle erhalten
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
@@ -34,7 +35,9 @@
         }
       });
     }
+	//Elemente mit den Daten aus der Schnittstelle auf der Oberfläche ausgeben
     function printData(data){
+	  //assoziatives Array zur dynamischen Zuteilung der Bilder
       var bilder = [];
       bilder["Holz"] = "img/holz.jpg";
       bilder["Stoff"] = "img/stoff.jpg";;
@@ -43,17 +46,17 @@
       bilder["Edelstahl"] = "img/edelstahl.jpg";
       bilder["Glas"] = "img/glas.jpg";
       
-      var index = 6;
+      var index = 6;//Index zum bestimmen ob der Spieler Materialien hat oder nicht (für Fehlermeldung falls Lager leer)
       var name = "";
       var menge = "";
       var bild = "";
       
-    	  if(data.Holz > 0){
+    	  if(data.Holz > 0){//wenn es von einem Material mehr als 0 ME gibt, dann wird es anzeigt
     		  name = "Holz";
     		  menge = data.Holz;
     		  bild = bilder[name];
     		  printCard(name, menge, bild);
-    		  index--;
+    		  index--;//hier wäre index != 6 --> Fehlermeldung wird nicht angezeigt
     	  } 
     	  
     	  if(data.Stoff > 0){
@@ -95,11 +98,11 @@
     		  printCard(name, menge, bild);
     		  index--;
     	  }
-      if(index == 6){//keine Materialien vorhanden
+      if(index == 6){//keine Materialien vorhanden --> Fehlermeldung ausgeben
     	  document.getElementById('rohstoffContent').innerHTML = "<h4 style='padding-left: 18px'>Keine Materialien im Inventar vorhanden!</h4>";
       }
     }
-    function printCard(name, menge, bild){
+    function printCard(name, menge, bild){//Ausgeben eines Elements auf der Oberfläche falls Menge > 0
     	var s ="";
     	
     	s += '<div class="col-sm-6 col-md-4">' + 

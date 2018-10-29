@@ -17,13 +17,14 @@
  <body onload="start()">
     <script>
       $(document).ready(function() {
-        $('#navbar').load('navbar.html');
-        getData();
-        $('#footer').load('footer.html');
+          $('#navbar').load('navbar.html');
+          getData();
+          $('#footer').load('footer.html');
       });
     </script>
 
     <script>
+	//Daten aus der Schnittstelle erhalten
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
@@ -34,11 +35,12 @@
         }
       });
     }
+	//Elemente mit den Daten aus der Schnittstelle auf der Oberfläche ausgeben
     function printData(data){
-      var index = 0;      
+      var index = 0;//Variable zur Ausgabe von Fehlermeldungen
       var s ="";
   	
-      for(var kredit in data){
+      for(var kredit in data){//Ausgeben eines Elements auf der Oberfläche falls es aufgenommene Darlehen gibt
         s +='<div class="col-sm-6 col-md-4">' + 
         '<div class="thumbnail">' + 
           '<div class="caption">' + 
@@ -57,10 +59,10 @@
             '</div>' +
          '</div>' +
       '</div>';
-      index++;
+      index++;//es gibt mindestens ein Element auf der Oberfläche --> Keine Fehlermeldung
       }
       
-      if(index == 0){
+      if(index == 0){//Ausgabe einer Fehlermeldung falls es keine aufgenommenen Kredite gibt
     	  s = "<h4 style='padding-left: 18px'>Zur Zeit keine laufenden Darlehen!</h4>";
       }
       

@@ -24,10 +24,12 @@
     </script>
 
 	<script>
+	//Variablen zum Zählen der Mitarbeiter in der jeweiligen Abteilung
 	var fertigungCount = 0;
 	var vertriebCount = 0;
 	var verwaltungCount = 0;
 	
+	//Daten aus der Schnittstelle erhalten
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
@@ -38,13 +40,15 @@
         }
       });
     }
+	//Elemente mit den Daten aus der Schnittstelle auf der Oberfläche ausgeben
     function printDataAlles(data, companyData){
         var contFertigung = document.getElementById('FertigungContent');
         var contVertrieb = document.getElementById('VertriebContent');
         var contVerwaltung = document.getElementById('VerwaltungContent');
         var s ="";
         var dialogID = "";
-
+		
+        //setzen der jeweiligen Dialoge die beim Klicken auf "Details" erscheinen
         for(var mitarbeiter in data){
         	if(data[mitarbeiter].m.mfg == "MASCHINE"){
     			dialogID = 1;
@@ -56,7 +60,7 @@
     			dialogID = 3;
     			verwaltungCount++;
     		}
-      	  
+       //String der die Daten enthält und auf der Oberfläche interpretiert wird
        s +='<div class="col-sm-6 col-md-4">' + 
             '<div class="thumbnail">' + 
               '<div class="caption">' + 
@@ -70,7 +74,7 @@
                 '</div>' +
              '</div>' +
           '</div>';
-		
+		//Den zuvor generierten String an die richtige Stelle auf der UI platzieren (Aufteilung in Produktion, Vertrieb, Verwaltung)
 		if(data[mitarbeiter].m.mfg == "MASCHINE"){
 			contFertigung.innerHTML += s;
 			s = "";
@@ -82,12 +86,12 @@
 			s = "";
 		}
         }
-        
+        //aktuelle Kapazität in der jeweiligen Abteilung anzeigen
         document.getElementById('FertigungHead').innerHTML = "Fertigung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.MASCHINE /60) + " Stunden)";
         document.getElementById('VertriebHead').innerHTML = "Vertrieb (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERTRIEB /60) + " Stunden)";
         document.getElementById('VerwaltungHead').innerHTML = "Verwaltung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERWALTUNG /60) + " Stunden)";
         
-		
+		//falls es keine Mitarbeiter gibt --> Fehlermeldung in der jeweiligen Abteilung anzeigen
 		if(fertigungCount == 0){
 			contFertigung.innerHTML = "<h4 style='padding-left: 18px'>Keine Mitarbeiter in dieser Abteilung vorhanden!</h4>";
 		} 
@@ -197,9 +201,10 @@
   </div>
 
   <script>
+  	//Script zum Anzeigen von Details zu den Mitarbeitern der Abteilung
     var modalContent = document.getElementById('detailsContentID');
-    var panelID = null;
-
+	
+  	//setze die Daten auf dem Details-Dialog in Abhängigkeit zur ID die übergeben wird
     function setModalData(panelID){
       if (panelID == 1) { //1 = Fertigung
         modalContent.innerHTML = '<p>Mitarbeiter werden in der Fertigung benötigt, um <b>Produkte herzustellen</b>. Sie besitzen das nötige Fachwissen, um die Produkte ohne Komplikationen herzustellen.<p>' + 

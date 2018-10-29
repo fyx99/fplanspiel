@@ -24,6 +24,7 @@
     </script>
     
     <script>
+	//Daten aus der Schnittstelle erhalten
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/unternehmen",
@@ -34,16 +35,18 @@
         }
       });
     }
+	//Elemente mit den Daten aus der Schnittstelle auf der Oberfläche ausgeben
     function printData(data){
       var cont  = document.getElementById('maschinenContent');
       var s ="";
-      var maschinenCount = 0;
+      var maschinenCount = 0;//Variable zum Zählen der Maschinen (für die Fehlermeldung)
+	  //assoziatives Array zur dynamischen Zuteilung der Bilder
       var bilder = [];
       bilder["Stuhl"] = "img/maschineeins.jpg";
       bilder["Tisch"] = "img/maschinezwei.jpg";
       bilder["Schrank"] = "img/maschinedrei.jpg";
       
-      for(var maschine in data){
+      for(var maschine in data){//for-in-Schleife zur Ausgabe aller Daten der Objekte (der Maschinen)
         s += '<div class="col-sm-6 col-md-4">' + 
             '<div class="thumbnail">' + 
             '<img src="' + bilder[data[maschine].p.produktTyp] +'" alt="' + data[maschine].name + '">' + 
@@ -52,11 +55,10 @@
             '<p>Produziert: <b>' + data[maschine].p.name + '</b></p>' + 
             '<p><a class="btn btn-primary" onclick="loadData(' + maschinenCount + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' + 
             '</div></div></div>';
-			//'<p><a href="verkauf.html#maschinen" class="btn btn-danger" role="button">Verkaufen</a> <a class="btn btn-primary" onclick="loadData(' + maschinenCount + ')" data-toggle="modal" data-target="#details" role="button">Details</a></p>' +
             
-            maschinenCount++;
+            maschinenCount++;//es existiert mindestens eine Maschine --> keine Fehlermeldung ausgeben
       }
-      if(maschinenCount == 0){
+      if(maschinenCount == 0){//Fehlermeldung ausgeben falls keine Maschine existiert
     	  s = "<h4 style='padding-left: 18px'>Keine Maschinen im Inventar vorhanden!</h4>";
       }
       cont.innerHTML = s;
@@ -116,6 +118,7 @@
   </div>
  	
  <script>
+     //Daten aus der Schnittstelle holen für die Ausgabe im Dialog
      function loadData(index){
       jQuery.ajax({
         url: "../api/spiel/maschinen",
@@ -126,14 +129,16 @@
         }
       });
     }
-
+	//setzen des Dialogs (Inhalte festlegen)
     function setValues(data, index){
     	document.getElementById('detailsDialogTitel').innerHTML = "Details zu: " + data[index].name;
-   
+   		
+    	//Ausgabe einer Liste der Materialien, die für die Produktion einer ME des Produkts benötigt wird
     	var inhalt = "";
     	inhalt += '<h4 style="font-size: 20px">Für die Produktion werden folgende Materialien benötigt:</h4>' + 
     	'<ul class="list-group">';
     	
+    	//Ausgabe der Menge der jeweiligen Materialien falls die Menge > 0
     	if(data[index].matrix.matrix.Holz > 0){
     		inhalt += '<li class="list-group-item d-flex justify-content-between align-items-center font">Holz' +
     		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Holz + '</span></li>';
@@ -159,7 +164,7 @@
     		'<span class="badge badge-primary badge-pill">' + data[index].matrix.matrix.Glas + '</span></li>';
     	}
 
-    	
+    	//Anschließend Eigenschaften der Maschine anzeigen
     	inhalt += '</ul><hr><p class="font"><b>Eigenschaften:</b></p>';
     	inhalt += '<table class="table font">' + 
 		'<tr><td><b>Produziert: </b></td><td>' + data[index].p.name + '</td</tr>' + 

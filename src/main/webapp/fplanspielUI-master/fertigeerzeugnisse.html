@@ -24,6 +24,7 @@
     </script>
 
 	<script>
+	//Daten aus der Schnittstelle erhalten
     function getData(){
       jQuery.ajax({
         url: "../api/spiel/produkte",
@@ -34,10 +35,12 @@
         }
       });
     }
+	//Elemente mit den Daten aus der Schnittstelle auf der Oberfläche ausgeben
     function printData(data){
       var cont  = document.getElementById('fertigeErzContent');
       var s ="";
-      var index = 0;
+      var index = 0;//index zum Zählen der Elemente auf der Oberfläche --> falls 0 --> Fehlermeldung ausgeben
+	  //assoziatives Array zur dynamischen Zuteilung der Bilder
       var bilder = [];
       bilder["Holzstuhl"] = "img/holzstuhl2.jpg";
       bilder["Stoffstuhl"] = "img/stoffstuhl.jpg";
@@ -51,7 +54,7 @@
       bilder["Edelstahlschrank"] = "img/edelstahlschrank.jpg";
       bilder["Glasschrank"] = "img/glasschrank.jpg";
 
-      for(var produkt in data){
+      for(var produkt in data){//for-in-Schleife zur Ausgabe aller Daten der Objekte (der fertigen Erzeugnisse)
         s += '<div class="col-sm-6 col-md-4">' + 
             '<div class="thumbnail">' + 
             '<img src="' + bilder[data[produkt].p.name] +'" alt="' + data[produkt].p.name + '">' + 
@@ -61,9 +64,9 @@
             '<p><a href="verkauf.html" class="btn btn-danger" role="button">Verkaufen</a></p>' + 
             '</div></div></div>';
 
-            index++;
+            index++;//Objekt existiert --> keine Fehlermeldung anzeigen
       }
-      if(index == 0){
+      if(index == 0){//Fehlermeldung anzeigen
     	  s = "<h4 style='padding-left: 18px'>Keine fertigen Erzeugnisse im Inventar vorhanden!</h4>";
       }
       cont.innerHTML = s;
