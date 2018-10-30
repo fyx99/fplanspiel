@@ -141,11 +141,7 @@
 	  					
 	    		'<table style="row">' +
 	    		' <tr>' +
-	    		' <td style="text-align: center; width: 5%">' +
-	    		' <div class="form-check">' +
-	    		'<input class="form-check-input" type="checkbox" value="" id="defaultCheck' + i + '" onclick="changePlayerCount(\x27defaultCheck'+i+'\x27)" >'+
-	            '                    </div>' +
-	              '              </td>' +
+	    		
 	              '<td>' +
 	              '<input id="firma' + i + '" name="firmaSpieler' + i + '" placeholder="Firma" style="width: 200px">' +
 	              '<p></p>' +
@@ -346,17 +342,6 @@
         	
         	spielmodus = count;
         }
-     	
-		// Funktion, um Spieleranzahl zu verändern
-        function changePlayerCount(checkBoxID) {
-            var checkBoxObject = document.getElementById(checkBoxID);
-            if (checkBoxObject.checked == true) {
-                anzahlSpieler = anzahlSpieler + 1;
-            } else {
-                anzahlSpieler = anzahlSpieler - 1;
-            }
-            document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
-        }
 
      	// Funktion, um Rundenanzahl zu verändern
         function changeRoundCount(count){
@@ -372,7 +357,7 @@
         
         // Beim Klick auf Unternehmen hinzufuegen
         function unternehmenHinzufuegen(ele){
-        	var firma;
+        	var firma;            
     		
     		for (var i=1;i<=8; i++){
     			if (ele.id == "unternehmen"+i){ // Richtige ID ansprechen
@@ -389,6 +374,8 @@
          			} else {
          				callUnternehmenHinzufuegen(firma,standort);
          				document.getElementById("fehlermeldung"+i).innerHTML = "Unternehmen wurde hinzugefügt!";
+                        anzahlSpieler = anzahlSpieler + 1;
+         				document.getElementById('anzahlSpielerText').innerHTML = anzahlSpieler + " Spieler";
          				setColourBlack(document.getElementById("fehlermeldung" +i));
          				
          				if (erstesUnternehmenHinzugefuegt == true) {
