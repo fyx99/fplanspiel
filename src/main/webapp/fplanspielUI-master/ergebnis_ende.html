@@ -13,45 +13,23 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> <!-- Bibliothek für Diagramme -->
  </head>
  
    <body>
         <script type="text/javascript" >
             $(document).ready(function() {
                 $('#footer').load('footer.html');
-                });
+                });            
             
-
-           function printPlatzierung(data){
-             	 var inhaltTabelle  = document.getElementById('inhaltTabelle');
-             	 var glueckwunsch = document.getElementById('glueckwunsch');
-                  console.log(data);
-                  var s =" ";
-                  var platz =1;
-                  var ersterPlatz = data[0].name;
-                   for(var index in data){
-                 	  
-                       //s += "<tr><td>" + platz + "</td> <td>" + data[index].name + "</td><td>0€</td></tr>";
-                       s += '<tr><td >' + platz + '</td> <td>' + data[index].name + '</td></tr>';
-                       platz++;              
-                      }
-                      inhaltTabelle.innerHTML = s;
-                      
-                      glueckwunsch.innerHTML = "Herzlichen Glückwunsch an das Unternehmen " + ersterPlatz + "!";
-                      
-             }
-            
-
-            // Funktion, um Tabelle dynamisch zu erstellen, muss noch bearbeitet werden!
+            // Funktion, um Daten fuer die Platzierung zu laden (in der JSON-Datei sind die Unternehmen nach der Platzierung sortiert)
             window.onload = function () {
                 jQuery.ajax({
                     url: "../api/spiel/spielende",
                     type: "GET",
                     dataType: "json",
                     success: function(data, data2){
-                    	printPlatzierung(data);
-                        
+                    	printPlatzierung(data);                       
                     }
                 });
 
@@ -59,10 +37,29 @@
                 url: "../api/spiel/zwischenstand",
                 type: "GET",
                 dataType: "json",
- 					success: function(data, data2){
-                	
-                	                   
-                    var unternehmenData = data.unternehmen;
+ 					success: function(data, data2){						
+ 						printDiagramme(data);               	
+                }
+            });
+                
+                function printPlatzierung(data){
+                		var inhaltTabelle  = document.getElementById('inhaltTabelle');
+                		var glueckwunsch = document.getElementById('glueckwunsch');
+                     var s =" "; // String, in dem die dynamisch erzeugte Tabelle gespeichert wird
+                     var platz =1; // Platzierung der Unternehmen
+                     var ersterPlatz = data[0].name; // In der JSON-Datei sind die Unternehmen nach der Platzierung sortiert
+                        
+                      for(var index in data){                	  
+                            s += '<tr><td >' + platz + '</td> <td>' + data[index].name + '</td></tr>';
+                            platz++;              
+                      }
+                           inhaltTabelle.innerHTML = s;
+                           
+                           glueckwunsch.innerHTML = "Herzlichen Glückwunsch an das Unternehmen " + ersterPlatz + "!";                           
+                  }
+                
+                function printDiagramme(data){
+    	            var unternehmenData = data.unternehmen;
                     var marktanteilData = data.unternehmen.marktanteile;             
                     var xWert = 1
                    
@@ -70,18 +67,19 @@
                        	dataPoints01.push({ label: unternehmenData[index].name, y: unternehmenData[index].gewinn, x: xWert});
                         dataPoints03.push({ label: unternehmenData[index].name, y: unternehmenData[index].kapital, x: xWert});
                         dataPoints04.push({ label: unternehmenData[index].name, y: unternehmenData[index].umsatz, x: xWert});
+                        dataPoints05.push({ label: unternehmenData[index].name, y: unternehmenData[index].mitarbeiter, x: xWert});
                         
                         dataPoints02.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Stuhl});
                         dataPoints06.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Tisch});
                         dataPoints07.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Schrank});
                         
-                        console.log("marktanteil" + unternehmenData[index].marktanteile.Stuhl);
                         xWert++;      
                     }
 
-                  	chart01.options.data[0].dataPoints = dataPoints01;
+                  	chart01.options.data[0].dataPoints = dataPoints01; // Daten, die aus der JSON-Datei extrahiert wurden, den Diagrammen zuordnen
                     chart03.options.data[0].dataPoints = dataPoints03;
                     chart04.options.data[0].dataPoints = dataPoints04;
+                    chart05.options.data[0].dataPoints = dataPoints05;
                     
                     chart02.options.data[0].dataPoints = dataPoints02;
                     chart06.options.data[0].dataPoints = dataPoints06;
@@ -91,12 +89,12 @@
                     chart01.render();
                     chart03.render();
                     chart04.render(); 
+                    chart05.render(); 
                     
                     chart02.render();
                     chart06.render();
                     chart07.render(); 
                 }
-            });
                 
                 var dataPoints01 = [];
                 var dataPoints02 = [];
@@ -105,8 +103,8 @@
                 var dataPoints05 = [];
                 var dataPoints06 = [];
                 var dataPoints07 = [];
-                var dataPoints08 = [];
 
+                // Diagramme generieren 
                 var chart01 = new CanvasJS.Chart("chartContainer01",
                         {
                         	animationEnabled: true, 
@@ -120,7 +118,6 @@
                                 type: "column",
                                 showInLegend: true,
                                 toolTipContent: "{y} €",
-                                //yValueFormatString: "###,,.### ",
                                 legendText: "{indexLabel}",
                                 dataPoints: [
                                 ]
@@ -141,20 +138,13 @@
                                 type: "column",
                                 showInLegend: true,
                                 toolTipContent: "{y} €",
-                                //yValueFormatString: "###,,.### ",
                                 legendText: "{indexLabel}",
                                 dataPoints: [
-                                    {  x:1, y: 300000, label: "Spieler 1" },
-                                    {  x:2, y: 300000, label: "Spieler 2" },
-                                    {  x:3, y: 300000, label: "Spieler 3" },
-                                    {  x:4, y: 300000, label: "Spieler 4"}
                                 ]
                             }
                             ]
                         });
-                        //chart04.render();
 
-                        
                         var chart03 = new CanvasJS.Chart("chartContainer03",
                         {
                         	animationEnabled: true, 
@@ -168,18 +158,12 @@
                                 type: "column",
                                 showInLegend: true,
                                 toolTipContent: "{y} €",
-                                //yValueFormatString: "###,,.### ",
                                 legendText: "{indexLabel}",
                                 dataPoints: [
-                                    {  x:1, y: 300000, label: "Spieler 1" },
-                                    {  x:2, y: 300000, label: "Spieler 2" },
-                                    {  x:3, y: 300000, label: "Spieler 3" },
-                                    {  x:4, y: 300000, label: "Spieler 4"}
                                 ]
                             }
                             ]
                         });
-                        //chart03.render();
                         
                          var chart02 = new CanvasJS.Chart("chartContainer02",
                         {
@@ -194,7 +178,6 @@
                                 type: "pie",
                                 showInLegend: true,
                                 toolTipContent: "{y} %",
-                                //yValueFormatString: "###,,.### ",
                                 legendText: "{indexLabel}",
                                 dataPoints: [
                                     {  y: 20, indexLabel: "Spieler 1" },
@@ -205,8 +188,6 @@
                             }
                             ]
                         });
-                       //chart02.render();
-
 
                          var chart05 = new CanvasJS.Chart("chartContainer05",
                         {
@@ -221,18 +202,12 @@
                                 type: "column",
                                 showInLegend: true,
                                 toolTipContent: "{y} Mitarbeiter",
-                                //yValueFormatString: "###,,.### ",
                                 legendText: "{indexLabel}",
                                 dataPoints: [
-                                    {  x:1, y: 4, label: "Spieler 1" },
-                                    {  x:2, y: 3, label: "Spieler 2" },
-                                    {  x:3, y: 2, label: "Spieler 3" },
-                                    {  x:4, y: 1, label: "Spieler 4"}
                                 ]
                             }
                             ]
                         });
-                        chart05.render();
 
                          var chart06 = new CanvasJS.Chart("chartContainer06",
                         {
@@ -247,18 +222,12 @@
                                 type: "pie",
                                 showInLegend: true,
                                 toolTipContent: "{y} %",
-                                //yValueFormatString: "###,,.### ",
                                 legendText: "{indexLabel}",
                                 dataPoints: [
-                                    {  y: 4, indexLabel: "Spieler 1" },
-                                    {  y: 5, indexLabel: "Spieler 2" },
-                                    {  y: 2, indexLabel: "Spieler 3" },
-                                    {  y: 1, indexLabel: "Spieler 4"}
                                 ]
                             }
                             ]
                         });
-                        //chart06.render(); 
                         
                         var chart07 = new CanvasJS.Chart("chartContainer07",
                                 {
@@ -273,51 +242,13 @@
                                         type: "pie",
                                         showInLegend: true,
                                         toolTipContent: "{y} %",
-                                        //yValueFormatString: "###,,.### ",
                                         legendText: "{indexLabel}",
                                         dataPoints: [
-                                            {  y: 4, indexLabel: "Spieler 1" },
-                                            {  y: 5, indexLabel: "Spieler 2" },
-                                            {  y: 2, indexLabel: "Spieler 3" },
-                                            {  y: 1, indexLabel: "Spieler 4"}
                                         ]
                                     }
                                     ]
-                                });
-                                //chart07.render(); 
-                                
-                                var chart08 = new CanvasJS.Chart("chartContainer08",
-                                        {
-        		                        	animationEnabled: true, 
-        		                    		animationDuration: 2000,
-                                            theme: "theme2",
-                                            title:{
-                                                text: "Marktanteil Test in %"
-                                            },      
-                                            data: [
-                                            {       
-                                                type: "pie",
-                                                showInLegend: true,
-                                                toolTipContent: "{y} %",
-                                                //yValueFormatString: "###,,.### ",
-                                                legendText: "{indexLabel}",
-                                                dataPoints: [
-                                                    {  y: 4, indexLabel: "Spieler 1" },
-                                                    {  y: 5, indexLabel: "Spieler 2" },
-                                                    {  y: 2, indexLabel: "Spieler 3" },
-                                                    {  y: 1, indexLabel: "Spieler 4"}
-                                                ]
-                                            }
-                                            ]
-                                        });
-                                        chart08.render(); 
-    
-            
-            }
-            
-
-
-          
+                                });                               
+            }    
         </script>
    
     <!-- Fixed navbar -->
@@ -347,9 +278,8 @@
                 <table class="table table-bordered table-sm m-0">
                     <thead class="">
                         <tr>
-                            <th>Platz </th>
+                            <th class="col-sm-2 col-md-2">Platz </th>
                             <th>Spieler</th>
-                           <!-- <th>XXX</th>-->
                         </tr>
                     </thead>
                     <tbody id="inhaltTabelle">
@@ -358,7 +288,7 @@
             </div>
 
             <br>
-            <p id="glueckwunsch">Herzlichen Glückwunsch an Spieler 1!</p>
+            <p id="glueckwunsch">Herzlichen Glückwunsch an Spieler </p>
             <br>
             <br>
         </div>
@@ -409,18 +339,12 @@
         <div class="row">
             <div class="col-sm-4 col-md-6">
                  <div id="chartContainer05" style="height: 300px; width: 100%;"></div>
-            </div>
-            <div class="col-sm-4 col-md-6">
-               <div id="chartContainer08" style="height: 300px; width: 100%;"></div>
-            </div>
-             
+            </div>             
         </div> 
         
         <br>
         <br>
         <br>
-        
-        
 
         <a class="btn btn-primary float-right" onclick="href='start.html'">Neues Spiel starten</a>
     </div>    

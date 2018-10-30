@@ -12,16 +12,13 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> <!-- Bibliothek für Diagramme -->
  </head>
  
 <body>
         <script type="text/javascript" >
             $(document).ready(function() {
-                //$('#navbar').load('navbar.html');
                 $('#footer').load('footer.html');
-
                 });
 
             window.onload = function () {
@@ -29,11 +26,14 @@
                 url: "../api/spiel/zwischenstand",
                 type: "GET",
                 dataType: "json",
-                success: function(data, data2){
-                	
-                	rundeAnzeigen(data);
-                    
-                    var unternehmenData = data.unternehmen;
+                success: function(data, data2){                	
+                	rundeAnzeigen(data);                	
+                	printDiagramme(data);                 
+                }
+            });
+                
+                function printDiagramme(data){
+                	var unternehmenData = data.unternehmen;
                     var marktanteilData = data.unternehmen.marktanteile;             
                     var xWert = 1
                    
@@ -41,18 +41,19 @@
                        	dataPoints01.push({ label: unternehmenData[index].name, y: unternehmenData[index].gewinn, x: xWert});
                         dataPoints03.push({ label: unternehmenData[index].name, y: unternehmenData[index].kapital, x: xWert});
                         dataPoints04.push({ label: unternehmenData[index].name, y: unternehmenData[index].umsatz, x: xWert});
+                        dataPoints05.push({ label: unternehmenData[index].name, y: unternehmenData[index].mitarbeiter, x: xWert});
                         
                         dataPoints02.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Stuhl});
                         dataPoints06.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Tisch});
                         dataPoints07.push({ indexLabel: unternehmenData[index].name, y: unternehmenData[index].marktanteile.Schrank});
                         
-                        console.log("marktanteil" + unternehmenData[index].marktanteile.Stuhl);
                         xWert++;      
                     }
 
-                  	chart01.options.data[0].dataPoints = dataPoints01;
+                  	chart01.options.data[0].dataPoints = dataPoints01; // Daten, die aus der JSON-Datei extrahiert wurden, den Diagrammen zuordnen
                     chart03.options.data[0].dataPoints = dataPoints03;
                     chart04.options.data[0].dataPoints = dataPoints04;
+                    chart05.options.data[0].dataPoints = dataPoints05;
                     
                     chart02.options.data[0].dataPoints = dataPoints02;
                     chart06.options.data[0].dataPoints = dataPoints06;
@@ -61,19 +62,20 @@
                    
                     chart01.render();
                     chart03.render();
-                    chart04.render(); 
+                    chart04.render();
+                    chart05.render();  
                     
                     chart02.render();
                     chart06.render();
                     chart07.render(); 
                 }
-            });
 				
+                // In der Ueberschrift Rundenanzahl anzeigen
                 function rundeAnzeigen(data){
                 	var cont  = document.getElementById('runde');
-                    var s =data.runde;
-                    var sInt = +s -1;
-                    cont.innerHTML += sInt;
+                    var rundeData =data.runde;
+                    var rundeDataInt = +rundeData -1; // Schnittstelle liefert die nächste Rundenanzahl, deswegen -1
+                    cont.innerHTML += rundeDataInt;
                 }
 
                	var dataPoints01 = [];
@@ -83,11 +85,11 @@
                 var dataPoints05 = [];
                 var dataPoints06 = [];
                 var dataPoints07 = [];
-                var dataPoints08 = [];
 
+                // Diagramme generieren 
                 var chart01 = new CanvasJS.Chart("chartContainer01",
                 {
-                	animationEnabled: true, 
+                	animationEnabled: true, // Animation fuer das Diagramm
             		animationDuration: 2000,
                     theme: "theme2",
                     title:{
@@ -98,7 +100,6 @@
                         type: "column",
                         showInLegend: true,
                         toolTipContent: "{y} €",
-                        //yValueFormatString: "###,,.### ",
                         legendText: "{indexLabel}",
                         dataPoints: [
                         ]
@@ -119,19 +120,12 @@
                         type: "column",
                         showInLegend: true,
                         toolTipContent: "{y} €",
-                        //yValueFormatString: "###,,.### ",
                         legendText: "{indexLabel}",
                         dataPoints: [
-                            {  x:1, y: 300000, label: "Spieler 1" },
-                            {  x:2, y: 300000, label: "Spieler 2" },
-                            {  x:3, y: 300000, label: "Spieler 3" },
-                            {  x:4, y: 300000, label: "Spieler 4"}
                         ]
                     }
                     ]
                 });
-                //chart04.render();
-
                 
                 var chart03 = new CanvasJS.Chart("chartContainer03",
                 {
@@ -146,18 +140,12 @@
                         type: "column",
                         showInLegend: true,
                         toolTipContent: "{y} €",
-                        //yValueFormatString: "###,,.### ",
                         legendText: "{indexLabel}",
                         dataPoints: [
-                            {  x:1, y: 300000, label: "Spieler 1" },
-                            {  x:2, y: 300000, label: "Spieler 2" },
-                            {  x:3, y: 300000, label: "Spieler 3" },
-                            {  x:4, y: 300000, label: "Spieler 4"}
                         ]
                     }
                     ]
                 });
-                //chart03.render();
                 
                  var chart02 = new CanvasJS.Chart("chartContainer02",
                 {
@@ -172,19 +160,12 @@
                         type: "pie",
                         showInLegend: true,
                         toolTipContent: "{y} %",
-                        //yValueFormatString: "###,,.### ",
                         legendText: "{indexLabel}",
                         dataPoints: [
-                            {  y: 20, indexLabel: "Spieler 1" },
-                            {  y: 30, indexLabel: "Spieler 2" },
-                            {  y: 40, indexLabel: "Spieler 3" },
-                            {  y: 10, indexLabel: "Spieler 4"}
                         ]
                     }
                     ]
                 });
-               //chart02.render();
-
 
                  var chart05 = new CanvasJS.Chart("chartContainer05",
                 {
@@ -199,18 +180,12 @@
                         type: "column",
                         showInLegend: true,
                         toolTipContent: "{y} Mitarbeiter",
-                        //yValueFormatString: "###,,.### ",
                         legendText: "{indexLabel}",
                         dataPoints: [
-                            {  x:1, y: 4, label: "Spieler 1" },
-                            {  x:2, y: 3, label: "Spieler 2" },
-                            {  x:3, y: 2, label: "Spieler 3" },
-                            {  x:4, y: 1, label: "Spieler 4"}
                         ]
                     }
                     ]
                 });
-                chart05.render();
 
                  var chart06 = new CanvasJS.Chart("chartContainer06",
                 {
@@ -225,18 +200,12 @@
                         type: "pie",
                         showInLegend: true,
                         toolTipContent: "{y} %",
-                        //yValueFormatString: "###,,.### ",
                         legendText: "{indexLabel}",
                         dataPoints: [
-                            {  y: 4, indexLabel: "Spieler 1" },
-                            {  y: 5, indexLabel: "Spieler 2" },
-                            {  y: 2, indexLabel: "Spieler 3" },
-                            {  y: 1, indexLabel: "Spieler 4"}
                         ]
                     }
                     ]
                 });
-                //chart06.render(); 
                 
                 var chart07 = new CanvasJS.Chart("chartContainer07",
                         {
@@ -251,45 +220,12 @@
                                 type: "pie",
                                 showInLegend: true,
                                 toolTipContent: "{y} %",
-                                //yValueFormatString: "###,,.### ",
                                 legendText: "{indexLabel}",
                                 dataPoints: [
-                                    {  y: 4, indexLabel: "Spieler 1" },
-                                    {  y: 5, indexLabel: "Spieler 2" },
-                                    {  y: 2, indexLabel: "Spieler 3" },
-                                    {  y: 1, indexLabel: "Spieler 4"}
                                 ]
                             }
                             ]
-                        });
-                        //chart07.render(); 
-                        
-                        var chart08 = new CanvasJS.Chart("chartContainer08",
-                                {
-		                        	animationEnabled: true, 
-		                    		animationDuration: 2000,
-                                    theme: "theme2",
-                                    title:{
-                                        text: "Marktanteil Test in %"
-                                    },      
-                                    data: [
-                                    {       
-                                        type: "pie",
-                                        showInLegend: true,
-                                        toolTipContent: "{y} %",
-                                        //yValueFormatString: "###,,.### ",
-                                        legendText: "{indexLabel}",
-                                        dataPoints: [
-                                            {  y: 4, indexLabel: "Spieler 1" },
-                                            {  y: 5, indexLabel: "Spieler 2" },
-                                            {  y: 2, indexLabel: "Spieler 3" },
-                                            {  y: 1, indexLabel: "Spieler 4"}
-                                        ]
-                                    }
-                                    ]
-                                });
-                                chart08.render(); 
-                        
+                        });                                              
     }
 
         </script>
@@ -394,21 +330,14 @@
         <div class="row">
             <div class="col-sm-4 col-md-6">
                  <div id="chartContainer05" style="height: 300px; width: 100%;"></div>
-            </div>
-            <div class="col-sm-4 col-md-6">
-               <div id="chartContainer08" style="height: 300px; width: 100%;"></div>
-            </div>
-             
+            </div>             
         </div> 
         
         <br>
         <br>
         <br>
-        
-        
-        
 
-         <a class="btn btn-primary float-right" onclick="href='rundenresultat.html'">Nächste Runde starten</a>
+        <a class="btn btn-primary float-right" onclick="href='rundenresultat.html'">Nächste Runde starten</a>
     </div>    
             
     <!-- Fixed footer -->
