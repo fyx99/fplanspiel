@@ -12,6 +12,42 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    
+    <style> 
+		table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+		}
+		
+		td, th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		border-collapse: separate;
+		padding: 8px;
+		}
+		
+		.panelTop{
+		margin-top: 2px;
+		margin-bottom: 2px;
+		}
+		
+		.form-check-input {
+		width: 15px;
+		height: 15px;
+		}
+		
+		.blockButton{
+		width: 60px;
+		height: 60px;
+		}
+		
+		.borderless td, .borderless th {
+		border: none;
+		}
+	</style>
+              
+                
   </head>
   <body>
     <!-- Fixed navbar -->
@@ -39,40 +75,6 @@
         </div>	
             	<h3>Bitte wähle den Spielmodus, die Länge des Spiels und die Anzahl der Spieler aus!</h3>
 
-                <style> 
-                table {
-                    font-family: arial, sans-serif;
-                    border-collapse: collapse;
-                    width: 100%;
-                    }
-
-                td, th {
-                    border: 1px solid #dddddd;
-                    text-align: left;
-                    border-collapse: separate;
-                    padding: 8px;
-                    }
-
-                    .panelTop{
-      				margin-top: 2px;
-    				margin-bottom: 2px;
-    				}
-
-    				.form-check-input {
-    				width: 15px;
-    				height: 15px;
-    				}
-
-        			.blockButton{
-        			width: 60px;
-        			height: 60px;
-        			}
-
-        			.borderless td, .borderless th {
-            		border: none;
-        			}
-                </style>
-                
                 <!-- Spielmodus auswaehlen -->
                 <div class="panel panel-default">
 	      			<div class="panel-heading">
@@ -338,9 +340,7 @@
         		document.getElementById('spielmodusText').innerHTML= "Spielmodus 1 (ohne Anfangsinventar)";
         	} else {
         		document.getElementById('spielmodusText').innerHTML= "Spielmodus 2 (mit Anfangsinventar)";
-        	}
-        	
-        	spielmodus = count;
+        	}       	
         }
 
      	// Funktion, um Rundenanzahl zu verändern
