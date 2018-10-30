@@ -50,8 +50,7 @@
                      var ersterPlatz = data[0].name; // In der JSON-Datei sind die Unternehmen nach der Platzierung sortiert
                         
                       for(var index in data){                	  
-                            //s += '<tr><td >' + platz + '</td> <td>' + data[index].name + '</td></tr>';
-                            s += '<tr><td >' + platz + '</td> <td>' + data[index].name + '</td><td>'+ data[index].gewinn + '</td></tr>';
+                            s += '<tr><td >' + platz + '</td> <td>' + data[index].name + '</td></tr>';
                             platz++;              
                       }
                            inhaltTabelle.innerHTML = s;
@@ -279,9 +278,8 @@
                 <table class="table table-bordered table-sm m-0">
                     <thead class="">
                         <tr>
-                            <th>Platz </th>
+                            <th class="col-sm-2 col-md-2">Platz </th>
                             <th>Spieler</th>
-                           	<th>Gewinn</th>
                         </tr>
                     </thead>
                     <tbody id="inhaltTabelle">
