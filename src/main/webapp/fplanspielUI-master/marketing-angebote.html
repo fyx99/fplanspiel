@@ -81,7 +81,13 @@
 							string = '<p>'+kapazitätVerwaltung+'</p>';
 							
 							document.getElementById('anzeigeKapazität'+i).innerHTML = string;
-							document.getElementById('maximalesBudget'+i).innerHTML = "Du kannst maximal " + maximalesBudget + " € investieren. ";
+							
+							if (maximalesBudget == 0) {
+								document.getElementById('maximalesBudget'+i).innerHTML = "Verwaltungsmitarbeiter fehlen! ";
+							} else {
+								document.getElementById('maximalesBudget'+i).innerHTML = "Du kannst maximal " + maximalesBudget + " € investieren. ";
+							}
+							
 						}
 					}
 				});
@@ -112,7 +118,7 @@
 									'<label>Vorhandene Arbeitszeit Vertrieb: </label>' +							
 								'</div>'+
 								'<div class="col-sm-12">'+
-						'<p id="anzeigeKapazität'+angebot+'">   hi</p>' +
+						'<p id="anzeigeKapazität'+angebot+'">  </p>' +
 						'</div>'+
 						
 						'<div class="col-sm-12">'+
