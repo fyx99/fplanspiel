@@ -34,7 +34,7 @@
  	 		var kreditid;
  	 		var mitarbeiterid;
  	 		
- 			window.onload = getDataEinkauf();
+ 			
  				
  				function getDataEinkauf(){
 	 				jQuery.ajax({
@@ -73,6 +73,8 @@
 	 					}
 	 				});
  				}
+ 				
+ 				window.onload = getDataEinkauf();
  				
  			// Alle Bilder der Materialien
  			var imgMat = {};
@@ -510,7 +512,6 @@
 						
 						// Falls genug Verwaltungszeit vorhanden
 						if(vVerwaltungszeit >= bVerwaltungszeit){
-						
 							s+='<div class="row">'+
 								'<div class="col-sm-9">'+
 								'</div>'+
@@ -541,6 +542,7 @@
  			 * function kaufe()
  			 * */
  			function kaufe(menge, id){
+ 				console.log("Menge: "+menge);
  				jQuery.ajax({
  			 		url: "../api/spiel/angebotkaufen?menge=" + menge + "&angebotsid=" + id,
  			 		type: "GET",

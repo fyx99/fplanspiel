@@ -26,8 +26,9 @@
  		var datenmMarkt; // "../api/spiel/unternehmen".data.mmarkt.angebote
  		var maschinenid;
 
- 		window.onload = getDataVerarbeitung();
  		
+ 		
+ 		// Hole aus der Schnittstelle alle Produkte, die produziert werden können
  		function getDataVerarbeitung(){
 			jQuery.ajax({
 				url: "../api/spiel/unternehmen",
@@ -42,6 +43,8 @@
 			});
 			
 		}
+ 		
+ 		window.onload = getDataVerarbeitung();
  		
  		// Alle Bilder
  		var imgProd = {};
@@ -110,7 +113,7 @@
 								'<p>Benötigte Arbeitszeit</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-								'<p>'+ data[angebot].markteinheit.arbeitszeit+'&nbsp;&nbsp;h</p>'+
+								'<p>'+ data[angebot].markteinheit.arbeitszeit+'&nbsp;&nbsp;Min</p>'+
 							'</div>'+	
 							
 							'<div class="col-sm-12">'+
@@ -139,12 +142,12 @@
 							
 					// Zeige nur Maschinen zur Auswahl an, die genug Kapazität frei haben!
 					if(maschInBesitz[maschine].name == data[angebot].markteinheit.name && auslastung < kapazitaet){
-						s+=			'<option>'+maschInBesitz[maschine].id+' '+maschInBesitz[maschine].name+' ('+auslastung+'/'+kapazitaet+')</option>';
+						s+=	'<option>'+maschInBesitz[maschine].id+' '+maschInBesitz[maschine].name+' ('+auslastung+'/'+kapazitaet+')</option>';
 					}
 				}
 					
 				//Ausgabe von Input-Feld und Button
-				s+=		  		'</select>'+
+				s+=		  '</select>'+
 								'<br>'+
 							'</div>'+
 							
@@ -322,7 +325,7 @@
 						'<p>Benötigte Arbeitszeit</p>'+
 					'</div>'+
 					'<div class="col-sm-6">'+
-						'<p>'+arbeitszeit+'&nbsp;h'+ text +'</p>'+
+						'<p>'+arbeitszeit+'&nbsp;Min'+ text +'</p>'+
 					'</div>'+	
 					
 					'<div class="col-sm-12">'+
