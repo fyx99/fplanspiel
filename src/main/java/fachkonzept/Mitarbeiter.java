@@ -21,6 +21,15 @@ public class Mitarbeiter extends Markteinheit {
         this.arbeitszeit = arbeitszeit;
     }
     
+    public Mitarbeiter(Mitarbeiter m) {
+        super();
+        
+        this.name= m.name;
+        this.lohnkosten = m.lohnkosten;
+        this.mfg = m.mfg;
+        this.arbeitszeit = m.arbeitszeit;
+    }
+    
 
     public String getName() {
         return name;

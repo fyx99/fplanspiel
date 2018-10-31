@@ -8,7 +8,7 @@ public class Arbeitskraft {
     public Arbeitskraft(int auslastung, Mitarbeiter m) {
         super();
         this.auslastung = auslastung;
-        this.m = m;
+        this.m = new Mitarbeiter(m);
     }
     public Arbeitskraft(Mitarbeiter m) {
         this.m = m;

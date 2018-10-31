@@ -257,13 +257,7 @@ public class SpielService {
 	@Path("mitarbeiterEntfernen")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static void mitarbeiterEntfernen(@QueryParam("id") int id) {
-
-		for (Arbeitskraft a : s.getAktuellesUnternehmen().getMitarbeiter()) {
-			if (a.getM().getId() == id) {
-				s.getAktuellesUnternehmen().arbeitskraftEntfernen(a);
-				break;
-			}
-		}
+		s.getAktuellesUnternehmen().arbeitskraftEntfernen(id);
 	}
 
 	@GET

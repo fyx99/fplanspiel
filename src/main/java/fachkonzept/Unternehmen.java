@@ -173,6 +173,15 @@ public class Unternehmen {
         mitarbeiter.remove(ak);
     }
     
+    public void arbeitskraftEntfernen(int id) {
+		for (Arbeitskraft a : this.mitarbeiter) {
+			if (a.getM().getId() == id) {
+				this.arbeitskraftEntfernen(a);
+				return;
+			}
+		}
+    }
+    
     public void verbindlichkeitEntfernen(Verbindlichkeit v) {
         verbindlichkeiten.remove(v);
     }
