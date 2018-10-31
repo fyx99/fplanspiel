@@ -28,18 +28,7 @@ public abstract class Markteinheit {
 		}
 		return null;
 	}
-/*
-	public static Markteinheit findeMarkteinheit(String name, Class<?> klasse) {	//mit check der klasse
-		klasse.getName();
-		for(Markteinheit m : Markteinheit.alleMarkteinheiten) {
-			if(m.getClass().getName().equals(klasse.getName()) && m.getName() == name) {
-				return m;
-			}
-		}
-		return null;
-	}
-	
-*/
+
 	public int getId() {
 		return id;
 	}
