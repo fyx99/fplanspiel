@@ -100,9 +100,8 @@ public class SpielService {
 			default:
 				st = new Standort(SimulationsKonstanten.getStandortFaktoren(standortArt));
 			}
-			
+
 			s.unternehmenHinzufuegen(new Unternehmen(name, s, st));
-			
 
 		}
 
@@ -112,14 +111,14 @@ public class SpielService {
 	@GET
 	@Path("starten")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static void spielStart(@DefaultValue("10") @QueryParam("rundenZahl") Integer rundenAnzahl, @DefaultValue("0") @QueryParam("szenario") Integer szenario) {
+	public static void spielStart(@DefaultValue("10") @QueryParam("rundenZahl") Integer rundenAnzahl,
+			@DefaultValue("0") @QueryParam("szenario") Integer szenario) {
 		if (s != null) {
 			s.setRundenAnzahl(rundenAnzahl);
 			s.setSzenario(szenario);
 			s.rundenStart();
 		}
 	}
-	
 
 	@GET
 	@Path("spiel")
@@ -215,10 +214,6 @@ public class SpielService {
 		} else {
 			return false;
 		}
-
-		// Spiel.log("gekauft " + tatsaechlichemenge + " von " +
-		// angebot.getMarkteinheit().getName());
-
 	}
 
 	@GET
@@ -257,20 +252,18 @@ public class SpielService {
 		Angebot a = Angebot.findeAngebot(id);
 		s.getAktuellesUnternehmen().getVmarkt().angebotEntfernen(a);
 	}
-	
+
 	@GET
 	@Path("mitarbeiterEntfernen")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static void mitarbeiterEntfernen(@QueryParam("id") int id) {
-		
-		for (Arbeitskraft a: s.getAktuellesUnternehmen().getMitarbeiter()) {
-			if(a.getM().getId() == id) {
+
+		for (Arbeitskraft a : s.getAktuellesUnternehmen().getMitarbeiter()) {
+			if (a.getM().getId() == id) {
 				s.getAktuellesUnternehmen().arbeitskraftEntfernen(a);
 				break;
 			}
 		}
-		
-		
 	}
 
 	@GET
@@ -389,18 +382,6 @@ public class SpielService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static List<UnternehmenDTO> getSpielende() {
 		return s.getRangliste().stream().map(UnternehmenMapper::toDTO).collect(Collectors.toList());
-	}
-
-	@GET
-	@Path("materialdetails")
-	@Produces(MediaType.APPLICATION_JSON)
-	public static List<String> getMaterialDetails(@QueryParam("material") String material) {
-		// String to Enum MaschinenArt
-		// MaterialArt.valueOf(material);
-		// return
-		// s.getAktuellesUnternehmen().getMmarkt().getMaterialDetails(MaterialArt.valueOf(material),
-		// s);
-		return null;
 	}
 
 	public static Spiel getSpiel() {
