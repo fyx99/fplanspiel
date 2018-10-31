@@ -41,7 +41,7 @@ public class AbsatzmarktTest {
 		
 		assertEquals(anzUmsatzeByProduktTyp + 1, un.getVmarkt().getUmsaetzeByProduktTyp(ProduktTyp.Stuhl).size());
 		
-		assertEquals(51, un.getVmarkt().getMarktanteilByProduktTypAndUnternehmen(un, ProduktTyp.Stuhl));
+		assertEquals(49, un.getVmarkt().getMarktanteilByProduktTypAndUnternehmen(un, ProduktTyp.Stuhl));
 		//nicht 100%, da bereits andere Test-Daten
 		
 	}

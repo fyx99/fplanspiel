@@ -196,7 +196,8 @@ public class Simulation {
 				continue;
 
 			simuliereEinzelnesProdukt(produkt_angebote,
-					us.get(0).getVmarkt().getProduktVolumen().get(produktArt) * us.size(),
+					(int) (us.get(0).getVmarkt().getProduktVolumen().get(produktArt) * us.size()
+							* SimulationsKonstanten.periodenNachfrage(us.get(0).getSpiel().getRunde() % 4)),
 					SimulationsKonstanten.getProduktMarktpreis(produktArt));
 		}
 		// noch die nachfrage am ende anpassen
@@ -549,66 +550,64 @@ public class Simulation {
 				.collect(Collectors.toMap(pa -> pa, pa -> SimulationsKonstanten.getProduktMarktvolumen(pa))));
 		return am;
 	}
-	
-	//Startinventar für Szenario 1
+
+	// Startinventar für Szenario 1
 	private static void simuliereSzenario(Unternehmen un) {
-		//3 Maschinen hinzufügen
-		for (Angebot an: un.getMmarkt().getAngebote()) {
-			if(an.getMarkteinheit().getName().equals("Holzstuhlmaschine")) {
-				Maschine m = new Maschine((Maschine)(an.getMarkteinheit()));
+		// 3 Maschinen hinzufügen
+		for (Angebot an : un.getMmarkt().getAngebote()) {
+			if (an.getMarkteinheit().getName().equals("Holzstuhlmaschine")) {
+				Maschine m = new Maschine((Maschine) (an.getMarkteinheit()));
 				un.maschineHinzu(m, 1);
 			}
-			if(an.getMarkteinheit().getName().equals("Kunststofftischmaschine")) {
-				Maschine m = new Maschine((Maschine)(an.getMarkteinheit()));
+			if (an.getMarkteinheit().getName().equals("Kunststofftischmaschine")) {
+				Maschine m = new Maschine((Maschine) (an.getMarkteinheit()));
 				un.maschineHinzu(m, 1);
 			}
-			if(an.getMarkteinheit().getName().equals("Glasschrankmaschine")) {
-				Maschine m = new Maschine((Maschine)(an.getMarkteinheit()));
+			if (an.getMarkteinheit().getName().equals("Glasschrankmaschine")) {
+				Maschine m = new Maschine((Maschine) (an.getMarkteinheit()));
 				un.maschineHinzu(m, 1);
 			}
 		}
-		
-		//2 Mitarbeiter hinzufügen
-		for(Angebot an: un.getAmarkt().getAngebote()) {
-			if(an.getMarkteinheit().getName().equals("Mitarbeiter 1")) {
-				Mitarbeiter mFertigung = (Mitarbeiter)(an.getMarkteinheit());
+
+		// 2 Mitarbeiter hinzufügen
+		for (Angebot an : un.getAmarkt().getAngebote()) {
+			if (an.getMarkteinheit().getName().equals("Mitarbeiter 1")) {
+				Mitarbeiter mFertigung = (Mitarbeiter) (an.getMarkteinheit());
 				un.arbeitskraftHinzu(new Arbeitskraft(0, mFertigung));
 			}
-			if(an.getMarkteinheit().getName().equals("Mitarbeiter 6")) {
-				Mitarbeiter mVertrieb = (Mitarbeiter)(an.getMarkteinheit());
+			if (an.getMarkteinheit().getName().equals("Mitarbeiter 6")) {
+				Mitarbeiter mVertrieb = (Mitarbeiter) (an.getMarkteinheit());
 				un.arbeitskraftHinzu(new Arbeitskraft(0, mVertrieb));
 			}
 		}
-		
-		//Materialien hinzufügen
+
+		// Materialien hinzufügen
 		for (Angebot an : un.getBmarkt().getAngebote()) {
-			if(an.getMarkteinheit().getName().equals("Holz")) {
-				un.materialHinzu((Material)(an.getMarkteinheit()), 1500);
+			if (an.getMarkteinheit().getName().equals("Holz")) {
+				un.materialHinzu((Material) (an.getMarkteinheit()), 1500);
 			}
-			if(an.getMarkteinheit().getName().equals("Glas")) {
-				un.materialHinzu((Material)(an.getMarkteinheit()), 350);
+			if (an.getMarkteinheit().getName().equals("Glas")) {
+				un.materialHinzu((Material) (an.getMarkteinheit()), 350);
 			}
-			if(an.getMarkteinheit().getName().equals("Kunststoff")) {
-				un.materialHinzu((Material)(an.getMarkteinheit()), 1000);
+			if (an.getMarkteinheit().getName().equals("Kunststoff")) {
+				un.materialHinzu((Material) (an.getMarkteinheit()), 1000);
 			}
-			if(an.getMarkteinheit().getName().equals("Stoff")) {
-				un.materialHinzu((Material)(an.getMarkteinheit()), 150);
+			if (an.getMarkteinheit().getName().equals("Stoff")) {
+				un.materialHinzu((Material) (an.getMarkteinheit()), 150);
 			}
-			if(an.getMarkteinheit().getName().equals("Edelstahl")) {
-				un.materialHinzu((Material)(an.getMarkteinheit()), 100);
-			}	
+			if (an.getMarkteinheit().getName().equals("Edelstahl")) {
+				un.materialHinzu((Material) (an.getMarkteinheit()), 100);
+			}
 		}
-		
-		//Kurzer Kredit aufnehmen
+
+		// Kurzer Kredit aufnehmen
 		for (Angebot an : un.getFmarkt().getAngebote()) {
-			Kredit k = (Kredit)(an.getMarkteinheit());
-			if(k.getKreditArt().equals(KreditArt.Kurzes_Cash)) {
+			Kredit k = (Kredit) (an.getMarkteinheit());
+			if (k.getKreditArt().equals(KreditArt.Kurzes_Cash)) {
 				un.verbindlichkeitHinzu(new Verbindlichkeit(k));
 			}
 		}
-		
-		
-		
+
 	}
 
 	public static List<String> getLog() {
