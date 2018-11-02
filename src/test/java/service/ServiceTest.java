@@ -11,7 +11,6 @@ import fachkonzept.Maschine;
 import fachkonzept.Material;
 import fachkonzept.Produkt;
 import fachkonzept.Produktionsmatrix;
-import fachkonzept.Spiel;
 import fachkonzept.util.MaschinenArt;
 import fachkonzept.util.MaterialArt;
 import fachkonzept.util.ProduktArt;

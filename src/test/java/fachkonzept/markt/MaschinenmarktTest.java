@@ -5,16 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import fachkonzept.Angebot;
-import fachkonzept.Maschine;
-import fachkonzept.Produkt;
-import fachkonzept.Produktionsmatrix;
 import fachkonzept.Simulation;
 import fachkonzept.Spiel;
 import fachkonzept.Standort;
 import fachkonzept.Unternehmen;
 import fachkonzept.util.MaschinenArt;
-import fachkonzept.util.ProduktArt;
-import fachkonzept.util.ProduktTyp;
 import fachkonzept.util.SimulationsKonstanten;
 import fachkonzept.util.StandortArt;
 
