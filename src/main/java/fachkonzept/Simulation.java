@@ -413,29 +413,29 @@ public class Simulation {
 
 	private static Arbeitsmarkt arbeitsmarktDemoDaten(Unternehmen n) {
 		double standortfaktor_mitarbeiterkosten = n.getStandort().getMitarbeiterKosten();
-		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 150 * standortfaktor_mitarbeiterkosten, 60000,
+		Mitarbeiter ma1 = new Mitarbeiter("Mitarbeiter 1", 150 * standortfaktor_mitarbeiterkosten, 36000,
 				MitarbeiterFachgebiet.MASCHINE);
-		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 300 * standortfaktor_mitarbeiterkosten, 120000,
+		Mitarbeiter ma2 = new Mitarbeiter("Mitarbeiter 2", 300 * standortfaktor_mitarbeiterkosten, 42000,
 				MitarbeiterFachgebiet.MASCHINE);
 
-		Mitarbeiter ma3 = new Mitarbeiter("Mitarbeiter 3", 200 * standortfaktor_mitarbeiterkosten, 100000,
+		Mitarbeiter ma3 = new Mitarbeiter("Mitarbeiter 3", 200 * standortfaktor_mitarbeiterkosten, 36000,
 				MitarbeiterFachgebiet.VERWALTUNG);
-		Mitarbeiter ma4 = new Mitarbeiter("Mitarbeiter 4", 250 * standortfaktor_mitarbeiterkosten, 120000,
+		Mitarbeiter ma4 = new Mitarbeiter("Mitarbeiter 4", 250 * standortfaktor_mitarbeiterkosten, 42000,
 				MitarbeiterFachgebiet.VERWALTUNG);
 
-		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 200 * standortfaktor_mitarbeiterkosten, 100000,
+		Mitarbeiter ma5 = new Mitarbeiter("Mitarbeiter 5", 200 * standortfaktor_mitarbeiterkosten, 36000,
 				MitarbeiterFachgebiet.VERTRIEB);
-		Mitarbeiter ma6 = new Mitarbeiter("Mitarbeiter 6", 300 * standortfaktor_mitarbeiterkosten, 120000,
+		Mitarbeiter ma6 = new Mitarbeiter("Mitarbeiter 6", 300 * standortfaktor_mitarbeiterkosten, 42000,
 				MitarbeiterFachgebiet.VERTRIEB);
 
 		Arbeitsmarkt am = new Arbeitsmarkt();
 
-		am.anbieten(new Angebot(ma1, 10, 20));
-		am.anbieten(new Angebot(ma2, 10, 20));
-		am.anbieten(new Angebot(ma3, 10, 20));
-		am.anbieten(new Angebot(ma4, 10, 20));
-		am.anbieten(new Angebot(ma5, 10, 20));
-		am.anbieten(new Angebot(ma6, 10, 20));
+		am.anbieten(new Angebot(ma1, 10, 200));
+		am.anbieten(new Angebot(ma2, 10, 200));
+		am.anbieten(new Angebot(ma3, 10, 200));
+		am.anbieten(new Angebot(ma4, 10, 200));
+		am.anbieten(new Angebot(ma5, 10, 200));
+		am.anbieten(new Angebot(ma6, 10, 200));
 
 		return am;
 	}
