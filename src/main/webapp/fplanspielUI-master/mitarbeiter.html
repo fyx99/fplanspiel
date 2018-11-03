@@ -87,9 +87,9 @@
 		}
         }
         //aktuelle Kapazität in der jeweiligen Abteilung anzeigen
-        document.getElementById('FertigungHead').innerHTML = "Fertigung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.MASCHINE /60) + " Stunden)";
-        document.getElementById('VertriebHead').innerHTML = "Vertrieb (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERTRIEB /60) + " Stunden)";
-        document.getElementById('VerwaltungHead').innerHTML = "Verwaltung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERWALTUNG /60) + " Stunden)";
+        document.getElementById('FertigungHead').innerHTML = "Fertigung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.MASCHINE /60) + " Stunden und " + Math.round(companyData.mitarbeiter.kapazitaeten.MASCHINE %60) + " Minuten)";
+        document.getElementById('VertriebHead').innerHTML = "Vertrieb (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERTRIEB /60) + " Stunden und " + Math.round(companyData.mitarbeiter.kapazitaeten.VERTRIEB %60) + " Minuten)";
+        document.getElementById('VerwaltungHead').innerHTML = "Verwaltung (aktuelle Kapazität: " + Math.round(companyData.mitarbeiter.kapazitaeten.VERWALTUNG /60) + " Stunden und " + Math.round(companyData.mitarbeiter.kapazitaeten.VERWALTUNG %60) + " Minuten)";
         
 		//falls es keine Mitarbeiter gibt --> Fehlermeldung in der jeweiligen Abteilung anzeigen
 		if(fertigungCount == 0){
