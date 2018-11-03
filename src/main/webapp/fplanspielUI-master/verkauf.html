@@ -73,7 +73,11 @@
  				var contSel2 = document.getElementById('contentSelect2');
  				var s1 ="";
  				var s2 ="";
- 				var s3 ='<p>'+kapAlleArbeiter.VERTRIEB+'</p>';
+ 				
+ 				var kStunden = Math.trunc(kapAlleArbeiter.VERTRIEB / 60);
+ 		 		var kMinuten = kapAlleArbeiter.VERTRIEB % 60;
+ 		 		
+ 				var s3 ='<p>'+ kStunden+' Std. '+kMinuten+' Min.</p>';
  				
  				for(var produkt in data){
  					s1 += 	'<li class="list-group-item">'+ data[produkt].p.name+
@@ -173,22 +177,42 @@
 							'</div>'+
 							'<br>'+
 							'<div class="col-sm-6">'+
-								'<p>Fachgebiet</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-								'<p>'+ data[arbeiter].m.mfg+'</p>'+
+								'<p>Fachgebiet:</p>'+
+							'</div>';
+							
+ 					var mfg;
+					if(data[arbeiter].m.mfg == "MASCHINE"){
+						mfg = "Maschine";
+					}
+					if(data[arbeiter].m.mfg == "VERWALTUNG"){
+						mfg = "Verwaltung";
+					}
+					if(data[arbeiter].m.mfg == "VERTRIEB"){
+						mfg = "Vertrieb";
+					}
+					
+					s+=		'<div class="col-sm-6">'+
+								'<p>'+ mfg+'</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
 								'<p>Arbeitszeit:</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-								'<p>'+data[arbeiter].m.arbeitszeit+'</p>'+
+							'</div>';
+							
+					var aStunden = Math.trunc(data[arbeiter].m.arbeitszeit / 60);
+			 		var aMinuten = data[arbeiter].m.arbeitszeit % 60;
+			 		
+					s+=		'<div class="col-sm-6">'+
+								'<p>'+ aStunden+' Std. '+aMinuten+' Min.</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
 								'<p>Auslastung:</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-								'<p>'+data[arbeiter].auslastung+'</p>'+
+							'</div>';
+							
+					aStunden = Math.trunc(data[arbeiter].auslastung / 60);
+					aMinuten = data[arbeiter].auslastung % 60;	
+							
+					s+=		'<div class="col-sm-6">'+
+								'<p>'+ aStunden+' Std. '+aMinuten+' Min.</p>'+
 							'</div>'+
 							
 							'<div class="col-sm-8">'+
@@ -238,9 +262,14 @@
  			        return;
  				}
  				
+ 				var benKapaziaet = menge*preis*3.18;
+ 				
  				// Prüfe, ob genug Arbeitsstunden im Vertrieb vorhanden sind!
- 				if(datenUnternehmen.mitarbeiter.kapazitaeten.VERTRIEB <= 0){
- 					text = "<h6>Nicht genug Arbeitszeit!</h6><h6><b>Je 1€ pro ME beschäftigt deinen Mitarbeiter für 3,18 Minuten!</b></h6>";
+ 				if(datenUnternehmen.mitarbeiter.kapazitaeten.VERTRIEB <= 0 || datenUnternehmen.mitarbeiter.kapazitaeten.VERTRIEB < benKapaziaet){
+ 					
+ 					var bStunden = Math.trunc(benKapaziaet / 60);
+ 			 		var bMinuten = benKapaziaet % 60;
+ 					text = '<h6>Nicht genug Arbeitszeit!</h6><h6>Du benötigst '+bStunden+' Std. '+bMinuten+' Min.</h6>';
 					 meldung.innerHTML = text;
  			        return;
  				}
@@ -441,6 +470,9 @@
 			<div class="col-sm-1 align-self-center"></div>
 			<div class="col-sm-2 align-self-end">
 				<button type="button" class="btn btn-sm" onClick="anbieten()">Neues Angebot einstellen</button>
+				<br>
+				<h6><b>Je 1€ pro ME beschäftigt deinen Mitarbeiter für 3,18 Minuten!</b></h6>
+ 				
 			</div>
 		</div>
 		

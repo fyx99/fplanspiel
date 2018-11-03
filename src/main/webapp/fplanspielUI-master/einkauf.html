@@ -121,17 +121,21 @@
  									'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>Preis pro ME in €</p>'+
- 								'</div>'+
- 								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].preis+'</p>'+
+ 									'<p>Preis pro ME</p>'+
+ 								'</div>';
+ 					
+ 						var preis = data[angebot].preis;
+ 						preis = preis.toFixed(2);
+ 						
+ 							s+='<div class="col-sm-6">'+
+ 									'<p>'+ preis+'&nbsp;&nbsp;€</p>'+
  								'</div>'+
  											
  								'<div class="col-sm-6">'+
  									'<p>Verfügbar</p>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].menge+'</p>'+
+ 									'<p>'+ data[angebot].menge+'&nbsp;&nbsp;ME</p>'+
  									'<br>'+
  								'</div>'+		
  																
@@ -183,24 +187,28 @@
  									'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>Preis in €</p>'+
- 								'</div>'+
- 								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].preis+'</p>'+
+ 									'<p>Preis</p>'+
+ 								'</div>';
+ 								
+ 								var preis = data[angebot].preis;
+ 		 						preis = preis.toFixed(2);
+ 		 						
+ 							s+=	'<div class="col-sm-6">'+
+ 									'<p>'+ preis+'&nbsp;&nbsp;€</p>'+
  								'</div>'+
  											
  								'<div class="col-sm-6">'+
  									'<p>Verfügbar</p>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].menge+'</p>'+
+ 									'<p>'+ data[angebot].menge+'&nbsp;&nbsp;St.</p>'+
  								'</div>'+
  								
  								'<div class="col-sm-6">'+
  								'<p>Kapazität</p>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].markteinheit.kapazitaet+'</p>'+
+ 									'<p>'+ data[angebot].markteinheit.kapazitaet+'&nbsp;&nbsp;St.</p>'+
  									'<br>'+
  								'</div>'+	
  																
@@ -248,12 +256,12 @@
  								'<div class="col-sm-12">'+
  									'<h3>'+ data[angebot].markteinheit.name+'</h3>'+
  								'</div>'+
- 								'<div class="col-sm-6">'+
+ 								/* '<div class="col-sm-6">'+
  									'<p>Preis in €</p>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].preis+'</p>'+
- 								'</div>'+
+ 									'<p>'+ data[angebot].preis+' €</p>'+
+ 								'</div>'+ */
  											
  								'<div class="col-sm-6">'+
  									'<p>Verfügbar</p>'+
@@ -261,13 +269,16 @@
  								'<div class="col-sm-6">'+
  									'<p>'+ data[angebot].menge+'</p>'+
  									'<br>'+
- 								'</div>'+
+ 								'</div>';
  								
- 								'<div class="col-sm-6">'+
+ 							var vStunden = Math.trunc(data[angebot].markteinheit.verwaltungsZeit / 60);
+ 							var vMinuten = data[angebot].markteinheit.verwaltungsZeit % 60;
+ 								
+ 							s+= '<div class="col-sm-6">'+
 									'<p>Benötigte Verwaltungszeit</p>'+
 								'</div>'+
 								'<div class="col-sm-6">'+
-									'<p>'+ data[angebot].markteinheit.verwaltungsZeit+'</p>'+
+									'<p>'+vStunden+' Std. '+vMinuten+' Min. </p>'+
 									'<br>'+
 									'<br>'+
 								'</div>'+
@@ -276,19 +287,22 @@
  								'<p>Laufzeit</p>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].markteinheit.laufzeit+'</p>'+
+ 									'<p>'+ data[angebot].markteinheit.laufzeit+' Quartale</p>'+
  								'</div>'+	
  								'<div class="col-sm-6">'+
  								'<p>Volumen</p>'+
  								'</div>'+
  								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].markteinheit.volumen+'</p>'+
+ 									'<p>'+ data[angebot].markteinheit.volumen+' €</p>'+
  								'</div>'+	
  								'<div class="col-sm-6">'+
  								'<p>Zinssatz</p>'+
- 								'</div>'+
- 								'<div class="col-sm-6">'+
- 									'<p>'+ data[angebot].markteinheit.zinssatz+'</p>'+
+ 								'</div>';
+ 							
+ 							var zinssatz = data[angebot].markteinheit.zinssatz * 100;
+ 								
+ 							s+=	'<div class="col-sm-6">'+
+ 									'<p>'+ zinssatz+' %</p>'+
  									'<br>'+
  								'</div>'+	
  															
@@ -333,15 +347,32 @@
 							'</div>'+
 							'<div class="col-sm-6">'+
 							'<p>Fachgebiet</p>'+
+							'</div>';
+							
+					// Setze das Mitarbeiter-Fachgebiet
+					var mfg;
+					if(data[angebot].markteinheit.mfg == "MASCHINE"){
+						mfg = "Maschine";
+					}
+					if(data[angebot].markteinheit.mfg == "VERWALTUNG"){
+						mfg = "Verwaltung";
+					}
+					if(data[angebot].markteinheit.mfg == "VERTRIEB"){
+						mfg = "Vertrieb";
+					}
+					
+					s+=		'<div class="col-sm-6">'+
+							'<p>'+ mfg+'</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-							'<p>'+ data[angebot].markteinheit.mfg+'</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-								'<p>Preis in €</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-								'<p>'+ data[angebot].preis+'</p>'+
+								'<p>Einstellungskosten</p>'+
+							'</div>';
+							
+							var preis = data[angebot].preis;
+	 						preis = preis.toFixed(2);
+	 						
+						s+=	'<div class="col-sm-6">'+
+								'<p>'+ preis+' €</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
 								'<p>Verfügbar</p>'+
@@ -349,20 +380,27 @@
 							'<div class="col-sm-6">'+
 								'<p>'+ data[angebot].menge+'</p>'+
 								'<br>'+
-							'</div>'+
-							
-							'<div class="col-sm-6">'+
+							'</div>';
+						
+						// Math.trunc gibt den ganzzahligen Teil einer Zahl zurück
+						var aStunden = Math.trunc(data[angebot].markteinheit.arbeitszeit / 60);
+						var aMinuten = data[angebot].markteinheit.arbeitszeit % 60;
+						s+=	'<div class="col-sm-6">'+
 							'<p>Arbeitszeit</p>'+
 							'</div>'+
 							'<div class="col-sm-6">'+
-							'<p>'+ data[angebot].markteinheit.arbeitszeit+'</p>'+
+							'<p>'+aStunden+' Std. '+aMinuten+' Min. </p>'+
 							'</div>'+	
 							
 							'<div class="col-sm-6">'+
 							'<p>Lohnkosten</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-							'<p>'+ data[angebot].markteinheit.lohnkosten+'</p>'+
+							'</div>';
+							
+							var lohnkosten = data[angebot].markteinheit.lohnkosten;
+	 						lohnkosten = lohnkosten.toFixed(2);
+							
+						s+=	'<div class="col-sm-6">'+
+							'<p>'+lohnkosten+' €</p>'+
 							'<br>'+
 							'</div>'+
 							
@@ -442,6 +480,7 @@
 	 				//Multipliziere Preis mit eingebener Menge
 	 				var kosten = markt[angebot].preis;
 	 				kosten *= iV;
+	 				kosten = kosten.toFixed(2);
 	 				
 	 				var angebotsid = markt[angebot].id;
 	 				
@@ -449,10 +488,10 @@
 							'<h3>Kauf von ' +  markt[angebot].markteinheit.name +':</h3><div><br></div>'+
 						'</div>'+
 						'<div class="col-sm-12">'+
-							'<h4>Menge: '+ iV+' Stück</h4>'+
+							'<h4>Menge:&nbsp;&nbsp;'+ iV+'&nbsp;Stück</h4>'+
 						'</div>'+
 						'<div class="col-sm-12">'+
-						'<h4>Kosten: '+ kosten+' Euro</h4>'+
+						'<h4>Kosten:&nbsp;&nbsp;'+ kosten+'&nbsp;Euro</h4>'+
 						'</div>'+
 						'<div class="row">'+
 							'<div class="col-sm-9">'+
@@ -494,20 +533,23 @@
 						'</div>'+
 						'<div class="col-sm-6">'+
 						'<h4>'+ iV +' Stück</h4>'+
-						'</div>'+
+						'</div>';
 						
-						'<div class="col-sm-6">'+
+						/* '<div class="col-sm-6">'+
 						'<h4>Kosten:</h4>'+
 						'</div>'+
 						'<div class="col-sm-6">'+
 						'<h4>'+ kosten +' Euro</h4>'+
-						'</div>'+
+						'</div>'+ */
 						
-						'<div class="col-sm-6">'+
+					var vStunden = Math.trunc(bVerwaltungszeit / 60);
+					var vMinuten = bVerwaltungszeit % 60;
+					
+					s+=	'<div class="col-sm-6">'+
 						'<h4>Benötigte Verwaltungszeit:</h4>'+
 						'</div>'+
 						'<div class="col-sm-6">'+
-						'<h4>'+ bVerwaltungszeit +'</h4>'+
+						'<h4>'+vStunden+' Std. '+vMinuten+' Min.</h4>'+
 						'</div>';
 						
 						// Falls genug Verwaltungszeit vorhanden
@@ -522,13 +564,17 @@
 						
 						// Falls NICHT genug Verwaltungszeit vorhanden
 						} else{
+							
+							var vStunden = Math.trunc(vVerwaltungszeit / 60);
+							var vMinuten = vVerwaltungszeit % 60;
+							
 							s+='<div class="row">'+
 								'<br>'+
 								'<div class="col-sm-6">'+
 								'</div>'+
 								'<div class="col-sm-6">'+
 								'<h5>Nicht genug Verwaltungszeit vorhanden!</h5>'+
-								'<h5>Aktuell vorhandene Verwaltungszeit: '+vVerwaltungszeit+'</h5><div><br></div>'+
+								'<h5>Aktuell vorhandene Verwaltungszeit: '+vStunden+' Std. '+vMinuten+' Min.</h5><div><br></div>'+
 								'</div>'+
 							'</div>';
 						}

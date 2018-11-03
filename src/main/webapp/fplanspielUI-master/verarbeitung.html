@@ -25,8 +25,6 @@
  		var datenmMarkt; // "../api/spiel/unternehmen".data.mmarkt.angebote
  		var maschinenid;
 
- 		
- 		
  		// Hole aus der Schnittstelle alle Produkte, die produziert werden können
  		function getDataVerarbeitung(){
 			jQuery.ajax({
@@ -110,9 +108,13 @@
 							'</div>'+
 							'<div class="col-sm-6">'+
 								'<p>Benötigte Arbeitszeit</p>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
-								'<p>'+ data[angebot].markteinheit.arbeitszeit+'&nbsp;&nbsp;Min</p>'+
+							'</div>';
+							
+				var aStunden = Math.trunc(data[angebot].markteinheit.arbeitszeit / 60);
+ 				var aMinuten = data[angebot].markteinheit.arbeitszeit % 60;
+							
+				s+=			'<div class="col-sm-6">'+
+								'<p>'+ aStunden+' Std. '+aMinuten+' Min. </p>'+
 							'</div>'+	
 							
 							'<div class="col-sm-12">'+
@@ -322,9 +324,13 @@
 					'</div>'+
 					'<div class="col-sm-6">'+
 						'<p>Benötigte Arbeitszeit</p>'+
-					'</div>'+
-					'<div class="col-sm-6">'+
-						'<p>'+arbeitszeit+'&nbsp;Min'+ text +'</p>'+
+					'</div>';
+					
+			var aStunden = Math.trunc(arbeitszeit / 60);
+	 		var aMinuten = arbeitszeit % 60;
+	 		
+			s+=		'<div class="col-sm-6">'+
+						'<p>'+ aStunden+' Std. '+aMinuten+' Min.'+ text +'</p>'+
 					'</div>'+	
 					
 					'<div class="col-sm-12">'+
