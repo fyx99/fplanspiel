@@ -7,8 +7,8 @@ public class Radiowerbung extends Marketingmaßnahme {
 
     public Radiowerbung(String name, double budget) {
         super(name, budget, statVolumen, statEffekt);
-        // TODO Auto-generated constructor stub
+        
     }
-    //
+ 
 
 }

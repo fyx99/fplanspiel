@@ -57,21 +57,21 @@ public class SpielService {
 
 	@GET
 	@Path("ping")
-	@Produces(MediaType.TEXT_PLAIN) // Application_Json
+	@Produces(MediaType.TEXT_PLAIN) 
 	public static String ping(@DefaultValue("1") @QueryParam("ping") String p) {
 		return p;
 	}
 
 	@GET
 	@Path("neuesspiel")
-	@Produces(MediaType.TEXT_PLAIN) // Application_Json
+	@Produces(MediaType.TEXT_PLAIN) 
 	public static void neuesSpiel() {
 		s = new Spiel();
 	}
 
 	@GET
 	@Path("neuesunternehmen")
-	@Produces(MediaType.TEXT_PLAIN) // Application_Json
+	@Produces(MediaType.TEXT_PLAIN)
 	public static String neuesUnternehmen(@QueryParam("name") String name, @QueryParam("standort") String standort) {
 
 		if (s != null) {
@@ -122,7 +122,7 @@ public class SpielService {
 
 	@GET
 	@Path("spiel")
-	@Produces(MediaType.TEXT_PLAIN) // Application_Json
+	@Produces(MediaType.TEXT_PLAIN) 
 	public static SpielDTO getSpielDTO() {
 		return new SpielDTO(s);
 	}
@@ -188,7 +188,7 @@ public class SpielService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static boolean kaufeAngebot(@DefaultValue("-1") @QueryParam("menge") int menge,
 			@QueryParam("angebotsid") int id) {
-		// erstmal bezahlen
+		// Bezahlung
 
 		Angebot angebot = Angebot.findeAngebot(id);
 		if (angebot == null) {

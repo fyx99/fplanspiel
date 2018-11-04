@@ -7,9 +7,7 @@ public class Fernsehwerbung extends Marketingmaßnahme {
 
     public Fernsehwerbung(String name, double budget) {
         super(name, budget, statVolumen, statEffekt);
-        // TODO Auto-generated constructor stub
+
     }
-    //jetzt muss man hier natürlich noch was besonderes machen
-    //denkbar
     
 }

@@ -7,8 +7,8 @@ public class PRKampagne extends Marketingmaßnahme {
 
     public PRKampagne(String name, double budget) {
         super(name, budget, statVolumen, statEffekt);
-        // TODO Auto-generated constructor stub
+       
     }
-    //
+  
 
 }

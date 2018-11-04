@@ -7,7 +7,7 @@ public class Plakatwerbung extends Marketingmaßnahme {
 
     public Plakatwerbung(String name, double budget) {
         super(name, budget, statVolumen, statEffekt);
-        // TODO Auto-generated constructor stub
+        
     }
     //
     

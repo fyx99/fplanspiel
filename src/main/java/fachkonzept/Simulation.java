@@ -85,7 +85,6 @@ public class Simulation {
 					v.getKredit().getZinssatz() * v.getVerbleibendeSumme() + v
 							.tilgen(v.getVerbleibendeSumme() / (v.getKredit().getLaufzeit() - v.getAktuelleLaufzeit())),
 					"Kreditkosten");
-			// irgendwie nicht die richtige formel :D
 			if (v.getAktuelleLaufzeit() == v.getKredit().getLaufzeit() || v.getVerbleibendeSumme() <= 0) {
 				iter.remove();
 			}
@@ -180,17 +179,16 @@ public class Simulation {
 
 	private static void simuliereAbsatzmarkt(List<Unternehmen> us) {
 		for (ProduktArt produktArt : ProduktArt.values()) {
-			// pro produkt gehen wir den spaß jetzt mal durch
+			// Schleife pro ProduktArt
 			Map<Angebot, Unternehmen> produkt_angebote = new HashMap<Angebot, Unternehmen>();
 			for (Unternehmen u : us) {
 
 				List<Angebot> unternehmenAngebote = u.getVmarkt().getAngeboteByProduktArt(produktArt);
 
 				produkt_angebote.putAll(unternehmenAngebote.stream().collect(Collectors.toMap(a -> a, a -> u)));
-				// hier werden hoffentlich die angebote gesammelt :D
+				// Sammeln aller Angebote
 
 			}
-			// jetzt haben wir alle angebote der speziellen produkt art
 
 			if (produkt_angebote.isEmpty())
 				continue;
@@ -200,7 +198,7 @@ public class Simulation {
 							* SimulationsKonstanten.periodenNachfrage(us.get(0).getSpiel().getRunde() % 4)),
 					SimulationsKonstanten.getProduktMarktpreis(produktArt));
 		}
-		// noch die nachfrage am ende anpassen
+		// Anpassen der Nachfrage
 		us.forEach(u -> simuliereNachfrageAbsatzmarkt(u.getVmarkt(), u.getSpiel().getRunde()));
 
 	}

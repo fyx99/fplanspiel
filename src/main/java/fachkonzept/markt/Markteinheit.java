@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Markteinheit {
 
-	//DAch für MAteroial, MAschine und Produkt
+	//DAch für Material, Maschine und Produkt
 
 	private Integer id;
 	private String name;
@@ -36,7 +36,7 @@ public abstract class Markteinheit {
 	public String getName() {
 		return name;
 	}
-	//um das material zu verändern nicht den namen verändern :D
+	//um das material zu verändern
     public void setName(String name) {
         this.name = name;
     }

@@ -26,7 +26,7 @@ public class Spiel {
     public String rundenStart() {
         
         if(runde == 0) {
-            //dann anfangs simulation
+            //Spielstart simulieren
             Simulation.simuliereSpielstart(this);
             runde++;    //um in die runde 1 zu starten
         }
@@ -69,7 +69,6 @@ public class Spiel {
             ranglisteErstellen();
             return true;
         }
-        // hier könnten noch umsatz oder gewinnziele
 
         return false;
     }
