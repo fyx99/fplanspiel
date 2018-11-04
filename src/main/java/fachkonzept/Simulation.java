@@ -54,7 +54,6 @@ public class Simulation {
 
 	public static void simuliere(Spiel s) {
 
-		// rest
 		Iterator<Unternehmen> i = s.getUnternehmen().iterator();
 		while (i.hasNext()) {
 			Unternehmen n = i.next();
